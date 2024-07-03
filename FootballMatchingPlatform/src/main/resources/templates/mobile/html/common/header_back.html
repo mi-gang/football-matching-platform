@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="header-back-btn-logo">
+        <img src="../img/left arrow.svg" alt="뒤로가기 버튼" id="header-back-btn">
+        <span id="page-name"></span>
+    </div>
+    <div id="header-user-info">
+        <span id="user-tier"></span>
+        <img id="mypage" src="../img/user.svg" alt="마이페이지"> 
+    </div>
+
+    <script>
+        $('#header-back-btn').on('click', function(){
+            alert('뒤로가기')
+        })
+        $('#mypage').on('click', function(){
+            alert('마이페이지 이동')
+        })
+    </script>
+</body>
+</html>
