@@ -24,11 +24,12 @@ body {
 }
 
 #mobile-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    /* display: flex;
+    flex-direction: column; */
+    /* justify-content: space-between; */
     width: 100vw;
-    height: 100%;
+    /* height: 100%; */
+    min-height: 100vh;
 }
 
 /* 헤더 */
@@ -40,9 +41,12 @@ header{
 
     height: 3.6rem;
     border-bottom: 1px solid #D1D1D1;
-    position: relative;
     padding: 0 1.5rem;
-    /* z-index: 9; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
 }
 
 #header-back-btn-logo{
@@ -88,8 +92,12 @@ header{
 /* 컨텐츠 컨테이너 */
 #container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* margin: 3.6rem 0; */
+    padding: 3.6rem 0;
+    border: 1px solid #73A772;
 }
 
 /* 하단 메뉴바 */
@@ -101,6 +109,11 @@ nav {
     height: 3.6rem;
     background-color: #fff;
     border-top: 1px solid #D1D1D1;
+    position: fixed;
+    bottom: 0;
+    /* width: 100% */
+    left: 0;
+    right: 0;
   }
 
   nav div {
