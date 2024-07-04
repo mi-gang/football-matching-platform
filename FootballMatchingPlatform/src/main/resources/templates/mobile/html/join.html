@@ -5,7 +5,7 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/join.css">
+    <link rel="stylesheet" href="../css/join.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
@@ -14,7 +14,7 @@
 <body>
     <div class="flex-column-center" id="container">
         <div id="top-container">
-            <img src="image/left arrow.svg">
+            <img src="../img/left arrow.svg">
             <div>회원가입</div>
         </div>
         <div class="text" id="text-name">이름</div>
@@ -58,23 +58,23 @@
         <input id="email">
         <div class="text" id="text-location">플레이 지역</div>
         <input id="location">
-        <button id="join">회원가입</button>
+        <button id="join" onclick="return check()">회원가입</button>
         <div id="modal-location">
             <div id="top-location">
-                <div>플레이 지역</div>
-                <img src="image/Close.svg">
+                <div id="text-modal-top">플레이 지역</div>
+                <img id="close" src="../img/Close.svg">
             </div>
             <div id="location-list">
                 <div>
-                    <div>서울</div>
+                    <div class="city">서울</div>
                     <hr>
                 </div>
                 <div>
-                    <div>경기</div>
+                    <div class="city">경기</div>
                     <hr>
                 </div>
                 <div>
-                    <div>인천</div>
+                    <div class="city">인천</div>
                     <hr>
                 </div>
             </div>
@@ -83,6 +83,9 @@
 
 </body>
 <script>
+    function check(){
+        
+    }
     $("#m").on("click", function () {
         $(this).addClass("click");
         $("#f").removeClass("click");
@@ -97,9 +100,6 @@
         $("#m").val(0);
     })
 
-    $("#join").on("click", function () {
-        alert("회원가입");
-    })
 
     $("#pw-check").on("keyup", function () {
         if ($("#pw").val() != "") {
@@ -119,6 +119,19 @@
             $("#invalid-pw-check-success").css("display", "none");
             $("#invalid-pw-check-fail").css("display", "none");
         }
+    })
+
+    $("#location").on("click", function(){
+        $("#modal-location").css("display", "block");
+    })
+
+    $("#close").on("click", function(){
+        $("#modal-location").css("display", "none");
+    })
+
+    $(".city").on("click",function(){
+        $("#location").val($(this).text());
+        $("#modal-location").css("display", "none");
     })
 </script>
 
