@@ -2,12 +2,9 @@
 <html lang="en">
 
 <head>
-<<<<<<< HEAD
-=======
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/join.css">
->>>>>>> 49f220d0ef08fce82f43a011f8f62469ae2f2891
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 가입</title>
@@ -17,76 +14,6 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-    <!-- 모바일 컨테이너 -->
-    <div id="mobile-container">
-        <!-- 헤더 -->
-        <header></header>
-        <!-- 컨텐츠 컨테이너 -->
-        <div id="container">
-            <div class="flex-column-center">
-                <div class="text" id="text-name">이름</div>
-                <input id="name">
-                <div class="text-container">
-                    <div class="text" id="text-id">아이디</div>
-                    <div class="text-invalid" id="invalid-id">사용할 수 없는 아이디입니다.</div>
-                </div>
-                <input id="id">
-                <div class="text-container">
-                    <div class="text" id="text-nickname">닉네임</div>
-                    <div class="text-invalid" id="invalid-nickname">사용할 수 없는 닉네임입니다.</div>
-                </div>
-                <input id="nickname">
-                <div class="text-container">
-                    <div class="text" id="text-pw">비밀번호</div>
-                    <div class="text-invalid" id="invalid-pw">비밀번호는 영문 대소문자, 숫자, 특수문자를 6자 이상 포함해야 합니다.</div>
-                </div>
-                <input type="password" id="pw">
-                <div class="text-container">
-                    <div class="text" id="text-pw-check">비밀번호 확인</div>
-                    <div class="text-invalid" id="invalid-pw-check-fail">비밀번호가 일치하지 않습니다.</div>
-                    <div class="text-invalid" id="invalid-pw-check-success">비밀번호가 일치합니다.</div>
-                </div>
-                <input type="password" id="pw-check">
-                <div class="text-container">
-                    <div class="text" id="text-birth">생년월일</div>
-                    <div class="text" id="text-gender">성별</div>
-                </div>
-                <div>
-                    <input id="birth">
-                    <button class="gender" id="m" value="0">남</button>
-                    <button class="gender" id="f" value="0">여</button>
-                </div>
-                <div class="text" id="text-phone">전화번호</div>
-                <input id="phone">
-                <div class="text-container">
-                    <div class="text" id="text-email">이메일</div>
-                    <div class="text-invalid" id="invalid-email">사용할 수 없는 이메일입니다.</div>
-                </div>
-                <input id="email">
-                <div class="text" id="text-location">플레이 지역</div>
-                <input id="location">
-                <button id="join" onclick="return check()">회원가입</button>
-                <div id="modal-location">
-                    <div id="top-location">
-                        <div id="text-modal-top">플레이 지역</div>
-                        <img id="close" src="../img/Close.svg">
-                    </div>
-                    <div id="location-list">
-                        <div>
-                            <div class="city">서울</div>
-                            <hr>
-                        </div>
-                        <div>
-                            <div class="city">경기</div>
-                            <hr>
-                        </div>
-                        <div>
-                            <div class="city">인천</div>
-                            <hr>
-                        </div>
-                    </div>
-=======
     <div class="flex-column-center" id="container">
         <div id="top-container">
             <img src="../img/left arrow.svg">
@@ -151,14 +78,12 @@
                 <div>
                     <div class="city">인천</div>
                     <hr>
->>>>>>> 49f220d0ef08fce82f43a011f8f62469ae2f2891
                 </div>
             </div>
         </div>
         <!-- 하단 메뉴바 -->
     </div>
 
-<<<<<<< HEAD
     <script>
         // header, nav 내용 불러오기
         $(document).ready(function () {
@@ -172,32 +97,16 @@
                 alert("이름을 입력하세요.");
                 return false;
             }
-=======
-</body>
-<script>
-    function check(){
-        
-    }
-    $("#m").on("click", function () {
-        $(this).addClass("click");
-        $("#f").removeClass("click");
-        $(this).val(1);
-        $("#f").val(0);
-    })
->>>>>>> 49f220d0ef08fce82f43a011f8f62469ae2f2891
 
             if ($("#id").val().length == 0) {
                 alert("아이디를 입력하세요.");
                 return false;
             }
 
-<<<<<<< HEAD
             if ($("#nickname").val().length == 0) {
                 alert("닉네임을 입력하세요.");
                 return false;
             }
-=======
->>>>>>> 49f220d0ef08fce82f43a011f8f62469ae2f2891
 
             if ($("#pw").val().length == 0) {
                 alert("비밀번호를 입력하세요.");
@@ -269,7 +178,6 @@
                 $("#invalid-pw-check-success").css("display", "none");
                 $("#invalid-pw-check-fail").css("display", "none");
             }
-<<<<<<< HEAD
         })
 
         $("#location").on("click", function () {
@@ -286,28 +194,5 @@
         })
     </script>
 </body>
-=======
-        }
-        else {
-            $("#text-pw-check").css("margin-right", "15rem");
-            $("#invalid-pw-check-success").css("display", "none");
-            $("#invalid-pw-check-fail").css("display", "none");
-        }
-    })
-
-    $("#location").on("click", function(){
-        $("#modal-location").css("display", "block");
-    })
-
-    $("#close").on("click", function(){
-        $("#modal-location").css("display", "none");
-    })
-
-    $(".city").on("click",function(){
-        $("#location").val($(this).text());
-        $("#modal-location").css("display", "none");
-    })
-</script>
->>>>>>> 49f220d0ef08fce82f43a011f8f62469ae2f2891
 
 </html>
