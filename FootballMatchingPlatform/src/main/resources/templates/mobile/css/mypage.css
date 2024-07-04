@@ -1,0 +1,186 @@
+#container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 2rem;    
+    padding: 0 1rem;
+}
+
+/* 타이틀 폰트 */
+.title{
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.mypage-infos{
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 1.5px solid #DBDBDB;
+    border-radius: 10px;
+    padding: 0.6rem;
+}
+
+/* 닉네임, 이메일 등 섹션 */
+#user-info1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    column-gap: 2rem;    
+}
+
+#user-name-email{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#mypage-user{
+    width: 3rem;
+    height: 3rem;
+}
+
+#edit-info{
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 1.5px solid #DBDBDB;
+    border-radius: 20px;
+    padding: 0.6rem;
+    width: 10rem;
+    height: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#nickname{
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+#email{
+    font-size: 0.9rem;
+}
+
+/* 나머지 정보 섹션 */
+#user-info2{
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;    
+}
+
+#user-info2-1{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 2rem;    
+}
+
+/* 나의 등급 */
+#my-tier-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+}
+
+#my-tier-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 1.5rem;    
+}
+
+#my-tier{
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #73A772;
+    color: #ffffff;
+    font-size: 1.4rem;
+}
+
+#my-score-tank-percentile-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#my-rank-percentile-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+}
+
+/* 나의 전적 */
+#my-record-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+}
+
+#my-record-info{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+    width: 100%;
+}
+
+#my-record-info-1{
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.4rem;
+}
+#my-record-info-2{}
+
+/* 나의 팀 */
+
+#my-team-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+}
+
+#my-team-info{
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+}
+
+#team-name{
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+/* 나의 문의 */
+
+#my-inquiry-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+}
+
+#my-inquiry-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#more-inquiry{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.right-arrow{
+    width: 1.3rem;
+    height: 1.3rem;
+}
+
+.info-normal-text {
+    font-weight: 400;
+    font-size: 0.9rem;
+}
+
