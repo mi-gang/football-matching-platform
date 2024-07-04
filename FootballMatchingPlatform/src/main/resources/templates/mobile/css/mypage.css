@@ -1,9 +1,5 @@
 #container{
-    /* display: flex;
-    flex-direction: column;
-    /* justify-content: space-between;
-    row-gap: 2rem;    
-    padding: 0 1rem; */
+    padding: 3.3rem 1rem;
 }
 
 /* 타이틀 폰트 */
@@ -25,7 +21,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    column-gap: 2rem;    
+    column-gap: 3rem;
+    margin-top: 2.5rem;
 }
 
 #user-name-email{
@@ -42,9 +39,10 @@
 #edit-info{
     box-sizing: border-box;
     background: #FFFFFF;
-    border: 1.5px solid #DBDBDB;
+    border: 1.5px solid #73A772;
     border-radius: 20px;
     padding: 0.6rem;
+    margin-top: 1.5rem;
     width: 10rem;
     height: 2rem;
     display: flex;
@@ -66,14 +64,15 @@
 #user-info2{
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;    
+    row-gap: 2rem;
+    margin-top: 2rem; 
 }
 
 #user-info2-1{
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    column-gap: 2rem;    
+    justify-content: space-between;
+    column-gap: 1rem;    
 }
 
 /* 나의 등급 */
@@ -87,8 +86,9 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    column-gap: 1.5rem;  
-    height: 100rem;  
+    align-items: center;
+    column-gap: 0.8rem;  
+    height: 5rem;
 }
 
 #my-tier{
@@ -103,17 +103,43 @@
     font-size: 1.4rem;
 }
 
-#my-score-tank-percentile-wrapper{
+#my-score-rank-percentile-wrapper{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    row-gap: 0.2rem;
+}
+
+#mypage-score{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
 }
 
 #my-rank-percentile-wrapper{
     display: flex;
     flex-direction: row;
     justify-content: center; 
+    column-gap: 0.2rem;
 }
+
+#mypage-rank{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+}
+
+#mypage-percentile{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+}
+
+#my-percentile{
+    padding-left: 0.2rem;
+}
+
+
 
 /* 나의 전적 */
 #my-record-wrapper{
@@ -125,16 +151,40 @@
 #my-record-info{
     display: flex;
     flex-direction: column;
-    row-gap: 0.4rem;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
+    row-gap: 0.2rem;
+    height: 5rem;
 }
 
 #my-record-info-1{
     display: flex;
     flex-direction: row;
+    justify-content: center;
     column-gap: 0.4rem;
 }
-#my-record-info-2{}
+
+#game-count-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+}
+
+#win-count-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+}
+
+#my-record-info-2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+}
+
+#user-win-rate{
+    padding-left: 0.3rem;
+}
 
 /* 나의 팀 */
 
@@ -148,12 +198,52 @@
     display: flex;
     flex-direction: row;
     column-gap: 1rem;
+    height: 5rem;
 }
 
 #team-name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-weight: 600;
     font-size: 1.2rem;
+    padding: 0 1rem;
+    border-right: 1.5px solid #DBDBDB;
 }
+
+#team-rank-win-rate-wrapper,
+#team-tier-score-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    row-gap: 0.3rem;
+}
+
+/* #team-rank-wrapper ,
+#team-win-rate-wrapper,
+#team-tier-wrapper,
+#team-score-wrapper
+{
+    display: flex;
+    flex-direction: row;
+} */
+
+.team-wrapper{
+    display: flex;
+    flex-direction: row;
+}
+
+#team-rank,
+#team-win-rate,
+#team-tier,
+#team-score{
+    padding-left: 0.3rem;
+}
+
+
+
+
 
 /* 나의 문의 */
 
