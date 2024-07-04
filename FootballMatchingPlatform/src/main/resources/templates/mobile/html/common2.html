@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/team.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+      <!-- 헤더 -->
+      <header></header>
+      <!-- 컨텐츠 컨테이너 -->
+      <div id="container">
+        <button id="teamRank" class="">전체 팀 순위</button>
+        <button id="teamRank" class="">가입 가능 팀</button><br />
+        <input type="text" id="search" />
+        <button>검색</button>
+
+        <table id="teamTable">
+          <tr>
+            <th>순위</th>
+            <th>팀 이름</th>
+            <th>경기</th>
+            <th>승리</th>
+            <th>승률</th>
+            <th>등급</th>
+            <th>점수</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>지존풋살</td>
+            <td>50</td>
+            <td>50</td>
+            <td>100%</td>
+            <td>A</td>
+            <td>820</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>엄준식</td>
+            <td>100</td>
+            <td>70</td>
+            <td>70%</td>
+            <td>A</td>
+            <td>810</td>
+          </tr>
+        </table>
+      </div>
+      <!-- 하단 메뉴바 -->
+      <nav></nav>
+    </div>
+
+    <script>
+      document.getElementById("search").value = "검색어를 입력하세요";
+    </script>
+
+    <script>
+      // header, nav 내용 불러오기
+      $(document).ready(function () {
+        $("header").load("common/header_back.html", function () {
+          // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+          $("#page-name").text("페이지 이름"); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
+          $("#user-tier").text("A"); // 나중에 세션에서 usertier 구해서 넣기
+        });
+        $("nav").load("common/nav.html");
+      });
+    </script>
+  </body>
+</html>
