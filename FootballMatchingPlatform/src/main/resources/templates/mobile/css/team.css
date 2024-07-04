@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+
+#teamRank{
+box-sizing: border-box;
+height: 28px;
+left: 56px;
+top: 68px;
+border: 1px solid #73A772;
+border-radius: 20px;
+}
+#search{
+/* 검색 */
+width: 174px;
+height: 30px;
+left: calc(50% - 174px/2 + 45px);
+top: 111px;
+}
+#teamTable{
+/* 팀 리스트 */
+width: 278px;
+height: 312px;
+left: 21px;
+top: 159px;
+}
