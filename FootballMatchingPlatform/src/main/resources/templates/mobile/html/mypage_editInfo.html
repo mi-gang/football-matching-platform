@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mypage</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/mypage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+        <!-- 헤더 -->
+        <header></header>
+         <!-- 컨텐츠 컨테이너 -->
+        <div id="container">
+            <div id="editinfo-wrapper">
+                <div class="edit-content-wrapper">
+                    <span>이름</span>
+                    <input class="edit-input" value="김박박"/>
+                </div>
+                <div class="edit-content-wrapper">
+                    <span>아이디</span>
+                    <span class="non-edit">bakbakkim</span>
+                </div>
+                <div class="edit-content-wrapper">
+                    <span>닉네임</span>
+                    <input class="edit-input" value="bakxoon"/>
+                </div>
+                <div class="edit-content-wrapper">
+                    <span>생년월일</span>
+                    <span class="non-edit">2001.06.30</span>
+                </div>
+                <div class="edit-content-wrapper">
+                    <span>이메일</span>
+                    <input class="edit-input" value="bakxoon@gmail.com"/>
+                </div>
+                <div class="edit-content-wrapper">
+                    <span>전화번호</span>
+                    <input class="edit-input" value="010-9452-8484"/>
+                </div>
+                <div id="btn-wrapper">
+                    <div>
+                        <button id="edit-pw-btn" class="btn">비밀번호 수정</button>
+                        <button id="withdraw-btn" class="btn">회원 탈퇴</button>
+                    </div>
+                    <button id="my-info-edit-btn" class="btn">수정하기</button>
+                </div>
+            </div>
+        </div>
+        <!-- 하단 메뉴바 -->
+         <nav></nav>
+    </div>
+    
+    <script>
+    // header, nav 내용 불러오기
+    $(document).ready(function(){
+        $('header').load('common/header_mypage_back.html', function(){
+            $('#page-name').text('내 정보 수정');
+        });
+        $('nav').load('common/nav.html');
+    });
+    </script>
+    <script src="../js/mypage.js"></script>
+</body>
+</html>

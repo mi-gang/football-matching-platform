@@ -1,5 +1,6 @@
 #container{
     padding: 3.3rem 1rem;
+    min-height: calc(100vh - 6.6rem);
 }
 
 /* 타이틀 폰트 */
@@ -275,3 +276,131 @@
     font-size: 0.9rem;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ****************************** 내 정보 수정 ********************************** */
+
+/* 버튼 공통 */
+.btn{
+    border-radius: 20px;
+    border-color: transparent;
+    height: 1.8rem;
+}
+
+
+/* 비밀번호 확인 */
+#edit-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 1.5rem;
+}
+
+#check-pw-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    row-gap: 0.5rem;
+}
+
+#input-pw{
+    width: 15rem;
+    height: 2rem;
+
+    background: #F8FAFB;
+    border-radius: 5px;
+    border-color: transparent;
+}
+
+#input-pw:focus{
+    outline: none;
+    /* outline: 1.5px solid #77b687; */
+}
+
+#check-pw-btn{
+    width: 3.8rem;
+    color: #FFFFFF;
+    background: #73A772;
+    border-color: transparent;
+}
+
+
+
+
+/* 수정 폼 */
+
+#editinfo-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    justify-content: center;
+}
+
+.edit-content-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 1rem;
+}
+
+.edit-input{
+    width: 10rem;
+    height: 2rem;
+
+    background: #F8FAFB;
+    border-radius: 5px;
+    border-color: transparent;
+}
+
+.edit-input:focus{
+    outline: none;
+    /* outline: 1.5px solid #77b687; */
+}
+
+.non-edit{
+    width: 10rem;
+    height: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#btn-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
+    margin-top: 1rem;
+}
+
+#edit-pw-btn{
+    width: 7rem;
+    background: #FFFFFF;
+    border: 1.5px solid #DBDBDB;
+}
+
+#withdraw-btn{
+    width: 5.3rem;
+    background: #FFFFFF;
+    border: 1.5px solid #DBDBDB;
+}
+
+#my-info-edit-btn{
+    width: 5rem;
+    color: #FFFFFF;
+    background: #73A772;
+    border-color: transparent;
+}
