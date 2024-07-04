@@ -1,0 +1,125 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/join.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+</head>
+
+<body>
+    <div class="flex-column-center" id="container">
+        <div id="top-container">
+            <img src="image/left arrow.svg">
+            <div>회원가입</div>
+        </div>
+        <div class="text" id="text-name">이름</div>
+        <input id="name">
+        <div class="text-container">
+            <div class="text" id="text-id">아이디</div>
+            <div class="text-invalid" id="invalid-id">사용할 수 없는 아이디입니다.</div>
+        </div>
+        <input id="id">
+        <div class="text-container">
+            <div class="text" id="text-nickname">닉네임</div>
+            <div class="text-invalid" id="invalid-nickname">사용할 수 없는 닉네임입니다.</div>
+        </div>
+        <input id="nickname">
+        <div class="text-container">
+            <div class="text" id="text-pw">비밀번호</div>
+            <div class="text-invalid" id="invalid-pw">비밀번호는 영문 대소문자, 숫자, 특수문자를 6자 이상 포함해야 합니다.</div>
+        </div>
+        <input type="password" id="pw">
+        <div class="text-container">
+            <div class="text" id="text-pw-check">비밀번호 확인</div>
+            <div class="text-invalid" id="invalid-pw-check-fail">비밀번호가 일치하지 않습니다.</div>
+            <div class="text-invalid" id="invalid-pw-check-success">비밀번호가 일치합니다.</div>
+        </div>
+        <input type="password" id="pw-check">
+        <div class="text-container">
+            <div class="text" id="text-birth">생년월일</div>
+            <div class="text" id="text-gender">성별</div>
+        </div>
+        <div>
+            <input id="birth">
+            <button class="gender" id="m" value="0">남</button>
+            <button class="gender" id="f" value="0">여</button>
+        </div>
+        <div class="text" id="text-phone">전화번호</div>
+        <input id="phone">
+        <div class="text-container">
+            <div class="text" id="text-email">이메일</div>
+            <div class="text-invalid" id="invalid-email">사용할 수 없는 이메일입니다.</div>
+        </div>
+        <input id="email">
+        <div class="text" id="text-location">플레이 지역</div>
+        <input id="location">
+        <button id="join">회원가입</button>
+        <div id="modal-location">
+            <div id="top-location">
+                <div>플레이 지역</div>
+                <img src="image/Close.svg">
+            </div>
+            <div id="location-list">
+                <div>
+                    <div>서울</div>
+                    <hr>
+                </div>
+                <div>
+                    <div>경기</div>
+                    <hr>
+                </div>
+                <div>
+                    <div>인천</div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    $("#m").on("click", function () {
+        $(this).addClass("click");
+        $("#f").removeClass("click");
+        $(this).val(1);
+        $("#f").val(0);
+    })
+
+    $("#f").on("click", function () {
+        $(this).addClass("click");
+        $("#m").removeClass("click");
+        $(this).val(1);
+        $("#m").val(0);
+    })
+
+    $("#join").on("click", function () {
+        alert("회원가입");
+    })
+
+    $("#pw-check").on("keyup", function () {
+        if ($("#pw").val() != "") {
+            if ($(this).val() != $("#pw").val()) {
+                $("#text-pw-check").css("margin-right", "1rem");
+                $("#invalid-pw-check-success").css("display", "none");
+                $("#invalid-pw-check-fail").css("display", "block");
+            }
+            else {
+                $("#text-pw-check").css("margin-right", "4.35rem");
+                $("#invalid-pw-check-fail").css("display", "none");
+                $("#invalid-pw-check-success").css("display", "block");
+            }
+        }
+        else {
+            $("#text-pw-check").css("margin-right", "15rem");
+            $("#invalid-pw-check-success").css("display", "none");
+            $("#invalid-pw-check-fail").css("display", "none");
+        }
+    })
+</script>
+
+</html>

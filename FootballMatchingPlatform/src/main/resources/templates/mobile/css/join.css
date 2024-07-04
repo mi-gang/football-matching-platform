@@ -1,0 +1,152 @@
+html {
+    font-size: 10px;
+}
+
+.flex-column-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#top-container{
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    margin-right: 20rem;
+    margin-bottom: 4.9rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+img{
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1rem;
+}
+
+.text{
+    font-size: 1.3rem;
+    margin-bottom: 0.9rem;
+}
+
+.text-container{
+    display: flex;
+    font-size: 1.3rem;
+    align-items: baseline;
+}
+
+input{
+    width: 22.7rem;
+    height: 2.4rem;
+    margin-bottom: 1rem;
+    background-color: #F8FAFB;
+    border-radius: 0.5rem;
+    border-color: #FFFFFF;
+    border-style: solid;
+    text-align: center;
+}
+
+#text-name{
+    margin-right: 20.5rem;
+}
+
+#text-id{
+    margin-right: 19rem;
+}
+
+#text-nickname{
+    margin-right: 19rem;
+}
+
+#text-pw{
+    margin-right: 18rem;
+}
+
+#text-pw-check{
+    margin-right: 15rem;
+}
+
+#text-birth{
+    margin-right: 8rem;
+}
+
+#text-gender{
+    margin-right: 7rem;
+}
+
+#birth{
+    width: 12rem;
+}
+
+.gender{
+    width: 5rem;
+    height: 2.4rem;
+    background-color: #F8FAFB;
+    color: #000000;
+}
+
+#text-phone{
+    margin-right: 18rem;
+}
+
+#text-email{
+    margin-right: 19rem;
+}
+
+#text-location{
+    margin-right: 16rem;
+}
+
+button{
+    width: 23.5rem;
+    height: 3.5rem;
+    background-color: #73A772;
+    border-radius: 0.5rem;
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+    border-style: solid;
+}
+.text-invalid{
+    display: none;
+    font-size: 1rem;
+}
+
+.click{
+    background-color: #73A772;
+    color: #FFFFFF;
+}
+
+#invalid-pw-check-success{
+    color: #73A772;
+}
+
+#invalid-pw-check-fail{
+    color: #FF7D7D;
+}
+
+#modal-location{
+    position: absolute;
+    background-color: #FFFFFF;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-radius: 1rem;
+    border-color: #969696;
+    border-style: solid;
+}
+
+#top-location{
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.4rem;
+}
+
+#location-list{
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+}
+
+hr{
+    width: 14.4rem;
+}
