@@ -1,0 +1,59 @@
+#nav {
+    background: linear-gradient(90deg, #73A772 0%, #90E2CF 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.sidenav {
+    background-color: #ffffff;
+    position: fixed;
+    top: 5rem; /* 상단 여백 설정 */
+    left: 0;
+    width: 14rem; /* 너비 설정 */
+    height: 90%;
+    margin-top: 0.5rem;
+    border-right: 2px solid #a5a5a5;
+}
+
+#sectionView{
+    margin-left: 13.2rem;
+    margin-top: 5.5rem;
+}
+
+.search {
+    position: relative;
+    width: 40rem;
+    border: 1px solid #000000;
+    border-radius: 2rem;
+}
+
+input {
+    padding: 0.4rem 0.4rem;
+    font-size: 1.2rem;
+    border: 0;
+    width: 40rem;
+}
+
+input:focus{
+    outline: none !important;
+}
+
+img{
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
+.btn{
+    border-radius: 2rem;
+}
+
+.btn>dropdown{
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
+.table{
+    width: 88rem;
+}
