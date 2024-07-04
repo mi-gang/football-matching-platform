@@ -40,3 +40,14 @@ $("#withdraw-btn").on("click", function () {
 $("#my-info-edit-btn").on("click", function () {
     alert('회원 정보 수정 메소드 실행')
 });
+
+
+
+
+
+////////////////////// 문의 내역 //////////////////////////////
+
+// 문의하기 버튼 클릭 시
+$('#add-inquiry-btn').on('click', function () {
+    alert('문의 작성 페이지 이동')
+});

@@ -90,9 +90,10 @@ header{
 #container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     padding: 3.3rem 0;
+    min-height: calc(100vh - 6.6rem);
 }
 
 /* 하단 메뉴바 */
