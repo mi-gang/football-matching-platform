@@ -9,81 +9,81 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/common.css" />
 
-    <title>Document</title>
+    <title>System Manager Main</title>
 </head>
 
 <body>
 
     <header id="navbar"></header>
-    <section class="container-fluid">
-        <div id="sectionView">
-            <div class="row d-flex p-3">
-                <div class="dropdown d-flex justify-content-center align-items-center">
+    <section class="container-fluid d-flex justify-content-center" id="sectionView">
 
-                    <select name="city1" id="city1"></select>
-                    <select name="prov1" id="prov1"></select>
-
-                    <button class="btn dropdown-toggle btn-lg border-black m-2" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false" name="city100">
-                        시/도 선택
-                    </button>
-                    <ul class="dropdown-menu" id='dropCity'>
-
-                    </ul>
-                    <button class="btn dropdown-toggle btn-lg border-black m-2" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false" name="prov100">
-                        구/군 선택
-                    </button>
-                    <ul class="dropdown-menu" id="dropProv">
-
-                    </ul>
-
-
+        <!-- 여기서부터 내용 작성! -->
+        <div class="d-flex justify-content-center" id="maincontents">
+            <div class="pt-3">
+                <div class="row d-flex justify-content-center align-items-center p-3">
+                    <div class="col-1 ps-5">
+                        <div class="col-2 dropdown d-flex justify-content-center align-items-center">
+                            <button class="btn dropdown-toggle btn-lg border-black" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false" name="city1">
+                                시/도 선택
+                            </button>
+                            <ul class="dropdown-menu" id='dropCity'>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="dropdown d-flex justify-content-center align-items-center">
+                            <button class="btn dropdown-toggle btn-lg border-black" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false" name="prov1">
+                                구/군 선택
+                            </button>
+                            <ul class="dropdown-menu" id="dropProv">
+                            </ul>
+                        </div>
+                    </div>
                     <div class="search m-2 d-flex justify-content-between align-items-center">
                         <input type="text" class="border-1 ms-3" placeholder="검색어 입력">
-                        <button class="btn border-0"><img src="img/search.svg" class="m-2" /></button>
+                        <button class="btn border-0"><img src="../img/search.svg" class="m-2" /></button>
                     </div>
                 </div>
+
+                <div class="row d-flex justify-content-center align-content-start overflow-auto h-100 p-3">
+                    <table class="table table-hover text-center" id="listTable">
+                        <thead>
+                            <tr class="m-3">
+                                <th scope="col">구장 이름</th>
+                                <th scope="col">주소</th>
+                                <th scope="col">전월 예약 수</th>
+                                <th scope="col">구장 매니저</th>
+                                <th scope="col">연락처</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>인천 더피치 인하점 B구장</td>
+                                <td>인천광역시 미추홀구 소성로 6</td>
+                                <td>83건</td>
+                                <td>박구장</td>
+                                <td>010-8888-9999</td>
+                            </tr>
+                            <tr>
+                                <td>신정 FC 우쩌구 구장</td>
+                                <td>서울 강서구 화곡동 산 199</td>
+                                <td>23건</td>
+                                <td>신구장</td>
+                                <td>010-8888-7777</td>
+                            </tr>
+                            <tr>
+                                <td>군자 FC 저쩌구 구장</td>
+                                <td>서울 광진구 군자동 무 888</td>
+                                <td>25건</td>
+                                <td>전구장</td>
+                                <td>010-7777-9999</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <div class="row d-flex justify-content-center p-3">
-                <table class="table table-hover text-center">
-                    <thead>
-                        <tr class="m-3">
-                            <th scope="col">구장 이름</th>
-                            <th scope="col">주소</th>
-                            <th scope="col">전월 예약 수</th>
-                            <th scope="col">구장 매니저</th>
-                            <th scope="col">연락처</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>인천 더피치 인하점 B구장</td>
-                            <td>인천광역시 미추홀구 소성로 6</td>
-                            <td>83건</td>
-                            <td>박구장</td>
-                            <td>010-8888-9999</td>
-                        </tr>
-                        <tr>
-                            <td>신정 FC 우쩌구 구장</td>
-                            <td>서울 강서구 화곡동 산 199</td>
-                            <td>23건</td>
-                            <td>신구장</td>
-                            <td>010-8888-7777</td>
-                        </tr>
-                        <tr>
-                            <td>군자 FC 저쩌구 구장</td>
-                            <td>서울 광진구 군자동 무 888</td>
-                            <td>25건</td>
-                            <td>전구장</td>
-                            <td>010-7777-9999</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
-
         </div>
     </section>
 
@@ -109,60 +109,35 @@
             var area15 = ["거제시", "김해시", "마산시", "밀양시", "사천시", "양산시", "진주시", "진해시", "창원시", "통영시", "거창군", "고성군", "남해군", "산청군", "의령군", "창녕군", "하동군", "함안군", "함양군", "합천군"];
             var area16 = ["서귀포시", "제주시", "남제주군", "북제주군"];
 
-            
+
             $("button[name^=city]").each(function () {
                 $ulcity = $(this);
                 $.each(eval(area0), function () {
-                    $ulcity.next().append("<li><a class='dropdown-item' href='#'>"+ this+"</a></li>");
+                    $ulcity.next().append("<li><a class='dropdown-item' href='#'>" + this + "</a></li>");
                 });
                 $("#dropProv").append("<li><a class='dropdown-item' href='#'>구/군 선택</a></li>");
             })
 
-            $("button[name^=city]").change(function () {
-                var area = "area" + $("li", $(this)).index($("option:selected", $(this)));
-                var $prov = $(this).next();
-                console.log($(this).next());
-                $("option", $prov).remove();
+            $("#dropCity > li > a").on('click', function () {
+                $("button[name=city1]").text($(this).text());
+                var area = "area" + $("#dropCity > li >").index(this);
 
-                if (area == "area0")
-                    $prov.append("<option value=''>구/군 선택</option>");
+                $("li", $("#dropProv")).remove();
+
+                if (area == "area0"){
+                    $("#dropProv").append("<li><a class='dropdown-item' href='#'>구/군 선택</a></li>");
+                    $("button[name=prov1]").text("구/군 선택");
+                }
                 else {
                     $.each(eval(area), function () {
-                        $prov.append("<option value='" + this + "'>" + this + "</option>");
-                    });
+                        $("#dropProv").append("<li><a class='dropdown-item' href='#'>" + this + "</a></li>");
+                    })
                 }
+
+                $("#dropProv > li > a").on('click', function () {
+                    $("button[name=prov1]").text($(this).text());
+                })
             })
-
-            $("#dropCity > li > a").on('click', function(){
-                $("button[name=city100]").text($(this).text());
-
-                var are = "area" + $("li", $())
-
-            })
-            // ============================
-
-            $("select[name^=city]").each(function () {
-                $selcity = $(this);
-                $.each(eval(area0), function () {
-                    $selcity.append("<option value='" + this + "'>" + this + "</option>");
-                });
-                $selcity.next().append("<option value=''>구/군 선택</option>");
-            })
-
-            $("select[name^=city]").change(function () {
-                var area = "area" + $("option", $(this)).index($("option:selected", $(this)));
-                var $prov = $(this).next();
-                $("option", $prov).remove();
-
-                if (area == "area0")
-                    $prov.append("<option value=''>구/군 선택</option>");
-                else {
-                    $.each(eval(area), function () {
-                        $prov.append("<option value='" + this + "'>" + this + "</option>");
-                    });
-                }
-            })
-
         })
     </script>
 </body>

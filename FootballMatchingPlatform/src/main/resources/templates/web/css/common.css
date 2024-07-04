@@ -1,3 +1,20 @@
+/* 
+    메인 컬러
+    color: #73A772;  // 녹색
+ */
+
+ * {
+    font-family: 'Pretendard-Regular';
+    font-size: 16px;
+}
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
 #nav {
     background: linear-gradient(90deg, #73A772 0%, #90E2CF 100%);
     position: fixed;
@@ -6,24 +23,39 @@
     width: 100%;
 }
 
+#mainbar > li > a{
+    font-size: 2rem;
+}
+
+#sidebar > ul > li > a{
+    font-size: 1.2rem;
+}
+
 .sidenav {
     background-color: #ffffff;
     position: fixed;
-    top: 5rem; /* 상단 여백 설정 */
+    top: 7rem; /* 상단 여백 설정 */
     left: 0;
     width: 14rem; /* 너비 설정 */
-    height: 90%;
-    margin-top: 0.5rem;
+    height: 88.4%;
     border-right: 2px solid #a5a5a5;
 }
 
 #sectionView{
-    margin-left: 13.2rem;
-    margin-top: 5.5rem;
+    margin-left: 13.8rem;
+    margin-top: 7rem;
+    width: 104rem;
+    padding: 0;
+    height: 100%;
+}
+
+#maincontents{
+    width: 100%;
+    height: 100%;
 }
 
 .search {
-    position: relative;
+
     width: 40rem;
     border: 1px solid #000000;
     border-radius: 2rem;
@@ -55,5 +87,18 @@ img{
 }
 
 .table{
-    width: 88rem;
+    width: 78rem;
+}
+
+#fieldimg{
+    width: 50rem;
+    height: 22.5rem;
+}
+
+#fieldInfo{
+    width: 50rem;
+}
+
+.text-decoration-line-through{
+    color: #a5a5a5;
 }
