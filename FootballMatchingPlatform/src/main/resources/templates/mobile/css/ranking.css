@@ -1,0 +1,19 @@
+#container{
+    padding: 3.3rem 2.63rem;
+}
+#title-container{
+    display: flex;
+    width: 100%;
+}
+
+.content-container{
+    display: flex;
+}
+
+.first-content-container{
+
+}
+
+.second-content-container{
+
+}

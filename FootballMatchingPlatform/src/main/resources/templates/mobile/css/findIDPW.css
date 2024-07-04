@@ -1,0 +1,53 @@
+#container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 9.44rem 2.63rem;
+  font-size: 1.3rem;
+  height: 100%;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  hr {
+    width: 100%;
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+  
+  label {
+    margin-bottom: 0.56rem;
+  }
+  
+  #id,
+  #name {
+    margin-bottom: 0.94rem;
+  }
+  
+  #emailById, #emailByPw {
+    margin-bottom: 1.5rem;
+  }
+  
+  button {
+    width: 14.6rem;
+    height: 2.2rem;
+    background-color: #73A772;
+    border-radius: 0.5rem;
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+    border-style: solid;
+  }
+  
+  input {
+    width: 14.2rem;
+    height: 1.5rem;
+    background-color: #F8FAFB;
+    border-radius: 0.5rem;
+    border-color: #FFFFFF;
+    border-style: solid;
+    text-align: center;
+  }

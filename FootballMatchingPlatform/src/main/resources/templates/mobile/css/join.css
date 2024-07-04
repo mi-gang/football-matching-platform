@@ -54,7 +54,7 @@ input{
 }
 
 #text-pw-check{
-    margin-right: 15rem;
+    margin-right: 15.5rem;
 }
 
 #text-birth{
@@ -71,7 +71,7 @@ input{
 
 .gender{
     width: 5rem;
-    height: 2.4rem;
+    height: 3rem;
     background-color: #F8FAFB;
     color: #000000;
 }
@@ -151,4 +151,10 @@ hr{
 
 #top-location img{
     margin-right: 0;
+}
+
+
+/* 컨텐츠 컨테이너 */
+#container {
+    padding: 0;
 }
