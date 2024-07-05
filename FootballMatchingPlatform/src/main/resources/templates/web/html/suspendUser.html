@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/common.css" />
 
-    <title>Document</title>
+    <title>정지 회원 목록</title>
 </head>
+
 <body>
     <header id="navbar"></header>
 
@@ -37,11 +39,10 @@
                                 <th scope="col">이메일</th>
                                 <th scope="col">연락처</th>
                                 <th scope="col">정지 기간</th>
-
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr class="tableIndex" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <td>chul01</td>
                                 <td>김철수</td>
                                 <td>남</td>
@@ -49,34 +50,9 @@
                                 <td>A등급</td>
                                 <td>ch0000@gmail.com</td>
                                 <td>010-8452-9482</td>
-                                <td>~2024.06.30
-                                    <a href="#" class="load">
-                                        <img src="../img/down chevron.svg">
-                                    </a>
-                                </td>
+                                <td>~2024.06.30</td>
                             </tr>
-
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">매칭정보</th>
-                                        <th scope="col">신고자</th>
-                                        <th scope="col">신고사유</th>
-                                        <th scope="col">신고내용</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>2024.06.25(화) 08:00-10:00
-                                            서울 강서 신정FC</td>
-                                        <td>su94</td>
-                                        <td>비매너 행위</td>
-                                        <td>경기중에 백태클 오지게 날립니다..</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <tr>
+                            <tr class="tableIndex" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <td>chul01</td>
                                 <td>김철수</td>
                                 <td>남</td>
@@ -84,13 +60,9 @@
                                 <td>A등급</td>
                                 <td>ch0000@gmail.com</td>
                                 <td>010-8452-9482</td>
-                                <td>~2024.06.21
-                                    <a href="#">
-                                        <img src="../img/down chevron.svg">
-                                    </a>
-                                </td>
+                                <td>~2024.06.30</td>
                             </tr>
-                            <tr>
+                            <tr class="tableIndex" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <td>chul01</td>
                                 <td>김철수</td>
                                 <td>남</td>
@@ -98,22 +70,84 @@
                                 <td>A등급</td>
                                 <td>ch0000@gmail.com</td>
                                 <td>010-8452-9482</td>
-                                <td>~2024.06.21
-                                    <a href="#">
-                                        <img src="../img/down chevron.svg">
-                                    </a>
-                                </td>
+                                <td>~2024.06.30</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+
+                <!-- 신고 modal -->
+                <div class="modal fade" tabindex="-1" id="exampleModal">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">[ chul01 ]님의 신고 목록</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body d-flex justify-content-center">
+                                <!-- 신고 테이블 -->
+                                <table class="table" id="reportList">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">매칭정보</th>
+                                            <th scope="col">신고자</th>
+                                            <th scope="col">신고사유</th>
+                                            <th scope="col" style="width: 40%;">신고내용</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>2024.06.25(화) 08:00-10:00
+                                                서울 강서 신정FC</td>
+                                            <td>su94asdfasfdas</td>
+                                            <td>비매너 플레이</td>
+                                            <td>경기중에 백태클 오지게 날립니다..ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2024.06.25(화) 08:00-10:00
+                                                서울 강서 신정FC</td>
+                                            <td>su94</td>
+                                            <td>비매너 플레이</td>
+                                            <td>경기중에 백태클 오지게 날립니다..ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary"
+                                data-bs-toggle="modal" data-bs-target="#modal2">정지 해제</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 정지해제 모달 -->
+                <div class="modal fade" id="modal2" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">두번째 모달 창</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p>정지 해제 하시겠습니까?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">확인</button>
+                                <button type="button" class="btn btn-secondary"
+                                data-bs-target="#exampleModal" data-bs-toggle="modal">취소</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
     <script>
         $("#navbar").load("navbar.html");
-
     </script>
 </body>
+
 </html>

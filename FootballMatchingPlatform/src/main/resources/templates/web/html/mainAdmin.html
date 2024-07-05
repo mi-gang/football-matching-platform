@@ -9,13 +9,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/common.css" />
 
-    <title>구장 신청 목록</title>
+    <title>시스템 매니저 메인</title>
 </head>
 
 <body>
 
     <header id="navbar"></header>
-
     <section class="container-fluid d-flex justify-content-center" id="sectionView">
 
         <!-- 여기서부터 내용 작성! -->
@@ -54,6 +53,7 @@
                             <tr class="m-3">
                                 <th scope="col">구장 이름</th>
                                 <th scope="col">주소</th>
+                                <th scope="col">전월 예약 수</th>
                                 <th scope="col">구장 매니저</th>
                                 <th scope="col">연락처</th>
                             </tr>
@@ -62,18 +62,21 @@
                             <tr>
                                 <td>인천 더피치 인하점 B구장</td>
                                 <td>인천광역시 미추홀구 소성로 6</td>
+                                <td>83건</td>
                                 <td>박구장</td>
                                 <td>010-8888-9999</td>
                             </tr>
                             <tr>
                                 <td>신정 FC 우쩌구 구장</td>
                                 <td>서울 강서구 화곡동 산 199</td>
+                                <td>23건</td>
                                 <td>신구장</td>
                                 <td>010-8888-7777</td>
                             </tr>
                             <tr>
                                 <td>군자 FC 저쩌구 구장</td>
                                 <td>서울 광진구 군자동 무 888</td>
+                                <td>25건</td>
                                 <td>전구장</td>
                                 <td>010-7777-9999</td>
                             </tr>
@@ -84,10 +87,8 @@
         </div>
     </section>
 
-
     <script>
         $("#navbar").load("navbar.html");
-
 
         // 시/도 선택, 구/군 선택
         $('document').ready(function () {
@@ -124,7 +125,7 @@
 
                 $("li", $("#dropProv")).remove();
 
-                if (area == "area0") {
+                if (area == "area0"){
                     $("#dropProv").append("<li><a class='dropdown-item' href='#'>구/군 선택</a></li>");
                     $("button[name=prov1]").text("구/군 선택");
                 }
@@ -138,11 +139,11 @@
                     $("button[name=prov1]").text($(this).text());
                 })
             })
+        })
 
-
-            $("tbody > tr").on('click', function () {
-                alert("구장 상세 페이지 이동");
-            })
+        // 페이지 이동
+        $("tbody > tr").on('click',function(){
+            alert("구장 상세 페이지 이동");
         })
     </script>
 </body>
