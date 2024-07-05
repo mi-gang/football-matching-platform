@@ -4,18 +4,18 @@
 <body>
     <nav class="navbar navbar-expand-lg p-4" id="nav">
         <div class="container-fluid">
-            <a class="navbar-brand text-light" href="#">LOGO</a>
+            <a class="navbar-brand text-light ms-5" href="#">LOGO</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="mainvar">
-                    <li class="nav-item">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="mainbar">
+                    <li class="nav-item ms-5">
                         <a class="nav-link link-light fw-bold" aria-current="page" href="#">구장 관리</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item ms-5">
                         <a class="nav-link link-light" href="#">회원 관리</a>
                     </li>
                 </ul>
@@ -27,21 +27,21 @@
         <div class="d-flex align-items-center" id="sidebar">
             <ul class="nav nav-pills nav-stacked justify-content-center m-2" id="side1">
                 <li class="nav-item m-2">
-                    <a class="nav-link active bg-dark" href="#">등록된 구장 정보</a>
+                    <a class="nav-link rounded-5 active bg-dark" href="#">등록된 구장 정보</a>
                 </li>
                 <li class="nav-item m-2">
-                    <a class="nav-link link-dark" href="#">신청 목록</a>
+                    <a class="nav-link rounded-5 link-dark" href="#">신청 목록</a>
                 </li>
             </ul>
             <ul class="nav nav-pills nav-stacked justify-content-center m-2" id="side2">
                 <li class="nav-item m-2">
-                    <a class="nav-link active bg-dark" href="#">전체 회원 목록</a>
+                    <a class="nav-link rounded-5 active bg-dark" href="#">전체 회원 목록</a>
                 </li>
                 <li class="nav-item m-2">
-                    <a class="nav-link link-dark" href="#">정지 회원 목록</a>
+                    <a class="nav-link rounded-5 link-dark" href="#">정지 회원 목록</a>
                 </li>
                 <li class="nav-item m-2">
-                    <a class="nav-link link-dark" href="#">문의 게시판</a>
+                    <a class="nav-link rounded-5 link-dark" href="#">문의 게시판</a>
                 </li>
             </ul>
         </div>
@@ -53,8 +53,8 @@
     <script>
         $("#side2").hide();
 
-        $("#mainvar > li > a").on('click', function () {
-            $("#mainvar> li > a").removeClass("fw-bold");
+        $("#mainbar > li > a").on('click', function () {
+            $("#mainbar> li > a").removeClass("fw-bold");
             $(this).addClass("fw-bold");
             if ($(this).text() === "회원 관리") {
                 $("#side1").hide();

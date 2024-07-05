@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/common.css" />
+
+    <title>구장 등록 신청</title>
+</head>
+
+<body>
+
+    <header id="navbar"></header>
+
+    <section class="container-fluid d-flex justify-content-center" id="sectionView">
+        <div class="d-flex justify-content-center" id="maincontents">
+            <!-- 여기서부터 내용 작성! -->
+            <div class="d-flex flex-column align-items-center">
+
+                <div class="" id="fieldInfo">
+                    <!-- 구장 이름 -->
+                    <div class="m-5 text-center">
+                        <h2>구장 등록 신청</h2>
+                    </div>
+
+                    <!-- 입력 값들 -->
+                    <div class="">
+                        <!-- 구장 이름 -->
+                        <div class="mb-3 row">
+                            <label for="inputTitle" class="col-sm-2 col-form-label fs-5">구장 이름</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputTitle">
+                            </div>
+                        </div>
+
+                        <!-- 구장 주소 -->
+                        <div class="mb-3 row">
+                            <label for="inputTitle" class="col-sm-2 col-form-label fs-5">구장 주소</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputTitle">
+                            </div>
+                        </div>
+
+                        <!-- 구장 시설 -->
+                        <div class="mb-3 row align-items-center">
+                            <label for="inputTitle" class="col-sm-2 col-form-label fs-5">구장 시설</label>
+                            <div class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="poss1">
+                                    <label class="form-check-label fs-5" for="inlineCheckbox1">샤워실</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="poss2">
+                                    <label class="form-check-label fs-5" for="inlineCheckbox2">주차장</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="poss4">
+                                    <label class="form-check-label fs-5" for="inlineCheckbox3">풋살화 대여</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="poss5">
+                                    <label class="form-check-label fs-5" for="inlineCheckbox4">음료 판매</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="poss6">
+                                    <label class="form-check-label fs-5" for="inlineCheckbox5">풋살공 대여</label>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <!-- 구장 소개글 -->
+                        <div class="mb-3 row">
+                            <label for="inputTitle" class="col-sm-2 col-form-label fs-5">소개글</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- 구장 사진 등록 -->
+                        <div class="mb-3 row">
+                            <label for="inputTitle" class="col-sm-2 col-form-label fs-5">구장 사진</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="file" id="fieldImg">
+                            </div>
+                        </div>
+
+                        <!-- 사업자 등록증 -->
+                        <div class="mb-3 row">
+                            <label for="inputTitle" class="col-sm-2 col-form-label fs-5">사업자 등록증</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="file" id="businessImg" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center m-5">
+                        <button class="btn btn-dark btn-lg p-2 ps-5 pe-5" id="deleteBtn">신청</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        $("#navbar").load("navbarManager.html");
+
+    </script>
+</body>
+
+</html>

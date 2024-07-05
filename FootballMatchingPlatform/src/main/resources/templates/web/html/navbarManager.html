@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <nav class="navbar navbar-expand-lg p-4" id="nav">
+        <div class="container-fluid">
+            <a class="navbar-brand text-light ms-5" href="#">LOGO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="mainbar">
+                    <li class="nav-item ms-5">
+                        <a class="nav-link link-light fw-bold" aria-current="page" href="#">구장 관리</a>
+                    </li>
+                    <li class="nav-item ms-5">
+                        <a class="nav-link link-light" href="#">구장 등록</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="sidenav d-flex align-content-between justify-content-center flex-wrap">
+        <div class="d-flex align-items-center" id="sidebar">
+            <ul class="nav nav-pills nav-stacked justify-content-center m-2" id="side1">
+                <li class="nav-item m-2">
+                    <a class="nav-link rounded-5 active bg-dark" href="#">나의 구장</a>
+                </li>
+                <li class="nav-item m-2">
+                    <a class="nav-link rounded-5 link-dark" href="#">일정 관리</a>
+                </li>
+            </ul>
+            <ul class="nav nav-pills nav-stacked justify-content-center m-2" id="side2">
+                <li class="nav-item m-2">
+                    <a class="nav-link rounded-5 active bg-dark" href="#">구장 등록 신청</a>
+                </li>
+            </ul>
+        </div>
+        <div class="m-4">
+            <button class="btn btn-dark btn-lg">로그아웃</button>
+        </div>
+    </nav>
+
+    <script>
+        $("#side2").hide();
+
+        $("#mainbar > li > a").on('click', function () {
+            $("#mainbar> li > a").removeClass("fw-bold");
+            $(this).addClass("fw-bold");
+            if ($(this).text() === "구장 등록") {
+                $("#side1").hide();
+                $("#side2").show();
+                initSide2();
+            }
+            else {
+                $("#side2").hide();
+                $("#side1").show();
+                initSide1();
+            }
+        })
+
+        //초기화
+        function initSide1() {
+            $("#side1 > li > a").removeClass("active bg-dark");
+            $("#side1 > li > a").addClass("link-dark");
+            $("#side1 > li:eq(0)").children('a').removeClass("link-dark");
+            $("#side1 > li:eq(0)").children('a').addClass("active bg-dark");
+        }
+
+        function initSide2() {
+            $("#side2 > li > a").removeClass("active bg-dark");
+            $("#side2 > li > a").addClass("link-dark");
+            $("#side2 > li:eq(0)").children('a').removeClass("link-dark");
+            $("#side2 > li:eq(0)").children('a').addClass("active bg-dark");
+        }
+
+        $("#sidebar > ul > li > a").on('click', function () {
+            $("#sidebar> ul > li > a").removeClass("active bg-dark");
+            $("#sidebar> ul > li > a").addClass("link-dark");
+            $(this).removeClass("link-dark");
+            $(this).addClass("active bg-dark");
+        })
+    </script>
+</body>
+
+</html>
