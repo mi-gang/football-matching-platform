@@ -51,3 +51,8 @@ $("#my-info-edit-btn").on("click", function () {
 $('#add-inquiry-btn').on('click', function () {
     alert('문의 작성 페이지 이동')
 });
+
+// 문의 상세 페이지 이동
+$('#container').on('click', '.inquiry-detail', function () {
+    alert('문의 상세 페이지 이동')
+});
