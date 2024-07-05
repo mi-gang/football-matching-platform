@@ -2,11 +2,40 @@ html {
     font-size: 10px;
 }
 
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+    height: 5.12rem;
+    padding: 0 1.92rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+  }
+
+  #header-back-btn {
+    width: 2.72rem;
+    height: 2.72rem;
+  }
+
 .flex-column-center {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+#top-container{
+    display: flex;
+    align-items: center;
+    margin-right: 20rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 3rem;
 }
 
 img{

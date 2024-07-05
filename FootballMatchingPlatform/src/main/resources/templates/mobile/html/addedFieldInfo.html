@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구장 상세 정보</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/addedFieldInfo.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+        <!-- 헤더 -->
+        <header></header>
+         <!-- 컨텐츠 컨테이너 -->
+        <div id="container">
+            <img id="img-field" src="../img/구장 사진.svg">
+            <div id="title-container">
+                <div>신정FC 우쩌구 구장</div>
+                <div>서울 강서구 화곡동 산 199</div>
+            </div>
+            <hr>
+            <div id="info-container">
+                <div>구장시설</div>
+                <div id="info-list">
+                    <div>샤워실</div>
+                    <div>주차장</div>
+                    <div>풋살화 대여</div>
+                    <div>음료 판매</div>
+                    <div>풋살공 대여</div>
+                </div>
+            </div>
+            <hr>
+            <div id="content-container">
+                <div>소개글</div>
+                <ul id="content">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    // header, nav 내용 불러오기
+    $(document).ready(function(){
+        $('header').load('./common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+            $('#page-name').text('신정FC 우쩌구 구장'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
+            $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+        });
+
+        var text = `찾아가는 길: 수인분당선 인하대역 7번출구 홈플러스 인하점 4층(E/V이용 가능)
+                    차량: 차량 출입구로 입장해서 4층에 주차
+                    도보: 차량 출입구로 걸어서 올라오거나, 정문을 바라보고 건물 우측에 있는 직원 출입구로 입장
+                    주차: 현장 사무실에서 직접 등록 (3시간 적용)
+                    흡연: 지정된 흡연 구역에서만 흡연 (흡연 지정 구역이 아직 별도로 없어서 구장 출입문 앞 벽쪽에서 피시고 담배꽁초는 쓰레기통에 버려주시면 됩니다) *흡연 후 담배꽁초 불씨는 털어서 꼭 쓰레기통에 버려주세요.
+                    대여/판매: 풋살화 대여: 260(3), 270(3), 280(3), 3,000원(안내데스크에서 신분증 제출 후 대여, 경기 종료 후, 반납 및 신분증 수령 (구장관리자 없을경우:대여 후 현장에 나와있는 안내판 계좌번호로 3천원 입금))
+                    평일 야간, 주말 매치 참여 시 안내데스크에서 붙이는 핫팩 제공
+                    화장실: 1층 화장실 이용(구장 인근에서 노상방뇨 적발 시 퇴장 조치)`;
+        var content = text.split("\n");
+        var str = "";
+        for(i=0; i<content.length; i++){
+            str += "<li>" + content[i] + "</li>";
+        }
+
+        $("#content").html(str);
+    });
+    </script>
+</body>
+</html>
