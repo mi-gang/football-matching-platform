@@ -1,0 +1,692 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="../css/common.css">
+</head>
+<style>
+
+
+
+
+
+
+#locationInfoDiv{
+	margin-left:-10%;
+}
+
+
+
+
+
+
+.locationCityBtn:hover, .locationCityBtn.active {
+	background: #73A772;
+}
+
+#locationBtns button{
+	border-radius:3rem;
+	background-color:#FFFFFF;
+	color:#626262;
+	font-size:0.8rem;
+	border-color:#626262;
+}
+#locationBtns {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+#OKOKTier button{
+	border-radius:3rem;
+	background-color:#FFFFFF;
+	color:#626262;
+	font-size:0.8rem;
+	border-color:#626262;
+}
+#OKOKTier {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.timeZone{
+	white-space:nowrap;
+}
+
+
+
+
+
+.locationCity{
+	white-space:nowrap;
+	
+}
+
+.locationCityBtn{
+	border-radius:6rem;
+	background-color:#FFFFFF;
+	color:#626262;
+	width:4rem;
+	height:3rem;
+	font-size:1rem;
+	border-color:#626262;
+    text-align: center;
+}
+#locationCityBtns {
+	
+	font-size: 0;
+}
+#locationCityBtns li {
+	display: inline-block;
+	margin-left: -1px;
+}
+#locationCityBtns li:first-child {
+	margin-left: 0;
+}
+
+#OKOKTier {
+	font-size: 0;
+}
+#OKOKTier li {
+	display: inline-block;
+	margin-left: -1px;
+}
+#OKOKTier li:first-child {
+	margin-left: 0;
+}
+
+#locationBtns {
+	font-size: 0;
+}
+#locationBtns li {
+	display: inline-block;
+	margin-left: -1px;
+}
+#locationBtns li:first-child {
+	margin-left: 0;
+}
+
+
+
+
+
+
+
+
+
+body{
+	font-size:16px;
+}
+
+
+#matchingCheckList li {
+	display: inline-block;
+	margin-left: -1px;
+}
+#matchingCheckList li:first-child {
+	margin-left: 0;
+}
+
+
+input[type="checkbox"]{
+	width:1.5rem;
+	height:1.5rem;
+	margin-left:5rem;
+	margin-top:1.7rem;
+	
+}
+
+.matchInfo{
+	margin-right:2rem;
+    cursor: pointer;
+}
+
+.applyStatus{
+	color:#FFFFFF;
+	background-color:#73A772;
+	border-radius:1.5rem;
+	border:none;
+	font-size:0.75rem;
+	width:4rem;
+	height:1.5rem;
+}
+
+
+
+.ulMatchDiv{
+	display:flex;
+	justify-content:space-between;
+	border:1px solid #969696;
+	border-radius:0.5rem;
+	width:21rem;
+	height:5rem;
+}
+
+.matchTime{
+	font-size:1.1rem;
+	white-space: nowrap;
+}
+
+.matchLocation{
+	font-size:0.9rem;
+	margin-top:-15%;
+}
+
+.matchingCheckListDiv{
+	display:flex;
+	justify-content:flex-end;
+}
+
+
+.filterBtnDiv{
+	display:flex;
+	justify-content:flex-start;
+}
+
+.h1Location{
+	font-size:1.5rem;
+}
+
+
+.filterBtn{
+	margin-top:1.5rem;
+	border: 1px solid #000000;
+	border-radius:1rem;
+	background-color:#FFFFFF;
+	color:#000000;
+	width:5rem;
+	height:2.5rem;
+	font-size:1rem;
+}
+
+
+.matchingLocationImage{
+    width: 5rem;
+    height: 5rem;
+    margin-left: 3rem;
+}
+.matchOKTier{
+    color:#FFFFFF;
+    background-color: #686868;
+	border-radius:1.5rem;
+	border:none;
+	font-size:0.75rem;
+	width:3rem;
+	height:1.5rem;
+}
+
+.filterSelectbox{
+    color:#000000;
+    border-color: #000000;
+    background-color: #FFFFFF;
+	border-radius:1rem;
+    font-size: 1rem;
+    width: 10rem;
+	height:2.5rem;
+    margin-left: 7rem;
+}
+
+
+.filterSelectbox:hover{
+    background-color: #FFFFFF !important;
+    border-color: #000000 !important;
+    box-shadow: none !important;
+}
+
+
+.matchingDate{
+	white-space:nowrap;
+	
+}
+
+.matchingDateBtn{
+	border-radius:6rem;
+	background-color:#FFFFFF;
+	color:#626262;
+	width:2rem;
+	height:2rem;
+	font-size:0.66rem;
+	border-color:#626262;
+}
+
+#matchingDateBtns {
+	
+	font-size: 0;
+}
+#matchingDateBtns li {
+	display: inline-block;
+	margin-left: -1px;
+}
+#matchingDateBtns li:first-child {
+	margin-left: 0;
+}
+
+
+.matchingDateBtn:hover, .matchingDateBtn.active1 {
+	background: #73A772;
+}
+#searchButton{
+    background: #73A772;
+    color: #FFFFFF;
+    border-radius: 3rem;
+    width: 6rem;
+    height: 2rem;
+    border: #73A772;
+}
+
+#OKOKTierUl{
+
+}
+</style>
+<body>
+
+
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+        <!-- 헤더 -->
+        <header></header>
+         <!-- 컨텐츠 컨테이너 -->
+        <div id="container">
+
+
+<div class = "container">
+	
+	<div class = "w-auto h-auto filterBtnDiv">
+		<button class = "filterBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">필터</button>
+        <select class="filterSelectbox mt-4 form-select">
+            <option selected value="1">가까운 일정순</option>
+            <option value="2">인원이 많은 순</option>
+            <option value="3">인원이 적은 순</option>
+        </select>
+	</div>
+
+	<div class = "w-auto h-auto matchingCheckListDiv mt-4">
+	  	<ul id = "matchingCheckList">
+		  <div class = "ulMatchDiv mt-0" id = "matchList1" >
+			  <div class = "w-auto h-auto matchInfo mt-1 mx-1">	  
+				<button class = "applyStatus" disabled="true" >9/10명</button>
+                <button class="matchOKTier" disabled="true">A등급</button><br>
+				<p class = "matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
+				<p class = "matchLocation">서울 강남 풋살FC</p>
+			  </div>	
+              <img class="matchingLocationImage" src="../img/image6.svg"/>
+			<hr>			
+		  </div>
+		  <div class = " ulMatchDiv mt-3" id = "matchList2">
+			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
+				<button class = " applyStatus" disabled="true" >9/10명</button>
+                <button class="matchOKTier" disabled="true">A등급</button><br>
+				<p class = " matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
+				<p class = " matchLocation">서울 강서 신정FC</p>
+			  </div>	
+			<img class="matchingLocationImage" src="../img/image6.svg"/>	
+			<hr>			
+		  </div>
+		  <div class = "ulMatchDiv mt-3" id = "matchList3">
+			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
+				<button class = "applyStatus" disabled="true" >7/10명</button>
+                <button class="matchOKTier" disabled="true">A등급</button><br>
+				<p class = " matchTime mb-0">6/25(화) 10:00-12:00</p><br>				
+				<p class = " matchLocation">서울 강남 풋살FC</p>
+			  </div>	
+			<img class="matchingLocationImage" src="../img/image6.svg"/>	
+			<hr>			
+		  </div>
+		  
+		  
+		  		  <div class = " ulMatchDiv mt-3" id = "matchList1">
+			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
+				<button class = " applyStatus" disabled="true" >9/10명</button>
+                <button class="matchOKTier" disabled="true">A등급</button><br>
+				<p class = " matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
+				<p class = " matchLocation">서울 강남 풋살FC</p>
+			  </div>	
+			<img class="matchingLocationImage" src="../img/image6.svg"/>	
+			<hr>			
+		  </div>
+		  <div class = " ulMatchDiv mt-3" id = "matchList2">
+			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
+				<button class = " applyStatus" disabled="true" >9/10명</button>
+                <button class="matchOKTier" disabled="true">A등급</button><br>
+				<p class = " matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
+				<p class = "matchLocation">서울 강서 신정FC</p>
+			  </div>	
+			<img class="matchingLocationImage" src="../img/image6.svg"/>	
+			<hr>			
+		  </div>
+		  <div class = "ulMatchDiv mt-3" id = "matchList3">
+			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
+				<button class = " applyStatus" disabled="true" >7/10명</button>
+                <button class="matchOKTier" disabled="true">A등급</button><br>
+				<p class = " matchTime mb-0">6/25(화) 10:00-12:00</p><br>				
+				<p class = " matchLocation">서울 강남 풋살FC</p>
+			  </div>	
+			<img class="matchingLocationImage" src="../img/image6.svg"/>	
+			<hr>			
+		  </div>
+		  
+		  
+		  		  <div class = " ulMatchDiv mt-3" id = "matchList1">
+			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
+				<button class = " applyStatus" disabled="true" >9/10명</button>
+                <button class="matchOKTier" disabled="true">A등급</button><br>
+				<p class = "matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
+				<p class = " matchLocation">서울 강남 풋살FC</p>
+			  </div>	
+			<img class="matchingLocationImage" src="../img/image6.svg"/>	
+			<hr>			
+		  </div>
+		  <div class = " ulMatchDiv mt-3" id = "matchList2">
+			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
+				<button class = " applyStatus" disabled="true" >9/10명</button>
+                <button class="matchOKTier" disabled="true">A등급</button><br>
+				<p class = "matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
+				<p class = " matchLocation">서울 강서 신정FC</p>
+			  </div>	
+			<img class="matchingLocationImage" src="../img/image6.svg"/>	
+			<hr>			
+		  </div>
+		  <div class = "ulMatchDiv mt-3" id = "matchList3">
+			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
+				<button class = " applyStatus" disabled="true" >7/10명</button>
+                <button class="matchOKTier" disabled="true">A등급</button><br>
+				<p class = " matchTime mb-0">6/25(화) 10:00-12:00</p><br>				
+				<p class = " matchLocation">서울 강남 풋살FC</p>
+			  </div>	
+			<img class="matchingLocationImage" src="../img/image6.svg"/>	
+			<hr>			
+		  </div>
+		  
+		</ul>
+	</div>
+	
+	
+	
+	
+<!-- 	
+	<div class="modal">
+        <div class="modal_body">
+            <h1 class = "w-auto h-auto h1Location">지역</h1>
+            <button class = "w-auto h-auto locationModalXBtn">X</button>
+    <div class = "w-auto h-auto locationCity">
+	  <ul id = "locationCityBtns">
+		<li><button type = "button" class = "w-auto h-auto locationCityBtn btn m-2 p-3" onclick="change_btn(event)">서울</button></li>
+		<li><button type = "button" class = "w-auto h-auto locationCityBtn btn m-2 p-3" onclick="change_btn(event)">인천</button></li>
+		<li><button type = "button" class = "w-auto h-auto locationCityBtn btn m-2 p-3" onclick="change_btn(event)">부산</button></li>	
+	  </ul>
+	</div>
+
+
+	<div class = "w-auto h-auto timeZone mt-5">
+		<ul id = "locationBtns">
+		<li><button type = "button" id="locationBtn" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">중구</button></li>
+		<li><button type = "button" id="locationBtn1" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">서구</button></li>
+		<li><button type = "button" id="locationBtn2" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">동구</button></li>
+		<li><button type = "button" id="locationBtn3" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">남동구</button></li> <br>
+		<li><button type = "button" id="locationBtn4" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">영등포구</button></li>
+		<li><button type = "button" id="locationBtn5" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">강남구</button></li>
+		<li><button type = "button" id="locationBtn6" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">금천구</button></li>
+		
+		</ul>
+	</div>	
+          -->
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content w-auto h-auto">
+      <div class="modal-header">
+       
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3>날짜</h3>
+        <div class = "matchingDate">
+
+            <ul id = "matchingDateBtns">
+                <button type = "button" id="backBtn" class = "btn"><</button>
+              <li><button type = "button" class = "matchingDateBtn btn m-1 p-1" onclick="change_btn1(event)" value="2024-06-27">27</button></li>
+              <li><button type = "button" class = "matchingDateBtn btn m-1 p-1" onclick="change_btn1(event)" value="2024-06-28">28</button></li>
+              <li><button type = "button" class = "matchingDateBtn btn m-1 p-1" onclick="change_btn1(event)" value="2024-06-29">29</button></li>
+              <li><button type = "button" class = "matchingDateBtn btn m-1 p-1" onclick="change_btn1(event)" value="2024-06-30">30</button></li>
+              <li><button type = "button" class = "matchingDateBtn btn m-1 p-1" onclick="change_btn1(event)" value="2024-07-01">1</button></li>
+              <button type = "button" id="frontBtn" class = "btn">></button> 	
+            </ul>
+          
+          </div>
+          <h3>지역</h3>
+        <div class = "w-auto h-auto locationCity">
+            <ul id = "locationCityBtns">
+              <li><button type = "button" class = " locationCityBtn btn m-2 p-3" onclick="change_btn(event)" value="서울">서울</button></li>
+              <li><button type = "button" class = " locationCityBtn btn m-2 p-3" onclick="change_btn(event)" value="인천">인천</button></li>
+              <li><button type = "button" class = " locationCityBtn btn m-2 p-3" onclick="change_btn(event)" value="부산">부산</button></li>	
+            </ul>
+          </div>
+          <hr>
+          
+          <div id = "locationInfoDiv" class = "overflow-y-auto overflow-x-auto w-auto h-auto timeZone mt-5">
+              <ul id = "locationBtns" >
+              <li><button type = "button" id="locationBtn" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">중구</button></li>
+              <li><button type = "button" id="locationBtn1" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">서구</button></li>
+              <li><button type = "button" id="locationBtn2" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">동구</button></li>
+              <li><button type = "button" id="locationBtn3" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">남동구</button></li> 
+              <li><button type = "button" id="locationBtn4" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">영등포구</button></li>
+              <li><button type = "button" id="locationBtn5" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">강남구</button></li>
+              <li><button type = "button" id="locationBtn6" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">금천구</button></li>
+              
+              </ul>
+          </div>
+          <div id="OKOKTier">
+            <ul id = "OKOKTierUl" >
+                <li><button type = "button"  class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)" value="A">A등급</button></li>
+                <li><button type = "button"  class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)" value="B">B등급</button></li>
+                <li><button type = "button"  class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)" value="C">C등급</button></li>
+                <li><button type = "button"  class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)" value="D">D등급</button></li>
+                </ul>
+          </div>	
+      </div>
+      <div class="modal-footer">
+        <button type="button" id = "searchButton">완료</button>
+      </div>
+    </div>
+  </div>
+</div>         
+         
+                 
+        </div>
+    </div>
+	
+        <!-- 하단 메뉴바 -->
+		<nav></nav>
+	
+	
+</div>
+
+
+
+
+
+
+
+<script>
+		// const modal = document.querySelector('.modal');
+        // const btnOpenModal=document.querySelector('.filterBtn');
+
+        // btnOpenModal.addEventListener("click", ()=>{
+        //     modal.style.display="flex";
+        // });
+        
+        
+        // const locationModalXBtn = document.querySelectoi('.locationModalXBtn');        
+
+	$(document).ready(function(){
+        $('header').load('./common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+            $('#page-name').text('페이지 이름'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
+            $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+        });
+        $('nav').load('./common/nav.html');
+    });
+
+
+    var selectedMatchDate = null;
+
+    function change_btn1(e1) {
+	var btns1 = document.querySelectorAll(".matchingDateBtn");
+	btns1.forEach(function(btn1, i) {
+		if(e1.currentTarget == btn1) {
+			btn1.classList.add("active1");
+		}
+		else {
+			btn1.classList.remove("active1");
+		}
+	});
+    selectedMatchDate = e1.currentTarget.value;
+	console.log( e1.currentTarget );
+	}
+
+
+    
+        
+    var selectedLocation = null;     
+        
+	function change_btn(e) {
+	var btns = document.querySelectorAll(".locationCityBtn");
+	var buttonsText = $(this).val;
+    var buttonsTextTest = $(this).prop('value');
+    btns.forEach(function(btn, i) {
+		if(e.currentTarget == btn) {
+			btn.classList.add("active");
+            
+		}
+		else {
+			btn.classList.remove("active");
+		}
+        
+	});
+    $("#locationInfoDiv").empty();
+    
+    console.log(buttonsText);
+    console.log(buttonsTextTest);
+    if(e.currentTarget.textContent == '인천'){ 
+    $("#locationInfoDiv")
+    .append("<ul id = 'locationBtns'>"+
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>연수구</button></li>"+
+              "<li><button type = 'button' id='locationBtn1' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>남동구</button></li>"+
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동구</button></li>"+
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>남동구</button></li>"+ 
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>서구</button></li>"+ 
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>미추홀구</button></li>"+
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>중구</button></li>"+
+              
+              "</ul>");
+    } else if (e.currentTarget.textContent == '서울') {
+        $("#locationInfoDiv")
+    .append("<ul id = 'locationBtns'>"+
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>중구</button></li>"+
+              "<li><button type = 'button' id='locationBtn1' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동작구</button></li>"+
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동대문구</button></li>"+
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>서대문구</button></li>"+ 
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>관악구</button></li>"+ 
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>금천구</button></li>"+
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>양천구</button></li>"+
+              
+              "</ul>");
+    
+    }
+	console.log( e.currentTarget );
+	selectedLocation = e.currentTarget.value;
+	}
+	
+	
+	
+
+	
+	
+	
+
+
+let selectedButton = null;
+
+
+function changeButtonColors(button) {
+  const computedStyle = window.getComputedStyle(button);
+  const buttonsColor = computedStyle.backgroundColor;
+  selectedButton = button;
+  console.log(buttonsColor);
+  if (buttonsColor == 'rgb(115, 167, 114)') {
+    button.style.backgroundColor = '#FFFFFF';
+  } else {
+    button.style.backgroundColor = '#73A772';
+  }
+}  
+
+// const selectedTierButtons = document.querySelectorAll('#OKOKTier button');
+
+const searchButton = document.getElementById('searchButton');
+
+
+
+searchButton.addEventListener('click', function() {
+    const selectedList = [];  
+  const selectedButtons = document.querySelectorAll('#locationBtns button');  
+  const selectedTierButtons = document.querySelectorAll('#OKOKTier button');  
+  selectedTierButtons.forEach(function(button, i) {
+    //i = 0;
+    if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
+        // 검색하고자하는 정보입니다
+        selectedList[i] = button.value;
+        console.log(i+'i : '+selectedList[i]);
+		//console.log(button.value);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
+    }
+    //i++;
+});
+
+var j = 0;
+  selectedButtons.forEach(button => {
+
+    if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
+
+		console.log(selectedMatchDate + selectedLocation + button.textContent);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
+    }
+     
+  });
+});
+
+
+
+
+const clickableDivs = document.querySelectorAll('.matchInfo');
+clickableDivs.forEach(div => {
+  div.addEventListener('click', function() {
+    //const link = this.dataset.link;
+    //window.location.href = link;
+    // 아무 링크나 걸어놓은 거임
+    window.location.href = 'https://news.naver.com/';
+  });
+});
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
