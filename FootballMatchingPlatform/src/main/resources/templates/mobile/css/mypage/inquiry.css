@@ -172,3 +172,48 @@
     font-weight: 700;
 
 }
+
+/* 문의 작성 페이지 */
+
+#addinquiry-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+#addinquiry-title-wrapper,
+#addinquiry-content-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.3rem;
+    justify-content: center;
+}
+
+#addinquiry-content-wrapper{
+    
+}
+
+#addinquiry-title-input{
+    width: 18rem;
+    height: 2rem;
+        
+    background: #F8FAFB;
+    border-radius: 5px;
+    border-color: transparent;
+}
+
+#addinquiry-content-input{
+    width: 18rem;
+    height: 15rem;
+        
+    background: #F8FAFB;
+    border-radius: 5px;
+    border-color: transparent;
+}
+
+
+/* #addinquiry-btn{
+    padding: ;
+} */

@@ -16,11 +16,21 @@
          <!-- 컨텐츠 컨테이너 -->
         <div id="container">
             <div id="edit-wrapper">
-                <div id="check-pw-wrapper">
-                    <span>비밀번호 확인</span>
-                    <input type="password" id="input-pw"/>
+                <div class="check-content-wrapper">
+                    <div class="input-title">
+                        <span>비밀번호 수정</span>
+                        <span id="edit-pw-notice-1" class="edit-pw-notice">유효성 검사 자리</span>
+                    </div>
+                    <input type="password" id="new-pw" class="input-pw"/>
                 </div>
-                <button id="check-pw-btn" class="btn">확인</button>
+                <div class="check-content-wrapper">
+                    <div class="input-title">
+                        <span>비밀번호 확인</span>
+                        <span id="edit-pw-notice-2" class="edit-pw-notice">유효성 검사 자리</span>
+                    </div>
+                    <input type="password" class="input-pw"/>
+                </div>
+                <button id="edit-pw-edit-btn" class="btn">수정하기</button>
             </div>
         </div>
         <!-- 하단 메뉴바 -->
