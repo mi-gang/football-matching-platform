@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mypage</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/mypage/edit-info.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+        <!-- 헤더 -->
+        <header></header>
+         <!-- 컨텐츠 컨테이너 -->
+        <div id="container">
+            <div id="edit-wrapper">
+                <div class="check-content-wrapper">
+                    <span>아이디</span>
+                    <input id="user-id" class="input-pw"/>
+                </div>
+                <div class="check-content-wrapper">
+                    <span>이메일</span>
+                    <input id="user-email" class="input-pw"/>
+                </div>
+                <button id="check-id-email-btn" class="btn">확인하기</button>
+            </div>
+        </div>
+        <!-- 하단 메뉴바 -->
+         <nav></nav>
+    </div>
+    
+    
+    <script>
+    // header, nav 내용 불러오기
+    $(document).ready(function(){
+        $('header').load('common/header_mypage_back.html', function(){
+            $('#page-name').text('내 정보 수정');
+        });
+        $('nav').load('common/nav.html');
+    });
+    </script>
+    <script src="../js/mypage.js"></script>
+</body>
+</html>

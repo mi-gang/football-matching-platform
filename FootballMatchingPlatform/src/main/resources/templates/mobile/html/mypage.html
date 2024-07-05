@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mypage</title>
     <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/mypage.css">
+    <link rel="stylesheet" href="../css/mypage/mypage.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -29,19 +29,19 @@
                         <span class="title">나의 등급</span>
                         <div id="my-tier-info" class="mypage-infos">
                             <div id="my-tier">A</div>
-                            <div id="my-score-tank-percentile-wrapper">
-                                <div id="my-score">
-                                    <span>829</span>
+                            <div id="my-score-rank-percentile-wrapper">
+                                <div id="mypage-score">
+                                    <span id="my-score">829</span>
                                     <span>점</span>
                                 </div>
                                 <div id="my-rank-percentile-wrapper">
-                                    <div id="my-rank">
-                                        <span>829</span>
+                                    <div id="mypage-rank">
+                                        <span id="my-rank">29</span>
                                         <span>위</span>
                                     </div>
-                                    <div id="my-percentile">
+                                    <div id="mypage-percentile">
                                         <span>(상위</span>
-                                        <span>25</span>
+                                        <span id="my-percentile">25</span>
                                         <span>%)</span>
                                     </div>
                                 </div>
@@ -52,18 +52,18 @@
                         <span class="title">나의 전적</span>
                         <div id="my-record-info" class="mypage-infos">
                             <div id="my-record-info-1">
-                                <div>
-                                    <span>17</span>
+                                <div id="game-count-wrapper">
+                                    <span id="game-count">17</span>
                                     <span>전</span>
                                 </div>
-                                <div>
-                                    <span>12</span>
+                                <div id="win-count-wrapper">
+                                    <span id="win-count">12</span>
                                     <span>승</span>
                                 </div>
                             </div>
                             <div id="my-record-info-2">
                                 <span>승률</span>
-                                <span>70.9</span>
+                                <span id="user-win-rate">70.9</span>
                                 <span>%</span>
                             </div>
                         </div>
@@ -73,26 +73,26 @@
                     <span class="title">소속 팀</span>
                     <div id="my-team-info" class="mypage-infos">
                         <span id="team-name">zI존 풋살</span>
-                        <div>
-                            <div>
-                                <span>순위</span>
-                                <span>1</span>
+                        <div id="team-rank-win-rate-wrapper">
+                            <div class="team-wrapper">
+                                <span>순위 :</span>
+                                <span id="team-rank">1</span>
                                 <span>위</span>
                             </div>
-                            <div>
-                                <span>승률</span>
-                                <span>78</span>
+                            <div class="team-wrapper">
+                                <span>승률 : </span>
+                                <span id="team-win-rate">78</span>
                                 <span>%</span>
                             </div>
                         </div>
-                        <div>
-                            <div>
-                                <span>등급</span>
-                                <span>A</span>
+                        <div id="team-tier-score-wrapper">
+                            <div class="team-wrapper">
+                                <span>등급 :</span>
+                                <span id="team-tier">A</span>
                             </div>
-                            <div>
-                                <span>점수</span>
-                                <span>820</span>
+                            <div class="team-wrapper">
+                                <span>점수 :</span>
+                                <span id="team-score">820</span>
                                 <span>점</span>
                             </div>
                         </div>
@@ -121,12 +121,12 @@
     <script>
     // header, nav 내용 불러오기
     $(document).ready(function(){
-        $('header').load('common/header.html', function(){
+        $('header').load('common/header_mypage.html', function(){
             $('#page-name').text('마이페이지');
-            $('#user-tier').text('A');
         });
         $('nav').load('common/nav.html');
     });
     </script>
+    <script src="../js/mypage.js"></script>
 </body>
 </html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mypage</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/mypage/inquiry.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+        <!-- 헤더 -->
+        <header></header>
+         <!-- 컨텐츠 컨테이너 -->
+        <div id="container">
+            <div id="total-inquiry-wrapper">
+                <span>총 </span>
+                <div>
+                    <span id="total-inquiry">2</span>
+                    <span>건</span>
+                </div>
+            </div>
+                <div class="inquiry-wrapper">
+                    <div class="inquiry-top-wrapper">
+                        <div class="a-wrapper status-0">
+                            <span>A.</span>
+                            <span class="inquiry-status">문의중</span>
+                        </div>
+                        <div class="inquiry-detail">
+                            <span class="info-normal-text">자세히 보기</span>
+                            <img class="right-arrow" src="../img/right arrow.svg" />
+                        </div>
+                    </div>
+                    <div class="q-wrapper">
+                        <span>Q.</span>
+                        <span class="inquiry-title">경기를 취소했는데 환불이 안됐습니다.</span>
+                    </div>
+                </div>
+                <div class="inquiry-wrapper">
+                    <div class="inquiry-top-wrapper">
+                        <div class="a-wrapper status-1">
+                            <span>A.</span>
+                            <span class="inquiry-status">답변완료</span>
+                        </div>
+                        <div class="inquiry-detail">
+                            <span class="info-normal-text">자세히 보기</span>
+                            <img class="right-arrow" src="../img/right arrow.svg" />
+                        </div>
+                    </div>
+                    <div class="q-wrapper">
+                        <span>Q.</span>
+                        <span class="inquiry-title">등급을 결정하는 기준이 궁금합니다. </span>
+                    </div>
+                </div>
+                <button id="add-inquiry-btn">문의하기</button>
+        </div>
+        <!-- 하단 메뉴바 -->
+         <nav></nav>
+    </div>
+    
+    <script>
+    // header, nav 내용 불러오기
+    $(document).ready(function(){
+        $('header').load('common/header_mypage_back.html', function(){
+            $('#page-name').text('문의 내역');
+        });
+        $('nav').load('common/nav.html');
+    });
+    </script>
+    <script src="../js/mypage.js"></script>
+</body>
+</html>
