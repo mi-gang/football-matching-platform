@@ -2,6 +2,26 @@ html {
     font-size: 10px;
 }
 
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+    height: 5.12rem;
+    padding: 0 1.92rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+  }
+
+  #header-back-btn {
+    width: 2.72rem;
+    height: 2.72rem;
+  }
+
 .flex-column-center {
     display: flex;
     flex-direction: column;
@@ -12,11 +32,10 @@ html {
 #top-container{
     display: flex;
     align-items: center;
-    margin-top: 1rem;
     margin-right: 20rem;
-    margin-bottom: 4.9rem;
     font-size: 1.8rem;
     font-weight: 600;
+    margin-bottom: 3rem;
 }
 
 img{
@@ -64,7 +83,7 @@ input{
 }
 
 #text-pw-check{
-    margin-right: 15rem;
+    margin-right: 15.5rem;
 }
 
 #text-birth{
@@ -81,7 +100,7 @@ input{
 
 .gender{
     width: 5rem;
-    height: 2.4rem;
+    height: 3rem;
     background-color: #F8FAFB;
     color: #000000;
 }
@@ -133,12 +152,15 @@ button{
     border-radius: 1rem;
     border-color: #969696;
     border-style: solid;
+    padding-top: 2rem;
+    display: none;
 }
 
 #top-location{
     display: flex;
     justify-content: space-between;
     font-size: 1.4rem;
+    margin-bottom: 2.3rem;
 }
 
 #location-list{
@@ -149,4 +171,19 @@ button{
 
 hr{
     width: 14.4rem;
+}
+
+#text-modal-top{
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+#top-location img{
+    margin-right: 0;
+}
+
+
+/* 컨텐츠 컨테이너 */
+#container {
+    padding: 0;
 }

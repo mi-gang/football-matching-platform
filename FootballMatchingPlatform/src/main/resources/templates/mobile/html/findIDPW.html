@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디/비밀번호 찾기</title>
+    <link rel="stylesheet" href="../css/common_main.css">
+    <link rel="stylesheet" href="../css/findIDPW.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+        <!-- 헤더 -->
+        <header></header>
+        <!-- 컨텐츠 컨테이너 -->
+        <div id="container">
+            <div class="input-container">
+                <label>이름</label>
+                <input id="name">
+                <label>이메일</label>
+                <input id="emailById">
+            </div>
+            <button onclick="return idFind()">ID 찾기</button>
+            <hr>
+            <div class="input-container">
+                <label>아이디</label>
+                <input id="id">
+                <label>이메일</label>
+                <input id="emailByPw">
+            </div>
+            <button onclick="return pwFind()">PW 찾기</button>
+        </div>
+
+    </div>
+
+    <script>
+        // header, nav 내용 불러오기
+        $(document).ready(function () {
+            $('header').load('./common/header_back_main.html', function () { // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+                $('#page-name').text('아이디/비밀번호 찾기'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
+                $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+            });
+        });
+
+        function idFind(){
+            if($("#name").val().length == 0){
+                alert("이름을 입력하세요.");
+                return false;
+            }
+
+            if($("#emailById").val().length == 0){
+                alert("이메일을 입력하세요.");
+                return false;
+            }
+
+            alert("아이디 찾기 페이지로 이동");
+        }
+
+        function pwFind(){
+            if($("#id").val().length == 0){
+                alert("아이디를 입력하세요.");
+                return false;
+            }
+
+            if($("#emailByPw").val().length == 0){
+                alert("이메일을 입력하세요.");
+                return false;
+            }
+
+            alert("비밀번호 찾기 페이지로 이동");
+        }
+
+    </script>
+</body>
+
+</html>
