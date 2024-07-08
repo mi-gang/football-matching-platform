@@ -118,6 +118,49 @@
                         <h4 class="p-1">경기 일정</h4>
                         <div class="border border-black rounded-5 p-3">
 
+                            <div class="d-flex justify-content-between">
+                                <!-- 캘린더 -->
+                                <div class="d-flex flex-column border-end border-secondary p-3">
+                                    <div class="row p-3">
+                                        <div class="col d-flex justify-content-center">
+                                            <img class="calendar-nav-btn" id="prevBtn" src="../img/left arrow.svg"
+                                                alt="이전 달 버튼"></img>
+                                            <div class="year-month"></div>
+                                            <img class="calendar-nav-btn" id="nextBtn" src="../img/right arrow.svg"
+                                                alt="다음 달 버튼"></img>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="calendar-days">
+                                            <div class="day sun">일</div>
+                                            <div class="day">월</div>
+                                            <div class="day">화</div>
+                                            <div class="day">수</div>
+                                            <div class="day">목</div>
+                                            <div class="day">금</div>
+                                            <div class="day sat">토</div>
+                                        </div>
+                                        <div class="calendar-dates" id="calendarDates"></div>
+                                    </div>
+                                </div>
+
+                                <!-- 일정  -->
+                                <div class="col d-flex flex-column text-center">
+                                    <div class="row border border-secondary rounded-3 m-1">
+                                        <p class="m-0 p-3">12:00-14:00</p>
+                                    </div>
+                                    <div class="row border border-secondary rounded-3 m-1">
+                                        <p class="m-0 p-3">12:00-14:00</p>
+                                    </div>
+                                    <div class="row border border-secondary rounded-3 m-1">
+                                        <p class="m-0 p-3">12:00-14:00</p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
 
@@ -154,18 +197,111 @@
         }
         $("#fieldContent > ul").html(str);
 
-        $("#okBtn").on('click',function(){
+        $("#okBtn").on('click', function () {
             confirm("승인 하시겠습니까?")
         })
 
-        $("#nopeBtn").on('click',function(){
+        $("#nopeBtn").on('click', function () {
             confirm("거절 하시겠습니까?")
         })
 
-        $("#deleteBtn").on('click',function(){
+        $("#deleteBtn").on('click', function () {
             confirm("삭제 하시겠습니까?")
         })
 
+        // ==========================================캘린더 부분
+        // 캘린더 생성
+        const date = new Date();
+        let currentYear = date.getFullYear();
+        let currentMonth = date.getMonth();
+        let currentDate = date.getDate();
+
+        const calendarDates = document.querySelector("#calendarDates");
+        const prevBtn = document.querySelector("#prevBtn");
+        const nextBtn = document.querySelector("#nextBtn");
+
+        // const calendarDates =  $("#calendarDates");
+        // const prevBtn = $("#prevBtn");
+        // const nextBtn = $("#nextBtn");
+
+        function renderCalendar() {
+            $('.year-month').text(`${currentYear}년 ${currentMonth + 1}월`);
+
+            const firstDayOfMonth = new Date(currentYear, currentMonth, 1); // 첫번째 날 불러오기
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();   // 날짜수 불러오기
+
+            const startDayOfWeek = firstDayOfMonth.getDay();
+
+            calendarDates.innerHTML = ""; // 일자 비우기
+
+            // 빈 날짜(이전 달)
+            for (let i = 0; i < startDayOfWeek; i++) {
+                const emptyDate = document.createElement("div");
+                emptyDate.classList.add("date", "empty");
+                calendarDates.appendChild(emptyDate);
+            }
+
+            // 현재 달의 날짜
+            for (let i = 1; i <= daysInMonth; i++) {
+
+                // date-wrapper
+                const dateWrapperElement = document.createElement("div");
+                dateWrapperElement.classList.add("date-wrapper");
+
+                // 날짜
+                const dateElement = document.createElement("div");
+                dateElement.classList.add("date");
+                dateElement.setAttribute('id', currentYear + "-" + parseInt(currentMonth + 1) + "-" + i);
+                dateElement.textContent = i;
+                if (i == currentDate && date.getMonth() == currentMonth) 
+                    dateElement.classList.add("today");
+
+                // 매칭 여부
+                const matchingDateElement = document.createElement("div");
+                matchingDateElement.classList.add("isMatching");
+
+                // 매칭 정보 있는 날이면 등록, 매칭 상태 불러와서 매칭 상태에 따라 다른 클래스 지정
+                if (i == 5)
+                    matchingDateElement.dataset.matchingStatus = "2";
+
+                dateWrapperElement.appendChild(dateElement);
+                dateWrapperElement.appendChild(matchingDateElement);
+                calendarDates.appendChild(dateWrapperElement);
+            }
+        }
+
+        renderCalendar();
+
+        // 이전 달 버튼 클릭 시
+        prevBtn.addEventListener("click", () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar();
+        });
+
+        // 다음 달 버튼 클릭 시
+        nextBtn.addEventListener("click", () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar();
+        });
+
+        // 날짜 클릭 시
+        $(".calendar-dates").on("click", ".date-wrapper", function () {
+            $('.click-date').removeClass('click-date');
+            $(this).find('.date').addClass('click-date'); // find -> 자식 요소 찾기
+
+            // 클릭한 날짜 불러오기
+            console.log($(this).find('.date').attr("id"));
+            // 매칭이 있는 경우 해당 날짜 매칭 정보들 불러오기
+
+        });
 
 
     </script>

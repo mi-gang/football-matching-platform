@@ -119,3 +119,126 @@ textarea{
     border-radius: 0.5rem;
     resize: none;
 }
+
+
+/* 버튼 공통 */
+.btn-setting{
+    border-radius: 20px;
+    border-color: transparent;
+    height: 1.8rem;
+}
+
+
+/* ********** 캘린더 ********* */
+.calendar-container {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+    width: 95%;
+    margin: 0.5rem 0;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.year-month{
+    font-size: 1.1rem;
+}
+
+.calendar-nav-btn{
+    width: 1.3rem;
+    height: 1.3rem;
+    text-align: center;
+}
+
+#my-matching-list-btn{
+    color: #333333;
+    background: #EBEBEB;
+    font-size: 0.9rem;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding-bottom: 0.3rem;
+}
+
+.day {
+    text-align: center;
+}
+
+.sun{
+    color: #FF7D7D;
+}
+
+.sat{
+    color: #7684FF;
+}
+
+.calendar-dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.date-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0;
+    width: 3rem;
+    height: 3rem;
+}
+
+.today{
+    background: #555555;
+    color: #ffffff;
+    border-radius: 50%;
+    border-width: 0.1rem;
+    /* border-top: 0.1rem; */
+    box-sizing: border-box;
+}
+
+.isMatching{
+    height: 1rem;
+}
+
+.matching-date{
+    width: 0.4rem;
+    height: 0.4rem;
+
+    background: #80D87E;
+    border-radius: 100px;
+
+}
+
+/* .date:hover {
+    background-color: #f5f5f5;
+  } */
+
+
+.click-date{
+    background: #DEDEDE;
+    border-radius: 50%;
+    border-width: 0.1rem;
+    /* border-top: 0.1rem; */
+    box-sizing: border-box;
+}
