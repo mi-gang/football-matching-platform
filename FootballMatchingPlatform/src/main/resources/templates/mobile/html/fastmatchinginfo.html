@@ -22,27 +22,27 @@
 }
 
 .showerTF.active {
-	background: #FFFFFF;
+    background: #FFFFFF;
     color:#a5a5a5;
     border:1px solid #a5a5a5;
 }
 .ballTF.active {
-	background: #FFFFFF;
+    background: #FFFFFF;
     color:#a5a5a5;
     border:1px solid #a5a5a5;
 }
 .parkTF.active {
-	background: #FFFFFF;
+    background: #FFFFFF;
     color:#a5a5a5;
     border:1px solid #a5a5a5;
 }
 .shoesTF.active {
-	background: #FFFFFF;
+    background: #FFFFFF;
     color:#a5a5a5;
     border:1px solid #a5a5a5;
 }
 .drinkTF.active {
-	background: #FFFFFF;
+    background: #FFFFFF;
     color:#a5a5a5;
     border:1px solid #a5a5a5;
 }
@@ -57,10 +57,10 @@
 
 .matchTier{
     border-radius:3rem;
-	background-color: #828282;
-	color:#FFFFFF;
-	font-size:0.8rem;
-	border:none;
+    background-color: #828282;
+    color:#FFFFFF;
+    font-size:0.8rem;
+    border:none;
 }
 
 .locationName{
@@ -69,9 +69,9 @@
 
 .locationInfo button{
     border-radius:3rem;
-	background-color: #73A772;
-	color:#FFFFFF;
-	font-size:0.8rem;
+    background-color: #73A772;
+    color:#FFFFFF;
+    font-size:0.8rem;
     border:2px solid #73A772;
     width: 5rem;
     height: 1.7rem;
@@ -87,9 +87,9 @@ body{
 
 .buyThis{
     border-radius:3rem;
-	background-color: #73A772;
-	color:#FFFFFF;
-	font-size:0.8rem;
+    background-color: #73A772;
+    color:#FFFFFF;
+    font-size:0.8rem;
     border:none;
     width: 5rem;
     height: 3rem;
@@ -100,9 +100,9 @@ body{
 
 .simpleBuy{
     border-radius:3rem;
-	background-color: #ebebeb;
-	color:#000000;
-	font-size:0.8rem;
+    background-color: #ebebeb;
+    color:#000000;
+    font-size:0.8rem;
     border:none;
     width: 8rem;
     height: 2rem;   
@@ -121,6 +121,66 @@ body{
     font-size: 1.13rem;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+.modal-dialog{
+  top:30%;
+}
+
+
+
+
+
+
+.toast {
+      position: fixed;
+      top: 85%;
+      right: 1%;
+      background-color: #333;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+      opacity: 0;
+      transition: opacity 1s ease;
+      
+    }
+
+    .toast.show {
+      opacity: 1;
+      z-index: 2001;
+      background-color: #AAAAAA;
+    }
+
+    .toast1 {
+      position: fixed;
+      top: 85%;
+      right: 1%;
+      background-color: #333;
+      color: white;
+      padding: 1rem 7.1rem;
+      border-radius: 1rem;
+      opacity: 0;
+      transition: opacity 1s ease;
+      
+    }
+
+    .toast1.show1 {
+      opacity: 1;
+      z-index: 2000;
+      background-color: #AAAAAA;
+    }
+.buyThis{
+    z-index: 1000;;
+}
 
 </style>
 <body>
@@ -141,7 +201,7 @@ body{
     </div>    
     <div class="matchTimeTierDiv mt-3 mx-5">
         <span class="matchTime">6월 30일(일) 18:00~20:00</span>
-        <button class="matchTier mx-1" disabled="true">A등급</button>
+        <button class="matchTier mx-1" id="getMatchTier" disabled="true" value="A">A등급</button>
     </div>
     <ul>
     <div class="matchLocationDiv mt-3 mx-3">
@@ -181,36 +241,35 @@ body{
 
 
 
-  <!-- 체크박스 선택 시 이 모달이 나오면 됨ㅇㅇ -->      
   <div class="modal" id="buyCheckModal" tabindex="-1" aria-labelledby="buyCheckModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-	  <div class="modal-content w-auto h-auto">
-		<div class="modal-body">
-        <form action="#" method="post">  
+    <div class="modal-dialog">
+      <div class="modal-content w-auto h-auto">
+        <div class="modal-body">
+        <form id="buyForm" action="#" method="post">  
           <!-- name 지정 안 해놓음 -->  
           <button type="button" class="simpleClose btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		  <p class="simpleTime" name="">2024년 06월 30일 (일) 18:00 - 20:00</p>
+          <p class="simpleTime" name="">2024년 06월 30일 (일) 18:00 - 20:00</p>
           <p class="simpleLocation" name="">서울 강서 풋살FC 풋살구 구장</p>
           <p class="simplePrice" name="">금액 10,000원</p>
           <button type="submit" class="simpleBuy" id = "buyButton">결제하기</button> 
         </form>
-		</div>
-	  </div>
-	</div>
+        </div>
+      </div>
+    </div>
   </div>         
-		   
+           
 
+  <div class="toast" id="toast">등급이 맞지 않습니다.</div>
 
-
-
+  <div class="toast1" id="toast1">정지된 회원입니다.</div>
 
 </div>
     </div>
-	
+    
         <!-- 하단 메뉴바 -->
-		<nav></nav>
-	
-	
+        <nav></nav>
+    
+    
 </div>
 
 
@@ -220,16 +279,20 @@ body{
 
 
 <script>
+
+    
+
     // header, nav 내용 불러오기
     $(document).ready(function(){
         $('header').load('./common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
             $('#page-name').text('페이지 이름'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
             $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+           
         });
         $('nav').load('./common/nav.html');
     });
 
-
+    
 
 window.onload = function(){
   var ballTF = document.querySelector('.ballTF');
@@ -264,6 +327,28 @@ window.onload = function(){
 
 
 
+// 유저 타입 불러오시면 됩니다. 서스펜드 약자임
+const getUserType = 'D';
+
+// $(document).ready(function() {
+// $('#buyForm').on('submit', function(event) {
+//        // D는 delete의 약자임(혹시나 해서 넣음)
+//        if(getUserType == 'S' || getUserType == 'D'){
+//         event.preventDefault();
+//         $('#buyButton').prop('disabled', true);
+//         var toast1 = document.getElementById('toast1');
+//       toast1.classList.add('show1');
+
+//       setTimeout(function() {
+//         toast1.classList.remove('show1');
+//         $('#buyButton').prop('disabled', false);
+//       }, 1000);
+//       return;
+//      } 
+
+//     });
+    
+// });
 
 
 
@@ -272,8 +357,44 @@ window.onload = function(){
 
 
 
+// 세션에서 유저 티어 불러오시면 됩니다
+const getUserTier = 'A';
+
+const getMatchTier = $('#getMatchTier').val();
+
+$(document).ready(function() {
+    $('#buyForm').on('submit', function(event) {
+      //        // D는 delete의 약자임(혹시나 해서 넣음)
+       if(getUserType == 'S' || getUserType == 'D'){
+        event.preventDefault();
+        $('#buyButton').prop('disabled', true);
+        var toast1 = document.getElementById('toast1');
+      toast1.classList.add('show1');
+
+      setTimeout(function() {
+        toast1.classList.remove('show1');
+        $('#buyButton').prop('disabled', false);
+      }, 1000);
+      return;
+     }   
+        
 
 
+    if(getMatchTier == getUserTier) {
+            event.preventDefault();
+        $('#buyButton').prop('disabled', true);
+        var toast = document.getElementById('toast');
+      toast.classList.add('show');
+
+      setTimeout(function() {
+        toast.classList.remove('show');
+        $('#buyButton').prop('disabled', false);
+      }, 1000);
+    } 
+    });
+    
+   
+});
 
 
 
