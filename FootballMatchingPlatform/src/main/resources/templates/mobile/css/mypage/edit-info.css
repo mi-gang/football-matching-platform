@@ -44,7 +44,6 @@
 #check-pw-btn{
     color: #FFFFFF;
     background: #73A772;
-    border-color: transparent;
 }
 
 
@@ -112,7 +111,6 @@
     width: 5rem;
     color: #FFFFFF;
     background: #73A772;
-    border-color: transparent;
 }
 
 
@@ -145,7 +143,6 @@
 #check-id-email-btn{
     color: #FFFFFF;
     background: #73A772;
-    border-color: transparent;
 }
 
 /* 아이디 이메일 확인 */
@@ -215,5 +212,4 @@
   }
   #withdrawModal-btn{
     background: #EBEBEB;
-    border-color: transparent;
   }

@@ -1,218 +1,204 @@
-#container{
-    padding: 3.3rem 1rem;
-    align-items: baseline;
-    row-gap: 1rem;
+#container {
+  padding: 3.3rem 1rem;
+  align-items: baseline;
+  row-gap: 1rem;
 }
 
 /* 문의 내역 */
 
-#total-inquiry-wrapper{
-    margin-top: 1.5rem;
-    padding-left: 0.3rem;
-    display: flex;
-    flex-direction: row;
-    column-gap: 0.3rem;
+#total-inquiry-wrapper {
+  margin-top: 1.5rem;
+  padding-left: 0.3rem;
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.3rem;
 }
 
 #total-inquiry-wrapper > span,
-#total-inquiry-wrapper > div > span{
-    font-weight: 700;
+#total-inquiry-wrapper > div > span {
+  font-weight: 700;
 }
 
-#total-inquiry-wrapper > div{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+#total-inquiry-wrapper > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.inquiry-wrapper{
-    box-sizing: border-box;
-    background: #FFFFFF;
-    border: 1.5px solid #DBDBDB;
-    border-radius: 10px;
-    padding: 1rem;
-    width: 100%;
-    height: 100%;
+.inquiry-wrapper {
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1.5px solid #dbdbdb;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
 
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
-    row-gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  row-gap: 0.5rem;
 }
 
 /* 버튼 공통 */
-.btn{
-    border-radius: 20px;
-    border-color: transparent;
-    height: 1.8rem;
+.btn {
+  border-radius: 20px;
+  border-color: transparent;
+  height: 1.8rem;
 }
 
-
-.a-wrapper{
-    border-radius: 20px;
-    /* height: 1.6rem;
+.a-wrapper {
+  border-radius: 20px;
+  /* height: 1.6rem;
     width: 4.4rem; */
-    padding: 0.4rem 0.6rem;
-    color: #FFFFFF;
-    border-color: transparent;
+  padding: 0.4rem 0.6rem;
+  color: #ffffff;
+  border-color: transparent;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    column-gap: 0.2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.2rem;
 }
 
-.a-wrapper > *{
-    font-size: 0.8rem;
+.a-wrapper > * {
+  font-size: 0.8rem;
 }
 
-.status-0{
-    background: #EF8665;
+.status-0 {
+  background: #ef8665;
 }
 
-.status-1{
-    background: #73A772;
+.status-1 {
+  background: #73a772;
 }
 
-#add-inquiry-btn{    
-    position: fixed;
-    bottom: 5rem;
-    right: 8rem;
-    left: 8rem;
-  
-    border: none;
-    border-radius: 10px;
-    background: #545454;
-    color: #ffffff;
-    padding: 0.7rem;
-    font-weight: 700;
-    box-shadow: 0px 5px 5px rgb(212, 212, 212);
-    cursor: pointer;
-    z-index:999;
+#add-inquiry-btn {
+  position: fixed;
+  bottom: 5rem;
+  right: 8rem;
+  left: 8rem;
+
+  border: none;
+  border-radius: 10px;
+  background: #545454;
+  color: #ffffff;
+  padding: 0.7rem;
+  font-weight: 700;
+  box-shadow: 0px 5px 5px rgb(212, 212, 212);
+  cursor: pointer;
+  z-index: 999;
 }
 
-.inquiry-top-wrapper{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+.inquiry-top-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.inquiry-detail{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.inquiry-detail {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .info-normal-text {
-    font-weight: 400;
-    font-size: 0.9rem;
+  font-weight: 400;
+  font-size: 0.9rem;
 }
-
-
-
-
-
-
-
-
-
 
 /* 문의 상세 페이지 */
 
+#inquiry-Q-wrapper {
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1.5px solid #dbdbdb;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 2rem;
+  width: 100%;
+  height: 100%;
 
-#inquiry-Q-wrapper{
-    box-sizing: border-box;
-    background: #FFFFFF;
-    border: 1.5px solid #DBDBDB;
-    border-radius: 10px;
-    padding: 1rem;
-    margin-top: 2rem;
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
-    row-gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  row-gap: 0.5rem;
 }
 
-#inquiry-A-wrapper{
-    box-sizing: border-box;
-    background: #FFFFFF;
-    border: 1.5px solid #DBDBDB;
-    border-radius: 10px;
-    padding: 1rem;
-    width: 100%;
-    height: 100%;
+#inquiry-A-wrapper {
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1.5px solid #dbdbdb;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
 
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
-    row-gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  row-gap: 0.5rem;
 }
 
-#title-wrapper{
-    font-weight: 700;
-    font-size: 1.2rem;
+#title-wrapper {
+  font-weight: 700;
+  font-size: 1.2rem;
 }
-#inquiry-centent{
-    padding-left: 1.2rem;
+#inquiry-centent {
+  padding-left: 1.2rem;
 }
 
-.answer-wrapper{
-    display: flex;
-    flex-direction: row;
-    column-gap: 0.5rem;
+.answer-wrapper {
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.5rem;
 }
 
 .answer-wrapper > span {
-    font-weight: 700;
-
+  font-weight: 700;
 }
 
 /* 문의 작성 페이지 */
 
-#addinquiry-wrapper{
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-    justify-content: center;
-    margin-top: 2rem;
+#addinquiry-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
 }
 
 #addinquiry-title-wrapper,
-#addinquiry-content-wrapper{
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.3rem;
-    justify-content: center;
+#addinquiry-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.3rem;
+  justify-content: center;
 }
 
-#addinquiry-content-wrapper{
-    
+#addinquiry-content-wrapper {
 }
 
-#addinquiry-title-input{
-    width: 18rem;
-    height: 2rem;
-        
-    background: #F8FAFB;
-    border-radius: 5px;
-    border-color: transparent;
+#addinquiry-title-input {
+  width: 18rem;
+  height: 2rem;
+
+  background: #f8fafb;
+  border-radius: 5px;
+  border-color: transparent;
 }
 
-#addinquiry-content-input{
-    width: 18rem;
-    height: 15rem;
-        
-    background: #F8FAFB;
-    border-radius: 5px;
-    border-color: transparent;
-}
+#addinquiry-content-input {
+  width: 18rem;
+  height: 15rem;
 
+  background: #f8fafb;
+  border-radius: 5px;
+  border-color: transparent;
+}
 
 /* #addinquiry-btn{
     padding: ;
