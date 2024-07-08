@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my matchings</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/mypage/mypage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+        <!-- 헤더 -->
+        <header></header>
+         <!-- 컨텐츠 컨테이너 -->
+        <div id="container">
+            <div id="calendar">
+                <div id="calendar-header">
+                    <div class="nav">
+                        <div>
+                            <button class="nav-btn" id="prevBtn">&lt;</button>
+                            <div class="year-month"></div>
+                            <button class="nav-btn" id="nextBtn">&gt;</button>
+                        </div>
+                        <button>전체 일정 보기</button>
+                    </div>
+
+                </div>
+                <div class="main">
+                    <div class="days">
+                        <div class="day">일</div>
+                        <div class="day">월</div>
+                        <div class="day">화</div>
+                        <div class="day">수</div>
+                        <div class="day">목</div>
+                        <div class="day">금</div>
+                        <div class="day">토</div>
+                    </div>
+                    <div class="dates" id="calendarDates"></div>
+                </div>
+            </div>
+            <script src="index.js"></script>
+        </div>
+        <!-- 하단 메뉴바 -->
+         <nav></nav>
+    </div>
+    
+    <script>
+    // header, nav 내용 불러오기
+    $(document).ready(function(){
+        $('header').load('common/header.html', function(){
+            $('#page-name').text('나의 일정');
+            $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+        });
+        $('nav').load('common/nav.html');
+    });
+    </script>
+    <script src="../js/my_matchings.js"></script>
+</body>
+</html>
