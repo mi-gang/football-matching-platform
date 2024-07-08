@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>등록된 구장 리스트</title>
+    <title>Document</title>
     <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/addedFieldList.css">
+    <link rel="stylesheet" href="../css/createTeam.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
@@ -17,105 +17,21 @@
         <header></header>
         <!-- 컨텐츠 컨테이너 -->
         <div id="container">
-            <div id="content-header">
-                <div id="filter-container">
-                    <img id="filter" src="../img/filter.svg">
-                    <div id="filter-text">지역</div>
-                </div>
-                <div id="search-container">
-                    <input id="search-keyword" placeholder="검색어를 입력하세요">
-                    <img id="search" src="../img/search.svg">
+            <div id="team-name-container">
+                <div>팀명 : </div>
+                <input id="team-name" type="text">
+            </div>
+            <div class="box-container">
+                <div>등급</div>
+                <div id="tier-container">
+                    <input type="checkbox" id="A-tier" value="A" name="tier"><label for="A-tier">A등급</label>
+                    <input type="checkbox" id="B-tier" value="B" name="tier"><label for="B-tier">B등급</label>
+                    <input type="checkbox" id="C-tier" value="C" name="tier"><label for="C-tier">C등급</label>
+                    <input type="checkbox" id="D-tier" value="D" name="tier"><label for="D-tier">D등급</label>
                 </div>
             </div>
-            <div id="list-container">
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-
-            </div>
-            <div id="modal-location">
-                <div id="top-location">
-                    <div id="text-modal-top">지역</div>
-                    <img id="close" src="../img/Close.svg">
-                </div>
+            <div class="box-container">
+                <div>지역</div>
                 <div id="location-list">
                     <div class="location-line">
                         <input type="radio" id="서울" value="서울" name="location"><label for="서울">서울</label>
@@ -142,39 +58,155 @@
                 <hr>
                 <div id="gu-list">
                 </div>
-                <div id="submit-container">
-                    <div id="submit">완료</div>
+            </div>
+            <div class="box-container">
+                <div>시간</div>
+                <div id="time-container">
+                    <div id="week-container">
+                        <div>
+                            <input type="radio" id="주중" value="주중" name="week"><label for="주중">주중</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="주말" value="주말" name="week"><label for="주말">주말</label>
+                        </div>
+                    </div>
+                    <div id="one-week-container">
+                        <div>주</div>
+                        <select name="count">
+                            <option value="1">1회</option>
+                            <option value="2">2회</option>
+                            <option value="3">3회</option>
+                            <option value="4">4회</option>
+                            <option value="5">5회</option>
+                            <option value="6">6회</option>
+                            <option value="7">7회</option>
+                        </select>
+                    </div>
+                    <div id="time-detail-container">
+                        <select name="start-time">
+                            <option value="8">8시</option>
+                            <option value="10">10시</option>
+                            <option value="12">12시</option>
+                            <option value="14">14시</option>
+                            <option value="16">16시</option>
+                            <option value="18">18시</option>
+                            <option value="20">20시</option>
+                        </select>
+                        <div>~</div>
+                        <select name="end-time">
+                            <option value="10">10시</option>
+                            <option value="12">12시</option>
+                            <option value="14">14시</option>
+                            <option value="16">16시</option>
+                            <option value="18">18시</option>
+                            <option value="20">20시</option>
+                            <option value="22">22시</option>
+                        </select>
+                    </div>
+
                 </div>
             </div>
+            <div class="box-container">
+                <div>소개글</div>
+                <textarea id="content"></textarea>
+            </div>
+            <div id="button-container">
+                <button>팀 생성</button>
+            </div>
         </div>
-
+        <!-- 하단 메뉴바 -->
+        <nav></nav>
     </div>
 
     <script>
         // header, nav 내용 불러오기
         $(document).ready(function () {
             $('header').load('./common/header_back.html', function () { // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
-                $('#page-name').text('구장'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
+                $('#page-name').text('팀 생성'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
                 $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
             });
+            $('nav').load('./common/nav.html');
         });
 
-        $(".content-box").on("click", function () {
-            alert("구장 상세 정보 페이지로 이동");
-        })
+        $("button").on("click", function(){
+            var teamName = $("#team-name").val();
+            if(teamName == ""){
+                alert("팀 명을 입력해주세요!");
+                return;
+            }
 
-        $("#search").on("click", function () {
-            alert($("#search-keyword").val());
-        })
+            var tier_arr = [];
 
-        $("#filter-container").on("click", function () {
-            $("#modal-location").css("display", "block");
-        })
+            $("input[name=tier]:checked").each(function () {
+                var tier = $(this).val();
+                tier_arr.push(tier);
+            });
 
-        $("#close").on("click", function () {
-            $("#modal-location").css("display", "none");
-        })
+            if(tier_arr.length == 0){
+                tier_arr.push("제한없음");
+            }
 
+            var location = $("input[name=location]:checked").val();
+            var gu_arr = [];
+
+            $("input[name=gu]:checked").each(function () {
+                var gu = $(this).val();
+                gu_arr.push(gu);
+            });
+
+            if (location == null) {
+                alert("지역을 선택해주세요!");
+                return;
+            }
+
+            if (gu_arr.length == 0) {
+                alert("구를 선택해주세요!");
+                return;
+            }
+
+            var week = $("input[name=week]:checked").val();
+
+            if(week == null){
+                alert("주중, 주말 중 하나를 선택하세요!");
+                return;
+            }
+
+            var count = $("select[name=count]").val();
+
+            var startTime = Number($("select[name=start-time]").val());
+            var endTime = Number($("select[name=end-time]").val());
+            
+            if(startTime >= endTime){
+                alert("시간을 다시 선택하세요!");
+                return;
+            }
+
+            var content = $("#content").val();
+            
+            if(content == ""){
+                alert("소개글을 입력하세요!");
+                retrun;
+            }
+
+            alert(teamName + " " + tier_arr + " " + location + " " + gu_arr + " " + week + " " + count + " " + startTime + " " + endTime + " " + content);
+        })
+        $("input[name=week]").on("click", function () {
+            if ($(this).val() == "주중") {
+                $("select[name=count]").html(
+                    `<option value="1">1회</option>
+                    <option value="2">2회</option>
+                    <option value="3">3회</option>
+                    <option value="4">4회</option>`
+                )
+            }
+            else if($(this).val() == "주말"){
+                $("select[name=count]").html(
+                    `<option value="1">1회</option>
+                    <option value="2">2회</option>
+                    <option value="3">3회</option>`
+                )
+            }
+        })
         $("input[name=location]").on("click", function () {
             if ($(this).val() == "서울") {
                 $("#gu-list").html(
@@ -245,29 +277,6 @@
                     ``
                 )
             }
-        })
-
-        $("#submit").on("click", function () {
-            var location = $("input[name=location]:checked").val();
-            var gu_arr = [];
-
-            $("input[name=gu]:checked").each(function () {
-                var gu = $(this).val();
-                gu_arr.push(gu);
-            });
-
-            if (location == null) {
-                alert("지역을 선택해주세요!");
-                return;
-            }
-
-            if (gu_arr.length == 0) {
-                alert("구를 선택해주세요!");
-                return;
-            }
-
-            alert(location + " " + gu_arr);
-            $("#modal-location").css("display", "none");
         })
     </script>
 </body>
