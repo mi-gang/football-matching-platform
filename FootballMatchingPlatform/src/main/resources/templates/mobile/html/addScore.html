@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/addScore.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        .text-secondary {
+            font-size: 0.8rem;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+        <!-- 헤더 -->
+        <header></header>
+        <!-- 컨텐츠 컨테이너 -->
+        <div id="container">
+
+            <div class="row m-2">
+                <p class="text-success m-0 p-3 pb-0">상대팀의 등수를 매겨주세요</p>
+            </div>
+
+            <div class="d-flex w-75 justify-content-end">
+                <div class="row">
+                    <button class="btn btn-outline-danger rounded-5" data-bs-toggle="modal"
+                        data-bs-target="#withdrawModal-1">신고</button>
+                </div>
+            </div>
+
+            <div class="">
+                <div class="row text-center align-items-center p-0 pt-3 pb-3">
+                    <div class="col d-flex flex-column p-0">
+                        <h5 class="m-0">1번</h5>
+                        <p class="text-secondary text-nowrap m-0">풋살왕풋살왕살왕</p>
+                    </div>
+                    <div class="col d-flex justify-content-center p-0">
+                        <input type="radio" class="btn-check" name="place-first" id="a1" autocomplete="off" value="1">
+                        <label class="radioBtn m-1" for="a1">1</label>
+                        <input type="radio" class="btn-check" name="second" id="a2" autocomplete="off" value="2">
+                        <label class="radioBtn m-1" for="a2">2</label>
+                        <input type="radio" class="btn-check" name="third" id="a3" autocomplete="off" value="3">
+                        <label class="radioBtn m-1" for="a3">3</label>
+                        <input type="radio" class="btn-check" name="fourth" id="a4" autocomplete="off" value="4">
+                        <label class="radioBtn m-1" for="a4">4</label>
+                        <input type="radio" class="btn-check" name="fifth" id="a5" autocomplete="off" value="5">
+                        <label class="radioBtn m-1" for="a5">5</label>
+                    </div>
+                </div>
+
+                <div class="row text-center align-items-center p-0 pt-3 pb-3">
+                    <div class="col d-flex flex-column p-0">
+                        <h5 class="m-0">2번</h5>
+                        <p class="text-secondary text-nowrap m-0">풋살왕</p>
+                    </div>
+                    <div class="col d-flex justify-content-center p-0">
+                        <input type="radio" class="btn-check" name="place-first" id="b1" autocomplete="off" value="1">
+                        <label class="radioBtn m-1" for="b1">1</label>
+                        <input type="radio" class="btn-check" name="second" id="b2" autocomplete="off" value="2">
+                        <label class="radioBtn m-1" for="b2">2</label>
+                        <input type="radio" class="btn-check" name="third" id="b3" autocomplete="off" value="3">
+                        <label class="radioBtn m-1" for="b3">3</label>
+                        <input type="radio" class="btn-check" name="fourth" id="b4" autocomplete="off" value="4">
+                        <label class="radioBtn m-1" for="b4">4</label>
+                        <input type="radio" class="btn-check" name="fifth" id="b5" autocomplete="off" value="5">
+                        <label class="radioBtn m-1" for="b5">5</label>
+                    </div>
+                </div>
+
+                <div class="row text-center align-items-center p-0 pt-3 pb-3">
+                    <div class="col d-flex flex-column p-0">
+                        <h5 class="m-0">3번</h5>
+                        <p class="text-secondary text-nowrap m-0">풋살왕</p>
+                    </div>
+                    <div class="col d-flex justify-content-center p-0">
+                        <input type="radio" class="btn-check" name="place-first" id="c1" autocomplete="off" value="1">
+                        <label class="radioBtn m-1" for="c1">1</label>
+                        <input type="radio" class="btn-check" name="second" id="c2" autocomplete="off" value="2">
+                        <label class="radioBtn m-1" for="c2">2</label>
+                        <input type="radio" class="btn-check" name="third" id="c3" autocomplete="off" value="3">
+                        <label class="radioBtn m-1" for="c3">3</label>
+                        <input type="radio" class="btn-check" name="fourth" id="c4" autocomplete="off" value="4">
+                        <label class="radioBtn m-1" for="c4">4</label>
+                        <input type="radio" class="btn-check" name="fifth" id="c5" autocomplete="off" value="5">
+                        <label class="radioBtn m-1" for="c5">5</label>
+                    </div>
+                </div>
+
+                <div class="row text-center align-items-center p-0 pt-3 pb-3">
+                    <div class="col d-flex flex-column p-0">
+                        <h5 class="m-0">4번</h5>
+                        <p class="text-secondary text-nowrap m-0">풋살왕</p>
+                    </div>
+                    <div class="col d-flex justify-content-center p-0">
+                        <input type="radio" class="btn-check" name="place-first" id="d1" autocomplete="off" value="1">
+                        <label class="radioBtn m-1" for="d1">1</label>
+                        <input type="radio" class="btn-check" name="second" id="d2" autocomplete="off" value="2">
+                        <label class="radioBtn m-1" for="d2">2</label>
+                        <input type="radio" class="btn-check" name="third" id="d3" autocomplete="off" value="3">
+                        <label class="radioBtn m-1" for="d3">3</label>
+                        <input type="radio" class="btn-check" name="fourth" id="d4" autocomplete="off" value="4">
+                        <label class="radioBtn m-1" for="d4">4</label>
+                        <input type="radio" class="btn-check" name="fifth" id="d5" autocomplete="off" value="5">
+                        <label class="radioBtn m-1" for="d5">5</label>
+                    </div>
+                </div>
+
+                <div class="row text-center align-items-center p-0 pt-3 pb-3">
+                    <div class="col d-flex flex-column p-0">
+                        <h5 class="m-0">5번</h5>
+                        <p class="text-secondary text-nowrap m-0">풋살왕</p>
+                    </div>
+                    <div class="col d-flex justify-content-center p-0">
+                        <input type="radio" class="btn-check" name="place-first" id="e1" autocomplete="off" value="1">
+                        <label class="radioBtn m-1" for="e1">1</label>
+                        <input type="radio" class="btn-check" name="second" id="e2" autocomplete="off" value="2">
+                        <label class="radioBtn m-1" for="e2">2</label>
+                        <input type="radio" class="btn-check" name="third" id="e3" autocomplete="off" value="3">
+                        <label class="radioBtn m-1" for="e3">3</label>
+                        <input type="radio" class="btn-check" name="fourth" id="e4" autocomplete="off" value="4">
+                        <label class="radioBtn m-1" for="e4">4</label>
+                        <input type="radio" class="btn-check" name="fifth" id="e5" autocomplete="off" value="5">
+                        <label class="radioBtn m-1" for="e5">5</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-2">
+                <button class="btn btn-secondary rounded-5" id="submitBtn">등록하기</button>
+            </div>
+
+
+            <!-- 신고 모달 -->
+            <div class="modal" id="withdrawModal-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header border-bottom-0">
+                            <h4 class="modal-title w-100">사용자 신고</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="modal-body-wrapper">
+
+                                <!-- 팀선택 -->
+                                <div class="row w-100">
+                                    <div class="dropdown col">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                            id="teamSelect" data-bs-toggle="dropdown" aria-expanded="false">
+                                            팀 선택
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">상대팀</a></li>
+                                            <li><a class="dropdown-item" href="#">내 팀</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- 신고 대상 선택 -->
+                                    <div class="dropdown col">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                            id="userSelect" data-bs-toggle="dropdown" aria-expanded="false">
+                                            신고 대상 선택
+                                        </button>
+                                        <ul class="dropdown-menu" id="userDropdown">
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- 신고 사유 선택 -->
+                                <div class="dropdown col">
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                        id="reasonSelect" data-bs-toggle="dropdown" aria-expanded="false">
+                                        신고 사유 선택
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">비매너 플레이</a></li>
+                                        <li><a class="dropdown-item" href="#">욕설 및 비방</a></li>
+                                        <li><a class="dropdown-item" href="#">폭력</a></li>
+                                        <li><a class="dropdown-item" href="#">불참 및 지각</a></li>
+                                        <li><a class="dropdown-item" href="#">기타</a></li>
+                                    </ul>
+                                </div>
+
+
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                    placeholder="신고 내용을 입력해주세요. (최대 300자)"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer justify-content-center border-top-0">
+                            <button type="button" class="btn rounded-5" id="withdrawModal-btn">
+                                신고하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 토스트 -->
+            <div id="toast" class="p-3"></div>
+
+            <!-- 하단 메뉴바 -->
+            <nav></nav>
+        </div>
+
+        <script>
+            // header, nav 내용 불러오기
+            $(document).ready(function () {
+                $('header').load('./common/header_back.html', function () { // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+                    $('#page-name').text('선수 평가'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
+                    $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+                });
+                $('nav').load('./common/nav.html');
+            });
+
+
+            // 한 사람당 check는 한번
+            $("label").on('click', function () {
+                const ch = $(this).parent().children('input')
+                const ch2 = $(this).parent().children('label')        
+                let name = $(this).prev().attr('name');
+
+                $('input[name='+name+']').each(function(){
+                    $(this).next().removeClass('click');
+                })
+                $(ch2).removeClass('click');
+                $(this).addClass('click');
+
+                $(ch).each(function () {
+                    if ($(this).is(":checked"))
+                        $(this).prop("checked", false);
+                })
+                $(this).prev().prop("checked", true);
+            })
+
+            // 등록하기 버튼 클릭 시
+            $("#submitBtn").on('click', function () {
+                let checkedLsit = $("input:radio[class=btn-check]:checked"); // 라디오 체크된 배열
+                for(i=0; i<checkedLsit.length;i++){
+                    console.log($(checkedLsit[i]).val());
+                }
+
+                if (checkedLsit.length != 5) {
+                    tostOn("등수를 입력해 주세요");
+                }
+                else
+                    alert("점수 등록 완료 - 등록 메소드 실행");
+            })
+
+
+            // 토스트 실행
+            function tostOn(str) {
+                $('#toast').text(str);
+                $('#toast').addClass("active");
+                setTimeout(function () {
+                    $('#toast').removeClass("active");
+                }, 1500);
+            }
+
+            // ====================================== 신고 ==========================================
+
+            // 버튼 text 변경
+            $("li").on('click', function () {
+                $(this).parent().prev().text($(this).text());
+
+                if ($(this).text() === '상대팀') {
+                    let users = ['1번 풋살킹풋살왕풋살', '2번 뿡야', '3번 zl존풋살', '4번 어익후야', '5번 오늘점심메뉴'];
+                    let str = "";
+                    for (i = 0; i < users.length; i++) {
+                        str += '<li><a class="dropdown-item" href="#">' + users[i] + '</a></li>'
+                    }
+                    $("#userDropdown").html(str);
+                    clickChangeText();
+                }
+                else if ($(this).text() === '내 팀') {
+                    let str = '<li><a class="dropdown-item" href="#">1번 우리팀짱</a></li>';
+                    $("#userDropdown").html(str);
+                    clickChangeText();
+                }
+            })
+
+            function clickChangeText() {
+                $("li").on('click', function () {
+                    $(this).parent().prev().text($(this).text());
+                })
+            }
+
+            // 취소할 시, 초기화
+            $(".btn-close").on('click', function () {
+                $("#teamSelect").text("팀 선택");
+                $("#userSelect").text("신고 대상 선택");
+                $("#reasonSelect").text("신고 사유 선택");
+                $("textarea").val("");
+            })
+
+            $()
+
+            // 신고하기 버튼 클릭 시
+            $("#withdrawModal-btn").on("click", function () {
+                alert('신고 등록 메소드 실행 ')
+                $("#teamSelect").text("팀 선택");
+                $("#userSelect").text("신고 대상 선택");
+                $("#reasonSelect").text("신고 사유 선택");
+                $("textarea").val("");
+            });
+
+
+        </script>
+</body>
+
+</html>
