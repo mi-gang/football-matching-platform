@@ -1,349 +1,439 @@
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title></title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<style>
-
-
-#btnTimes button{
-border-radius:3rem;
-	background-color:#828282;
-	color:#FFFFFF;
-	width:10rem;
-	height:6rem;
-	font-size:2rem;
-}
-
-
-.container{
-	display:felx;
-	justify-content:center;
-}
-
-#applyTypeBtn{
-	border-radius:3rem;
-	background-color:#828282;
-	color:#FFFFFF;
-	width:10rem;
-	height:6rem;
-	font-size:2rem;
-}
-
-#showBtn{
-	border-radius:3rem;
-	background-color:#73A772;
-	color:#FFFFFF;
-	width:15rem;
-	height:6rem;
-	font-size:2rem;
-	position:fixed;
-	top:90%;
-	left:37%;
-}
-
-
-
-
-p{
-	font-size:3rem;
-}
-
-.timeZone{
-	white-space:nowrap;
-}
-
-
-.matchingDate{
-	white-space:nowrap;
-	
-}
-
-.matchingDateBtn{
-	border-radius:6rem;
-	background-color:#FFFFFF;
-	color:#626262;
-	width:7rem;
-	height:7rem;
-	font-size:3rem;
-	border-color:#626262;
-}
-
-#matchingDateBtns {
-	
-	font-size: 0;
-}
-#matchingDateBtns li {
-	display: inline-block;
-	margin-left: -1px;
-}
-#matchingDateBtns li:first-child {
-	margin-left: 0;
-}
-
-
-
-#btnTimes {
-	font-size: 0;
-}
-#btnTimes li {
-	display: inline-block;
-	margin-left: -1px;
-}
-#btnTimes li:first-child {
-	margin-left: 0;
-}
-
-
-
-#applyTypeBtns {
-	font-size: 0;
-}
-#applyTypeBtns li {
-	display: inline-block;
-	margin-left: -1px;
-}
-#applyTypeBtns li:first-child {
-	margin-left: 0;
-}
-
-body{
-	font-size:16px;
-}
-
-
-#backBtn{
-	font-size:4rem;
-}
-
-#frontBtn{
-	font-size:4rem;
-}
-
-
-
-
-
-.matchingDateBtn:hover, .matchingDateBtn.active {
-	background: #73A772;
-}
-
-
-#applyTypeBtn:hover, #applyTypeBtn.active2 {
-	background: #73A772;
-}
-
-
-#btnTime:hover, #btnTime.active3 {
-	background: #73A772;
-}
-#btnTime1:hover, #btnTime1.active4 {
-	background: #73A772;
-}
-#btnTime2:hover, #btnTime2.active5 {
-	background: #73A772;
-}
-#btnTime3:hover, #btnTime3.active6 {
-	background: #73A772;
-}
-#btnTime4:hover, #btnTime4.active7 {
-	background: #73A772;
-}
-#btnTime5:hover, #btnTime5.active8 {
-	background: #73A772;
-}
-#btnTime6:hover, #btnTime6.active9 {
-	background: #73A772;
-}
-
-
-
-
-
-</style>
-<body>
-
-<div class = "container">
-	<!-- action에 알맞는 값을 넣어주세요 -->
-	
-	<div class = "matchingDate">
-
-	  <ul id = "matchingDateBtns">
-	  	<button type = "button" id="backBtn" class = "btn"><</button>
-		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)">27</button></li>
-		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)">28</button></li>
-		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)">29</button></li>
-		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)">30</button></li>
-		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)">1</button></li>
-		<button type = "button" id="frontBtn" class = "btn">></button> 	
-	  </ul>
-	
-	</div>
-	<div class = "applyType mt-4">
-		<p>신청 유형</p>
-		<ul id = "applyTypeBtns">
-			<li><button type = "button" id = "applyTypeBtn" class = "btn m-1 p-2" onclick="change_btn2(event)">개인</button></li>
-			<li><button type = "button" id = "applyTypeBtn" class = "btn m-1 p-2" onclick="change_btn2(event)">팀</button></li>
-		</ul>
-	</div>
-	<div class = "timeZone mt-5">
-		<p>시간</p>
-		<ul id = "btnTimes">
-		<li><button type = "button" id="btnTime" class = "btn m-2 p-3" onclick="changeButtonColor()">08~10</button></li>
-		<li><button type = "button" id="btnTime1" class = "btn m-2 p-3" onclick="changeButtonColor1()">10~12</button></li>
-		<li><button type = "button" id="btnTime2" class = "btn m-2 p-3" onclick="changeButtonColor2()">12~14</button></li>
-		<li><button type = "button" id="btnTime3" class = "btn m-2 p-3" onclick="changeButtonColor3()">14~16</button></li> <br>
-		<li><button type = "button" id="btnTime4" class = "btn m-2 p-3" onclick="changeButtonColor4()">16~18</button></li>
-		<li><button type = "button" id="btnTime5" class = "btn m-2 p-3" onclick="changeButtonColor5()">18~20</button></li>
-		<li><button type = "button" id="btnTime6" class = "btn m-2 p-3" onclick="changeButtonColor6()">20~22</button></li>
-		</ul>
-	</div>
-	
-	<button type="submit" id = "showBtn">조회</button>
-
-</div>
-
-
-
-<script type="text/javascript">
-	function change_btn(e) {
-	var btns = document.querySelectorAll(".matchingDateBtn");
-	btns.forEach(function(btn, i) {
-		if(e.currentTarget == btn) {
-			btn.classList.add("active");
-		}
-		else {
-			btn.classList.remove("active");
-		}
-	});
-	console.log( e.currentTarget );
-	}
-	
-	
-	
-	function change_btn2(e2) {
-	var btns1 = document.querySelectorAll("#applyTypeBtn");
-	btns1.forEach(function(btn1, i) {
-		if(e2.currentTarget == btn1) {
-			btn1.classList.add("active2");
-		}
-		else {
-			btn1.classList.remove("active2");
-		}
-	});
-	console.log( e2.currentTarget );
-	}
-	
-	
-	
-	
-	
-const button = document.querySelector('#btnTime');
-const button1 = document.querySelector('#btnTime1');
-const button2 = document.querySelector('#btnTime2');
-const button3 = document.querySelector('#btnTime3');
-const button4 = document.querySelector('#btnTime4');
-const button5 = document.querySelector('#btnTime5');
-const button6 = document.querySelector('#btnTime6');
-	
-function changeButtonColor() {
-    // Check if the button has the 'active' class
-    if (button.classList.contains('active3')) {
-        // Button is active, remove 'active' class and reset color
-        button.classList.remove('active3');
-        button.style.backgroundColor = '#828282'; // Default color
-    } else {
-        // Button is not active, add 'active' class and set active color
-        button.classList.add('active3');
-        button.style.backgroundColor = '#73A772'; // Active color
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <style>
+    #btnTimes button {
+      border-radius: 3rem;
+      background-color: #828282;
+      color: #ffffff;
+      width: 10rem;
+      height: 6rem;
+      font-size: 2rem;
     }
-}		
-function changeButtonColor1() {
-    // Check if the button has the 'active' class
-    if (button1.classList.contains('active4')) {
-        // Button is active, remove 'active' class and reset color
-        button1.classList.remove('active4');
-        button1.style.backgroundColor = '#828282'; // Default color
-    } else {
-        // Button is not active, add 'active' class and set active color
-        button1.classList.add('active4');
-        button1.style.backgroundColor = '#73A772'; // Active color
-    }
-}	
-function changeButtonColor2() {
-    // Check if the button has the 'active' class
-    if (button2.classList.contains('active5')) {
-        // Button is active, remove 'active' class and reset color
-        button2.classList.remove('active5');
-        button2.style.backgroundColor = '#828282'; // Default color
-    } else {
-        // Button is not active, add 'active' class and set active color
-        button2.classList.add('active5');
-        button2.style.backgroundColor = '#73A772'; // Active color
-    }
-}	
-function changeButtonColor3() {
-    // Check if the button has the 'active' class
-    if (button3.classList.contains('active6')) {
-        // Button is active, remove 'active' class and reset color
-        button3.classList.remove('active6');
-        button3.style.backgroundColor = '#828282'; // Default color
-    } else {
-        // Button is not active, add 'active' class and set active color
-        button3.classList.add('active6');
-        button3.style.backgroundColor = '#73A772'; // Active color
-    }
-}	
-function changeButtonColor4() {
-    // Check if the button has the 'active' class
-    if (button4.classList.contains('active7')) {
-        // Button is active, remove 'active' class and reset color
-        button4.classList.remove('active7');
-        button4.style.backgroundColor = '#828282'; // Default color
-    } else {
-        // Button is not active, add 'active' class and set active color
-        button4.classList.add('active7');
-        button4.style.backgroundColor = '#73A772'; // Active color
-    }
-}	
-function changeButtonColor5() {
-    // Check if the button has the 'active' class
-    if (button5.classList.contains('active8')) {
-        // Button is active, remove 'active' class and reset color
-        button5.classList.remove('active8');
-        button5.style.backgroundColor = '#828282'; // Default color
-    } else {
-        // Button is not active, add 'active' class and set active color
-        button5.classList.add('active8');
-        button5.style.backgroundColor = '#73A772'; // Active color
-    }
-}	
-function changeButtonColor6() {
-    // Check if the button has the 'active' class
-    if (button6.classList.contains('active9')) {
-        // Button is active, remove 'active' class and reset color
-        button6.classList.remove('active9');
-        button6.style.backgroundColor = '#828282'; // Default color
-    } else {
-        // Button is not active, add 'active' class and set active color
-        button6.classList.add('active9');
-        button6.style.backgroundColor = '#73A772'; // Active color
-    }
-}	
 
-	
-	
-//	const btn3 = document.querySelector("#btnTime");
-//	
-//	btn3.addEventListener('click', () => {
-//		const buttonColor = btn3.style.backgroundColor;
-//		console.log(buttonColor)
-//	});
+    .container {
+      display: felx;
+      justify-content: center;
+    }
 
-	
-</script>  
+    #applyTypeBtn {
+      border-radius: 3rem;
+      background-color: #828282;
+      color: #ffffff;
+      width: 10rem;
+      height: 6rem;
+      font-size: 2rem;
+    }
 
-</body>
+    #showBtn {
+      border-radius: 3rem;
+      background-color: #73a772;
+      color: #ffffff;
+      width: 15rem;
+      height: 6rem;
+      font-size: 2rem;
+      position: fixed;
+      top: 90%;
+      left: 37%;
+    }
+
+    p {
+      font-size: 3rem;
+    }
+
+    .timeZone {
+      white-space: nowrap;
+    }
+
+    .matchingDate {
+      white-space: nowrap;
+    }
+
+    .matchingDateBtn {
+      border-radius: 6rem;
+      background-color: #ffffff;
+      color: #626262;
+      width: 7rem;
+      height: 7rem;
+      font-size: 3rem;
+      border-color: #626262;
+    }
+
+    #matchingDateBtns {
+      font-size: 0;
+    }
+    #matchingDateBtns li {
+      display: inline-block;
+      margin-left: -1px;
+    }
+    #matchingDateBtns li:first-child {
+      margin-left: 0;
+    }
+
+    #btnTimes {
+      font-size: 0;
+    }
+    #btnTimes li {
+      display: inline-block;
+      margin-left: -1px;
+    }
+    #btnTimes li:first-child {
+      margin-left: 0;
+    }
+
+    #applyTypeBtns {
+      font-size: 0;
+    }
+    #applyTypeBtns li {
+      display: inline-block;
+      margin-left: -1px;
+    }
+    #applyTypeBtns li:first-child {
+      margin-left: 0;
+    }
+
+    body {
+      font-size: 16px;
+    }
+
+    #backBtn {
+      font-size: 4rem;
+    }
+
+    #frontBtn {
+      font-size: 4rem;
+    }
+
+    .matchingDateBtn:hover,
+    .matchingDateBtn.active {
+      background: #73a772;
+    }
+
+    #applyTypeBtn:hover,
+    #applyTypeBtn.active2 {
+      background: #73a772;
+    }
+
+    #btnTime:hover,
+    #btnTime.active3 {
+      background: #73a772;
+    }
+    #btnTime1:hover,
+    #btnTime1.active4 {
+      background: #73a772;
+    }
+    #btnTime2:hover,
+    #btnTime2.active5 {
+      background: #73a772;
+    }
+    #btnTime3:hover,
+    #btnTime3.active6 {
+      background: #73a772;
+    }
+    #btnTime4:hover,
+    #btnTime4.active7 {
+      background: #73a772;
+    }
+    #btnTime5:hover,
+    #btnTime5.active8 {
+      background: #73a772;
+    }
+    #btnTime6:hover,
+    #btnTime6.active9 {
+      background: #73a772;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <!-- action에 알맞는 값을 넣어주세요 -->
+
+      <div class="matchingDate">
+        <ul id="matchingDateBtns">
+          <button type="button" id="backBtn" class="btn"><</button>
+          <li>
+            <button
+              type="button"
+              class="matchingDateBtn btn m-2 p-3"
+              onclick="change_btn(event)"
+            >
+              27
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="matchingDateBtn btn m-2 p-3"
+              onclick="change_btn(event)"
+            >
+              28
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="matchingDateBtn btn m-2 p-3"
+              onclick="change_btn(event)"
+            >
+              29
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="matchingDateBtn btn m-2 p-3"
+              onclick="change_btn(event)"
+            >
+              30
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="matchingDateBtn btn m-2 p-3"
+              onclick="change_btn(event)"
+            >
+              1
+            </button>
+          </li>
+          <button type="button" id="frontBtn" class="btn">></button>
+        </ul>
+      </div>
+      <div class="applyType mt-4">
+        <p>신청 유형</p>
+        <ul id="applyTypeBtns">
+          <li>
+            <button
+              type="button"
+              id="applyTypeBtn"
+              class="btn m-1 p-2"
+              onclick="change_btn2(event)"
+            >
+              개인
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              id="applyTypeBtn"
+              class="btn m-1 p-2"
+              onclick="change_btn2(event)"
+            >
+              팀
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="timeZone mt-5">
+        <p>시간</p>
+        <ul id="btnTimes">
+          <li>
+            <button
+              type="button"
+              id="btnTime"
+              class="btn m-2 p-3"
+              onclick="changeButtonColor()"
+            >
+              08~10
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              id="btnTime1"
+              class="btn m-2 p-3"
+              onclick="changeButtonColor1()"
+            >
+              10~12
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              id="btnTime2"
+              class="btn m-2 p-3"
+              onclick="changeButtonColor2()"
+            >
+              12~14
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              id="btnTime3"
+              class="btn m-2 p-3"
+              onclick="changeButtonColor3()"
+            >
+              14~16
+            </button>
+          </li>
+          <br />
+          <li>
+            <button
+              type="button"
+              id="btnTime4"
+              class="btn m-2 p-3"
+              onclick="changeButtonColor4()"
+            >
+              16~18
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              id="btnTime5"
+              class="btn m-2 p-3"
+              onclick="changeButtonColor5()"
+            >
+              18~20
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              id="btnTime6"
+              class="btn m-2 p-3"
+              onclick="changeButtonColor6()"
+            >
+              20~22
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <button type="submit" id="showBtn">조회</button>
+    </div>
+
+    <script type="text/javascript">
+      function change_btn(e) {
+        var btns = document.querySelectorAll(".matchingDateBtn");
+        btns.forEach(function (btn, i) {
+          if (e.currentTarget == btn) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+        console.log(e.currentTarget);
+      }
+
+      function change_btn2(e2) {
+        var btns1 = document.querySelectorAll("#applyTypeBtn");
+        btns1.forEach(function (btn1, i) {
+          if (e2.currentTarget == btn1) {
+            btn1.classList.add("active2");
+          } else {
+            btn1.classList.remove("active2");
+          }
+        });
+        console.log(e2.currentTarget);
+      }
+
+      const button = document.querySelector("#btnTime");
+      const button1 = document.querySelector("#btnTime1");
+      const button2 = document.querySelector("#btnTime2");
+      const button3 = document.querySelector("#btnTime3");
+      const button4 = document.querySelector("#btnTime4");
+      const button5 = document.querySelector("#btnTime5");
+      const button6 = document.querySelector("#btnTime6");
+
+      function changeButtonColor() {
+        // Check if the button has the 'active' class
+        if (button.classList.contains("active3")) {
+          // Button is active, remove 'active' class and reset color
+          button.classList.remove("active3");
+          button.style.backgroundColor = "#828282"; // Default color
+        } else {
+          // Button is not active, add 'active' class and set active color
+          button.classList.add("active3");
+          button.style.backgroundColor = "#73A772"; // Active color
+        }
+      }
+      function changeButtonColor1() {
+        // Check if the button has the 'active' class
+        if (button1.classList.contains("active4")) {
+          // Button is active, remove 'active' class and reset color
+          button1.classList.remove("active4");
+          button1.style.backgroundColor = "#828282"; // Default color
+        } else {
+          // Button is not active, add 'active' class and set active color
+          button1.classList.add("active4");
+          button1.style.backgroundColor = "#73A772"; // Active color
+        }
+      }
+      function changeButtonColor2() {
+        // Check if the button has the 'active' class
+        if (button2.classList.contains("active5")) {
+          // Button is active, remove 'active' class and reset color
+          button2.classList.remove("active5");
+          button2.style.backgroundColor = "#828282"; // Default color
+        } else {
+          // Button is not active, add 'active' class and set active color
+          button2.classList.add("active5");
+          button2.style.backgroundColor = "#73A772"; // Active color
+        }
+      }
+      function changeButtonColor3() {
+        // Check if the button has the 'active' class
+        if (button3.classList.contains("active6")) {
+          // Button is active, remove 'active' class and reset color
+          button3.classList.remove("active6");
+          button3.style.backgroundColor = "#828282"; // Default color
+        } else {
+          // Button is not active, add 'active' class and set active color
+          button3.classList.add("active6");
+          button3.style.backgroundColor = "#73A772"; // Active color
+        }
+      }
+      function changeButtonColor4() {
+        // Check if the button has the 'active' class
+        if (button4.classList.contains("active7")) {
+          // Button is active, remove 'active' class and reset color
+          button4.classList.remove("active7");
+          button4.style.backgroundColor = "#828282"; // Default color
+        } else {
+          // Button is not active, add 'active' class and set active color
+          button4.classList.add("active7");
+          button4.style.backgroundColor = "#73A772"; // Active color
+        }
+      }
+      function changeButtonColor5() {
+        // Check if the button has the 'active' class
+        if (button5.classList.contains("active8")) {
+          // Button is active, remove 'active' class and reset color
+          button5.classList.remove("active8");
+          button5.style.backgroundColor = "#828282"; // Default color
+        } else {
+          // Button is not active, add 'active' class and set active color
+          button5.classList.add("active8");
+          button5.style.backgroundColor = "#73A772"; // Active color
+        }
+      }
+      function changeButtonColor6() {
+        // Check if the button has the 'active' class
+        if (button6.classList.contains("active9")) {
+          // Button is active, remove 'active' class and reset color
+          button6.classList.remove("active9");
+          button6.style.backgroundColor = "#828282"; // Default color
+        } else {
+          // Button is not active, add 'active' class and set active color
+          button6.classList.add("active9");
+          button6.style.backgroundColor = "#73A772"; // Active color
+        }
+      }
+
+      //	const btn3 = document.querySelector("#btnTime");
+      //
+      //	btn3.addEventListener('click', () => {
+      //		const buttonColor = btn3.style.backgroundColor;
+      //		console.log(buttonColor)
+      //	});
+    </script>
+  </body>
 </html>
