@@ -1,0 +1,25 @@
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  
+    height: 3.2rem;
+    padding: 0 1.2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-bottom: 0px;
+  }
+
+  #container {
+    align-items: normal;
+    padding-top: 3.3rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    padding-bottom: 0;
+
+    gap: 1rem;
+  }
