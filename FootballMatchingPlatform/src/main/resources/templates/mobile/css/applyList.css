@@ -1,0 +1,49 @@
+#container {
+    padding: 4.3rem 1rem;
+    align-items: normal;
+    gap: 1rem;
+    padding-bottom: 0;
+}
+
+#title-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #D5D5D5;
+    padding: 0.5rem 0;
+}
+
+.nickname-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.nickname-container :nth-child(2) {
+    width: 8.4rem;
+}
+
+.img-container {
+    display: flex;
+}
+
+#right-container {
+    display: flex;
+    gap: 1.1rem;
+    margin-right: 4rem;
+}
+
+button {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 4rem;
+    background: #73A772;
+    border: 1px solid #73A772;
+    border-radius: 20px;
+    color: #ffffff;
+}
