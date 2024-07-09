@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosta.project.repository.MatchingMapper">
+	
+	<select id="selectMatchingListByMonth">
+		SELECT ma.matching_add_seq, m.matching_date
+		FROM matching_adds ma
+		JOIN matching_add_lists mal ON ma.matching_add_seq = mal.matching_add_seq
+		JOIN matchings m ON mal.matching_seq = m.matching_seq
+		WHERE MONTH(m.matching_date) = #{month}
+		AND mal.user_id = #{userId}
+	</select>
+	
+	<select id="selectMatchingListByDate" resultType="com.kosta.project.dto.MatchingScheduleListDTO">
+	<!-- Collection<MatchingScheduleListDTO> selectMatchingListByDate(String userId, int date);-->
+	</select>
+	
+	<select id="selectMatchingListCount" resultType="com.kosta.project.dto.MatchingScheduleListDTO">
+	</select>
+	
+	<select id="selectMatchingList" resultType="com.kosta.project.dto.MatchingScheduleListDTO">	
+	</select>
+	
+	<update id="updatePayStatus" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+		UPDATE matching_add_lists mal
+		JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
+		SET mal.pay_status = TRUE 
+	    WHERE mal.matching_seq = #{matchingSeq} AND ma.user_id = #{userId}
+	</update>
+	
+	<delete id="deleteMatching" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">	
+	</delete>
+	
+	<!-- 상대팀 평가 -->
+	<select id="selectOpposingTeamPlayerList" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+		SELECT mal.player_number, u.user_id, u.nickname 
+		FROM matchings m JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
+		JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
+		JOIN users u ON ma.user_id = u.user_id
+		WHERE m.matching_seq = #{matchingSeq}
+		AND mal.team !=
+			(SELECT mal.team
+			FROM matching_add_lists mal
+			JOIN matching_adds ma
+			ON mal.matching_add_seq = ma.matching_add_seq
+			WHERE ma.user_id = #{userId}
+	</select>
+	
+	<update id="updateReviewScore" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+		update matching_add_lists mal
+		JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
+		set mal.review_score += #{score}
+		WHERE mal.matching_seq = #{matchingSeq} AND ma.user_id = #{userId}
+	</update>
+	
+	<select id="selectPlayerList">
+		SELECT mal.player_number, u.nickname 
+		FROM matchings m JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
+		JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
+		JOIN users u ON ma.user_id = u.user_id
+		WHERE m.matching_seq = #{matchingSeq}
+	</select>
+	
+	<select id="selectReviewScore" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+		SELECT mal.team, m.a_score, m.b_score
+		FROM matchings m
+		JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
+		JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
+		WHERE mal.matching_seq = #{matchingSeq}
+		AND ma.user_id = #{userId}
+	</select>
+	
+	<select id="selectTeamScore" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+		SELECT mal.review_score
+		FROM matching_add_lists mal JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
+		WHERE mal.matching_seq = #{matchingSeq}
+		AND ma.user_id = #{userId}
+	</select>
+	
+	
+	
+	
+	
+</mapper>
