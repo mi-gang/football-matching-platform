@@ -1,37 +1,28 @@
-.teamRankApply {
-  white-space: nowrap;
-  overflow: hidden;
+#container{
+  align-items: normal;
 }
 
-#teamPageButton {
-  justify-content: space-evenly;
-  padding-left: 0;
-  margin-top: 0rem;
-}
-
-#teamPageButton li {
-  display: inline-block;
-}
-
-.button {
-  background-color: #ffffff;
-  height: 2rem;
-  margin-left: 1rem;
-  left: 56px;
-  top: 68px;
-  border: 2px solid #000;
+#search-container {
+  display: flex;
+  background: #F8FAFB;
   border-radius: 20px;
-  font-size: 1rem;
+  padding-left: 1rem;
+  padding-right: 0.5rem;
+  align-items: center;
+  width: 50%;
 }
 
-.clicked_button {
+.selectBtn{
   background-color: #73a772;
   color: #ffffff;
-  border-color: #73a772;
+  background: #73A772;
+  border: 1px solid #73A772;
+  border-radius: 20px;
+  padding:0.5rem;
 }
 
 .searchTeam {
-  width: 18rem;
+  width: 16rem;
   height: 2rem;
   margin-top: 10px;
   border: 0px;
@@ -99,4 +90,56 @@ hr {
 }
 #score {
   font-weight: bold;
+}
+
+.content-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  border-color: #73a772;
+}
+
+
+.first-content-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ranking {
+  font-size: 0.875rem;
+}
+
+.second-content-container {
+  display: flex;
+  align-items: center;
+  gap : 0.4rem;
+}
+
+.teamname {
+  font-weight: 600;
+}
+
+.tier {
+  width: 1rem;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.gameCount{
+  text-align: center;
+  width: 3.4rem;
+}
+
+.odds{
+  text-align: center;
+  width: 2.4rem;
+}
+
+.score {
+  text-align: center;
+  width: 3.2rem;
+  font-size: 1rem;
 }
