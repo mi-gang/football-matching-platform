@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosta.project.repository.UsersMapper">
+	<select id="selectUserStatus" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT user_status as userStatus FROM users WHERE user_id = #{userId}
+	</select>
+	<select id="selectSuspenedTime" resultType="java.util.Date" parameterType="java.lang.String">
+		SELECT suspended_time as suspendedTime FROM users
+		WHERE user_id = #{userId}
+	</select>
+</mapper>

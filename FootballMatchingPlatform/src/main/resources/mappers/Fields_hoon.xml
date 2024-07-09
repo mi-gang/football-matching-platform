@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosta.project.repository.FieldsMapper">
+	<select id="selectFieldInfo" resultType="com.kosta.project.dto.FieldsDTO" parameterType="java.lang.Integer">
+		SELECT field_name as fieldName, field_img as fieldImg, field_address as fieldAddress, field_address_detail as fieldAddressDetail, 
+		shower_room as showerRoom, rent_ball as rentBall, rent_shoes as rentShoes, parking, sell_drink as sellDrink
+		FROM fields f, field_imgs fi
+		WHERE f.field_seq = #{fieldSeq}
+		AND f.field_seq = fi.field_seq;	
+	</select>
+	<select id="selectFieldSeq" resultType="Integer">
+		SELECT field_seq FROM fields WHERE field_status = 1; 
+	</select>
+	<select id="selectCloseTime" resultType="Integer" parameterType="com.kosta.project.dto.CloseTimeDTO"></select>
+</mapper>

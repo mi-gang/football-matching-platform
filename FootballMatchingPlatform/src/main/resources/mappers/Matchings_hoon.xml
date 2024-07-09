@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosta.project.repository.MatchingsMapper">
+	<select id="selectMatchingsList" resultType="com.kosta.project.dto.MatchingsDTO" parameterType="MatchingConditionDTO">
+		SELECT matching_seq as matchingSeq, matching_date as matchingDate, matching_time as matchingTime, field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_name as fieldName
+		FROM matchings m, fields f
+		WHERE m.field_seq = f.field_seq
+		AND matching_date = #{matchingDate}
+		AND matching_time = #{matchingTime}
+	</select>
+	<select id="selectMatchingsListByRegion" resultType="com.kosta.project.dto.MatchingsDTO" parameterType="MatchingConditionDTO">
+		SELECT matching_seq as matchingSeq, matching_date as matchingDate, matching_time as matchingTime, field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_name as fieldName
+		FROM matchings m, fields f
+		WHERE m.field_seq = f.field_seq
+		AND matching_date = #{matchingDate}
+		AND matching_time = #{matchingTime}
+		AND field_address REGEXP #{fieldAddress}; 
+	</select>
+	
+	<insert id="insertMatchingAdds" parameterType="java.lang.String">
+		INSERT INTO matching_adds(matching_add_date, user_id, team_seq)
+		VALUES(NOW(), #{userId}, NULL);
+	</insert>
+	<insert id="insertMatchingAddsByTeam" parameterType="java.lang.String">
+		INSERT INTO matching_adds(matching_add_date, user_id, team_seq)
+		VALUES(NOW(), NULL, #{teamSeq});
+	</insert>
+	<select id="selectMatchingAddSeq" resultType="java.lang.Integer">
+		SELECT max(matching_add_seq) FROM matching_adds;
+	</select>
+	<select id="selectMatchingStatus" resultType="java.lang.String" parameterType="java.lang.Integer">
+		SELECT matching_status as matchingStatus FROM matchings
+		WHERE matching_seq = #{matchingSeq};
+	</select>
+	<select id="insertMatchingAddLists" parameterType="com.kosta.project.dto.MatchingAddListDTO">
+		INSERT INTO matching_add_lists(matching_seq, add_success_status, cancle_status, pay_status,
+		review_status, team_status, team, player_number, review_score, matching_add_seq)
+		VALUES (#{matchingSeq}, #{addSuccessStatus}, FALSE, FALSE, FALSE, FALSE, FALSE, NULL, NULL, #{matchingAddSeq});
+	</select>
+	<select id="selectMatchingMemberCount" resultType="java.lang.Integer" parameterType="com.kosta.project.dto.MatchingCountDTO">
+		SELECT COUNT(matching_add_list_seq)
+		FROM matching_add_lists ml, matching_adds ma, users u
+		WHERE ml.matching_add_seq = ma.matching_add_seq
+		AND ma.user_id = u.user_id
+		AND matching_seq = #{matchingSeq} AND add_success_status = TRUE AND cancle_status = FALSE
+		AND user_tier = #{userTier};
+	</select>
+	<update id="updateMatchings" parameterType="java.lang.Integer">
+		UPDATE matchings SET matcing_status = '매칭성공'
+		WHERE matching_seq = #{matchingSeq};
+	</update>
+	<update id="updateMatchingAddLists" parameterType="com.kosta.project.dto.MatchingCountDTO">
+		UPDATE matching_add_lists ml
+		INNER JOIN matching_adds ma
+		ON ml.matching_add_seq = ma.matching_add_seq
+		INNER JOIN users u
+		ON u.user_id = ma.user_id
+		SET add_success_status = FALSE
+		WHERE matching_seq = #{matchingSeq}
+		AND u.user_tier != #{userTier};
+	</update>
+<!-- 	<select id="selectMatchingAddResult" resultType=""></select> -->
+</mapper>
