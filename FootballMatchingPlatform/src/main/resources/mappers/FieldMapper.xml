@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosta.project.repository.FieldMapper">
+	
+	<!-- <select id="selectFieldList" resultType="com.kosta.project.dto.FieldDTO">
+    SELECT f.field_seq AS fieldSeq, field_name AS fieldName, field_img AS fieldImg, field_address AS fieldAddress, field_address_detail AS fieldAddressDetail,
+			shower_room AS showerRoom, rent_ball AS rentBall, rent_shoes AS rentShoes, parking, sell_drink AS sellDrink
+	FROM fields f, field_imgs fi
+	WHERE f.field_seq = fi.field_seq
+  </select>
+
+ 	<select id="selectFieldListByFieldName" parameterType="java.lang.String" resultType="com.kosta.project.dto.FieldDTO">
+    SELECT f.field_seq AS fieldSeq, field_name AS fieldName, field_img AS fieldImg, field_address AS fieldAddress, field_address_detail AS fieldAddressDetail,
+			shower_room AS showerRoom, rent_ball AS rentBall, rent_shoes AS rentShoes, parking, sell_drink AS sellDrink
+	FROM fields f, field_imgs fi
+	WHERE f.field_seq = fi.field_seq AND field_name REGEXP #{fieldName}
+  </select> -->
+
+  <!-- <select id="selectFieldListByRegion" parameterType="java.lang.String" resultType="com.kosta.project.dto.FieldDTO">
+    SELECT f.field_seq AS fieldSeq, field_name AS fieldName, field_img AS fieldImg, field_address AS fieldAddress, field_address_detail AS fieldAddressDetail,
+			shower_room AS showerRoom, rent_ball AS rentBall, rent_shoes AS rentShoes, parking, sell_drink AS sellDrink
+	FROM fields f, field_imgs fi
+	WHERE f.field_seq = fi.field_seq AND field_address REGEXP #{fieldAddress}
+  </select> -->
+
+  <select id="selectFieldListByFieldNameAndRegion" parameterType="map" resultType="com.kosta.project.dto.FieldDTO">
+    SELECT f.field_seq AS fieldSeq, field_name AS fieldName, field_img AS fieldImg, field_address AS fieldAddress, field_address_detail AS fieldAddressDetail,
+			shower_room AS showerRoom, rent_ball AS rentBall, rent_shoes AS rentShoes, parking, sell_drink AS sellDrink
+	FROM fields f, field_imgs fi
+	WHERE f.field_seq = fi.field_seq AND field_name REGEXP #{fieldName} AND field_address REGEXP #{fieldAddress}
+  </select>	
+  
+  <!-- <select id="selectField" parameterType="integer" resultType="com.kosta.project.dto.FieldDTO">
+    SELECT f.field_seq AS fieldSeq, field_name AS fieldName, field_img AS fieldImg, field_address AS fieldAddress, field_address_detail AS fieldAddressDetail,
+			shower_room AS showerRoom, rent_ball AS rentBall, rent_shoes AS rentShoes, parking, sell_drink AS sellDrink, field_content AS fieldContent
+	FROM fields f, field_imgs fi
+	WHERE f.field_seq = #{fieldSeq} and f.field_seq = fi.field_seq;
+  </select> --> -->
+</mapper>

@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kosta.project.repository.UserMapper">
 	
-	<select id="selectUserLogin" parameterType="java.lang.String" resultType="com.kosta.project.dto.UserDTO">
+<!-- 	<select id="selectUserLogin" parameterType="java.lang.String" resultType="com.kosta.project.dto.UserDTO">
     SELECT
       user_id,
       address,
@@ -43,7 +43,7 @@
         SELECT nickname
         FROM users
         WHERE nickname = #{nickname}
-    </select>	
+    </select>	 -->
 	
 	
 	
