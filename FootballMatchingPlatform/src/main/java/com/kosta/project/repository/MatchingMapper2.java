@@ -19,7 +19,7 @@ public interface MatchingMapper2 {
 	int selectMatchingListCount(String userId);
 	Collection<MatchingScheduleListDTO> selectMatchingList(String userId);
 	boolean updatePayStatus(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
-	boolean deleteMatching(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
+	boolean deleteMatching(int matchingAddListSeq);
 	
 	// 상대팀 평가
 	Collection<UserPlayInfoDTO> selectOpposingTeamPlayerList (UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq

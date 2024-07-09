@@ -11,8 +11,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Builder
-public class UserMatchingInfoDTO {
-	private String userId;
+public class ReportDTO {
+	private int reportSeq;
+	private String reportType;
+	private String reportContent;
 	private int matchingSeq;
-	private int score;
+	private String userId;
+	private String reportedUserId;
 }

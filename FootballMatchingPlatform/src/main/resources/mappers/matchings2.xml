@@ -29,7 +29,9 @@
 	    WHERE mal.matching_seq = #{matchingSeq} AND ma.user_id = #{userId}
 	</update>
 	
-	<delete id="deleteMatching" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">	
+	<delete id="deleteMatching">	
+		DELETE FROM matching_add_lists
+		WHERE matching_add_list_seq = #{matchingAddListSeq};
 	</delete>
 	
 	<!-- 상대팀 평가 -->
@@ -77,9 +79,5 @@
 		WHERE mal.matching_seq = #{matchingSeq}
 		AND ma.user_id = #{userId}
 	</select>
-	
-	
-	
-	
 	
 </mapper>
