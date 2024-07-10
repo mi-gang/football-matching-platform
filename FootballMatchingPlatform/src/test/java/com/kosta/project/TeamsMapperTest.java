@@ -6,14 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.kosta.project.repository.FieldsMapper;
-import com.kosta.project.repository.TeamsMapper;
+import com.kosta.project.repository.TeamMapper;
 
 
 @SpringBootTest
 public class TeamsMapperTest {
 	@Autowired
-	TeamsMapper tm;
+	TeamMapper tm;
 	
 	//@Test
 	void selectTeamSeqTest() {

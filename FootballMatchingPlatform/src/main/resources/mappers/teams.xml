@@ -56,10 +56,6 @@
 		#{possB}, #{possC}, #{possD}, TRUE, FALSE, #{leaderID})
 	</insert>
 	
-	<select id="selectTeamSeq" resultType="Integer">
-		SELECT team_seq FROM teams WHERE team_name = #{teamName}
-	</select>
-	
 	<insert id="insertTeamMember">
 		INSERT INTO team_members(user_id, join_date, team_member_status, team_member_delete,team_seq)
 		VALUES (#{userId}, NOW(), FALSE, FALSE, #{teamSeq})
@@ -187,5 +183,26 @@
 	<update id="updateTeamDismantleStatus">
 		UPDATE teams SET team_dismantle_status = TRUE WHERE team_seq = #{teamSeq};
 	</update>
+	
+	<!-- 팀 시퀀스 가져오기(팀 매칭 신청 할 때), 팀장 여부 확인 할 때 -->
+	<select id="selectTeamSeq" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT team_seq as teamSeq FROM teams 
+		WHERE leader_id = #{userId};
+	</select>
+	
+	<!-- 팀원 수 확인하기 (팀 매칭 신청 할 때) -->
+	<select id="selectTeamMemberCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT COUNT(member_seq) FROM team_members 
+		WHERE team_seq = (SELECT team_seq FROM teams WHERE team_name = (SELECT team_name FROM teams WHERE leader_id = #{userId}))
+		AND team_member_status = 0;
+	</select>
+	
+	<!-- 팀원 리스트 조회(팀 매칭 신청 할 때 팀원 정지 여부 확인 위해) -->
+	<select id="selectTeamMemberIds" resultType="String" parameterType="java.lang.String">
+		SELECT user_id as userId FROM team_members
+		WHERE team_seq = (SELECT team_seq FROM teams 
+		WHERE team_name = (SELECT team_name FROM teams WHERE leader_id = #{userId}))
+		AND team_member_status = 0;
+	</select>
 	
 </mapper>

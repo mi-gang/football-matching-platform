@@ -9,7 +9,7 @@ import com.kosta.project.dto.TeamDTO;
 import com.kosta.project.dto.TeamMemberDTO;
 
 @Mapper
-public interface TeamMapper_yoo {
+public interface TeamMapper {
 	
 	List<TeamDTO> selectTeamRankList();
 	List<TeamDTO> selectSearchTeamRankList(String search);
@@ -20,7 +20,6 @@ public interface TeamMapper_yoo {
 	// 팀생성	
 	String selectTeamName(String teamName);	// 팀 이름 중복확인
 	boolean insertTeam(TeamDTO dto);
-	int selectTeamSeq(String teamName);
 	boolean insertTeamMember(String userId, int teamSeq);	// 팀 멤버 추가
 	
 	boolean insertTeamApply(String userId, int teamSeq);	// 팀 가입 신청
@@ -52,4 +51,7 @@ public interface TeamMapper_yoo {
 	int selectTeamMemberCount(int teamSeq); // 팀 멤버 수 확인
 	boolean updateTeamDismantleStatus(int teamSeq);
 	
+	int selectTeamSeq(String userId);
+	int selectTeamMemberCount(String userId);
+	List<String> selectTeamMemberIds(String userId);
 }

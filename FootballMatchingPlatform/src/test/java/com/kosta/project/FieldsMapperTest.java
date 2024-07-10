@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.kosta.project.dto.CloseTimeDTO;
-import com.kosta.project.repository.FieldsMapper;
+import com.kosta.project.repository.FieldMapper;
 
 
 @SpringBootTest
 public class FieldsMapperTest {
 	@Autowired
-	FieldsMapper fm;
+	FieldMapper fm;
 	
 	//@Test
 	void selectFieldInfoTest() {

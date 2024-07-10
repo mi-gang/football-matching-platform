@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.kosta.project.repository.UsersMapper;
+import com.kosta.project.repository.UserMapper;
 
 @SpringBootTest
 public class UserMapperTest {
 	@Autowired
-	UsersMapper um;
+	UserMapper um;
 	
 	//@Test
 	void selectUserStatusTest() {

@@ -8,14 +8,13 @@ import com.kosta.project.dto.MatchingAddListsDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingCountDTO;
 import com.kosta.project.dto.addMatchingsDTO;
-import com.kosta.project.repository.FieldsMapper;
-import com.kosta.project.repository.MatchingsMapper;
+import com.kosta.project.repository.MatchingMapper;
 
 
 @SpringBootTest
 public class MatchingsMapperTest {
 	@Autowired
-	MatchingsMapper mm;
+	MatchingMapper mm;
 	
 	//@Test
 	void selectMatchingsListTest() {

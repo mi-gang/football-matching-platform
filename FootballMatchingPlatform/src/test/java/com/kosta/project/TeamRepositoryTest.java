@@ -6,18 +6,15 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kosta.project.dto.TeamDTO;
-import com.kosta.project.repository.TeamMapper_yoo;
-
-import lombok.Builder;
+import com.kosta.project.repository.TeamMapper;
 
 @SpringBootTest
 class TeamRepositoryTest{
 
 	@Autowired
-	TeamMapper_yoo teamMapper;
+	TeamMapper teamMapper;
 	
 	//@Test
 	void selectTeamRankList() {		// 팀 전체 순위

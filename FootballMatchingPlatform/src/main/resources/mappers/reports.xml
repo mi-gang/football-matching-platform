@@ -3,6 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kosta.project.repository.ReportMapper">
 	
+	<!-- 신고 등록하기 -->
 	<insert id="insertReport" parameterType="com.kosta.project.dto.ReportDTO">
 		INSERT INTO reports
 		(report_type, report_content, matching_seq, user_id, reported_user_id)
@@ -10,6 +11,7 @@
 		(#{reportType}, #{reportContent}, #{matchingSeq}, #{userId}, #{reportedUserId})
 	</insert>
 	
+	<!-- 신고 검색하기 -->
 	<select id="selectReport" resultType="com.kosta.project.dto.ReportDTO">
 		SELECT report_type, report_content, matching_seq, user_id, reported_user_id
 		FROM reports

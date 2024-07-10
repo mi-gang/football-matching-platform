@@ -5,7 +5,7 @@ import java.util.Date;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface UsersMapper {
+public interface UserMapper {
 	String selectUserStatus(String userId);
 	Date selectSuspenedTime(String userId);
 }
