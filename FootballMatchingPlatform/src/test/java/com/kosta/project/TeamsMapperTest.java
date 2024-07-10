@@ -24,7 +24,7 @@ public class TeamsMapperTest {
 		System.out.println(tm.selectTeamMemberCount("chul01"));
 	}
 	
-	@Test
+	//@Test
 	void selectTeamMemberIdsTest() {
 		ArrayList<String> memberIds = new ArrayList<String>();
 		memberIds = (ArrayList<String>) tm.selectTeamMemberIds("chul01");

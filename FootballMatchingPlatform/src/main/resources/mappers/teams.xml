@@ -22,7 +22,7 @@
 		ORDER BY team_score DESC;
 	</select>
 	
-	
+		
 	<!-- 가입 가능 팀 목록 조회 -->
 	<select id="selectPossibleJoinTeam" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT t.team_seq AS teamSeq, team_name AS teamName, possible_a AS possA, possible_b AS possB, 
@@ -173,28 +173,24 @@
 	</select>
 
 
-	<!-- 팀 해체하기 -->
-	<select id="selectTeamMemberCount">
-		SELECT COUNT(user_id)
-		FROM team_members
-		WHERE team_seq = #{teamSeq} AND team_member_status = FALSE AND team_member_delete = FALSE;
+	<!-- 팀 원수 확인(팀해체, 팀매칭신청) -->
+	<select id="selectTeamMemberCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT COUNT(member_seq) 
+		FROM team_members 
+		WHERE team_seq = (SELECT team_seq FROM teams WHERE team_name = (SELECT team_name FROM teams WHERE leader_id = #{userId}))
+		AND team_member_status = 0 
+		AND team_member_delete = FALSE;
 	</select>
 	
 	<update id="updateTeamDismantleStatus">
 		UPDATE teams SET team_dismantle_status = TRUE WHERE team_seq = #{teamSeq};
 	</update>
 	
+	
 	<!-- 팀 시퀀스 가져오기(팀 매칭 신청 할 때), 팀장 여부 확인 할 때 -->
 	<select id="selectTeamSeq" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT team_seq as teamSeq FROM teams 
 		WHERE leader_id = #{userId};
-	</select>
-	
-	<!-- 팀원 수 확인하기 (팀 매칭 신청 할 때) -->
-	<select id="selectTeamMemberCount" resultType="java.lang.Integer" parameterType="java.lang.String">
-		SELECT COUNT(member_seq) FROM team_members 
-		WHERE team_seq = (SELECT team_seq FROM teams WHERE team_name = (SELECT team_name FROM teams WHERE leader_id = #{userId}))
-		AND team_member_status = 0;
 	</select>
 	
 	<!-- 팀원 리스트 조회(팀 매칭 신청 할 때 팀원 정지 여부 확인 위해) -->
@@ -206,16 +202,16 @@
 	</select>
 	
 	<!-- 내 팀 정보 불러오기(마이페이지) -->
-  <select id="selectTeamInfoByUserId" resultType="com.kosta.project.dto.TeamDTO">
-    SELECT
-      teams.team_name as teamName,
-      teams.team_rank as teamRank,
-      teams.team_tier as teamTier,
-      IFNULL(100 * (teams.win_count / teams.game_count), 0) AS winRate,  teams.team_score as teamScore
-    FROM teams
-    INNER JOIN team_members ON teams.team_seq = team_members.team_seq
-    WHERE team_members.user_id = #{userId}
-  </select>
+	<select id="selectTeamInfoByUserId" resultType="com.kosta.project.dto.TeamDTO">
+	    SELECT
+	      teams.team_name as teamName,
+	      teams.team_rank as teamRank,
+	      teams.team_tier as teamTier,
+	      IFNULL(100 * (teams.win_count / teams.game_count), 0) AS winRate,  teams.team_score as teamScore
+	    FROM teams
+	    INNER JOIN team_members ON teams.team_seq = team_members.team_seq
+	    WHERE team_members.user_id = #{userId}
+	</select>
 
 </mapper>
 	
