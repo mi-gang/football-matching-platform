@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class FieldService {
-	private final FieldMapper fieldMapper;
+//	private final FieldMapper fieldMapper;
 	
 //	public List<FieldDTO> getFieldList(){
 //		return fieldMapper.selectFieldList();
