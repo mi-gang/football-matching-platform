@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosta.project.repository.UsersMapper">
+	<!-- 회원 정지 여부 확인(매칭 신청 할 때) -->
+	<select id="selectUserStatus" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT user_status as userStatus FROM users WHERE user_id = #{userId}
+	</select>
+	<!-- 팀원 정지 여부 확인(팀 매칭 신청 할 때), 빠른 매칭 결제 할 때 -->
+	<select id="selectSuspenedTime" resultType="java.util.Date" parameterType="java.lang.String">
+		SELECT suspended_time as suspendedTime FROM users
+		WHERE user_id = #{userId}
+	</select>
+	<!-- 등급확인(빠른 매칭 결제 할 때) -->
+	<select id="selectUserTier" resultType="String" parameterType="Integer">
+		SELECT matching_tier FROM matchings
+		WHERE matching_seq = #{matchingSeq};
+	</select>
+</mapper>
