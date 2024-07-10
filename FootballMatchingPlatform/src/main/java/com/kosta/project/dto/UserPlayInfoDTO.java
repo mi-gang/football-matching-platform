@@ -10,7 +10,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class UserPlayInfoDTO {
-	private int userId;
+	private String userId;
 	private String nickname;
+	private char team;
 	private int playerNumber;
 }

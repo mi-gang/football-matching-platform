@@ -22,20 +22,22 @@ public class MatchingScheduleListDTO {
 	
 	private int matchingSeq;
 	private LocalDate matchingDate;
-	private LocalDate matchingTime;
+	private int matchingTime;
 	private boolean FastAddStatus;
 	private String matchingStatus;	
+
+	private int matchingAddSeq;
+	
 	private int aScore;
 	private int bScore;
 	
-	private int matchingAddSeq;
 	private int matchingAddListSeq;
-	private boolean addSuccessStatus;
+	private boolean matchingSuccessStatus;
 	private boolean cancelStatus;
 	private boolean payStatus;
 	private boolean reviewStatus;
 	private boolean teamStatus;
-	private String team;
+	private char team;
 	private int playerNumber;
 	
 }

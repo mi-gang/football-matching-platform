@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kosta.project.repository.MatchingMapper">
+<mapper namespace="com.kosta.project.repository.ReportMapper">
 	
 	<insert id="insertReport" parameterType="com.kosta.project.dto.ReportDTO">
 		INSERT INTO reports
@@ -10,10 +10,10 @@
 		(#{reportType}, #{reportContent}, #{matchingSeq}, #{userId}, #{reportedUserId})
 	</insert>
 	
-	<select id="selectReport" resultType="com.kosta.project.dto.MatchingScheduleListDTO">
-		SELECT reported_user_id
+	<select id="selectReport" resultType="com.kosta.project.dto.ReportDTO">
+		SELECT report_type, report_content, matching_seq, user_id, reported_user_id
 		FROM reports
-		WHERE user_id = #{userId} AND reported_user_id = #{reportedUserId}
+		WHERE report_seq = #{reportSeq}
 	</select>
 	
 </mapper>

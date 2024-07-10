@@ -13,8 +13,8 @@ import com.kosta.project.dto.UserPlayInfoDTO;
 @Mapper
 public interface MatchingMapper2 {
 	
-	Map<Integer, LocalDate> selectMatchingListByMonth(String userId, int month);
-	Collection<MatchingScheduleListDTO> selectMatchingListByDate(String userId, int date);
+	Collection<MatchingScheduleListDTO> selectMatchingListByMonth(String userId, int month);
+	Collection<MatchingScheduleListDTO> selectMatchingListByDate(String userId, String date);
 	
 	int selectMatchingListCount(String userId);
 	Collection<MatchingScheduleListDTO> selectMatchingList(String userId);
