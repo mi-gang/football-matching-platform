@@ -17,20 +17,20 @@ public class FieldMapperTest {
 	void getFieldListTest() {
 		System.out.println(fieldMapper.selectFieldList());
 	}
-//	@Test
-//	void getFieldListNameTest() {
-//		System.out.println(fieldMapper.selectFieldListByFieldName("구장"));
-//	}
-//	@Test
-//	void getFieldListRegionTest() {
-//		System.out.println(fieldMapper.selectFieldListByRegion("서울 금천"));
-//	}
-//	@Test
-//	void getFieldListNameRegionTest() {
-//		System.out.println(fieldMapper.selectFieldListByFieldNameAndRegion("구장","서울 금천"));
-//	}
-//	@Test
-//	void getFieldTest() {
-//		System.out.println(fieldMapper.selectField(4));
-//	}
+	@Test
+	void getFieldListNameTest() {
+		System.out.println(fieldMapper.selectFieldListByFieldName("구장"));
+	}
+	@Test
+	void getFieldListRegionTest() {
+		System.out.println(fieldMapper.selectFieldListByRegion("서울 금천구"));
+	}
+	@Test
+	void getFieldListNameRegionTest() {
+		System.out.println(fieldMapper.selectFieldListByFieldNameAndRegion(FieldDTO.builder().fieldName("구장").fieldAddress("서울").build()));
+	}
+	@Test
+	void getFieldTest() {
+		System.out.println(fieldMapper.selectField(4));
+	}
 }

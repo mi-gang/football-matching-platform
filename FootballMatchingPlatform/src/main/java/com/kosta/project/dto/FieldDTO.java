@@ -36,20 +36,4 @@ public class FieldDTO {
 	private int reservationCountOfMonth;
 	private String managerId;
 	
-	public FieldDTO(int fieldSeq, String fieldName, String fieldImg, String fieldAddress, String fieldAddressDetail,
-			boolean showerRoom, boolean rentBall, boolean rentShoes, boolean parking, boolean sellDrink) {
-		super();
-		this.fieldSeq = fieldSeq;
-		this.fieldName = fieldName;
-		this.fieldImg = fieldImg;
-		this.fieldAddress = fieldAddress;
-		this.fieldAddressDetail = fieldAddressDetail;
-		this.showerRoom = showerRoom;
-		this.rentBall = rentBall;
-		this.rentShoes = rentShoes;
-		this.parking = parking;
-		this.sellDrink = sellDrink;
-	}
-	
-	
 }
