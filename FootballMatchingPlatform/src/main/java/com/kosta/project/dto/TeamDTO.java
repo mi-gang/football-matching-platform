@@ -15,6 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class TeamDTO {
 	
+	private float winRate;
 	private int teamSeq;		// 팀 Seq
 	private String teamName;	// 팀명
 	private String hometown;	// 지역
@@ -34,7 +35,8 @@ public class TeamDTO {
 	private boolean recruitment;	// 모집 여부
 	private boolean teamDismantleStatus;	//팀 해체 여부
 	private String leaderID;				// 팀장 아이디
-	
+	private String userId;
+
 	private double odds;			// 승률
 	private int memberCount;
 	

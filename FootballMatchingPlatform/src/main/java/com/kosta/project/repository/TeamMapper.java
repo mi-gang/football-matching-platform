@@ -54,4 +54,8 @@ public interface TeamMapper {
 	int selectTeamSeq(String userId);
 	int selectTeamMemberCount(String userId);
 	List<String> selectTeamMemberIds(String userId);
+	
+	// 내 팀 정보 불러오기(마이페이지)
+	TeamDTO selectTeamInfoByUserId(String userId);
+
 }

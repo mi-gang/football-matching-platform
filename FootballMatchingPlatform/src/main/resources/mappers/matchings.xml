@@ -233,4 +233,29 @@
 		AND m.matching_seq = #{matchingSeq}
 	</select>
 	
+
+  <select id="selectMatchingAlready" parameterType="java.lang.String" resultType="com.kosta.project.dto.MatchingDTO">
+  SELECT
+    m.matching_status as matchingStatus,
+    m.matching_date as matchingDate,
+    m.matching_time as matchingTime,
+    f.field_address as fieldAddress,
+    f.field_address_detail as fieldAddressDetail,
+    f.field_name as fieldName
+  FROM
+    matchings m
+  INNER JOIN fields f ON m.field_seq = f.field_seq
+  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+  INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+  WHERE
+    ma.user_id = #{userId}
+    AND (m.matching_status = '경기 확정' OR m.matching_status = '매칭성공')
+    AND m.matching_date - NOW() >= 0
+    AND m.fast_add_status = 0
+  ORDER BY
+    m.matching_date DESC,
+    m.matching_time DESC
+  LIMIT 1
+  </select>
+
 </mapper>
