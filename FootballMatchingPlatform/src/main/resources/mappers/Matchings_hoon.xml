@@ -2,14 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kosta.project.repository.MatchingsMapper">
-	<select id="selectMatchingsList" resultType="com.kosta.project.dto.MatchingsDTO" parameterType="MatchingConditionDTO">
+	<!-- 매칭 중인 목록 조회 -->
+	<select id="selectMatchingsList" resultType="com.kosta.project.dto.MatchingsDTO" parameterType="com.kosta.project.dto.MatchingConditionDTO">
 		SELECT matching_seq as matchingSeq, matching_date as matchingDate, matching_time as matchingTime, field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_name as fieldName
 		FROM matchings m, fields f
 		WHERE m.field_seq = f.field_seq
 		AND matching_date = #{matchingDate}
 		AND matching_time = #{matchingTime}
+		AND matching_status = "매칭중"
 	</select>
-	<select id="selectMatchingsListByRegion" resultType="com.kosta.project.dto.MatchingsDTO" parameterType="MatchingConditionDTO">
+	<!-- 매칭 중인 목록 지역별 조회 -->
+	<select id="selectMatchingsListByRegion" resultType="com.kosta.project.dto.MatchingsDTO" parameterType="com.kosta.project.dto.MatchingConditionDTO">
 		SELECT matching_seq as matchingSeq, matching_date as matchingDate, matching_time as matchingTime, field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_name as fieldName
 		FROM matchings m, fields f
 		WHERE m.field_seq = f.field_seq
@@ -17,48 +20,79 @@
 		AND matching_time = #{matchingTime}
 		AND field_address REGEXP #{fieldAddress}; 
 	</select>
-	
+	<!-- 매칭 등록 -->
+	<insert id="insertMatchings" parameterType="com.kosta.project.dto.addMatchingsDTO">
+		INSERT INTO matchings(matching_date, matching_time, fast_add_status, matching_status, matching_tier,
+		a_score, b_score, field_seq)
+		VALUES (#{matchingDate}, #{matchingTime}, 0, "매칭중", NULL, NULL, NULL, #{fieldSeq});
+	</insert>
+	<!-- 매칭 신청 정보 등록(개인) -->
 	<insert id="insertMatchingAdds" parameterType="java.lang.String">
 		INSERT INTO matching_adds(matching_add_date, user_id, team_seq)
 		VALUES(NOW(), #{userId}, NULL);
 	</insert>
-	<insert id="insertMatchingAddsByTeam" parameterType="java.lang.String">
+	<!-- 매칭 신청 정보 등록(팀) -->
+	<insert id="insertMatchingAddsByTeam" parameterType="Integer">
 		INSERT INTO matching_adds(matching_add_date, user_id, team_seq)
 		VALUES(NOW(), NULL, #{teamSeq});
 	</insert>
+	<!-- 매칭 신청 정보 시퀀스 가져오기 -->
 	<select id="selectMatchingAddSeq" resultType="java.lang.Integer">
 		SELECT max(matching_add_seq) FROM matching_adds;
 	</select>
+	<!-- 신청 할 매칭 상태 조회 -->
 	<select id="selectMatchingStatus" resultType="java.lang.String" parameterType="java.lang.Integer">
 		SELECT matching_status as matchingStatus FROM matchings
 		WHERE matching_seq = #{matchingSeq};
 	</select>
-	<select id="insertMatchingAddLists" parameterType="com.kosta.project.dto.MatchingAddListDTO">
-		INSERT INTO matching_add_lists(matching_seq, add_success_status, cancle_status, pay_status,
+	<!-- 매칭 신청 등록 -->
+	<select id="insertMatchingAddLists" parameterType="com.kosta.project.dto.MatchingAddListsDTO">
+		INSERT INTO matching_add_lists(matching_seq, matching_success_status, cancel_status, pay_status,
 		review_status, team_status, team, player_number, review_score, matching_add_seq)
-		VALUES (#{matchingSeq}, #{addSuccessStatus}, FALSE, FALSE, FALSE, FALSE, FALSE, NULL, NULL, #{matchingAddSeq});
+		VALUES (#{matchingSeq}, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, NULL, NULL, #{matchingAddSeq});
 	</select>
+	<!-- 등록한 매칭에 대한 인원 확인 -->
 	<select id="selectMatchingMemberCount" resultType="java.lang.Integer" parameterType="com.kosta.project.dto.MatchingCountDTO">
 		SELECT COUNT(matching_add_list_seq)
 		FROM matching_add_lists ml, matching_adds ma, users u
 		WHERE ml.matching_add_seq = ma.matching_add_seq
 		AND ma.user_id = u.user_id
-		AND matching_seq = #{matchingSeq} AND add_success_status = TRUE AND cancle_status = FALSE
+		AND matching_seq = #{matchingSeq} AND cancel_status = FALSE
 		AND user_tier = #{userTier};
 	</select>
+	<!-- 매칭 성공 시 매칭 상태 매칭중 -> 매칭성공으로 변경 -->
 	<update id="updateMatchings" parameterType="java.lang.Integer">
-		UPDATE matchings SET matcing_status = '매칭성공'
+		UPDATE matchings SET matching_status = '매칭성공'
 		WHERE matching_seq = #{matchingSeq};
 	</update>
+	<!-- 매칭 성공 시 신청 인원 매칭 성공 상태 FALSE -> TRUE로 변경 -->
 	<update id="updateMatchingAddLists" parameterType="com.kosta.project.dto.MatchingCountDTO">
 		UPDATE matching_add_lists ml
 		INNER JOIN matching_adds ma
 		ON ml.matching_add_seq = ma.matching_add_seq
 		INNER JOIN users u
 		ON u.user_id = ma.user_id
-		SET add_success_status = FALSE
+		SET matching_success_status = TRUE
 		WHERE matching_seq = #{matchingSeq}
 		AND u.user_tier != #{userTier};
 	</update>
-<!-- 	<select id="selectMatchingAddResult" resultType=""></select> -->
+	<!-- 매칭 신청 결과 조회 -->
+ 	<select id="selectMatchingAddResult" resultType="com.kosta.project.dto.MatchingAddResultDTO" parameterType="Integer">
+ 		SELECT matching_date as matchingDate, field_address as fieldAddress, 
+ 		matching_time as matchingTime
+		FROM matching_add_lists ml, matchings m, fields f
+		WHERE ml.matching_seq = m.matching_seq
+		AND m.field_seq = f.field_seq
+		AND matching_add_seq = #{matchingAddSeq};
+ 	</select>
+ 	<!-- 빠른 신청 리스트 조회(가까운 일정 순) -->
+ 	<select id="selectFastMatchingList" resultType="com.kosta.project.dto.FastMatchingDTO">
+ 		SELECT matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
+ 		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
+ 		COUNT(matching_add_list_seq)
+		FROM matchings m, fields f, field_imgs fi, matching_add_lists ml
+		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
+		AND ml.matching_seq = m.matching_seq
+		ORDER BY matching_date;
+ 	</select>
 </mapper>

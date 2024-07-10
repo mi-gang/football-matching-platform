@@ -2,15 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kosta.project.repository.FieldsMapper">
+	<!-- 구장 정보 조회(매칭신청 할 때) -->
 	<select id="selectFieldInfo" resultType="com.kosta.project.dto.FieldsDTO" parameterType="java.lang.Integer">
 		SELECT field_name as fieldName, field_img as fieldImg, field_address as fieldAddress, field_address_detail as fieldAddressDetail, 
 		shower_room as showerRoom, rent_ball as rentBall, rent_shoes as rentShoes, parking, sell_drink as sellDrink
 		FROM fields f, field_imgs fi
 		WHERE f.field_seq = #{fieldSeq}
-		AND f.field_seq = fi.field_seq;	
+		AND f.field_seq = fi.field_seq
 	</select>
+	<!-- 영업 중인 구장 조회 -->
 	<select id="selectFieldSeq" resultType="Integer">
-		SELECT field_seq FROM fields WHERE field_status = 1; 
+		SELECT field_seq as fieldSeq 
+		FROM fields 
+		WHERE field_status = 1
 	</select>
-	<select id="selectCloseTime" resultType="Integer" parameterType="com.kosta.project.dto.CloseTimeDTO"></select>
+	<!-- 영업 중인 구장 지역별 조회 -->
+	<select id="selectFieldSeqByRegion" resultType="Integer" parameterType="String">
+		SELECT field_seq as fieldSeq 
+		FROM fields
+		WHERE field_status = 1
+		AND field_address REGEXP #{fieldAddress}
+	</select>
+	<!-- 닫힌 시간대 조회 -->
+	<select id="selectCloseTime" resultType="Integer" parameterType="com.kosta.project.dto.CloseTimeDTO">
+		SELECT closed_date as closedDate, closed_time as closedTime 
+		FROM field_schedules
+		WHERE closed_date = #{closedDate}
+		AND closed_time = #{closedTime}
+		AND field_seq = #{fieldSeq}
+	</select>
+	<!-- 구장 정보 조회(빠른 신청) -->
+	<select id="selectFastMatchingInfo" resultType="com.kosta.project.dto.FieldsDTO" parameterType="Integer">
+		SELECT field_img as fieldImg, matching_date as matchingDate, matching_time as matchingTime, 
+		matching_tier as matchingTier, field_name as fieldName, field_address as fieldAddress,
+		field_address_detail as fieldAddress, shower_room as showerRoom, rent_ball as rentBall, 
+		rent_shoes as rentShoes, parking, sell_drink as sellDrink, field_content as fieldContent
+		FROM field_imgs fi, matchings m, fields f
+		WHERE fi.field_seq = f.field_seq AND f.field_seq = m.field_seq
+		AND matching_seq = #{matchingSeq};
+	</select>
 </mapper>

@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MatchingAddListsDTO {
-	int matchingSeq;
-	int matchingAddSeq;
+public class MatchingAddResultDTO {
+	String matchingDate;
+	String fieldAddress;
+	int matchingTime;
 }
