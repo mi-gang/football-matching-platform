@@ -64,7 +64,17 @@ class TeamRepositoryTest{
 	}
 	
 	//@Test
-	void selectTeamInfo() {		// 팀 정보 확인
+	void selectApplyTeamList() {	// 신청 팀
+		System.out.println(teamMapper.selectApplyTeamList("chul02"));
+	}
+	
+	//@Test
+	void selectTeamName() {	// 팀 중복체크
+		System.out.println(teamMapper.selectTeamName("풋킹왕"));
+	}
+	
+	//@Test
+	void selectTeamInfoByModal() {		// 팀 정보 확인
 		System.out.println(teamMapper.selectTeamInfoByModal(3));
 		//System.out.println(teamMapper.selectTeamMemberTierAndCount(3));
 		List<Map<String, Integer>> map = teamMapper.selectTeamMemberTierAndCount(3);
@@ -74,8 +84,14 @@ class TeamRepositoryTest{
 	}
 	
 	//@Test
-	void insertTeamMember() {		// 팀 정보 확인
+	void insertTeamMember() {		// 팀 가입 완료
 		System.out.println(teamMapper.updateApplyTeamMemberStatus("user001"));
 		System.out.println(teamMapper.insertTeamMember("user001", 3));
+	}
+	
+	//@Test
+	void selectTeamInfo2(){		// 팀 정보 확인
+		System.out.println(teamMapper.selectTeamInfo("user001"));
+
 	}
 }
