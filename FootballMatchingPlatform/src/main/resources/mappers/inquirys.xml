@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosta.project.repository.InquiryMapper">
+	
+	<!-- 내 문의 내역 최신 2개 불러오기 -->
+  <select id="selectTwoInquiry" resultType="com.kosta.project.dto.InquiryDTO" parameterType="java.lang.String">
+    SELECT title, inquiry_seq as inquirySeq
+    FROM inquirys
+    WHERE user_id = #{userId}
+    ORDER BY inquiry_date DESC
+    LIMIT 2;
+  </select>
+
+
+	<!-- 내 문의 내역 전부 불러오기 -->
+  <select id="selectAllInquiry" resultType="com.kosta.project.dto.InquiryDTO" parameterType="java.lang.String">
+    SELECT title, inquiry_content as inquiryContent, inquiry_seq as inquirySeq,
+    CASE WHEN answer_content IS NULL THEN 0
+         ELSE 1 END AS answerContentFlag
+    FROM inquirys
+    WHERE user_id = #{userId}
+    ORDER BY inquiry_date DESC;
+  </select>
+
+
+	<!-- 선택한 문의 내역 상세 보기 -->
+  <select id="selectDetailInfoByInquirySeq" resultType="com.kosta.project.dto.InquiryDTO" parameterType="int">
+    SELECT title, inquiry_content as inquiryContent, answer_content as answerContent
+    FROM inquirys
+    WHERE inquiry_seq = #{inquirySeq};
+  </select>
+
+
+	<!-- 문의 내역 추가하기 -->
+  <insert id="insertInquiry" parameterType="com.kosta.project.dto.InquiryDTO">
+    INSERT INTO inquirys (title, inquiry_content, inquiry_date, user_id)
+    VALUES (#{title}, #{inquiryContent}, NOW(), #{userId});
+  </insert>
+	
+	
+	
+</mapper>	

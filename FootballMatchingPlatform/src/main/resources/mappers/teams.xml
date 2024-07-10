@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosta.project.repository.TeamMapper">
+
+
+	<!-- 내 팀 정보 불러오기(마이페이지) -->
+  <select id="selectTeamInfoByUserId" resultType="com.kosta.project.dto.TeamDTO">
+    SELECT
+      teams.team_name as teamName,
+      teams.team_rank as teamRank,
+      teams.team_tier as teamTier,
+      IFNULL(100 * (teams.win_count / teams.game_count), 0) AS winRate,  teams.team_score as teamScore
+    FROM teams
+    INNER JOIN team_members ON teams.team_seq = team_members.team_seq
+    WHERE team_members.user_id = #{userId}
+  </select>
+
+</mapper>
+	

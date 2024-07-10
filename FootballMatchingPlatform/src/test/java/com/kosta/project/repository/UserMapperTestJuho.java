@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.kosta.project.dto.UserDTO;
 
 @SpringBootTest
-public class UserMapperTest {
+public class UserMapperTestJuho {
 	
 	@Autowired
 	UserMapper um;
@@ -35,7 +35,7 @@ public class UserMapperTest {
 	}
 	
 	
-	// 유저 마지막 로그인 날짜
+	// 유저 마지막 로그인 날짜 업데이트
 	@Test
 	void setUserLastLoginByUserIdTest() {
 		String userId = "user00200";
@@ -70,10 +70,10 @@ public class UserMapperTest {
 	
 	
 	// 회원가입하기
-	//@Test
+	@Test
 	void insertUserJoinTest() {
-		
-		for (int i = 1; i < 10; i++) {
+		int i = 9999999;
+		//for (int i = 1000; i < 1010; i++) {
 			UserDTO userDTO = new UserDTO();
 			userDTO.setAddress("서울 강남구");
 			
@@ -112,7 +112,7 @@ public class UserMapperTest {
 			
 			
 			um.insertUserJoin(userDTO);	
-		}
+		//}
 		
 	}	
 		
@@ -165,5 +165,43 @@ public class UserMapperTest {
         }
 	} 
 	
+	
+	// 내 정보 수정하기
+	@Test
+	void updateMyInfoByUserIdTest() {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setUserId("user00100");
+		userDTO.setEmail("email00100@gmail.com");
+		userDTO.setName("노묵훈");
+		userDTO.setNickname("zl존묵훈");
+		userDTO.setPhoneNumber("010-2009-0523");
+		um.updateMyInfoByUserId(userDTO);
+	}
+	
+	
+	// 회원 상태 수정하기
+	@Test
+	void updateUserStatusByUserIdTest() {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setUserStatus("D");
+		userDTO.setUserId("user00101");
+		userDTO.setPassword("password00101");
+		um.updateUserStatusByUserId(userDTO);
+	}
+	
+	
+	// 내 정보 불러오기 
+	@Test
+	void selectMyInfoByUserIdTest() {
+		UserDTO userDTO = um.selectMyInfoByUserId("user00118", "password00118");
+		System.out.println(userDTO);
+		System.out.println(userDTO.getNickname() + 
+							userDTO.getEmail() + 
+							userDTO.getUserId() + 
+							userDTO.getName() + 
+							userDTO.getGender() +
+							userDTO.getBirthday() +
+							userDTO.getPhoneNumber());
+	}
 	
 }

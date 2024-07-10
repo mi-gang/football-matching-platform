@@ -52,4 +52,7 @@ public interface TeamMapper_yoo {
 	int selectTeamMemberCount(int teamSeq); // 팀 멤버 수 확인
 	boolean updateTeamDismantleStatus(int teamSeq);
 	
+	// 내 팀 정보 불러오기(마이페이지)
+	TeamDTO selectTeamInfoByUserId(String userId);
+
 }

@@ -10,6 +10,9 @@ import com.kosta.project.dto.UserDTO;
 @Mapper
 public interface UserMapper {
 	
+	
+	
+	/* 메인 */
 	// 유저 로그인
 	UserDTO selectUserLogin(String userId);
 	
@@ -45,6 +48,19 @@ public interface UserMapper {
 	
 	// 개인 순위 top100 불러오기
 	List<UserDTO> selectTopHundredUsersList(); 
+	
+	
+
+	
+	/* 마이 페이지 */	
+	// 내 정보 수정하기
+	void updateMyInfoByUserId(UserDTO userDTO);
+	
+	// 회원 상태 수정하기(회원 탈퇴 시)
+	void updateUserStatusByUserId(UserDTO userDTO);
+	
+	// 내 정보 불러오기
+	UserDTO selectMyInfoByUserId(String userId, String password);
 	
 	
 }
