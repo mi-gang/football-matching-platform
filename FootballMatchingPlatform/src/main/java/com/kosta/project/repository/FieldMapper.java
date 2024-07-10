@@ -8,9 +8,5 @@ import com.kosta.project.dto.FieldDTO;
 
 @Mapper
 public interface FieldMapper {
-//	List<FieldDTO> selectFieldList();
-//	List<FieldDTO> selectFieldListByFieldName(String fieldName);
-//	FieldDTO selectFieldListByRegion(String region);
-	FieldDTO selectFieldListByFieldNameAndRegion(FieldDTO dto); //구장이름, 지역
-//	FieldDTO selectField(Long fieldSeq);
+	List<FieldDTO> selectFieldList();
 }

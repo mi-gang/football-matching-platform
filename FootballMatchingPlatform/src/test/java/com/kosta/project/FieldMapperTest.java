@@ -15,6 +15,6 @@ public class FieldMapperTest {
 	
 	@Test
 	void fieldsTest() {
-		System.out.println(fieldMapper.selectFieldListByFieldNameAndRegion(FieldDTO.builder().fieldName("구장").fieldAddress("인천").build()));
+		System.out.println(fieldMapper.selectFieldList());
 	}
 }
