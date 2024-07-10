@@ -8,19 +8,9 @@
 }
 
 .selectBtn{
-  border: 1px solid #a5a5a5;
+  border: 0.16rem solid #a5a5a5;
   background-color: #ffffff;
   border-radius: 20px;
-  padding:0.5rem;
-}
-
-.btnClick{
-  background-color: #73a772;
-  color: #ffffff;
-  background: #73A772;
-  border: 1px solid #73A772;
-  border-radius: 20px;
-  padding:0.5rem;
 }
 
 .searchTeam {
@@ -148,13 +138,6 @@ hr {
 
 /* 가입 목록 */
 
-#list-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 1rem;
-}
-
 .content-box {
   display: flex;
   align-items: center;
@@ -168,14 +151,35 @@ hr {
 }
 
 .content-title {
-  font-weight: 600;
   font-size: 1.2rem;
 }
 
 .content-member {
-  font-size: 0.8rem;
+  font-size: 0.88rem;
 }
 
 .content-info {
-  font-size: 0.8rem;
+  font-size: 0.88rem;
+}
+
+.badge{
+  background-color: #73A772;
+}
+
+.joinBtn{
+  border: 0.16rem solid #a5a5a5;
+  background-color: #ffffff;
+  border-radius: 20px;
+}
+
+.btnClick{
+  background-color: #73a772;
+  color: #ffffff;
+  background: #73A772;
+  border: 0.16rem solid #73A772;
+}
+
+.team-title{
+  font-weight: 600;
+  font-size: 1.6rem;
 }

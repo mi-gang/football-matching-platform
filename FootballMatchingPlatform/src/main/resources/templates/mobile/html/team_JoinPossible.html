@@ -23,13 +23,13 @@
 
       <div class="d-flex gap-2 justify-content-between p-2 pt-2 m-2 mb-0">
         <div class="btnBox">
-          <button type="button" class="selectBtn btnClick">전체 팀 순위</button>
+          <button type="button" class="selectBtn p-2 btnClick">전체 팀 순위</button>
         </div>
         <div class="btnBox">
-          <button type="button" class="selectBtn">가입 가능 팀</button>
+          <button type="button" class="selectBtn p-2">가입 가능 팀</button>
         </div>
         <div class="btnBox">
-          <button type="button" class="selectBtn">가입 신청 목록</button>
+          <button type="button" class="selectBtn p-2">가입 신청 목록</button>
         </div>
       </div>
 
@@ -42,27 +42,65 @@
 
       <div class="d-flex flex-column gap-2 w-100 p-2">
 
-        <div class="row align-items-center content-box">
 
-          <div class="col-8 content-text">
-            <div class="content-title">풋살팀</div>
-            <div class="content-member">4/10명</div>
-            <div class="content-tier">
-              <span class="badge rounded-pill bg-success">A</span>
-              <span class="badge rounded-pill bg-success">B</span>
+        <div class="content-container border border-2 rounded-4 p-3">
+          <div class="teamInfo col-9 d-flex align-items-center content-text p-0">
+            <div class="d-flex">
+              <div class="content-title pe-2">풋살풋살킹팀</div>
+              <div class="content-tier ps-1">
+                <span class="badge rounded-5">A</span>
+                <span class="badge rounded-5">B</span>
+                <span class="badge rounded-5">C</span>
+              </div>
+
             </div>
-            <div class="content-info">주중 / 주 1회 / 08~12시 / 서울 금천구</div>
+            <div class="content-info">주중/주 4회/08~12시/서울 동대문구</div>
+            <div class="content-member p-0">4/10명</div>
           </div>
 
-          <div class="col p-0">
-            <button>가입신청</button>
+          <div class="col d-flex justify-content-end p-0">
+            <button class="joinBtn rounded-5 p-2">가입신청</button>
           </div>
-
         </div>
 
+        <div class="content-container border border-2 rounded-4 p-3">
+          <div class="teamInfo col-9 d-flex align-items-center content-text p-0">
+            <div class="d-flex">
+              <div class="content-title pe-2">풋살풋살킹팀</div>
+              <div class="content-tier ps-1">
+                <span class="badge rounded-5">티어무관</span>
+              </div>
+
+            </div>
+            <div class="content-info">주중/주 4회/08~12시/서울 동대문구</div>
+            <div class="content-member p-0">4/10명</div>
+          </div>
+
+          <div class="col d-flex justify-content-end p-0">
+            <button class="joinBtn rounded-5 p-2">가입신청</button>
+          </div>
+        </div>
+
+        <div class="content-container border border-2 rounded-4 p-3">
+          <div class="teamInfo col-9 d-flex align-items-center content-text p-0">
+            <div class="d-flex">
+              <div class="content-title pe-2">풋살풋살킹팀</div>
+              <div class="content-tier ps-1">
+                <span class="badge rounded-5">티어무관</span>
+              </div>
+
+            </div>
+            <div class="content-info">주중/주 4회/08~12시/서울 동대문구</div>
+            <div class="content-member p-0">4/10명</div>
+          </div>
+
+          <div class="col d-flex justify-content-end p-0">
+            <button class="joinBtn rounded-5 p-2">가입신청</button>
+          </div>
+        </div>
+        
+
       </div>
-
-
 
     </div>
     <!-- 하단 메뉴바 -->
@@ -89,6 +127,10 @@
       $(this).addClass('btnClick');
     })
 
+    $(".joinBtn").on('click', function(){
+      $(".joinBtn").removeClass('btnClick');
+      $(this).addClass('btnClick');
+    })
     document.getElementById("searchTeamText").value = "검색어를 입력하세요";
   </script>
 </body>
