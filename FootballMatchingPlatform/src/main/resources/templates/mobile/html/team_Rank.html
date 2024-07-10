@@ -21,14 +21,14 @@
     <!-- 컨텐츠 컨테이너 -->
     <div id="container">
 
-      <div class="d-flex gap-2 justify-content-between p-2">
-        <div class="">
-          <button type="button" class="selectBtn">전체 팀 순위</button>
+      <div class="d-flex gap-2 justify-content-between p-2 pt-2 m-2 mb-0">
+        <div class="btnBox">
+          <button type="button" class="selectBtn btnClick">전체 팀 순위</button>
         </div>
-        <div class="">
+        <div class="btnBox">
           <button type="button" class="selectBtn">가입 가능 팀</button>
         </div>
-        <div class="">
+        <div class="btnBox">
           <button type="button" class="selectBtn">가입 신청 목록</button>
         </div>
       </div>
@@ -170,22 +170,6 @@
   </div>
 
   <script>
-    // 전체 팀 순위, 가입 가능 팀, 가입 신청 목록 버튼 활성화
-    $(".button")
-      .each(function (index) {
-        $(this).attr("button-index", index);
-      })
-      .click(function () {
-        /*클릭된 <div>의 button-index 값을 index 변수에 할당한다.*/
-        var index = $(this).attr("button-index");
-        /*클릭한 <div>에  clicked_button 클래스 추가*/
-        $(".button[button-index=" + index + "]").addClass("clicked_button");
-        /*그 외 <div>는  clicked_button 클래스 삭제*/
-        $(".button[button-index!=" + index + "]").removeClass(
-          "clicked_button"
-        );
-      });
-
     // header, nav 내용 불러오기
     $(document).ready(function () {
       $("header").load("./common/header_back.html", function () {
@@ -199,6 +183,11 @@
     $("#searchTeamButton").on("click", function () {
       alert("팀 검색");
     });
+
+    $(".selectBtn").on('click',function(){
+      $(".selectBtn").removeClass('btnClick');
+      $(this).addClass('btnClick');
+    })
 
     document.getElementById("searchTeamText").value = "검색어를 입력하세요";
   </script>

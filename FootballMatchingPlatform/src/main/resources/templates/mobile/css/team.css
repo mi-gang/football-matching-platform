@@ -2,17 +2,19 @@
   align-items: normal;
 }
 
-#search-container {
-  display: flex;
-  background: #F8FAFB;
-  border-radius: 20px;
-  padding-left: 1rem;
-  padding-right: 0.5rem;
-  align-items: center;
-  width: 50%;
+
+.btnBox > button{
+  font-size: 0.8rem;
 }
 
 .selectBtn{
+  border: 1px solid #a5a5a5;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding:0.5rem;
+}
+
+.btnClick{
   background-color: #73a772;
   color: #ffffff;
   background: #73A772;
@@ -142,4 +144,38 @@ hr {
   text-align: center;
   width: 3.2rem;
   font-size: 1rem;
+}
+
+/* 가입 목록 */
+
+#list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 1rem;
+}
+
+.content-box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.content-text {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+.content-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.content-member {
+  font-size: 0.8rem;
+}
+
+.content-info {
+  font-size: 0.8rem;
 }

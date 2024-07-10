@@ -24,10 +24,9 @@ public class TeamDTO {
 	private String content;		// 소개글
 	private int teamScore;		// 팀 점수
 	private String teamTier;	// 팀 등급
-	private int  teamRank;		// 팀 순위
+	private int teamRank;		// 팀 순위
 	private int gameCount;		// 참가 횟수
-	private int winCount;		// 승리 횟수
-	private double odds;			// 승률
+	private int winCount;		// 승리 횟수	
 	private boolean possA;		
 	private boolean possB;
 	private boolean possC;
@@ -35,6 +34,8 @@ public class TeamDTO {
 	private boolean recruitment;	// 모집 여부
 	private boolean teamDismantleStatus;	//팀 해체 여부
 	private String leaderID;				// 팀장 아이디
+	
+	private double odds;			// 승률
 	private int memberCount;
 	
 }

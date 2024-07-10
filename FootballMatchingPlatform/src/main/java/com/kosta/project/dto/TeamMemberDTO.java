@@ -22,4 +22,10 @@ public class TeamMemberDTO {
 	private String userId;
 	private int teamSeq;
 	
+	private String nickname;
+	private String birthday;
+	private String gender;
+	private String userTier;
+	private String email;
+	
 }
