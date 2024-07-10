@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.kosta.project.dto.FieldsDTO;
 import com.kosta.project.dto.MatchingAddListsDTO;
 import com.kosta.project.dto.MatchingAddResultDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingCountDTO;
+import com.kosta.project.dto.MatchingDTO;
 import com.kosta.project.dto.MatchingScheduleListDTO;
 import com.kosta.project.dto.MatchingsDTO;
 import com.kosta.project.dto.UserMatchingInfoDTO;

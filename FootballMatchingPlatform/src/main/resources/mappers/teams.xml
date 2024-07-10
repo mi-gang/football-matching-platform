@@ -205,9 +205,6 @@
 		AND team_member_status = 0;
 	</select>
 	
-</mapper>
-
-
 	<!-- 내 팀 정보 불러오기(마이페이지) -->
   <select id="selectTeamInfoByUserId" resultType="com.kosta.project.dto.TeamDTO">
     SELECT
