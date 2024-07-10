@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.kosta.project.dto.FastMatchingConditionDTO;
 import com.kosta.project.dto.MatchingAddListsDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingCountDTO;
@@ -106,4 +107,39 @@ public class MatchingsMapperTest {
 	void selectFastMatchingListTest() {
 		System.out.println(mm.selectFastMatchingList());
 	}
+	
+	//@Test
+		void selectFastMatchingListBySmallTest() {
+			System.out.println(mm.selectFastMatchingListBySmall());
+		}
+		
+		//@Test
+		void selectFastMatchingListByBigTest() {
+			System.out.println(mm.selectFastMatchingListByBig());
+		}
+		
+		//@Test
+		void selectFastMatchingListBySmallDateAndRegionAndTierTest() {
+			FastMatchingConditionDTO dto = FastMatchingConditionDTO.builder()
+					.matchingDate("24-07-01")
+					.fieldAddress("인천광역시 미추홀구")
+					.matchingTier("D")
+					.build();
+			System.out.println(mm.selectFastMatchingListBySmallAndDateAndRegionAndTier(dto));
+		}
+		
+		@Test
+		void selectFastMatchingListByBigDateAndRegionAndTierTest() {
+			FastMatchingConditionDTO dto = FastMatchingConditionDTO.builder()
+					.matchingDate("24-07-01")
+					.fieldAddress("인천광역시 미추홀구")
+					.matchingTier("D")
+					.build();
+			System.out.println(mm.selectFastMatchingListBySmallAndDateAndRegionAndTier(dto));
+		}
+		
+		//@Test
+		void selectMatchingTierTest() {
+			System.out.println(mm.selectMatchingTier(1));
+		}
 }

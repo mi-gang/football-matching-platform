@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FastMatchingDTO {
+	int matchingSeq;
 	String matchingTier;
 	String matchingDate;
 	int matchingTime;

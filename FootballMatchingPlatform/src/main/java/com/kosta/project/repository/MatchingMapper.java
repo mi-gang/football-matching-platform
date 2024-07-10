@@ -5,8 +5,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.kosta.project.dto.FastMatchingConditionDTO;
+import com.kosta.project.dto.FastMatchingDTO;
 import com.kosta.project.dto.MatchingAddListsDTO;
-import com.kosta.project.dto.MatchingAddResultDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingCountDTO;
 import com.kosta.project.dto.MatchingDTO;
@@ -29,8 +30,13 @@ public interface MatchingMapper {
 	int selectMatchingMemberCount(MatchingCountDTO dto);
 	void updateMatchings(int matchingSeq);
 	void updateMatchingAddLists(MatchingCountDTO dto);
-	List<MatchingAddResultDTO> selectMatchingAddResult(int matchingAddSeq);
+	List<MatchingConditionDTO> selectMatchingAddResult(int matchingAddSeq);
 	List<MatchingsDTO> selectFastMatchingList();
+	List<FastMatchingDTO> selectFastMatchingListBySmall();
+	List<FastMatchingDTO> selectFastMatchingListByBig();
+	List<FastMatchingDTO> selectFastMatchingListBySmallAndDateAndRegionAndTier(FastMatchingConditionDTO dto);
+	List<FastMatchingDTO> selectFastMatchingListByBigAndDateAndRegionAndTier(FastMatchingConditionDTO dto);
+	String selectMatchingTier(int matchingSeq);
 	
 	// 일정표
 	Collection<MatchingScheduleListDTO> selectMatchingListByMonth(String userId, int month);

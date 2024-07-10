@@ -100,16 +100,84 @@
  	
  	<!-- 빠른 신청 리스트 조회(가까운 일정 순) -->
  	<select id="selectFastMatchingList" resultType="com.kosta.project.dto.FastMatchingDTO">
- 		SELECT matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
+ 		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
  		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
- 		COUNT(matching_add_list_seq)
+ 		COUNT(matching_add_list_seq) as playerCount
 		FROM matchings m, fields f, field_imgs fi, matching_add_lists ml
 		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
 		AND ml.matching_seq = m.matching_seq
+		AND fast_add_status = 1
+		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
 		ORDER BY matching_date;
  	</select>
  	
- 	
+ 	<!-- 빠른 신청 리스트 조회(인원 적은 순, 가까운 일정 순) -->
+	<select id="selectFastMatchingListBySmall" resultType="com.kosta.project.dto.FastMatchingDTO">
+		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
+ 		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
+ 		COUNT(matching_add_list_seq) as playerCount
+		FROM matchings m, fields f, field_imgs fi, matching_add_lists ml
+		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
+		AND ml.matching_seq = m.matching_seq
+		AND fast_add_status = 1
+		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
+		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
+		ORDER BY COUNT(matching_add_list_seq), matching_date;
+	</select>
+	
+	<!-- 빠른 신청 리스트 조회(인원 많은 순, 가까운 일정 순) -->
+	<select id="selectFastMatchingListByBig" resultType="com.kosta.project.dto.FastMatchingDTO">
+		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
+ 		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
+ 		COUNT(matching_add_list_seq) as playerCount
+		FROM matchings m, fields f, field_imgs fi, matching_add_lists ml
+		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
+		AND ml.matching_seq = m.matching_seq
+		AND fast_add_status = 1
+		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
+		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
+		ORDER BY COUNT(matching_add_list_seq) DESC, matching_date;
+	</select>
+	
+	<!-- 빠른 신청 리스트 조회(인원 적은 순, 가까운 일정 순, 날짜 지역 등급 필터) -->
+ 	<select id="selectFastMatchingListBySmallAndDateAndRegionAndTier" resultType="com.kosta.project.dto.FastMatchingDTO" parameterType="com.kosta.project.dto.FastMatchingConditionDTO">
+ 		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
+ 		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
+ 		COUNT(matching_add_list_seq) as playerCount
+		FROM matchings m, fields f, field_imgs fi, matching_add_lists ml
+		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
+		AND ml.matching_seq = m.matching_seq
+		AND fast_add_status = 1
+		AND matching_date = #{matchingDate}
+		AND field_address REGEXP #{fieldAddress}
+		AND matching_tier = #{matchingTier}
+		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
+		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
+		ORDER BY COUNT(matching_add_list_seq), matching_date;
+	</select>
+	
+	<!-- 빠른 신청 리스트 조회(인원 많은 순, 가까운 일정 순, 날짜 지역 등급 필터) -->
+ 	<select id="selectFastMatchingListByBigAndDateAndRegionAndTier" resultType="com.kosta.project.dto.FastMatchingDTO" parameterType="com.kosta.project.dto.FastMatchingConditionDTO">
+ 		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
+ 		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
+ 		COUNT(matching_add_list_seq) as playerCount
+		FROM matchings m, fields f, field_imgs fi, matching_add_lists ml
+		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
+		AND ml.matching_seq = m.matching_seq
+		AND fast_add_status = 1
+		AND matching_date = #{matchingDate}
+		AND field_address REGEXP #{fieldAddress}
+		AND matching_tier = #{matchingTier}
+		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
+		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
+		ORDER BY COUNT(matching_add_list_seq) DESC, matching_date;
+	</select>
+	
+	<!-- 등급확인(빠른 매칭 결제 할 때) -->
+	<select id="selectMatchingTier" resultType="String" parameterType="Integer">
+		SELECT matching_tier FROM matchings
+		WHERE matching_seq = #{matchingSeq};
+	</select>
 	
 	<!-- 일정표 -->
 	<!-- 특정 달에 맞는 매칭 정보 리스트 불러오기 -->

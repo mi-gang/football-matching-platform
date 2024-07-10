@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MatchingAddResultDTO {
+public class FastMatchingConditionDTO {
 	String matchingDate;
 	String fieldAddress;
-	int matchingTime;
+	String matchingTier;
 }

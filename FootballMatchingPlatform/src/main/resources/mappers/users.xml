@@ -14,12 +14,6 @@
 		WHERE user_id = #{userId}
 	</select>
 	
-	<!-- 등급확인(빠른 매칭 결제 할 때) -->
-	<select id="selectUserTier" resultType="String" parameterType="Integer">
-		SELECT matching_tier FROM matchings
-		WHERE matching_seq = #{matchingSeq};
-	</select>
-	
 	
 	<!-- 유저 로그인 -->
   <select id="selectUserLogin" parameterType="java.lang.String" resultType="com.kosta.project.dto.UserDTO">
