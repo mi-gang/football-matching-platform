@@ -3,33 +3,33 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kosta.project.repository.FieldMapper">
 	<select id="selectFieldList" resultType="com.kosta.project.dto.FieldDTO">
-		SELECT f.field_seq AS fieldSeq, field_name AS fieldName, field_img AS fieldImg, field_address AS fieldAddress, field_address_detail AS fieldAddressDetail,
+		SELECT field_status as fieldStatus, f.field_seq AS fieldSeq, field_name AS fieldName, field_img AS fieldImg, field_address AS fieldAddress, field_address_detail AS fieldAddressDetail,
                shower_room AS showerRoom, rent_ball AS rentBall, rent_shoes AS rentShoes, parking, sell_drink AS sellDrink
         FROM fields f, field_imgs fi
-        WHERE f.field_seq = fi.field_seq
+        WHERE f.field_seq = fi.field_seq AND field_status = true
 	</select>
 	<select id="selectFieldListByFieldName" parameterType="java.lang.String" resultType="com.kosta.project.dto.FieldDTO">
 	SELECT f.field_seq AS fieldSeq, field_name AS fieldName, field_img AS fieldImg, field_address AS fieldAddress, field_address_detail AS fieldAddressDetail,
                shower_room AS showerRoom, rent_ball AS rentBall, rent_shoes AS rentShoes, parking, sell_drink AS sellDrink
     FROM fields f, field_imgs fi
-	WHERE f.field_seq = fi.field_seq AND field_name REGEXP #{fieldName}
+	WHERE f.field_seq = fi.field_seq AND field_name REGEXP #{fieldName} AND field_status = true
 	</select>
 	<select id="selectFieldListByRegion" parameterType="java.lang.String" resultType="com.kosta.project.dto.FieldDTO">
 	SELECT f.field_seq AS fieldSeq, field_name AS fieldName, field_img AS fieldImg, field_address AS fieldAddress, field_address_detail AS fieldAddressDetail,
                shower_room AS showerRoom, rent_ball AS rentBall, rent_shoes AS rentShoes, parking, sell_drink AS sellDrink
     FROM fields f, field_imgs fi
-    WHERE f.field_seq = fi.field_seq AND field_address REGEXP #{fieldAddress}
+    WHERE f.field_seq = fi.field_seq AND field_address REGEXP #{fieldAddress} AND field_status = true
 	</select>
 	<select id="selectFieldListByFieldNameAndRegion" parameterType="com.kosta.project.dto.FieldDTO"  resultType="com.kosta.project.dto.FieldDTO">
 		SELECT f.field_seq AS fieldSeq, field_name AS fieldName, field_img AS fieldImg, field_address AS fieldAddress, field_address_detail AS fieldAddressDetail,
                shower_room AS showerRoom, rent_ball AS rentBall, rent_shoes AS rentShoes, parking, sell_drink AS sellDrink
         FROM fields f, field_imgs fi
-        WHERE f.field_seq = fi.field_seq AND field_name REGEXP #{fieldName} AND field_address REGEXP #{fieldAddress}
+        WHERE f.field_seq = fi.field_seq AND field_name REGEXP #{fieldName} AND field_address REGEXP #{fieldAddress} AND field_status = true
 	</select>
     <select id="selectField" parameterType="Integer" resultType="com.kosta.project.dto.FieldDTO">
 		SELECT f.field_seq AS fieldSeq, field_name AS fieldName, field_img AS fieldImg, field_address AS fieldAddress, field_address_detail AS fieldAddressDetail,
                shower_room AS showerRoom, rent_ball AS rentBall, rent_shoes AS rentShoes, parking, sell_drink AS sellDrink
     	FROM fields f, field_imgs fi
-        WHERE f.field_seq = #{fieldSeq} and f.field_seq = fi.field_seq
+        WHERE f.field_seq = #{fieldSeq} and f.field_seq = fi.field_seq AND field_status = true
 	</select>
 </mapper>
