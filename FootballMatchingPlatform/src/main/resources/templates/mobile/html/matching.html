@@ -17,139 +17,6 @@
 
 
 
-/* 버튼 공통 */
-.btn-setting{
-    border-radius: 20px;
-    border-color: transparent;
-    height: 1.8rem;
-}
-
-
-/* ********** 캘린더 ********* */
-.calendar-container {
-    /* display: flex;
-    flex-direction: column;
-    align-items: center; */
-    width: 95%;
-    margin: 0.5rem 0;
-  }
-
-  .calendar-header {
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .calendar-nav{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem 0;
-  }
-
-  .year-month{
-    font-size: 1.1rem;
-  }
-
-  .calendar-nav-btn{
-    width: 1.3rem;
-    height: 1.3rem;
-    text-align: center;
-  }
-
-  #my-matching-list-btn{
-    color: #333333;
-    background: #EBEBEB;
-    font-size: 0.9rem;
-  }
-
-  .calendar-days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    padding-bottom: 0.3rem;
-  }
-
-  .day {
-    text-align: center;
-}
-
-.sun{
-    color: #FF7D7D;
-}
-
-.sat{
-    color: #7684FF;
-}
-
-.calendar-dates {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-  }
-
-  .date-wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .date {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem 0;
-    width: 2rem;
-    height: 2rem;
-  }
-
-  .today{
-    background: #555555;
-    color: #ffffff;
-    border-radius: 50%;
-    border-width: 0.1rem;
-    /* border-top: 0.1rem; */
-    box-sizing: border-box;
-  }
-
-  .matching-date{
-    width: 0.4rem;
-    height: 0.4rem;
-
-    background: #80D87E;
-    border-radius: 100px;
-
-  }
-
-  /* .date:hover {
-    background-color: #f5f5f5;
-  } */
-
-
-.click-date{
-    background: #73A772;
-    border-radius: 50%;
-    border-width: 0.1rem;
-    /* border-top: 0.1rem; */
-    box-sizing: border-box;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -211,7 +78,7 @@ p{
 	
 }
 
-.matchingDateBtn{
+.matchingDateBtn0{
 	border-radius:6rem;
 	background-color:#FFFFFF;
 	color:#626262;
@@ -223,6 +90,56 @@ p{
 	align-items:center;
 	justify-content: center;
 }
+.matchingDateBtn1{
+	border-radius:6rem;
+	background-color:#FFFFFF;
+	color:#626262;
+	width:2rem;
+	height:2rem;
+	font-size:0.8rem;
+	border-color:#626262;
+	display: flex;
+	align-items:center;
+	justify-content: center;
+}
+.matchingDateBtn2{
+	border-radius:6rem;
+	background-color:#FFFFFF;
+	color:#626262;
+	width:2rem;
+	height:2rem;
+	font-size:0.8rem;
+	border-color:#626262;
+	display: flex;
+	align-items:center;
+	justify-content: center;
+}
+.matchingDateBtn3{
+	border-radius:6rem;
+	background-color:#FFFFFF;
+	color:#626262;
+	width:2rem;
+	height:2rem;
+	font-size:0.8rem;
+	border-color:#626262;
+	display: flex;
+	align-items:center;
+	justify-content: center;
+}
+.matchingDateBtn4{
+	border-radius:6rem;
+	background-color:#FFFFFF;
+	color:#626262;
+	width:2rem;
+	height:2rem;
+	font-size:0.8rem;
+	border-color:#626262;
+	display: flex;
+	align-items:center;
+	justify-content: center;
+}
+
+
 
     #matchingDateBtns {
       font-size: 0;
@@ -270,10 +187,26 @@ p{
 	font-size:1rem;
 }
 
-    .matchingDateBtn:hover,
-    .matchingDateBtn.active {
+    .matchingDateBtn0:hover,
+    .matchingDateBtn0.active90 {
       background: #73a772;
     }
+    .matchingDateBtn1:hover,
+    .matchingDateBtn1.active90 {
+      background: #73a772;
+    }
+    .matchingDateBtn2:hover,
+    .matchingDateBtn2.active90 {
+      background: #73a772;
+    }
+    .matchingDateBtn3:hover,
+    .matchingDateBtn3.active90 {
+      background: #73a772;
+    }
+    .matchingDateBtn4:hover,
+    .matchingDateBtn4.active90 {
+      background: #73a772;
+    }	
 
     #applyTypeBtn:hover,
     #applyTypeBtn.active2 {
@@ -359,53 +292,15 @@ p{
 
 	  <ul id = "matchingDateBtns">
 	  	<button type = "button" id="backBtn" class = "btn"><</button>
-		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)" value="2024-06-27">27</button></li>
+		<div id = "matchingDateBtnsLi">
+		<!-- <li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)" value="2024-06-27">27</button></li>
 		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)" value="2024-06-28">28</button></li>
 		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)" value="2024-06-29">29</button></li>
 		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)" value="2024-06-30">30</button></li>
-		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)" value="2024-07-01">1</button></li>
+		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)" value="2024-07-01">1</button></li> -->
+		</div>
 		<button type = "button" id="frontBtn" class = "btn">></button> 	
 	  </ul>
-	
-
-
-
-
-
-
-	  <div class="calendar-container">
-		<div class="calendar-header">
-			<div class="calendar-nav">
-				<img class="calendar-nav-btn" id="prevBtn" src="../img/left arrow.svg" alt="이전 달 버튼"></img>
-				<div class="year-month"></div>
-				<img class="calendar-nav-btn" id="nextBtn" src="../img/right arrow.svg" alt="다음 달 버튼"></img>
-			</div>
-			<button class="btn-setting" id="my-matching-list-btn">일정 전체보기</button>
-		</div>
-		<div class="main">
-			<div class="calendar-days">
-				<div class="day sun">일</div>
-				<div class="day">월</div>
-				<div class="day">화</div>
-				<div class="day">수</div>
-				<div class="day">목</div>
-				<div class="day">금</div>
-				<div class="day sat">토</div>
-			</div>
-			<div class="calendar-dates" id="calendarDates"></div>
-		</div>
-	</div>
-
-
-
-
-
-
-
-
-
-
-
 
 	</div>
 	<div class = "applyType mt-4">
@@ -458,113 +353,70 @@ $(document).ready(function(){
 
 
 
+	const today = new Date(); // 오늘 날짜
+const TODAY_BUTTON_VALUE = today.toISOString().slice(0, 10); // '오늘' 버튼의 value 값 (YYYY-MM-DD)
 
+const matchingDateBtns = document.getElementById('matchingDateBtns'); // 버튼 목록 요소
+const backBtn = document.getElementById('backBtn'); // 이전 날짜 버튼
+const frontBtn = document.getElementById('frontBtn'); // 다음 날짜 버튼
 
+// 오늘부터 5일까지의 날짜 배열
+const dates = [];
 
-
-
-
-	const date = new Date();
-let currentYear = date.getFullYear();
-let currentMonth = date.getMonth();
-let currentDate = date.getDate();
-
-const calendarDates = document.querySelector("#calendarDates");
-const prevBtn = document.querySelector("#prevBtn");
-const nextBtn = document.querySelector("#nextBtn");
-
-const dateRemember = '0000-00-00';
-
-
-function renderCalendar() {
-    document.querySelector('.year-month').textContent = `${currentYear}년 ${currentMonth + 1}월`;
-
-    const firstDayOfMonth = new Date(currentYear, currentMonth, 1); // 첫번째 날 불러오기
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();   // 날짜수 불러오기
-
-    const startDayOfWeek = firstDayOfMonth.getDay();
-
-    calendarDates.innerHTML = ""; // 일자 비우기
-
-    // 빈 날짜(이전 달)
-    for (let i = 0; i < startDayOfWeek; i++) {
-        const emptyDate = document.createElement("div");
-        emptyDate.classList.add("date", "empty");
-        calendarDates.appendChild(emptyDate);
-    }
-
-    // 현재 달의 날짜
-    for (let i = 1; i <= daysInMonth; i++) {
-        
-        // date-wrapper
-        const dateWrapperElement = document.createElement("div");
-        dateWrapperElement.classList.add("date-wrapper");
-        
-        // 날짜
-        const dateElement = document.createElement("div");
-        dateElement.classList.add("date");
-        dateElement.setAttribute('id',currentYear + "-" + parseInt(currentMonth+1) + "-" + i );
-        dateElement.textContent = i;
-        if(i==currentDate) dateElement.classList.add("today");
-        
-        // 매칭 여부
-        const matchingDateElement = document.createElement("div");
-    
-        // 매칭 정보 있는 날이면 등록, 매칭 상태 불러와서 매칭 상태에 따라 다른 클래스 지정
-        if(i == 5)
-        matchingDateElement.dataset.matchingStatus = "2";
-        
-        dateWrapperElement.appendChild(dateElement);
-        dateWrapperElement.appendChild(matchingDateElement);
-        calendarDates.appendChild(dateWrapperElement);
-    }
+for (let i = 0; i <= 4; i++) {
+  const date = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
+  dates.push(date.toISOString().slice(0, 10));
 }
 
-renderCalendar();
-
-// 이전 달 버튼 클릭 시
-prevBtn.addEventListener("click", () => {
-    currentMonth--;
-    if (currentMonth < 0) {
-      currentMonth = 11;
-      currentYear--;
-    }
-    renderCalendar();
-  });
-
-  // 다음 달 버튼 클릭 시
-  nextBtn.addEventListener("click", () => {
-    currentMonth++;
-    if (currentMonth > 11) {
-      currentMonth = 0;
-      currentYear++;
-    }
-    renderCalendar();
-  });
-
-  // 날짜 클릭 시
-  $(".calendar-dates").on("click", ".date-wrapper", function () {
-    $('.click-date').removeClass('click-date');
-    $(this).find('.date').addClass('click-date'); // find -> 자식 요소 찾기
-    
-    // 클릭한 날짜 불러오기
-    console.log($(this).find('.date').attr("id"));
-	// const clickedDate = $(this).find('.date').attr("id");
-	// $(this).find('.date').data("id", clickedDate);
-
-	dateRemember = $(this).attr('id');
-
-
-    // 매칭이 있는 경우 해당 날짜 매칭 정보들 불러오기
-
-
+// 버튼 생성 및 이벤트 설정
+dates.forEach((date, i) => {
+	console.log(i)
+  $('#matchingDateBtnsLi').append(
+	"<li><button type = 'button' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+  )
 });
 
 
 
+// 날짜 변경 함수
+function changeBtn(event) {
+  const selectedMatchDate = event.target.value;
+  console.log(selectedMatchDate)
+}
 
+// 이전 날짜 버튼 클릭 이벤트
+backBtn.addEventListener('click', () => {
+  // 이전 5일 버튼 생성 및 이벤트 설정...
+  $('#matchingDateBtnsLi li').empty();
 
+  const backDates = [];
+  console.log($('.matchingdatebtn0').val())
+  const newStartDate = new Date(dates[0]); // 첫 번째 버튼의 날짜를 기준으로 -5일
+  newStartDate.setDate(newStartDate.getDate() - 5);
+  console.log(newStartDate)
+  for (let i = 0; i <= 4; i++) {
+  const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
+  backDates.push(date.toISOString().slice(0, 10));
+}
 
+// 버튼 생성 및 이벤트 설정
+backDates.forEach((date, i) => {
+	console.log(i)
+  $('#matchingDateBtnsLi').append(
+	"<li><button type = 'button' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+  )
+});
+
+});
+
+// 다음 날짜 버튼 클릭 이벤트
+frontBtn.addEventListener('click', () => {
+  // 다음 5일 버튼 생성 및 이벤트 설정...
+  $('#matchingDateBtnsLi').empty();
+  const newStartDate = new Date(dates[dates.length - 1]); // 마지막 버튼의 날짜를 기준으로 +5일
+  newStartDate.setDate(newStartDate.getDate() + 5);
+  
+});
 
 
 
@@ -583,10 +435,10 @@ prevBtn.addEventListener("click", () => {
 	var btns = document.querySelectorAll(".matchingDateBtn");
 	btns.forEach(function(btn, i) {
 		if(e.currentTarget == btn) {
-			btn.classList.add("active");
+			btn.classList.add("active90");
 		}
 		else {
-			btn.classList.remove("active");
+			btn.classList.remove("active90");
 		}
 	});
 	console.log( e.currentTarget.value );
@@ -647,7 +499,7 @@ selectedButtons.forEach(button => {
 
 if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
 	checkNumber++;
-	console.log(checkNumber + dateRemember + teamOrSolo + button.value);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
+	console.log(checkNumber + selectedDate + teamOrSolo + button.value);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
 	
 }
  
