@@ -1,37 +1,20 @@
-.teamRankApply {
-  white-space: nowrap;
-  overflow: hidden;
+#container{
+  align-items: normal;
 }
 
-#teamPageButton {
-  justify-content: space-evenly;
-  padding-left: 0;
-  margin-top: 0rem;
+
+.btnBox > button{
+  font-size: 0.8rem;
 }
 
-#teamPageButton li {
-  display: inline-block;
-}
-
-.button {
+.selectBtn{
+  border: 0.16rem solid #a5a5a5;
   background-color: #ffffff;
-  height: 2rem;
-  margin-left: 1rem;
-  left: 56px;
-  top: 68px;
-  border: 2px solid #000;
   border-radius: 20px;
-  font-size: 1rem;
-}
-
-.clicked_button {
-  background-color: #73a772;
-  color: #ffffff;
-  border-color: #73a772;
 }
 
 .searchTeam {
-  width: 18rem;
+  width: 16rem;
   height: 2rem;
   margin-top: 10px;
   border: 0px;
@@ -99,4 +82,104 @@ hr {
 }
 #score {
   font-weight: bold;
+}
+
+.content-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  border-color: #73a772;
+}
+
+
+.first-content-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ranking {
+  font-size: 0.875rem;
+}
+
+.second-content-container {
+  display: flex;
+  align-items: center;
+  gap : 0.4rem;
+}
+
+.teamname {
+  font-weight: 600;
+}
+
+.tier {
+  width: 1rem;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.gameCount{
+  text-align: center;
+  width: 3.4rem;
+}
+
+.odds{
+  text-align: center;
+  width: 2.4rem;
+}
+
+.score {
+  text-align: center;
+  width: 3.2rem;
+  font-size: 1rem;
+}
+
+/* 가입 목록 */
+
+.content-box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.content-text {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+.content-title {
+  font-size: 1.2rem;
+}
+
+.content-member {
+  font-size: 0.88rem;
+}
+
+.content-info {
+  font-size: 0.88rem;
+}
+
+.badge{
+  background-color: #73A772;
+}
+
+.joinBtn{
+  border: 0.16rem solid #a5a5a5;
+  background-color: #ffffff;
+  border-radius: 20px;
+}
+
+.btnClick{
+  background-color: #73a772;
+  color: #ffffff;
+  background: #73A772;
+  border: 0.16rem solid #73A772;
+}
+
+.team-title{
+  font-weight: 600;
+  font-size: 1.6rem;
 }
