@@ -1,4 +1,4 @@
-package com.kosta.project;
+package com.kosta.project.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.kosta.project;
+package com.kosta.project.repository;
 
 
 import org.junit.jupiter.api.Test;

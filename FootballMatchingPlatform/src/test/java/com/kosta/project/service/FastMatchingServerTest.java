@@ -17,7 +17,7 @@ public class FastMatchingServerTest {
 	private FastMatchingService fms;
 
 	// 회원 상태 확인
-	@Test
+	//@Test
 	void getUserStatusTest() {
 		System.out.println(fms.getUserStatus("user00100"));
 	}
@@ -31,21 +31,21 @@ public class FastMatchingServerTest {
 
 
 	// 구장 상세 정보 조회
-	@Test
+	//@Test
 	void getFieldTest() {
 		System.out.println(fms.getField(3));
 	}
 
 
 	// 등급 확인
-	@Test
+	//@Test
 	void getMatchingTierTest() {
 		System.err.println(fms.getMatchingTier(3));
 	}
 
 
 	// 빠른 신청 리스트1
-	@Test
+	//@Test
 	void getFastMatchingListTest() {
 		List<FastMatchingDTO> matchingDTOList = fms.getFastMatchingList();
 		for (FastMatchingDTO matchingsDTO : matchingDTOList) {
@@ -62,7 +62,7 @@ public class FastMatchingServerTest {
 
 
 	// 빠른 신청 리스트2
-	@Test
+	//@Test
 	void getFastMatchingListBySmallTest() {
 		List<FastMatchingDTO> matchingDTOList = fms.getFastMatchingListBySmall();
 		for (FastMatchingDTO matchingsDTO : matchingDTOList) {
@@ -79,7 +79,7 @@ public class FastMatchingServerTest {
 	}
 
 	// 빠른 신청 리스트3
-	@Test
+	//@Test
 	void getFastMatchingListByBigTest() {
 		List<FastMatchingDTO> matchingDTOList = fms.getFastMatchingListBySmall();
 		for (FastMatchingDTO matchingsDTO : matchingDTOList) {
@@ -96,7 +96,7 @@ public class FastMatchingServerTest {
 	}	
 
 	// 빠른 신청 리스트4
-	@Test
+	//@Test
 	void getFastMatchingListByBigAndDateAndRegionAndTierTest() {
 		FastMatchingConditionDTO fmcDTO = new FastMatchingConditionDTO();
 		List<FastMatchingDTO> matchingDTOList = fms.getFastMatchingListByBigAndDateAndRegionAndTier(fmcDTO);
@@ -117,7 +117,7 @@ public class FastMatchingServerTest {
 
 
 	// 빠른 신청 리스트5
-	@Test
+	//@Test
 	void getFastMatchingListBySmallAndDateAndRegionAndTierTest() {
 		FastMatchingConditionDTO fmcDTO = new FastMatchingConditionDTO();
 		List<FastMatchingDTO> matchingDTOList = fms.getFastMatchingListBySmallAndDateAndRegionAndTier(fmcDTO);

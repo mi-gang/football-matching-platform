@@ -39,9 +39,8 @@ public class FastMatchingService {
 	public boolean isSuspendedUser(String userId) {
 		boolean result = false;
 		 LocalDate today = LocalDate.now();
-		 Date suspended = um.selectSuspenedTime(userId);
-		 LocalDate convertedLocalDate2 = LocalDate.ofInstant(suspended.toInstant(), ZoneId.of("Asia/Seoul"));
-		if(today.isBefore(convertedLocalDate2)) {
+		 LocalDate suspended = LocalDate.parse(um.selectSuspendedTime(userId));
+		if(today.isBefore(suspended)) {
 			result = true;
 		}
 		

@@ -1,4 +1,4 @@
-package com.kosta.project;
+package com.kosta.project.service;
 
 import java.util.ArrayList;
 import java.util.List;
