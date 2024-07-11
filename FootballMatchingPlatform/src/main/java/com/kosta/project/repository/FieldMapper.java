@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import com.kosta.project.dto.CloseTimeDTO;
 import com.kosta.project.dto.FieldDTO;
 import com.kosta.project.dto.FieldsDTO;
+import com.kosta.project.dto.MatchingsDTO;
+import com.kosta.project.dto.addMatchingListInfo;
 
 @Mapper
 public interface FieldMapper {
@@ -17,6 +19,7 @@ public interface FieldMapper {
 	FieldDTO selectField(int fieldSeq);
 	
 	FieldsDTO selectFieldInfo(int fieldSeq);
+	addMatchingListInfo selectFieldAddressAndName(int fieldSeq);
 	List<Integer> selectFieldSeq();
 	List<Integer> selectFieldSeqByRegion(String fieldAddress);
 	List<Integer> selectCloseTime(CloseTimeDTO dto);

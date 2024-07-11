@@ -32,7 +32,7 @@ public class FieldsMapperTest {
 	void selectCloseTimeTest() {
 		CloseTimeDTO dto = CloseTimeDTO.builder()
 				.closedDate("2024-07-10")
-				.closedTime(12)
+				.closedTime("12")
 				.fieldSeq(3)
 				.build();
 		System.out.println(fm.selectCloseTime(dto));

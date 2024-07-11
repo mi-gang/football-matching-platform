@@ -12,7 +12,7 @@ import com.kosta.project.dto.UserDTO;
 @Mapper
 public interface UserMapper {
 	String selectUserStatus(String userId);
-	Date selectSuspenedTime(String userId);
+	String selectSuspendedTime(String userId);
 
 	/* 메인 */
 	// 유저 로그인

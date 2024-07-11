@@ -214,7 +214,8 @@
 		SELECT user_id as userId FROM team_members
 		WHERE team_seq = (SELECT team_seq FROM teams 
 		WHERE team_name = (SELECT team_name FROM teams WHERE leader_id = #{userId}))
-		AND team_member_status = 0;
+		AND team_member_status = 0
+		AND team_member_delete = 0;
 	</select>
 	
 	<!-- 내 팀 정보 불러오기(마이페이지) -->

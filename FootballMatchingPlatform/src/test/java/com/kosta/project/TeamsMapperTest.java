@@ -21,13 +21,13 @@ public class TeamsMapperTest {
 	
 	//@Test
 	void selectTeamMemberCountTest() {
-		System.out.println(tm.selectTeamMemberCount("chul01"));
+		System.out.println(tm.selectTeamMemberCount("user002"));
 	}
 	
-	//@Test
+	@Test
 	void selectTeamMemberIdsTest() {
 		ArrayList<String> memberIds = new ArrayList<String>();
-		memberIds = (ArrayList<String>) tm.selectTeamMemberIds("chul01");
+		memberIds = (ArrayList<String>) tm.selectTeamMemberIds("user002");
 		System.out.println(memberIds);
 	}
 }

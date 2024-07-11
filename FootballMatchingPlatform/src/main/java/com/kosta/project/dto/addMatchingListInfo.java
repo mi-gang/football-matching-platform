@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CloseTimeDTO {
-	String closedDate;
-	String closedTime;
+public class addMatchingListInfo {
+	String fieldAddress;
+	String fieldName;
 	int fieldSeq;
 }

@@ -7,8 +7,7 @@
 	<select id="selectMatchingsList" resultType="com.kosta.project.dto.MatchingsDTO" parameterType="com.kosta.project.dto.MatchingConditionDTO">
 		SELECT matching_seq as matchingSeq, matching_date as matchingDate, 
 		matching_time as matchingTime, field_address as fieldAddress, 
-		field_address_detail as fieldAddressDetail, field_name as fieldName
-		, m.field_seq
+		field_address_detail as fieldAddressDetail, field_name as fieldName, m.field_seq
 		FROM matchings m, fields f
 		WHERE m.field_seq = f.field_seq
 		AND matching_date = #{matchingDate}
@@ -18,7 +17,9 @@
 	
 	<!-- 매칭 중인 목록 지역별 조회 -->
 	<select id="selectMatchingsListByRegion" resultType="com.kosta.project.dto.MatchingsDTO" parameterType="com.kosta.project.dto.MatchingConditionDTO">
-		SELECT matching_seq as matchingSeq, matching_date as matchingDate, matching_time as matchingTime, field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_name as fieldName
+		SELECT matching_seq as matchingSeq, matching_date as matchingDate, 
+		matching_time as matchingTime, field_address as fieldAddress, 
+		field_address_detail as fieldAddressDetail, field_name as fieldName, m.field_seq
 		FROM matchings m, fields f
 		WHERE m.field_seq = f.field_seq
 		AND matching_date = #{matchingDate}
