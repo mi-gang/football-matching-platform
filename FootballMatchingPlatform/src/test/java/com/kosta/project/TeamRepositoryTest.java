@@ -22,7 +22,7 @@ class TeamRepositoryTest{
 		System.out.println(teamMapper.selectSearchTeamRankList("풋"));
 	}
 	
-	@Test
+	//@Test
 	void selectPossibleJoinTeam() {		// 팀 가입 가능 순위
 		System.out.println(teamMapper.selectPossibleJoinTeam());
 		System.out.println(teamMapper.selectSearchPossibleTeam("풋"));
@@ -60,7 +60,7 @@ class TeamRepositoryTest{
 	void deleteTeamApply() {	// 팀 신청 취소
 		String userId = "user003";
 		int teamSeq = 3;
-		System.out.println(teamMapper.deleteApplyByTeamSeq(userId, teamSeq));
+		System.out.println(teamMapper.deleteApply(userId, teamSeq));
 	}
 	
 	//@Test
@@ -88,7 +88,7 @@ class TeamRepositoryTest{
 		System.out.println(teamMapper.updateApplyTeamMemberStatus("user00301"));
 		System.out.println(teamMapper.insertTeamMember("user00301", 4));
 		
-		if(teamMapper.selectTeamMemberCount(4) == 10) {
+		if(teamMapper.selectTeamMemberCNT(4) == 10) {
 			//추가모집 마감 gogo
 		}
 		
@@ -114,10 +114,10 @@ class TeamRepositoryTest{
 				.weekType("주말")
 				.weekTime("주 2회")
 				.hopeTime("08시-12시")
-				.content("남자만 받아요22")
-				.possA(false)
-				.possB(true)
-				.possC(true)
+				.content("남자만 받아요55")
+				.possA(true)
+				.possB(false)
+				.possC(false)
 				.possD(true)
 				.leaderID("user00100")
 				.build();
@@ -127,8 +127,8 @@ class TeamRepositoryTest{
 	
 	//@Test
 	void updateTeamApplyStatus() {	// 추가 모집 마감
-		System.out.println(teamMapper.updateApplyTeamStatus(3));
-		System.out.println(teamMapper.updateTeamRecruitmentStatus(3));
+		System.out.println(teamMapper.updateApplyTeamStatus(""));
+		System.out.println(teamMapper.updateTeamRecruitmentStatus(4));
 	}
 	
 	//@Test
@@ -136,14 +136,15 @@ class TeamRepositoryTest{
 		System.out.println(teamMapper.selectTeamMemberList(1));
 	}
 	
+	
 	//@Test
 	void selectTeamApplyList() {	// 팀장의 가입신청목록 조회
-		System.out.println(teamMapper.selectApplyList(3));
+		System.out.println(teamMapper.selectApplyList("user00102"));
 	}
 	
 	//@Test
 	void selectTeamMemberCount() { // 팀 해체하기
-		if(teamMapper.selectTeamMemberCount(4) == 1) {
+		if(teamMapper.selectTeamMemberCNT(4) == 1) {
 			System.out.println(teamMapper.updateTeamDismantleStatus(4));
 		}
 	}

@@ -90,19 +90,22 @@
 		VALUES (#{userId}, NOW(), FALSE, FALSE, #{teamSeq});
 	</insert>
 	
-	<delete id="deleteApplyByTeamSeq">
+	<delete id="deleteApply">
 		DELETE FROM applys WHERE user_id = #{userId} AND team_seq = #{teamSeq};
 	</delete>
 	
 	
 	<!-- 가입 신청된 목록 조회 -->
 	<select id="selectApplyTeamList" resultType="com.kosta.project.dto.TeamDTO">
-		SELECT t.team_seq AS teamSeq,team_name AS teamName, possible_a AS possA, possible_b AS possB, possible_c AS possC, 
-		possible_d AS possD, week_type AS weekType, week_time AS weekTime, hope_time AS hopeTime, hometown, 
-		COUNT(case when team_member_status=FALSE AND team_member_delete=FALSE then 1 END) AS memberCountt
-		FROM teams t, team_members m, applys a
-		WHERE t.team_seq = m.team_seq AND a.team_seq = t.team_seq AND recruitment = TRUE
-		AND a.user_id = #{userId} AND apply_status = FALSE AND close_status = FALSE;
+		SELECT t.team_seq, team_name, possible_a AS possA, possible_b AS possB, possible_c AS possC,
+		possible_d AS possD, week_type, week_time, hope_time,
+		COUNT(case when tm.team_member_status=FALSE AND tm.team_member_delete=FALSE then 1 END)
+		AS memberCount
+		FROM applys a
+		JOIN teams t ON a.team_seq = t.team_seq
+		LEFT JOIN team_members tm ON t.team_seq = tm.team_seq
+		WHERE a.user_id = #{userId} AND apply_status = FALSE AND close_status = FALSE
+		GROUP BY t.team_seq; 
 	</select>
 
 	
@@ -110,7 +113,14 @@
 	<update id="updateApplyTeamMemberStatus">
 		UPDATE applys SET apply_status = TRUE WHERE user_id = #{userId};
 	</update>
-
+	
+	<!-- 팀원수 -->
+	<select id="selectTeamMemberCNT"> 
+		SELECT COUNT(user_id)
+		FROM team_members
+		WHERE team_seq = #{teamSeq} AND team_member_status = 0 AND team_member_delete = 0;
+	</select>
+	
 	
 	<!-- 내 팀 정보 조회 (내 팀 정보 Btn) -->
 	<select id="selectTeamInfo" resultType="com.kosta.project.dto.TeamDTO">
@@ -137,19 +147,24 @@
 	<!-- 팀 추가 모집 하기 -->
 	<update id="updateTeamInfo" parameterType="com.kosta.project.dto.TeamDTO">
 		UPDATE teams
-		SET hometown = #{hometown}, week_type = #{weekType}, week_time = #{weekTime}, 
-		hope_time= #{hopeTime}, possible_a = #{possA}, possible_b = #{possB}, 
-		possible_c = #{possC}, possible_d = #{possD},
-		content = #{content}, recruitment = TRUE
-		WHERE team_seq = #{teamSeq};
+		SET hometown = #{hometown}, week_type = #{weekType}, week_time = #{weekTime}, hope_time=#{hopeTime},
+		possible_a = #{possA}, possible_b = #{possB}, possible_c = #{possC}, possible_d = #{possD},
+		content = #{content}, recruitment = true
+		WHERE team_seq = (SELECT team_seq FROM teams WHERE leader_id = #{leaderID});
 	</update>
 	
 	
 	<!-- 추가모집 마감 -->
 	<update id="updateApplyTeamStatus">
-		UPDATE applys SET close_status = TRUE WHERE team_seq = #{teamSeq};
+		UPDATE applys SET close_status = TRUE WHERE team_seq = 
+		(SELECT team_seq FROM teams WHERE leader_id=#{userId});
 	</update>
 
+	<update id="updateTeamRecruitmentStatusByLeader">
+		UPDATE teams SET recruitment = FALSE WHERE team_seq = 
+		(SELECT team_seq FROM teams WHERE leader_id=#{userId});
+	</update>
+	
 	<update id="updateTeamRecruitmentStatus">
 		UPDATE teams SET recruitment = FALSE WHERE team_seq = #{teamSeq};
 	</update>
@@ -164,11 +179,12 @@
 	</select>
 
 
-	<!-- 팀장의 가입 신청 목록 조회 -->
-	<select id="selectApplyList" resultType="com.kosta.project.dto.TeamMemberDTO">
+	<!-- [팀장] 가입 신청 목록 조회 -->
+	<select id="selectApplyList" resultType="com.kosta.project.dto.ApplyDTO">
 		SELECT a.user_id AS userId, nickname, birthday, gender, user_tier AS userTier, email
 		FROM users u, applys a
-		WHERE u.user_id = a.user_id AND a.team_seq = #{teamSeq}
+		WHERE u.user_id = a.user_id AND a.team_seq = (SELECT team_seq FROM teams WHERE team_name=
+		(SELECT team_name FROM teams WHERE leader_id=#{userId}))
 		AND apply_status = FALSE AND close_status = FALSE;
 	</select>
 
