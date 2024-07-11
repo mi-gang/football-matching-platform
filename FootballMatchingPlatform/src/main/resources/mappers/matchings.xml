@@ -210,7 +210,7 @@
 	</select>
 
 	<!-- 매칭 리스트 개수 불러오기 -->
-	<select id="selectMatchingListCount">
+	<select id="selectMatchingListCount" resultType="int">
 		SELECT COUNT(mal.matching_seq)
 		FROM matchings m 
 		JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
@@ -240,7 +240,7 @@
 	</update>
 	
 	<!-- 매칭 삭제하기 -->
-	<delete id="deleteMatching">	
+	<delete id="deleteMatching">
 		DELETE FROM matching_add_lists
 		WHERE matching_add_list_seq = #{matchingAddListSeq};
 	</delete>
@@ -273,7 +273,7 @@
 	</update>
 	
 	<!-- 매칭에 참여한 사용자 리스트 불러오기 -->
-	<select id="selectPlayerList">
+	<select id="selectPlayerList" resultType="com.kosta.project.dto.UserPlayInfoDTO">
 		SELECT u.user_id, u.nickname, mal.team, mal.player_number
 		FROM matchings m JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
 		JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
@@ -283,7 +283,7 @@
 	</select>
 	
 	<!-- 경기 결과 점수 불러오기 -->
-	<select id="selectReviewScore" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+	<select id="selectReviewScore" resultType="int" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
 		SELECT mal.review_score
 		FROM matching_add_lists mal JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
 		WHERE mal.matching_seq = #{matchingSeq}
@@ -291,7 +291,7 @@
 	</select>
 	
 	<!-- 승리 여부 불러오기 -->
-	<select id="selectTeamScore" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+	<select id="selectTeamScore" resultType="int" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
 		SELECT
     	CASE
 	      	WHEN mal.team = 'A' AND m.a_score &gt; m.b_score THEN 1
