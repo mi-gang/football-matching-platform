@@ -39,5 +39,6 @@ public class MatchingScheduleListDTO {
 	private boolean teamStatus;
 	private char team;
 	private int playerNumber;
+	private boolean isleader;
 	
 }

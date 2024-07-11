@@ -12,10 +12,11 @@
 	</insert>
 	
 	<!-- 신고 검색하기 -->
-	<select id="selectReport" resultType="com.kosta.project.dto.ReportDTO">
-		SELECT report_type, report_content, matching_seq, user_id, reported_user_id
+	<select id="selectReport" parameterType="com.kosta.project.dto.ReportDTO">
+		SELECT COUNT(report_seq)
 		FROM reports
-		WHERE report_seq = #{reportSeq}
+		WHERE user_id = #{userId} AND reported_user_id = #{reportedUserId}
+		AND matching_seq = #{matchingSeq}
 	</select>
 	
 </mapper>
