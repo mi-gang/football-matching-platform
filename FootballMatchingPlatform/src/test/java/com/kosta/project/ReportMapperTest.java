@@ -18,9 +18,9 @@ public class ReportMapperTest {
 		System.out.println(result);
 	}
 	
-	//@Test
+	@Test
 	void selectReportTest() {
-		System.out.println(reportMapper.selectReport(1));
+		System.out.println(reportMapper.selectReport(new ReportDTO(0, "비매너 플레이", "경기 중 자꾸 상대팀 선수들에게 침을 뱉습니다.", 1, "user00100", "user00101")));
 	}
 	
 }

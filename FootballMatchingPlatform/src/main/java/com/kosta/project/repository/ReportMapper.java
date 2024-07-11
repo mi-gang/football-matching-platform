@@ -8,6 +8,6 @@ import com.kosta.project.dto.ReportDTO;
 public interface ReportMapper {
 	
 	boolean insertReport(ReportDTO reportDTO);
-	ReportDTO selectReport(int reportSeq);
+	boolean selectReport(ReportDTO reportDTO);
 	
 }
