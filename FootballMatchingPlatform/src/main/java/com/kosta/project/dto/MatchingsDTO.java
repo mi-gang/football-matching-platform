@@ -16,4 +16,5 @@ public class MatchingsDTO {
 	String fieldAddress;
 	String fieldAddressDetail;
 	String fieldName;
+	int fieldSeq;
 }

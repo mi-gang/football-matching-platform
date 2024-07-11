@@ -48,11 +48,10 @@ public interface TeamMapper {
 	
 	List<TeamMemberDTO> selectApplyList(int teamSeq);	// 팀장- 가입 신청 목록
 	
-	int selectTeamMemberCount(int teamSeq); // 팀 멤버 수 확인
 	boolean updateTeamDismantleStatus(int teamSeq);
 	
-	int selectTeamSeq(String userId);
-	int selectTeamMemberCount(String userId);
+	Integer selectTeamSeq(String userId);
+	int selectTeamMemberCount(String userId); // 팀 멤버 수 확인
 	List<String> selectTeamMemberIds(String userId);
 	
 	// 내 팀 정보 불러오기(마이페이지)

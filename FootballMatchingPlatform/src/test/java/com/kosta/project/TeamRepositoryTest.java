@@ -88,7 +88,7 @@ class TeamRepositoryTest{
 		System.out.println(teamMapper.updateApplyTeamMemberStatus("user00301"));
 		System.out.println(teamMapper.insertTeamMember("user00301", 4));
 		
-		if(teamMapper.selectTeamMemberCount(4) == 10) {
+		if(teamMapper.selectTeamMemberCount("user001") == 10) {
 			//추가모집 마감 gogo
 		}
 		
@@ -143,7 +143,7 @@ class TeamRepositoryTest{
 	
 	//@Test
 	void selectTeamMemberCount() { // 팀 해체하기
-		if(teamMapper.selectTeamMemberCount(4) == 1) {
+		if(teamMapper.selectTeamMemberCount("user001") == 1) {
 			System.out.println(teamMapper.updateTeamDismantleStatus(4));
 		}
 	}

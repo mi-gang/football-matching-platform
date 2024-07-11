@@ -1,5 +1,9 @@
 package com.kosta.project;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,11 +21,11 @@ public class MatchingsMapperTest {
 	@Autowired
 	MatchingMapper mm;
 	
-	//@Test
+	@Test
 	void selectMatchingsListTest() {
 		MatchingConditionDTO dto = MatchingConditionDTO.builder()
 				.matchingDate("2024-07-10")
-				.matchingTime(12)
+				.matchingTime("14")
 				.build();
 		System.out.println(mm.selectMatchingsList(dto));
 	}
@@ -30,7 +34,7 @@ public class MatchingsMapperTest {
 	void selectMatchingsListByRegionTest() {
 		MatchingConditionDTO dto = MatchingConditionDTO.builder()
 				.matchingDate("2024-07-10")
-				.matchingTime(12)
+				.matchingTime("14")
 				.fieldAddress("인천광역시 미추홀구")
 				.build();
 		System.out.println(mm.selectMatchingsListByRegion(dto));
@@ -103,7 +107,7 @@ public class MatchingsMapperTest {
 		System.out.println(mm.selectMatchingAddResult(19));
 	}
 	
-	@Test
+	//@Test
 	void selectFastMatchingListTest() {
 		System.out.println(mm.selectFastMatchingList());
 	}
@@ -128,7 +132,7 @@ public class MatchingsMapperTest {
 			System.out.println(mm.selectFastMatchingListBySmallAndDateAndRegionAndTier(dto));
 		}
 		
-		@Test
+		//@Test
 		void selectFastMatchingListByBigDateAndRegionAndTierTest() {
 			FastMatchingConditionDTO dto = FastMatchingConditionDTO.builder()
 					.matchingDate("24-07-01")

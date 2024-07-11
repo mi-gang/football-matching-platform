@@ -18,6 +18,6 @@ public class UserMapperTest {
 	
 	@Test
 	void selectSuspenedTime() {
-		System.out.println(um.selectSuspenedTime("chul01"));
+		System.out.println(um.selectSuspendedTime("chul01"));
 	}
 }
