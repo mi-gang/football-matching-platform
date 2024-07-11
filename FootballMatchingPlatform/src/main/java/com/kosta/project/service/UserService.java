@@ -49,10 +49,7 @@ public class UserService {
 	}
 	
 	
-	// 점수 높은 사용자 100명 불러오기
-	public List<UserDTO> getTopHundredUsersList() {
-		return um.selectTopHundredUsersList();
-	}
+
 
 	// 내 정보 불러오기
 	public UserDTO getMyInfoByUserId(String userId, String password) {
