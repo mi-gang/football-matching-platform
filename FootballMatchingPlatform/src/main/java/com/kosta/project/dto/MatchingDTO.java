@@ -26,4 +26,5 @@ public class MatchingDTO {
 	private String feildAddress;
 	private String feildAddressDetail;
 	private String feildName;
+	private int fieldSeq;
 }
