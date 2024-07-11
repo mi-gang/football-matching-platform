@@ -142,6 +142,7 @@ p{
 
 
     #matchingDateBtns {
+	  white-space: nowrap;
       font-size: 0;
     }
     #matchingDateBtns li {
@@ -187,26 +188,10 @@ p{
 	font-size:1rem;
 }
 
-    .matchingDateBtn0:hover,
-    .matchingDateBtn0.active90 {
+    #matchingDateBtn:hover,
+    #matchingDateBtn.active90 {
       background: #73a772;
     }
-    .matchingDateBtn1:hover,
-    .matchingDateBtn1.active90 {
-      background: #73a772;
-    }
-    .matchingDateBtn2:hover,
-    .matchingDateBtn2.active90 {
-      background: #73a772;
-    }
-    .matchingDateBtn3:hover,
-    .matchingDateBtn3.active90 {
-      background: #73a772;
-    }
-    .matchingDateBtn4:hover,
-    .matchingDateBtn4.active90 {
-      background: #73a772;
-    }	
 
     #applyTypeBtn:hover,
     #applyTypeBtn.active2 {
@@ -277,6 +262,12 @@ p{
       background-color: #AAAAAA;
     }
 
+	#matchingDateBtnsLi{
+		width: 15rem;
+	}
+	#matchingDateBtns{
+		width: 18rem;
+	}
 
 </style>
 <body>
@@ -291,15 +282,13 @@ p{
 	<div class = "matchingDate">
 
 	  <ul id = "matchingDateBtns">
-	  	<button type = "button" id="backBtn" class = "btn"><</button>
+	  	<li><button type = "button" id="backBtn" class = "btn"><</button></li>
+	<li>	
 		<div id = "matchingDateBtnsLi">
-		<!-- <li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)" value="2024-06-27">27</button></li>
-		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)" value="2024-06-28">28</button></li>
-		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)" value="2024-06-29">29</button></li>
-		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)" value="2024-06-30">30</button></li>
-		<li><button type = "button" class = "matchingDateBtn btn m-2 p-3" onclick="change_btn(event)" value="2024-07-01">1</button></li> -->
+
 		</div>
-		<button type = "button" id="frontBtn" class = "btn">></button> 	
+	</li>
+		<li><button type = "button" id="frontBtn" class = "btn">></button></li> 	
 	  </ul>
 
 	</div>
@@ -350,9 +339,6 @@ $(document).ready(function(){
     });
 
 
-
-
-
 	const today = new Date(); // 오늘 날짜
 const TODAY_BUTTON_VALUE = today.toISOString().slice(0, 10); // '오늘' 버튼의 value 값 (YYYY-MM-DD)
 
@@ -364,58 +350,105 @@ const frontBtn = document.getElementById('frontBtn'); // 다음 날짜 버튼
 const dates = [];
 
 for (let i = 0; i <= 4; i++) {
+
   const date = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
   dates.push(date.toISOString().slice(0, 10));
+
 }
 
 // 버튼 생성 및 이벤트 설정
 dates.forEach((date, i) => {
 	console.log(i)
   $('#matchingDateBtnsLi').append(
-	"<li><button type = 'button' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
 });
 
 
 
-// 날짜 변경 함수
-function changeBtn(event) {
-  const selectedMatchDate = event.target.value;
-  console.log(selectedMatchDate)
-}
 
+
+
+
+
+
+let backClickCount = 0;
+let frontClickCount = 0;
+let plusOrMinusNumber = 0;
 // 이전 날짜 버튼 클릭 이벤트
 backBtn.addEventListener('click', () => {
   // 이전 5일 버튼 생성 및 이벤트 설정...
+  backClickCount++;
+
+  plusOrMinusNumber = 5*(frontClickCount + backClickCount);
+
   $('#matchingDateBtnsLi li').empty();
 
   const backDates = [];
-  console.log($('.matchingdatebtn0').val())
+  
+ 
+
+
+
   const newStartDate = new Date(dates[0]); // 첫 번째 버튼의 날짜를 기준으로 -5일
-  newStartDate.setDate(newStartDate.getDate() - 5);
+  newStartDate.setDate(newStartDate.getDate() - plusOrMinusNumber);
   console.log(newStartDate)
+  console.log(dates[0])
   for (let i = 0; i <= 4; i++) {
+
   const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
   backDates.push(date.toISOString().slice(0, 10));
+
 }
 
 // 버튼 생성 및 이벤트 설정
 backDates.forEach((date, i) => {
 	console.log(i)
   $('#matchingDateBtnsLi').append(
-	"<li><button type = 'button' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
-});
+
 
 });
 
-// 다음 날짜 버튼 클릭 이벤트
+});
+
+
+//다음 날짜 버튼 클릭 이벤트
 frontBtn.addEventListener('click', () => {
-  // 다음 5일 버튼 생성 및 이벤트 설정...
-  $('#matchingDateBtnsLi').empty();
-  const newStartDate = new Date(dates[dates.length - 1]); // 마지막 버튼의 날짜를 기준으로 +5일
-  newStartDate.setDate(newStartDate.getDate() + 5);
+  // 이전 5일 버튼 생성 및 이벤트 설정...
+  frontClickCount++;
+
+  plusOrMinusNumber = 5*(frontClickCount + backClickCount);
+
+  $('#matchingDateBtnsLi li').empty();
+
+  const frontDates = [];
   
+ 
+
+
+
+  const newStartDate = new Date(dates[0]); // 첫 번째 버튼의 날짜를 기준으로 -5일
+  newStartDate.setDate(newStartDate.getDate() + plusOrMinusNumber);
+  console.log(newStartDate)
+  console.log(dates[0])
+  for (let i = 0; i <= 4; i++) {
+
+  const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
+  frontDates.push(date.toISOString().slice(0, 10));
+
+}
+
+// 버튼 생성 및 이벤트 설정
+frontDates.forEach((date, i) => {
+	console.log(i)
+  $('#matchingDateBtnsLi').append(
+	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+  )
+
+
+});
 });
 
 
@@ -432,7 +465,7 @@ frontBtn.addEventListener('click', () => {
 	var checkNumber = 0;
 	var selectedDate = null;
 	function change_btn(e) {
-	var btns = document.querySelectorAll(".matchingDateBtn");
+	var btns = document.querySelectorAll("#matchingDateBtn");
 	btns.forEach(function(btn, i) {
 		if(e.currentTarget == btn) {
 			btn.classList.add("active90");
