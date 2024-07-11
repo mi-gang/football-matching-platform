@@ -147,7 +147,14 @@ public class MatchingService {
 	
 	public boolean addMatcings(String type, String userId, int matchingSeq, String userTier, String matchingDate, int matchingTime, int fieldSeq) {
 		boolean result = false;
-		
+		if(type.equals("개인")) {
+			mm.insertMatchingAdds(userId);
+		}
+		else if(type.equals("팀")) {
+			int teamSeq = tm.selectTeamSeq(userId);
+			mm.insertMatchingAddsByTeam(teamSeq);
+		}
+		int matchingAddSeq = mm.selectMatchingAddSeq();
 		return result;
 	}
 }
