@@ -52,6 +52,9 @@ public interface UserMapper {
 	List<UserDTO> selectTopHundredUsersList(); 
 	
 	
+	
+	
+	
 
 	
 	/* 마이 페이지 */	
@@ -63,6 +66,15 @@ public interface UserMapper {
 	
 	// 내 정보 불러오기
 	UserDTO selectMyInfoByUserId(String userId, String password);
+	
+	// 내 등급 불러오기
+	UserDTO selectMyTierAndScoreByUserId(String userId);
+	
+	// 내 전적 불러오기
+	UserDTO selectMyMatchedInfoByUserId(String userId);
+	
+	// 닉네임, 이메일 불러오기
+	UserDTO selectNicknameAndEmailByUserIdForMyPage(String userId);
 	
 	
 }

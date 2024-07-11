@@ -35,6 +35,7 @@ public class UserDTO {
 	private int reportCount;
 	private Date suspendedTime;
 	private String userStatus;
+	private float winRate;
 	
 	
 }

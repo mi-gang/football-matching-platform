@@ -206,4 +206,26 @@ public class UserMapperTestJuho {
 							userDTO.getPhoneNumber());
 	}
 	
+	
+	// 내 등급 불러오기
+	@Test
+	void selectMyTierAndScoreByUserIdTest() {
+		System.out.println(um.selectMyTierAndScoreByUserId("user00200"));
+	}
+	
+	
+	// 내 전적 불러오기
+	@Test
+	void selectMyMatchedInfoByUserIdTest() {
+		System.out.println(um.selectMyMatchedInfoByUserId("user00200"));
+	}
+	
+	
+	// 내 이메일, 닉네임 불러오기
+	@Test
+	void selectNicknameAndEmailByUserIdForMyPageTest() {
+		System.out.println(um.selectNicknameAndEmailByUserIdForMyPage("user00200"));
+	}
+	
+	
 }

@@ -31,7 +31,7 @@ public interface MatchingMapper {
 	void updateMatchings(int matchingSeq);
 	void updateMatchingAddLists(MatchingCountDTO dto);
 	List<MatchingConditionDTO> selectMatchingAddResult(int matchingAddSeq);
-	List<MatchingsDTO> selectFastMatchingList();
+	List<FastMatchingDTO> selectFastMatchingList();
 	List<FastMatchingDTO> selectFastMatchingListBySmall();
 	List<FastMatchingDTO> selectFastMatchingListByBig();
 	List<FastMatchingDTO> selectFastMatchingListBySmallAndDateAndRegionAndTier(FastMatchingConditionDTO dto);
