@@ -4,7 +4,7 @@
 <mapper namespace="com.kosta.project.repository.TeamMapper">
 	
 	<!-- 팀 전체 순위 -->
-<!-- 	<select id="selectTeamRankList" resultType="com.kosta.project.dto.TeamDTO">
+ 	<select id="selectTeamRankList" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT team_name AS teamName, team_rank AS teamRank, game_count AS gameCount, 
 		win_count AS winCount, if(game_count = 0, 0, 100*(win_count/game_count)) AS odds,
 		team_tier AS teamTier, team_score AS teamScore 
@@ -12,7 +12,7 @@
 		ORDER BY team_score DESC
 	</select>
 	
-	팀 전체순위 [검색]
+	<!-- 팀 전체순위 [검색] -->
 	<select id="selectSearchTeamRankList" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT team_name AS teamName, team_rank AS teamRank, game_count AS gameCount, 
 		win_count AS winCount, if(game_count = 0, 0, 100*(win_count/game_count)) AS odds,
@@ -34,7 +34,7 @@
 		GROUP BY m.team_seq;
 	</select>
 	
-	가입 가능 팀 목록 조회 [검색]
+	<!-- 가입 가능 팀 목록 조회 [검색] -->
 	<select id="selectSearchPossibleTeam" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT t.team_seq AS teamSeq, team_name AS teamName, possible_a AS possA, possible_b AS possB, 
 		possible_c AS possC, possible_d AS possD, week_type AS weekType, week_time AS weekTime,
@@ -47,7 +47,7 @@
 	</select>
 	
 	
-	팀 생성하기
+	<!-- 팀 생성하기 -->
 	<insert id="insertTeam" parameterType="com.kosta.project.dto.TeamDTO">
 		INSERT INTO teams(team_name, hometown, week_type, week_time, hope_time, content, team_score, team_tier, 
 		game_count, win_count, possible_a, possible_b, possible_c, possible_d, 
@@ -66,7 +66,7 @@
 	</select>
 	
 	
-	팀 정보 불러오기 by 모달
+	<!-- 팀 정보 불러오기 by 모달 -->
 	<select id="selectTeamInfoByModal" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT team_seq AS teamSeq, team_name AS teamName, game_count AS gameCount, win_count AS winCount, 
 		if(game_count = 0, 0, 100*(win_count/game_count)) AS odds, NVL(team_rank, 0) AS teamRank, 
@@ -84,7 +84,7 @@
 		GROUP BY user_tier;
 	</select>
 	
-	팀 가입 신청하기 & 가입신청 취소하기
+	<!-- 팀 가입 신청하기 & 가입신청 취소하기 -->
 	<insert id="insertTeamApply">
 		INSERT INTO applys(user_id, apply_date, apply_status, close_status, team_seq)
 		VALUES (#{userId}, NOW(), FALSE, FALSE, #{teamSeq});
@@ -95,7 +95,7 @@
 	</delete>
 	
 	
-	가입 신청된 목록 조회
+	<!-- 가입 신청된 목록 조회 -->
 	<select id="selectApplyTeamList" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT t.team_seq AS teamSeq,team_name AS teamName, possible_a AS possA, possible_b AS possB, possible_c AS possC, 
 		possible_d AS possD, week_type AS weekType, week_time AS weekTime, hope_time AS hopeTime, hometown, 
@@ -106,13 +106,13 @@
 	</select>
 
 	
-	팀원 모집 신청 받기 (신청 허가)
+	<!-- 팀원 모집 신청 받기 (신청 허가) -->
 	<update id="updateApplyTeamMemberStatus">
 		UPDATE applys SET apply_status = TRUE WHERE user_id = #{userId};
 	</update>
 
 	
-	내 팀 정보 조회 (내 팀 정보 Btn)
+	<!-- 내 팀 정보 조회 (내 팀 정보 Btn) -->
 	<select id="selectTeamInfo" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT team_seq AS teamSeq, team_name AS teamName, game_count AS gameCount, win_count AS winCount, 
 		if(game_count = 0, 0, 100*(win_count/game_count)) AS odds, NVL(team_rank, 0) AS teamRank, team_tier AS teamTier,
@@ -124,7 +124,7 @@
 	</select>
 	
 	
-	팀원 팀나가기 & 팀원 강퇴하기
+	<!-- 팀원 팀나가기 & 팀원 강퇴하기 -->
 	<update id="updateTeamMemberStatus">
 		UPDATE team_members SET team_member_status = TRUE WHERE user_id = #{userId};
 	</update>
@@ -134,7 +134,7 @@
 	</update>
 	
 	
-	팀 추가 모집 하기
+	<!-- 팀 추가 모집 하기 -->
 	<update id="updateTeamInfo" parameterType="com.kosta.project.dto.TeamDTO">
 		UPDATE teams
 		SET hometown = #{hometown}, week_type = #{weekType}, week_time = #{weekTime}, 
@@ -145,7 +145,7 @@
 	</update>
 	
 	
-	추가모집 마감
+	<!-- 추가모집 마감 -->
 	<update id="updateApplyTeamStatus">
 		UPDATE applys SET close_status = TRUE WHERE team_seq = #{teamSeq};
 	</update>
@@ -155,7 +155,7 @@
 	</update>
 
 
-	팀원 목록
+	<!-- 팀원 목록 -->
 	<select id="selectTeamMemberList" resultType="com.kosta.project.dto.TeamMemberDTO">
 		SELECT nickname, birthday, gender, user_tier AS userTier, email
 		FROM users u, team_members m
@@ -164,7 +164,7 @@
 	</select>
 
 
-	팀장의 가입 신청 목록 조회
+	<!-- 팀장의 가입 신청 목록 조회 -->
 	<select id="selectApplyList" resultType="com.kosta.project.dto.TeamMemberDTO">
 		SELECT a.user_id AS userId, nickname, birthday, gender, user_tier AS userTier, email
 		FROM users u, applys a
