@@ -30,28 +30,63 @@
                 </div>
             </div>
 
-            <div class="d-flex flex-column align-items-center gap-2 w-100 p-2">
+            <div class="d-flex flex-column align-items-center gap-2 w-100 ps-3 pe-3">
 
-                <div class="d-flex w-100 align-items-center justify-content-center border border-2 rounded-4 p-3">
-                    <div class="row">
-                        <div class="team-title text-center">
+                <!-- 팀 정보 -->
+                <div
+                    class="d-flex gap-2 w-100 align-items-center justify-content-center border border-2 rounded-4 p-2 pt-4 pb-4 mt-2">
+                    <div class="d-flex text-center">
+                        <div class="team-title pe-3">
                             풋살지존지존
                         </div>
                     </div>
-                    <div class=""></div>
-                    <div class="ps-3">
-                        <div class="">1위 820점 A등급</div>
-                        <div class="">100전 78승 (승률 78%)</div>
-                            <span class="badge rounded-5">4/10명</span>
+                    <div class="d-flex flex-column gap-1">
+                        <div class="">
+                            1위 A등급
+                            <span class="team-score">[1820점]</span>
+                        </div>
+                        <div class="">100전 78승
+                            <span class="team-score">(승률 78%)</span>
+                        </div>
+                        <span class="badge rounded-5 w-50">9 / 10 명</span>
                     </div>
                 </div>
-                <div class="d-flex w-100 ps-2">
+
+                <!-- 일정 -->
+                <div class="d-flex w-100 ps-2 mt-2">
+                    <div>다음 일정</div>
+                </div>
+                <div class="d-flex justify-content-between w-100 border border-2 rounded-4 p-3">
+                    <div>
+                        <div class="d-flex">
+                            <div class="pe-1">풋살지존지존</div>
+                            <div>vs</div>
+                            <div class="ps-1">엄준식준식이</div>
+                        </div>
+                        <div class="d-flex">
+                            <div>6/30(일)</div>
+                            <div>18:00~20:00</div>
+                        </div>
+                        <div class="d-flex">
+                            <div>서울 강서</div>
+                            <div>신정FC 우쩌구 구장</div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end team-img">
+                        <img src="../img/구장 사진.svg">
+                    </div>
+                </div>
+
+                <!-- 팀원 -->
+                <div class="d-flex justify-content-between w-100 ps-2 mt-2">
                     <div>팀원</div>
+                    <!-- 팀장일 경우에만 -->
+                    <div><a href="#" class="link-secondary pe-2">더보기</a></div>
                 </div>
                 <div class="d-flex w-100 border border-2 rounded-4 p-3 justify-content-center flex-wrap gap-3">
                     <div class="member_list_box">
                         <div class="d-flex nickname_container">
-                            <div>slr12</div>
+                            <div>지존킹짱짱왕</div>
                             <img src="../img/leader.svg">
                         </div>
                         <div>A</div>
@@ -64,51 +99,30 @@
                     </div>
                     <div class="member_list_box">
                         <div class="d-flex nickname_container">
-                            <div>slr12</div>
+                            <div>호날두2</div>
                         </div>
                         <div>A</div>
                     </div>
                     <div class="member_list_box">
                         <div class="d-flex nickname_container">
-                            <div>slr12</div>
+                            <div>흥민이형</div>
                         </div>
                         <div>A</div>
                     </div>
                     <div class="member_list_box">
                         <div class="d-flex nickname_container">
-                            <div>slr12</div>
+                            <div>지존킹짱왕짱</div>
                             <div class="nickBadge">new</div>
                         </div>
                         <div>A</div>
                     </div>
                 </div>
-                <div class="d-flex w-100 ps-2">
-                    <div>다음 일정</div>
-                </div>
-                <div class="next-game-container w-100 border border-2 rounded-4 p-3">
-                    <div>
-                        <div class="d-flex">
-                            <div>zI존풋살</div>
-                            <div>vs</div>
-                            <div>엄준식</div>
-                        </div>
-                        <div class="d-flex">
-                            <div>6/30(일)</div>
-                            <div>18:00~20:00</div>
-                        </div>
-                        <div class="d-flex">
-                            <div>서울 강서</div>
-                            <div>신정FC 우쩌구 구장</div>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <img src="../img/구장 사진.svg">
-                    </div>
-                </div>
-                <div class="d-flex w-100 ps-2">
+
+
+                <div class="d-flex w-100 ps-2 mt-2">
                     <div>팀 설명</div>
                 </div>
-                <div class="w-100 border border-2 rounded-4 p-3">
+                <div class="w-100 border border-2 rounded-4 p-3 mb-2">
                     <div class="d-flex align-items-center gap-1">
                         <div>신청 가능 등급</div>
                         <div class="tier-badge">A등급</div>
@@ -126,15 +140,26 @@
                         <div>서울시 금천구</div>
                     </div>
                     <div class="d-flex flex-wrap">
-                        <div>소개글</div>
+                        <div>[소개글]</div>
                         <div>
-                            안녕하세요. 저희 팀은 남성 팀이라 여성은 
-                            안 받습니다.  팀원들이 젊어서 10대부터 
+                            안녕하세요. 저희 팀은 남성 팀이라 여성은
+                            안 받습니다. 팀원들이 젊어서 10대부터
                             30대 사이의 남성 분을 원합니다.
                             감사합니다.
                         </div>
                     </div>
                 </div>
+
+                <div class="d-flex gap-2 justify-content-center mb-2">
+                    <div class="">
+                        <button type="button" class="joinBtn p-2 ps-4 pe-4" id="addMember">팀원 추가 모집</button>
+                    </div>
+                    <div class="">
+                        <button type="button" class="joinBtn p-2 ps-4 pe-4" id="deleteTeam">팀 해체하기</button>
+                    </div>
+                </div>
+
+
             </div>
         </div>
         <!-- 하단 메뉴바 -->
@@ -152,10 +177,6 @@
             $("nav").load("./common/nav.html");
         });
 
-        $("#searchTeamButton").on("click", function () {
-            alert("팀 검색");
-        });
-
         $(".selectBtn").on('click', function () {
             $(".selectBtn").removeClass('btnClick');
             $(this).addClass('btnClick');
@@ -164,7 +185,10 @@
         $(".joinBtn").on('click', function () {
             $(".joinBtn").removeClass('btnClick');
             $(this).addClass('btnClick');
+
+            alert("추가모집 모달");
         })
+
         document.getElementById("searchTeamText").value = "검색어를 입력하세요";
     </script>
 </body>
