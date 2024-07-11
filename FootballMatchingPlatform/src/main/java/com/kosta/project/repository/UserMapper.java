@@ -15,10 +15,10 @@ public interface UserMapper {
 
 	/* 메인 */
 	// 유저 로그인
-	UserDTO selectUserLogin(String userId);
+	UserDTO selectUserLogin(String userId, String password);
 	
 	// 유저 구글 로그인
-	UserDTO selectUserSnsLogin(String userId);
+	UserDTO selectUserSnsLogin(String userId, String password);
 	
 	// 유저 마지막 로그인 날짜
 	void setUserLastLoginDateByUserId(String userId);

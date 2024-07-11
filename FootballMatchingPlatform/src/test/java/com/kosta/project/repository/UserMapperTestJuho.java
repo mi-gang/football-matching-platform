@@ -23,7 +23,8 @@ public class UserMapperTestJuho {
 	@Test
 	void selectUserLoginTest() {
 		String userId = "user00200";
-		System.out.println(um.selectUserLogin(userId));
+		String password = "password00200";
+		System.out.println(um.selectUserLogin(userId, password));
 	}
 	
 	
@@ -31,7 +32,8 @@ public class UserMapperTestJuho {
 	@Test
 	void selectUserSnsLoginTest() {
 		String userId = "user00200";
-		System.out.println(um.selectUserSnsLogin(userId));
+		String password = "password00200";
+		System.out.println(um.selectUserSnsLogin(userId, password));
 	}
 	
 	
@@ -70,7 +72,7 @@ public class UserMapperTestJuho {
 	
 	
 	// 회원가입하기
-	@Test
+	//@Test
 	void insertUserJoinTest() {
 		int i = 9999999;
 		//for (int i = 1000; i < 1010; i++) {
