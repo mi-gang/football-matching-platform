@@ -5,7 +5,10 @@
 
 	<!-- 매칭 중인 목록 조회 -->
 	<select id="selectMatchingsList" resultType="com.kosta.project.dto.MatchingsDTO" parameterType="com.kosta.project.dto.MatchingConditionDTO">
-		SELECT matching_seq as matchingSeq, matching_date as matchingDate, matching_time as matchingTime, field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_name as fieldName
+		SELECT matching_seq as matchingSeq, matching_date as matchingDate, 
+		matching_time as matchingTime, field_address as fieldAddress, 
+		field_address_detail as fieldAddressDetail, field_name as fieldName
+		, m.field_seq
 		FROM matchings m, fields f
 		WHERE m.field_seq = f.field_seq
 		AND matching_date = #{matchingDate}
@@ -89,7 +92,7 @@
 	</update>
 	
 	<!-- 매칭 신청 결과 조회 -->
- 	<select id="selectMatchingAddResult" resultType="com.kosta.project.dto.MatchingAddResultDTO" parameterType="Integer">
+ 	<select id="selectMatchingAddResult" resultType="com.kosta.project.dto.MatchingConditionDTO" parameterType="Integer">
  		SELECT matching_date as matchingDate, field_address as fieldAddress, 
  		matching_time as matchingTime
 		FROM matching_add_lists ml, matchings m, fields f
