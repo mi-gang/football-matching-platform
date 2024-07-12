@@ -99,9 +99,9 @@ public class MobileController {
 		return "matchinglist";
 	}
 	
-	@GetMapping("/myCalender")
+	@GetMapping("/myCalendar")
 	public String getMyCalender() {
-		return "myCalender";
+		return "myCalendar";
 	}
 	
 	@GetMapping("/myMatchingList")
