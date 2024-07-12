@@ -89,7 +89,7 @@
 		ON u.user_id = ma.user_id
 		SET matching_success_status = TRUE
 		WHERE matching_seq = #{matchingSeq}
-		AND u.user_tier != #{userTier};
+		AND u.user_tier = #{userTier};
 	</update>
 	
 	<!-- 매칭 신청 결과 조회 -->
