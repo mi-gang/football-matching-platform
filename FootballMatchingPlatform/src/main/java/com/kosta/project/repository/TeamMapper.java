@@ -12,8 +12,11 @@ import com.kosta.project.dto.TeamMemberDTO;
 @Mapper
 public interface TeamMapper {
 	
+	String isTeam(String userId);
+	
 	List<TeamDTO> selectTeamRankList();
 	List<TeamDTO> selectSearchTeamRankList(String search);
+	List<TeamDTO> selectPossibleJoinTeamByUser(String userId);
 	
 	List<TeamDTO> selectPossibleJoinTeam();
 	List<TeamDTO> selectSearchPossibleTeam(String search);

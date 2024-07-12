@@ -16,6 +16,11 @@ class TeamRepositoryTest{
 	@Autowired
 	TeamMapper teamMapper;
 	
+	@Test
+	void isTeam() {
+		System.out.println(teamMapper.isTeam("user007"));
+	}
+	
 	//@Test
 	void selectTeamRankList() {		// 팀 전체 순위
 		System.out.println(teamMapper.selectTeamRankList());
