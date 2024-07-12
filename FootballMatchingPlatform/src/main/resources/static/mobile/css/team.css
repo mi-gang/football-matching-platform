@@ -233,3 +233,13 @@ font-size: 0.8rem;
   text-decoration: none;
   font-size: 0.88rem;
 }
+
+.deleteImg > img{
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.teamKing{
+  width: 1.2rem;
+  height: 1.2rem;
+}
