@@ -23,6 +23,49 @@ public class UserService {
 	
 	private final InquiryMapper im;
 	
+	//로그인하기 (세션에 본인 등급 넣기-상단 네비에 넣을 용도, 시/도)
+	public UserDTO getUserLogin(String userId, String password) {
+		um.setUserLastLoginDateByUserId(userId); 
+		return um.selectUserLogin(userId, password);
+	}
+	//소셜 로그인하기
+	public UserDTO getUserSnsLogin(String userId, String password) {
+		um.setUserLastLoginDateByUserId(userId); 
+		return um.selectUserSnsLogin(userId,password);
+	}
+	
+	// 아이디 중복 여부 확인하기
+	public boolean getUserIdByUserId(String userId) {
+		if (um.selectUserIdByUserId(userId) == null)
+			return true;
+		else
+			return false;
+	}
+
+	// 닉네임 중복 여부 확인하기
+	public boolean getUserNicknameByNickname(String nickname) {
+		if (um.selectUserNicknameByNickname(nickname) == null)
+			return true;
+		else return false;
+	}
+
+	// 이메일 중복 여부 확인하기
+	public boolean getEmailByEmail(String email) {
+		if (um.selectEmailByEmail(email)==null)
+			return true;
+		else return false;
+	}
+	
+	//회원가입하기
+	public void addUserJoin(UserDTO userDTO) {
+		um.insertUserJoin(userDTO);
+	}
+	
+	//이름, 이메일이 일치하는 아이디 불러오기
+	public String getIdByNameAndEmail(String name, String email) {
+		return um.selectIdByNameAndEmail(name, email);
+	}
+	
 	// 내 팀 정보 불러오기(마이페이지)
 	public TeamDTO getTeamInfoByUserId(String userId) {
 		return tm.selectTeamInfoByUserId(userId);
