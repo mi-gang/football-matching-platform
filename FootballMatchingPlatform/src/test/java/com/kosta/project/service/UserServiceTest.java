@@ -5,17 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.kosta.project.dto.UserDTO;
-import com.kosta.project.service.JoinService;
-import com.kosta.project.service.LoginService;
-import com.kosta.project.service.SearchUserIdPasswordService;
+
 @SpringBootTest
 public class UserServiceTest {
 //	@Autowired
 //	LoginService loginService;
 	@Autowired
-	JoinService joinService;
-	@Autowired
-	SearchUserIdPasswordService searchIdPassword;
+	UserService us;
 	
 //	@Test
 //	void getUserLoginTest() {
@@ -34,10 +30,10 @@ public class UserServiceTest {
 //	void getUserNicknameByNickname() {
 //		System.out.println(joinService.getUserNicknameByNickname("nickname001"));
 //	}
-	@Test
-	void getEmailByEmail() {
-		System.out.println(joinService.getEmailByEmail("email001@gmail.com"));
-	}
+//	@Test
+//	void getEmailByEmail() {
+//		System.out.println(joinService.getEmailByEmail("email001@gmail.com"));
+//	}
 //	@Test
 //	void addUserJoin() {
 //		joinService.addUserJoin(UserDTO.builder().userId(null));
