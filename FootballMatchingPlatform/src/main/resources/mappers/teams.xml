@@ -3,6 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kosta.project.repository.TeamMapper">
 	
+	<!-- 팀 유무 확인 -->
+	<select id="isTeam">
+		SELECT user_id
+		FROM team_members
+		WHERE user_id = #{userId} AND 
+		team_member_status = FALSE AND team_member_delete = FALSE; 
+	</select>
+	
 	<!-- 팀 전체 순위 -->
  	<select id="selectTeamRankList" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT team_name AS teamName, team_rank AS teamRank, game_count AS gameCount, 
@@ -33,6 +41,23 @@
 		WHERE t.team_seq = m.team_seq AND recruitment = TRUE AND team_dismantle_status = FALSE
 		GROUP BY m.team_seq;
 	</select>
+	
+	<!-- 로그인 -> 가입 가능 팀 목록 조회 -->
+	<select id = "selectPossibleJoinTeamByUser" resultType="com.kosta.project.dto.TeamDTO">
+		SELECT t.team_seq AS teamSeq, team_name AS teamName, possible_a AS possA, possible_b AS possB, 
+		possible_c AS possC, possible_d AS possD, week_type AS weekType, week_time AS weekTime,
+		hope_time AS hopeTime, hometown, COUNT(case when team_member_status=FALSE AND team_member_delete=FALSE
+		then 1 END) AS memberCount
+		FROM teams t, team_members m
+		WHERE t.team_seq = m.team_seq AND recruitment = TRUE AND team_dismantle_status = FALSE
+		AND t.team_seq NOT IN(
+			SELECT t.team_seq
+			FROM teams AS t JOIN applys AS a ON t.team_seq = a.team_seq
+			WHERE a.user_id = "user00420"
+		)
+		GROUP BY m.team_seq;
+	</select>
+	
 	
 	<!-- 가입 가능 팀 목록 조회 [검색] -->
 	<select id="selectSearchPossibleTeam" resultType="com.kosta.project.dto.TeamDTO">
