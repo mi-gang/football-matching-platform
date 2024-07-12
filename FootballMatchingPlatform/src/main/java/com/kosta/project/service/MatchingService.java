@@ -13,7 +13,9 @@ import com.kosta.project.dto.CloseTimeDTO;
 import com.kosta.project.dto.FieldsDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
+import com.kosta.project.dto.AddMatchingDataDTO;
 import com.kosta.project.dto.addMatchingListInfo;
+import com.kosta.project.dto.addMatchingsDTO;
 import com.kosta.project.repository.FieldMapper;
 import com.kosta.project.repository.MatchingMapper;
 import com.kosta.project.repository.TeamMapper;
@@ -145,13 +147,27 @@ public class MatchingService {
 		return fDTO;
 	}
 	
-	public boolean addMatcings(String type, String userId, int matchingSeq, String userTier, String matchingDate, int matchingTime, int fieldSeq) {
+	public boolean addMatcings(AddMatchingDataDTO dto) {
 		boolean result = false;
-		if(type.equals("개인")) {
-			mm.insertMatchingAdds(userId);
+		
+		for(int i=0; i<dto.getMDTO().size(); i++) {
+			if(dto.getMDTO().get(i).getMatchingSeq() == 0) {
+				addMatchingsDTO aDTO = addMatchingsDTO.builder()
+						.matchingDate(dto.getMDTO().get(i).getMatchingDate())
+						.matchingTime(dto.getMDTO().get(i).getMatchingTime())
+						.fieldSeq(dto.getMDTO().get(i).getFieldSeq())
+						.build();
+				mm.insertMatchings(aDTO);
+			}
 		}
-		else if(type.equals("팀")) {
-			int teamSeq = tm.selectTeamSeq(userId);
+		
+		
+		
+		if(dto.getType().equals("개인")) {
+			mm.insertMatchingAdds(dto.getUserId());
+		}
+		else if(dto.getType().equals("팀")) {
+			int teamSeq = tm.selectTeamSeq(dto.getUserId());
 			mm.insertMatchingAddsByTeam(teamSeq);
 		}
 		int matchingAddSeq = mm.selectMatchingAddSeq();

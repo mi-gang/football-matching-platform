@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.kosta.project.dto.AddMatchingDataDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
 import com.kosta.project.repository.FieldMapper;
@@ -57,8 +58,25 @@ public class MatchingServiceTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	void getFieldInfoTest() {
 		System.out.println(ms.getFieldInfo(4));
+	}
+	
+	@Test
+	void addMatcingsTest() {
+		MatchingConditionDTO dto = MatchingConditionDTO.builder()
+				.matchingDate("2024-07-10")
+				.matchingTime("14 16")
+				.build();
+		List<MatchingsDTO> matchingsDTO = ms.getMatchingsList(dto);
+		
+		AddMatchingDataDTO addDTO = AddMatchingDataDTO.builder()
+				.type("개인")
+				.userId("user002")
+				.userTier("D")
+				.mDTO(matchingsDTO)
+				.build();
+		ms.addMatcings(addDTO);
 	}
 }
