@@ -36,6 +36,7 @@ public class MatchingScheduleListDTO {
 	private boolean cancelStatus;
 	private boolean payStatus;
 	private boolean reviewStatus;
+	private boolean opposingTeamReviewStatus;
 	private boolean teamStatus;
 	private char team;
 	private int playerNumber;

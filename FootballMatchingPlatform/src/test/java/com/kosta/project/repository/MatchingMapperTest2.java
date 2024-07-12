@@ -85,10 +85,42 @@ public class MatchingMapperTest2 {
 		System.out.println(result);
 	}
 	
+	// 추가 메소드 테스트
+	
+//	int selectMatchingSeqByMachingAddListSeq(int matchingAddListSeq);
+//	boolean updateCancelStatus(int matchingAddListSeq);
+//	boolean updateFastAddStatus(int matchingSeq);
+//	boolean updateReviewStatus(int matchingAddListSeq);
+//	boolean selectOpposingTeamReviewStatus(UserMatchingInfoDTO userMatchingInfoDTO);
+
+	
 	@Test
-	void selectTeamScoreTest() {
-		int result = matchingMapper.selectTeamScore(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user001").build());
+	void selectMatchingSeqByMachingAddListSeqTest() {
+		int result = matchingMapper.selectMatchingSeqByMachingAddListSeq(15);
 		System.out.println(result);
 	}
+	
+	@Test
+	void updateCancelStatusTest() {
+		System.out.println(matchingMapper.updateCancelStatus(15));
+	}
+	
+	@Test
+	void updateFastAddStatusTest() {
+		System.out.println(matchingMapper.updateFastAddStatus(6));
+	}
+	
+	@Test
+	void updateReviewStatusTest() {
+		System.out.println(matchingMapper.updateReviewStatus(15));
+
+	}
+	
+	@Test
+	void selectOpposingTeamReviewStatusTest() {
+		System.out.println(matchingMapper.selectOpposingTeamReviewStatus(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user001").build()));
+	}
+	
+	
 	
 }
