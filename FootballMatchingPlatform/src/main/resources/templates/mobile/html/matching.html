@@ -5,271 +5,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="mobile/css/common.css">
+<link rel="stylesheet" href="mobile/css/matching.css">
 </head>
-<style>
 
-
-
-
-
-
-
-
-
-
-
-
-
-#btnTimes button{
-	border-radius:3rem;
-	background-color:#828282;
-	color:#FFFFFF;
-	width:4rem;
-	height:2rem;
-	font-size:0.8rem;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-
-
-
-
-#applyTypeBtn{
-	border-radius:3rem;
-	background-color:#828282;
-	color:#FFFFFF;
-	width:4rem;
-	height:2rem;
-	font-size:0.8rem;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-
-#showBtn{
-	border-radius:3rem;
-	background-color:#73A772;
-	color:#FFFFFF;
-	width:7.5rem;
-	height:3rem;
-	font-size:1rem;
-	position:fixed;
-	top:85%;
-	left:35%;
-	z-index: 1000;
-}
-
-
-
-
-p{
-	font-size:1rem;
-}
-
-.timeZone{
-	white-space:nowrap;
-}
-
-
-.matchingDate{
-	white-space:nowrap;
-	
-}
-
-.matchingDateBtn0{
-	border-radius:6rem;
-	background-color:#FFFFFF;
-	color:#626262;
-	width:2rem;
-	height:2rem;
-	font-size:0.8rem;
-	border-color:#626262;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-.matchingDateBtn1{
-	border-radius:6rem;
-	background-color:#FFFFFF;
-	color:#626262;
-	width:2rem;
-	height:2rem;
-	font-size:0.8rem;
-	border-color:#626262;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-.matchingDateBtn2{
-	border-radius:6rem;
-	background-color:#FFFFFF;
-	color:#626262;
-	width:2rem;
-	height:2rem;
-	font-size:0.8rem;
-	border-color:#626262;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-.matchingDateBtn3{
-	border-radius:6rem;
-	background-color:#FFFFFF;
-	color:#626262;
-	width:2rem;
-	height:2rem;
-	font-size:0.8rem;
-	border-color:#626262;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-.matchingDateBtn4{
-	border-radius:6rem;
-	background-color:#FFFFFF;
-	color:#626262;
-	width:2rem;
-	height:2rem;
-	font-size:0.8rem;
-	border-color:#626262;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-
-
-
-    #matchingDateBtns {
-	  white-space: nowrap;
-      font-size: 0;
-    }
-    #matchingDateBtns li {
-      display: inline-block;
-      margin-left: -1px;
-    }
-    #matchingDateBtns li:first-child {
-      margin-left: 0;
-    }
-
-    #btnTimes {
-      font-size: 0;
-    }
-    #btnTimes li {
-      display: inline-block;
-      margin-left: -1px;
-    }
-    #btnTimes li:first-child {
-      margin-left: 0;
-    }
-
-    #applyTypeBtns {
-      font-size: 0;
-    }
-    #applyTypeBtns li {
-      display: inline-block;
-      margin-left: -1px;
-    }
-    #applyTypeBtns li:first-child {
-      margin-left: 0;
-    }
-
-    body {
-      font-size: 16px;
-    }
-
-
-#backBtn{
-	font-size:1rem;
-}
-
-#frontBtn{
-	font-size:1rem;
-}
-
-    #matchingDateBtn:hover,
-    #matchingDateBtn.active90 {
-      background: #73a772;
-    }
-
-    #applyTypeBtn:hover,
-    #applyTypeBtn.active2 {
-      background: #73a772;
-    }
-
-
-#btnTime:hover, #btnTime.active3 {
-	background: #73A772;
-}
-#btnTime1:hover, #btnTime1.active4 {
-	background: #73A772;
-}
-#btnTime2:hover, #btnTime2.active5 {
-	background: #73A772;
-}
-#btnTime3:hover, #btnTime3.active6 {
-	background: #73A772;
-}
-#btnTime4:hover, #btnTime4.active7 {
-	background: #73A772;
-}
-#btnTime5:hover, #btnTime5.active8 {
-	background: #73A772;
-}
-#btnTime6:hover, #btnTime6.active9 {
-	background: #73A772;
-}
-
-
-
-
-.toast {
-      position: fixed;
-      top: 85%;
-      right: 1%;
-      background-color: #333;
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: 1rem;
-      opacity: 0;
-      transition: opacity 1s ease;
-      
-    }
-
-    .toast.show {
-      opacity: 1;
-      z-index: 2001;
-      background-color: #AAAAAA;
-    }
-
-    .toast1 {
-      position: fixed;
-      top: 85%;
-      right: 1%;
-      background-color: #333;
-      color: white;
-      padding: 1rem 7.1rem;
-      border-radius: 1rem;
-      opacity: 0;
-      transition: opacity 1s ease;
-      
-    }
-
-    .toast1.show1 {
-      opacity: 1;
-      z-index: 2000;
-      background-color: #AAAAAA;
-    }
-
-	#matchingDateBtnsLi{
-		width: 15rem;
-	}
-	#matchingDateBtns{
-		width: 18rem;
-	}
-
-</style>
 <body>
     <!-- 모바일 컨테이너 -->
     <div id="mobile-container">
@@ -325,9 +64,7 @@ p{
 <!-- 하단 메뉴바 -->
 <nav></nav>
 
-
 </div>
-
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -338,8 +75,7 @@ $(document).ready(function(){
         $('nav').load('./common/nav.html');
     });
 
-
-	const today = new Date(); // 오늘 날짜
+const today = new Date(); // 오늘 날짜
 const TODAY_BUTTON_VALUE = today.toISOString().slice(0, 10); // '오늘' 버튼의 value 값 (YYYY-MM-DD)
 
 const matchingDateBtns = document.getElementById('matchingDateBtns'); // 버튼 목록 요소
@@ -350,7 +86,6 @@ const frontBtn = document.getElementById('frontBtn'); // 다음 날짜 버튼
 const dates = [];
 
 for (let i = 0; i <= 4; i++) {
-
   const date = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
   dates.push(date.toISOString().slice(0, 10));
 
@@ -363,14 +98,6 @@ dates.forEach((date, i) => {
 	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
 });
-
-
-
-
-
-
-
-
 
 let backClickCount = 0;
 let frontClickCount = 0;
@@ -385,10 +112,6 @@ backBtn.addEventListener('click', () => {
   $('#matchingDateBtnsLi li').empty();
 
   const backDates = [];
-  
- 
-
-
 
   const newStartDate = new Date(dates[0]); // 첫 번째 버튼의 날짜를 기준으로 -5일
   newStartDate.setDate(newStartDate.getDate() - plusOrMinusNumber);
@@ -398,7 +121,6 @@ backBtn.addEventListener('click', () => {
 
   const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
   backDates.push(date.toISOString().slice(0, 10));
-
 }
 
 // 버튼 생성 및 이벤트 설정
@@ -407,12 +129,8 @@ backDates.forEach((date, i) => {
   $('#matchingDateBtnsLi').append(
 	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
-
-
 });
-
 });
-
 
 //다음 날짜 버튼 클릭 이벤트
 frontBtn.addEventListener('click', () => {
@@ -424,10 +142,6 @@ frontBtn.addEventListener('click', () => {
   $('#matchingDateBtnsLi li').empty();
 
   const frontDates = [];
-  
- 
-
-
 
   const newStartDate = new Date(dates[0]); // 첫 번째 버튼의 날짜를 기준으로 -5일
   newStartDate.setDate(newStartDate.getDate() + plusOrMinusNumber);
@@ -437,7 +151,6 @@ frontBtn.addEventListener('click', () => {
 
   const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
   frontDates.push(date.toISOString().slice(0, 10));
-
 }
 
 // 버튼 생성 및 이벤트 설정
@@ -446,22 +159,8 @@ frontDates.forEach((date, i) => {
   $('#matchingDateBtnsLi').append(
 	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
-
-
 });
 });
-
-
-
-
-
-
-
-
-
-
-
-
 	var checkNumber = 0;
 	var selectedDate = null;
 	function change_btn(e) {
@@ -478,7 +177,6 @@ frontDates.forEach((date, i) => {
 	selectedDate = e.currentTarget.value;
 	}
 	
-	
 	var teamOrSolo = null;
 	function change_btn2(e2) {
 	var btns1 = document.querySelectorAll("#applyTypeBtn");
@@ -494,7 +192,6 @@ frontDates.forEach((date, i) => {
 	teamOrSolo = e2.currentTarget.value;
 	}
 	
-	
 	function changeButtonColors(button) {
   const computedStyle = window.getComputedStyle(button);
   const buttonsColor = computedStyle.backgroundColor;
@@ -506,7 +203,6 @@ frontDates.forEach((date, i) => {
     button.style.backgroundColor = '#73A772';
   }
 }  
-	
 	
 const searchButton = document.getElementById('showBtn');
 const selectedButtons = document.querySelectorAll('#btnTimes button');  
@@ -526,20 +222,17 @@ if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
 } 
 );
 
-
 checkNumber=0;
 selectedButtons.forEach(button => {
 
 if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
 	checkNumber++;
 	console.log(checkNumber + selectedDate + teamOrSolo + button.value);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
-	
 }
- 
 });
 
 // 팀 멤버 수
-var teamMember = 5;
+var teamMember = 4;
 
 if(checkNumber == 0){
 	toast.classList.add('show');
@@ -554,26 +247,9 @@ if(teamOrSolo == '팀' && teamMember < 5){
         toast1.classList.remove('show1');
 	}, 1000);
 } 
-
 }
 
-
-
-
 });
-
-// const selectedTimes = document.querySelectorAll('#btnTimes button');  
-
-// document.getElementById('showBtn').addEventListener('click', function() {
-// 	if(selectedDate == null || teamOrSolo == null){
-		
-
-// 	}
-// });
-
-
-	
 </script>  
-
 </body>
 </html>
