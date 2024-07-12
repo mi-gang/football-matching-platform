@@ -210,7 +210,7 @@
 	</select>
 
 	<!-- 매칭 리스트 개수 불러오기 -->
-	<select id="selectMatchingListCount">
+	<select id="selectMatchingListCount" resultType="int">
 		SELECT COUNT(mal.matching_seq)
 		FROM matchings m 
 		JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
@@ -240,10 +240,30 @@
 	</update>
 	
 	<!-- 매칭 삭제하기 -->
-	<delete id="deleteMatching">	
+	<delete id="deleteMatching">
 		DELETE FROM matching_add_lists
-		WHERE matching_add_list_seq = #{matchingAddListSeq};
+		WHERE matching_add_list_seq = #{matchingAddListSeq}
 	</delete>
+	
+	<!-- 매칭 시퀀스 구하기 -->
+	<select id="selectMatchingSeqByMachingAddListSeq" parameterType="int" resultType="int">
+		SELECT matching_seq
+		FROM matching_add_lists
+		WHERE matching_add_list_seq = #{matchingAddListSeq}
+	</select>
+	
+	<!-- 매칭(개인) - 취소 상태 등록하기 -->
+	<update id="updateCancelStatus" parameterType="int">
+		UPDATE matching_add_lists SET cancel_status = 1 
+		WHERE matching_add_list_seq = #{matchingAddListSeq}
+	</update>
+	
+	<!-- 매칭 - 빠른 매칭 상태 변경하기 -->
+	<update id="updateFastAddStatus" parameterType="int">
+		UPDATE matchings
+		SET fast_add_status = 1
+		WHERE matching_seq = #{matchingtSeq}
+	</update>
 
 	<!-- 상대팀 평가 -->
 	<!-- 상대팀 리스트 불러오기 -->
@@ -272,8 +292,14 @@
 		WHERE mal.matching_seq = #{matchingSeq} AND ma.user_id = #{userId}
 	</update>
 	
+	<!-- 매칭(개인) - 리뷰 작성 상태 등록하기 -->
+	<update id="updateReviewStatus" parameterType="int">
+		UPDATE matching_add_lists SET review_status = 1
+		WHERE matching_add_list_seq = #{matchingAddListSeq}
+	</update>
+	
 	<!-- 매칭에 참여한 사용자 리스트 불러오기 -->
-	<select id="selectPlayerList">
+	<select id="selectPlayerList" resultType="com.kosta.project.dto.UserPlayInfoDTO">
 		SELECT u.user_id, u.nickname, mal.team, mal.player_number
 		FROM matchings m JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
 		JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
@@ -282,8 +308,25 @@
 		AND matching_success_status = 1
 	</select>
 	
+	<!-- 상대팀 전부 평가 완료 여부 확인하기 -->
+	<select id="selectOpposingTeamReviewStatus" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+		SELECT min(review_status)
+		FROM matchings m
+		JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
+		JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
+		JOIN users u ON ma.user_id = u.user_id
+		WHERE  m.matching_seq = #{matchingSeq}
+		AND mal.team !=
+   			(SELECT mal.team
+   			FROM matching_add_lists mal
+   			JOIN matching_adds ma
+   			ON mal.matching_add_seq = ma.matching_add_seq
+   			WHERE ma.user_id = #{userId}
+   			AND mal.matching_add_list_seq  = #{matchingAddSeq})
+	</select>
+	
 	<!-- 경기 결과 점수 불러오기 -->
-	<select id="selectReviewScore" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+	<select id="selectReviewScore" resultType="int" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
 		SELECT mal.review_score
 		FROM matching_add_lists mal JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
 		WHERE mal.matching_seq = #{matchingSeq}
@@ -291,7 +334,7 @@
 	</select>
 	
 	<!-- 승리 여부 불러오기 -->
-	<select id="selectTeamScore" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+	<select id="selectTeamScore" resultType="int" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
 		SELECT
     	CASE
 	      	WHEN mal.team = 'A' AND m.a_score &gt; m.b_score THEN 1
@@ -305,29 +348,40 @@
 		AND m.matching_seq = #{matchingSeq}
 	</select>
 	
+	<!-- 해당 매칭에 대해 팀장 여부 확인하기 -->
+	<select id="isTeamLeader" parameterType="com.kosta.project.dto.UserMatchingInfoDTO" resultType="boolean">
+		SELECT COUNT(t.team_seq)
+		FROM teams t
+		JOIN matching_adds ma ON t.team_seq = ma.team_seq
+		JOIN matching_add_lists mal ON ma.matching_add_seq = mal.matching_add_seq
+		JOIN matchings m ON m.matching_seq = mal.matching_seq
+		WHERE t.leader_id = #{userId}
+		AND m.matching_seq = #{matchingSeq}
+		AND t.team_dismantle_status = 0;
+	</select>
 
   <select id="selectMatchingAlready" parameterType="java.lang.String" resultType="com.kosta.project.dto.MatchingDTO">
-  SELECT
-    m.matching_status as matchingStatus,
-    m.matching_date as matchingDate,
-    m.matching_time as matchingTime,
-    f.field_address as fieldAddress,
-    f.field_address_detail as fieldAddressDetail,
-    f.field_name as fieldName
-  FROM
-    matchings m
-  INNER JOIN fields f ON m.field_seq = f.field_seq
-  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
-  INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
-  WHERE
-    ma.user_id = #{userId}
-    AND (m.matching_status = '경기 확정' OR m.matching_status = '매칭성공')
-    AND m.matching_date - NOW() >= 0
-    AND m.fast_add_status = 0
-  ORDER BY
-    m.matching_date DESC,
-    m.matching_time DESC
-  LIMIT 1
+	  SELECT
+	    m.matching_status as matchingStatus,
+	    m.matching_date as matchingDate,
+	    m.matching_time as matchingTime,
+	    f.field_address as fieldAddress,
+	    f.field_address_detail as fieldAddressDetail,
+	    f.field_name as fieldName
+	  FROM
+	    matchings m
+	  INNER JOIN fields f ON m.field_seq = f.field_seq
+	  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+	  INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+	  WHERE
+	    ma.user_id = #{userId}
+	    AND (m.matching_status = '경기 확정' OR m.matching_status = '매칭성공')
+	    AND m.matching_date - NOW() >= 0
+	    AND m.fast_add_status = 0
+	  ORDER BY
+	    m.matching_date DESC,
+	    m.matching_time DESC
+	  LIMIT 1
   </select>
 
 </mapper>

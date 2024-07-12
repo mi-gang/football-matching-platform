@@ -32,13 +32,20 @@ public class ScheduleService {
 	public Collection<MatchingScheduleListDTO> getMatchingListByDate(String userId, String date) {
 
 		Collection<MatchingScheduleListDTO> scheduleListDTOs = new ArrayList<MatchingScheduleListDTO>();
-
+		
 		// 특정 날짜에 맞는 매칭 리스트 불러오기
 		scheduleListDTOs = matchingMapper.selectMatchingListByDate(userId, date);
 
 		for (MatchingScheduleListDTO matchingScheduleListDTO : scheduleListDTOs) {
+			UserMatchingInfoDTO userMatchingInfoDTO = UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingScheduleListDTO.getMatchingSeq()).build();
 			// 팀장 여부 추가하기
-			matchingScheduleListDTO.setIsleader(false);
+			if (matchingScheduleListDTO.isTeamStatus()) {
+			matchingScheduleListDTO.setIsleader(matchingMapper.isTeamLeader(userMatchingInfoDTO));				
+			}
+			// 상대팀 전부 평가 완료 여부 추가하기(내가 리뷰 작성했을 때만 - 리뷰 작성 안하면 작성 하라고만 띄우기)
+			if (matchingScheduleListDTO.isReviewStatus()) {
+				matchingScheduleListDTO.setOpposingTeamReviewStatus(matchingMapper.selectOpposingTeamReviewStatus(userMatchingInfoDTO));				
+			}
 		}
 		return scheduleListDTOs;
 	}
@@ -60,10 +67,27 @@ public class ScheduleService {
 		}
 	}
 
-	/** 매칭 취소하기 */
+	/** 매칭 취소하기 (매칭 전) */
 	public void revmoveMatching(int matchingAddListSeq) {
 		if (!matchingMapper.deleteMatching(matchingAddListSeq))
 			throw new RuntimeException("Failed to delete matching with sequence " + matchingAddListSeq);
+	}
+	
+	@Transactional
+	/** 매칭 취소하기 (매칭 후) */
+	public void cancelMatching(int matchingAddListSeq) {
+		
+		// 매칭 시퀀스 구하기
+		int matchingSeq = matchingMapper.selectMatchingSeqByMachingAddListSeq(matchingAddListSeq);
+		
+		// 매칭 취소 상태 (개인) 등록하기
+		if (matchingMapper.updateCancelStatus(matchingAddListSeq)) {
+			// 빠른 매칭 등록하기 
+			if (!matchingMapper.updateFastAddStatus(matchingSeq))
+				throw new RuntimeException("Failed to update fast add status, matchingSeq : " + matchingSeq);			
+		}else {
+			throw new RuntimeException("Failed to update cancel status, matchingAddListSeq : " + matchingAddListSeq);			
+		}
 	}
 
 	/** 상대팀 리스트 확인하기 */
@@ -71,12 +95,24 @@ public class ScheduleService {
 		return matchingMapper.selectOpposingTeamPlayerList(userMatchingInfoDTO);
 	}
 
-	/** 상대팀 평가 점수 등록하기 */
 	@Transactional
-	public void setReviewScore(Collection<UserMatchingInfoDTO> userMatchingInfoDTOs) {
-		for (UserMatchingInfoDTO userMatchingInfoDTO : userMatchingInfoDTOs) {
-			if (!matchingMapper.updateReviewScore(userMatchingInfoDTO))
-				throw new RuntimeException("Failed to update review score for " + userMatchingInfoDTO);
+	/** 상대팀 평가 점수 등록하기 */
+	public void setReviewScore(Collection<UserMatchingInfoDTO> userMatchingInfoDTOs, int matchingAddListSeq) {
+		
+		try {
+		    for (UserMatchingInfoDTO userMatchingInfoDTO : userMatchingInfoDTOs) {
+		    	// 각 사용자 별 등수에 맞는 점수 추가하기
+		        if (!matchingMapper.updateReviewScore(userMatchingInfoDTO)) {
+		            throw new RuntimeException("Failed to update review score for " + userMatchingInfoDTO);
+		        }
+		    }
+		    // 매칭(개인) - 리뷰 작성 상태 등록하기
+		    if (!matchingMapper.updateReviewStatus(matchingAddListSeq)) {
+		        throw new RuntimeException("Failed to update review status for matchingAddListSeq: " + matchingAddListSeq);
+		    }
+		} catch (RuntimeException e) {
+		    // 예외 처리 로직
+			// handleFailedUpdate(e);
 		}
 	}
 
@@ -102,6 +138,7 @@ public class ScheduleService {
 
 	/** 내 점수 확인하기 */
 	public Map<String, Integer> getReviewScoreAndTeamScore(UserMatchingInfoDTO userMatchingInfoDTO) {
+		
 		Map<String, Integer> map = new HashMap<>();
 
 		int reviewScore = matchingMapper.selectReviewScore(userMatchingInfoDTO);

@@ -21,7 +21,7 @@ public class ScheduleServiceTest {
 		System.out.println(scheduleService.getMatchingListByMonth("user001", 7));
 	}
 	
-	//@Test
+	@Test
 	void getMatchingListByDateTest() {
 		System.out.println(scheduleService.getMatchingListByDate("user001", "2024-07-10"));
 	}
@@ -51,7 +51,7 @@ public class ScheduleServiceTest {
 		scheduleService.setPayStatus(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user001").build());
 	}
 	
-	//@Test
+	@Test
 	void setReviewScoreTest() {
 		Collection<UserMatchingInfoDTO> userMatchingInfoDTOs = new ArrayList<>();
 		
@@ -61,7 +61,7 @@ public class ScheduleServiceTest {
 		userMatchingInfoDTOs.add(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user00108").score(-1).build());
 		userMatchingInfoDTOs.add(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user00109").score(-2).build());
 		
-		scheduleService.setReviewScore(userMatchingInfoDTOs);
+		scheduleService.setReviewScore(userMatchingInfoDTOs, 15);
 	}
 	
 	//@Test
@@ -77,5 +77,11 @@ public class ScheduleServiceTest {
 	//@Test
 	void getReviewScoreAndTeamScoreTest() {
 		scheduleService.getReviewScoreAndTeamScore(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user001").build());
+	}
+	
+	 
+	@Test
+	void cancelMatchingTest() {
+		scheduleService.cancelMatching(15);
 	}
 }

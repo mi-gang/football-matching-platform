@@ -41,15 +41,23 @@ public interface MatchingMapper {
 	// 일정표
 	Collection<MatchingScheduleListDTO> selectMatchingListByMonth(String userId, int month);
 	Collection<MatchingScheduleListDTO> selectMatchingListByDate(String userId, String date);
+	boolean isTeamLeader(UserMatchingInfoDTO userMatchingInfoDTO);
+	boolean selectOpposingTeamReviewStatus(UserMatchingInfoDTO userMatchingInfoDTO);
 	
 	int selectMatchingListCount(String userId);
 	Collection<MatchingScheduleListDTO> selectMatchingList(String userId);
 	boolean updatePayStatus(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
+	
 	boolean deleteMatching(int matchingAddListSeq);
+	
+	int selectMatchingSeqByMachingAddListSeq(int matchingAddListSeq);
+	boolean updateCancelStatus(int matchingAddListSeq);
+	boolean updateFastAddStatus(int matchingSeq);
 	
 	// 상대팀 평가
 	Collection<UserPlayInfoDTO> selectOpposingTeamPlayerList (UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
 	boolean updateReviewScore(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq, int score
+	boolean updateReviewStatus(int matchingAddListSeq);
 	
 	
 	Collection<UserPlayInfoDTO> selectPlayerList(int matchingSeq);
@@ -57,6 +65,7 @@ public interface MatchingMapper {
 	// 점수 확인
 	int selectReviewScore(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
 	int selectTeamScore(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
+	
 	// 다가오는 경기 일정을 불러옵니다.
 	List<MatchingDTO> selectMatchingAlready(String userId);
 
