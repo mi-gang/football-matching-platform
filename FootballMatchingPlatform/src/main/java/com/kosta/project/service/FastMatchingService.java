@@ -55,6 +55,13 @@ public class FastMatchingService {
 	}
 	
 	
+	// 빠른 신청용 구장 상세 정보 조회
+	public FieldsDTO getFastMatchingInfo(int matchingSeq) {
+		return fm.selectFastMatchingInfo(matchingSeq);
+	}
+	
+	
+	
 	// 등급확인
 	public String getMatchingTier(int matchingSeq) {
 		return mm.selectMatchingTier(matchingSeq);

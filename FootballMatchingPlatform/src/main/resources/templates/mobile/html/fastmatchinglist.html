@@ -303,103 +303,31 @@ input[type="checkbox"]{
         </select>
 	</div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<div class = "w-auto h-auto matchingCheckListDiv mt-4">
-	  	<ul id = "matchingCheckList">
+		<ul id = "matchingCheckList" th:each="i : ${fastmatchinglist}">
 		  <div class = "ulMatchDiv mt-0" id = "matchList1" >
 			  <div class = "w-auto h-auto matchInfo mt-1 mx-1">	  
-				<button class = "applyStatus" disabled="true" >9/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = "matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = "matchLocation">서울 강남 풋살FC</p>
+				<button class = "applyStatus" th:value="${i.matchingSeq}" disabled="true" th:text="${i.playerCount} + '/10명'"></button>
+                <button class="matchOKTier" disabled="true" th:text="${i.matchingTier}"></button><br>
+				<p class = "matchTime mb-0" th:text="${i.matchingDate} + ' ' + ${i.matchingTime} + ':00 ~ ' + ${i.matchingTime + 2} + ':00'"></p><br>				
+				<p class = "matchLocation" th:text="${i.fieldAddress} + ' ' + ${i.fieldAddressDetail}"></p>
 			  </div>	
-              <img class="matchingLocationImage" src="../img/image6.svg"/>
+              <img class="matchingLocationImage"  src="${i.fieldImg}"/>
 			<hr>			
 		  </div>
-		  <div class = " ulMatchDiv mt-3" id = "matchList2">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >9/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = " matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = " matchLocation">서울 강서 신정FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  <div class = "ulMatchDiv mt-3" id = "matchList3">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = "applyStatus" disabled="true" >7/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = " matchTime mb-0">6/25(화) 10:00-12:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  
-		  
-		  		  <div class = " ulMatchDiv mt-3" id = "matchList1">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >9/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = " matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  <div class = " ulMatchDiv mt-3" id = "matchList2">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >9/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = " matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = "matchLocation">서울 강서 신정FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  <div class = "ulMatchDiv mt-3" id = "matchList3">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >7/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = " matchTime mb-0">6/25(화) 10:00-12:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  
-		  
-		  		  <div class = " ulMatchDiv mt-3" id = "matchList1">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >9/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = "matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  <div class = " ulMatchDiv mt-3" id = "matchList2">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >9/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = "matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = " matchLocation">서울 강서 신정FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  <div class = "ulMatchDiv mt-3" id = "matchList3">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >7/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = " matchTime mb-0">6/25(화) 10:00-12:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  
 		</ul>
 	</div>
 	
@@ -636,6 +564,59 @@ function changeButtonColors(button) {
 
 // const selectedTierButtons = document.querySelectorAll('#OKOKTier button');
 
+
+
+
+
+
+
+
+
+
+
+//	<div class = "w-auto h-auto matchingCheckListDiv mt-4">
+//		<ul id = "matchingCheckList" th:each="i : ${fastmatchinglist}">
+//		  <div class = "ulMatchDiv mt-0" id = "matchList1" >
+//			  <div class = "w-auto h-auto matchInfo mt-1 mx-1">	  
+//				<button class = "applyStatus" th:value="${i.matchingSeq}" disabled="true" th:text="${i.playerCount} + '/10명'"></button>
+//               <button class="matchOKTier" disabled="true" th:text="${i.matchingTier}"></button><br>
+//				<p class = "matchTime mb-0" th:text="${i.matchingDate} + ' ' + ${i.matchingTime} + ':00 ~ ' + ${i.matchingTime + 2} + ':00'"></p><br>				
+//				<p class = "matchLocation" th:text="${i.fieldAddress} + ' ' + ${i.fieldAddressDetail}"></p>
+//			  </div>	
+//             <img class="matchingLocationImage"  src="${i.fieldImg}"/>
+//			<hr>			
+//		  </div>
+//		</ul>
+//	</div>
+
+
+
+//filterSelectbox
+
+const filterSelectbox = document.querySelector('.filterSelectbox');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const searchButton = document.getElementById('searchButton');
 
 
@@ -655,12 +636,18 @@ searchButton.addEventListener('click', function() {
     //i++;
 });
 
-var j = 0;
+
+	// 아직 비동기 시작도 안 함
+
+
+
   selectedButtons.forEach(button => {
 
     if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
 
 		console.log(selectedMatchDate + selectedLocation + button.textContent);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
+		
+		
     }
      
   });
@@ -669,14 +656,24 @@ var j = 0;
 
 
 
-const clickableDivs = document.querySelectorAll('.matchInfo');
-clickableDivs.forEach(div => {
-  div.addEventListener('click', function() {
-    //const link = this.dataset.link;
-    //window.location.href = link;
-    // 아무 링크나 걸어놓은 거임
-    window.location.href = 'https://news.naver.com/';
-  });
+
+
+
+
+
+
+
+
+
+const containerElement = document.querySelector('.matchInfo'); // Replace with actual parent container selector
+
+containerElement.addEventListener('click', (event) => {
+  if (event.target.classList.contains('matchInfo')) {
+    const clickedDiv = event.target;
+    const applyStatusElement = clickedDiv.querySelector('.applyStatus');
+    const applyStatusValue = applyStatusElement.value;
+    window.location.href = '/fastmatchinginfo/' + applyStatusValue;
+  }
 });
 
 

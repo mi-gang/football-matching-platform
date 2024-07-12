@@ -159,6 +159,31 @@
 		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
 		ORDER BY COUNT(matching_add_list_seq), matching_date;
 	</select>
+	<!--     AND field_address IN (
+      <foreach item="address" collection="fieldAddresses">
+        #{address}
+        <if test="index != last">
+          ,
+        </if>
+      </foreach>
+    )
+    AND matching_tier IN (
+      <foreach item="tier" collection="matchingTiers">
+        #{tier}
+        <if test="index != last">
+          ,
+        </if>
+      </foreach>
+    ) -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	<!-- 빠른 신청 리스트 조회(인원 많은 순, 가까운 일정 순, 날짜 지역 등급 필터) -->
  	<select id="selectFastMatchingListByBigAndDateAndRegionAndTier" resultType="com.kosta.project.dto.FastMatchingDTO" parameterType="com.kosta.project.dto.FastMatchingConditionDTO">
