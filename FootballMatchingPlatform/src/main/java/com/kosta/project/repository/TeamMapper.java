@@ -52,7 +52,7 @@ public interface TeamMapper {
 	
 	boolean updateTeamDismantleStatus(int teamSeq);
 	
-	int selectTeamSeq(String userId);
+	Integer selectTeamSeq(String userId);
 	
 	int selectTeamMemberCount(String userId);
 	int selectTeamMemberCNT(int teamSeq);
