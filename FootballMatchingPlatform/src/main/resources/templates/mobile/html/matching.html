@@ -8,265 +8,6 @@
 <link rel="stylesheet" href="mobile/css/common.css">
 <link rel="stylesheet" href="mobile/css/matching.css">
 </head>
-<style>
-
-
-
-
-
-
-
-
-
-#btnTimes button{
-	border-radius:3rem;
-	background-color:#828282;
-	color:#FFFFFF;
-	width:4rem;
-	height:2rem;
-	font-size:0.8rem;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-
-
-
-
-#applyTypeBtn{
-	border-radius:3rem;
-	background-color:#828282;
-	color:#FFFFFF;
-	width:4rem;
-	height:2rem;
-	font-size:0.8rem;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-
-#showBtn{
-	border-radius:3rem;
-	background-color:#73A772;
-	color:#FFFFFF;
-	width:7.5rem;
-	height:3rem;
-	font-size:1rem;
-	position:fixed;
-	top:85%;
-	left:35%;
-	z-index: 1000;
-}
-
-
-
-
-p{
-	font-size:1rem;
-}
-
-.timeZone{
-	white-space:nowrap;
-}
-
-
-.matchingDate{
-	white-space:nowrap;
-	
-}
-
-.matchingDateBtn0{
-	border-radius:6rem;
-	background-color:#FFFFFF;
-	color:#626262;
-	width:2rem;
-	height:2rem;
-	font-size:0.8rem;
-	border-color:#626262;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-.matchingDateBtn1{
-	border-radius:6rem;
-	background-color:#FFFFFF;
-	color:#626262;
-	width:2rem;
-	height:2rem;
-	font-size:0.8rem;
-	border-color:#626262;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-.matchingDateBtn2{
-	border-radius:6rem;
-	background-color:#FFFFFF;
-	color:#626262;
-	width:2rem;
-	height:2rem;
-	font-size:0.8rem;
-	border-color:#626262;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-.matchingDateBtn3{
-	border-radius:6rem;
-	background-color:#FFFFFF;
-	color:#626262;
-	width:2rem;
-	height:2rem;
-	font-size:0.8rem;
-	border-color:#626262;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-.matchingDateBtn4{
-	border-radius:6rem;
-	background-color:#FFFFFF;
-	color:#626262;
-	width:2rem;
-	height:2rem;
-	font-size:0.8rem;
-	border-color:#626262;
-	display: flex;
-	align-items:center;
-	justify-content: center;
-}
-
-
-
-    #matchingDateBtns {
-	  white-space: nowrap;
-      font-size: 0;
-    }
-    #matchingDateBtns li {
-      display: inline-block;
-      margin-left: -1px;
-    }
-    #matchingDateBtns li:first-child {
-      margin-left: 0;
-    }
-
-    #btnTimes {
-      font-size: 0;
-    }
-    #btnTimes li {
-      display: inline-block;
-      margin-left: -1px;
-    }
-    #btnTimes li:first-child {
-      margin-left: 0;
-    }
-
-    #applyTypeBtns {
-      font-size: 0;
-    }
-    #applyTypeBtns li {
-      display: inline-block;
-      margin-left: -1px;
-    }
-    #applyTypeBtns li:first-child {
-      margin-left: 0;
-    }
-
-    body {
-      font-size: 16px;
-    }
-
-
-#backBtn{
-	font-size:1rem;
-}
-
-#frontBtn{
-	font-size:1rem;
-}
-
-    #matchingDateBtn:hover,
-    #matchingDateBtn.active90 {
-      background: #73a772;
-    }
-
-    #applyTypeBtn:hover,
-    #applyTypeBtn.active2 {
-      background: #73a772;
-    }
-
-
-#btnTime:hover, #btnTime.active3 {
-	background: #73A772;
-}
-#btnTime1:hover, #btnTime1.active4 {
-	background: #73A772;
-}
-#btnTime2:hover, #btnTime2.active5 {
-	background: #73A772;
-}
-#btnTime3:hover, #btnTime3.active6 {
-	background: #73A772;
-}
-#btnTime4:hover, #btnTime4.active7 {
-	background: #73A772;
-}
-#btnTime5:hover, #btnTime5.active8 {
-	background: #73A772;
-}
-#btnTime6:hover, #btnTime6.active9 {
-	background: #73A772;
-}
-
-
-
-
-.toast {
-      position: fixed;
-      top: 85%;
-      right: 1%;
-      background-color: #333;
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: 1rem;
-      opacity: 0;
-      transition: opacity 1s ease;
-      
-    }
-
-    .toast.show {
-      opacity: 1;
-      z-index: 2001;
-      background-color: #AAAAAA;
-    }
-
-    .toast1 {
-      position: fixed;
-      top: 85%;
-      right: 1%;
-      background-color: #333;
-      color: white;
-      padding: 1rem 7.1rem;
-      border-radius: 1rem;
-      opacity: 0;
-      transition: opacity 1s ease;
-      
-    }
-
-    .toast1.show1 {
-      opacity: 1;
-      z-index: 2000;
-      background-color: #AAAAAA;
-    }
-
-	#matchingDateBtnsLi{
-		width: 15rem;
-	}
-	#matchingDateBtns{
-		width: 18rem;
-	}
-
-</style>
 <body>
     <!-- 모바일 컨테이너 -->
     <div id="mobile-container">
@@ -324,15 +65,52 @@ p{
 
 </div>
 <script type="text/javascript">
+	// 팀 멤버 수
 
+if(checkNumber == 0){
+	toast.classList.add('show');
+	setTimeout(function() {
+        toast.classList.remove('show');
+	}, 1000);
+} else {
+	
+}
 $(document).ready(function(){
-        $('header').load('./common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
-            $('#page-name').text('페이지 이름'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
-            $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
-        });
-        $('nav').load('./common/nav.html');
-    });
+	var isLeader
+	$('header').load('./common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+		$('#page-name').text('매칭 신청'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
+		$('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+	});
+	$('nav').load('./common/nav.html');
+	fetch("/matching/isLeader/user002")
+	.then(response => response.json())
+	.then(data => {
+		isLeader = data.result;
+		console.log(isLeader);
+		if(isLeader == false){
+			alert("팀장이 아닙니다!");
+			$("button[value=팀]").css("pointer-events", "none");
+		}
+		else{
+			fetch("/matching/isTeam/user002")
+			.then(response => response.json())
+			.then(data => {
+			isTeam = data.result;
+			console.log(data.result);
+				if(isTeam == "팀원이 부족합니다."){
+					toast1.classList.add('show1');
+					setTimeout(function() {
+        				toast1.classList.remove('show1');
+					}, 1000);
+				}
+				else if(isTeam == "정지된 팀원이 있습니다."){
 
+				}
+			})
+		}
+	})
+});
+			
 const today = new Date(); // 오늘 날짜
 const TODAY_BUTTON_VALUE = today.toISOString().slice(0, 10); // '오늘' 버튼의 value 값 (YYYY-MM-DD)
 
@@ -346,7 +124,6 @@ const dates = [];
 for (let i = 0; i <= 4; i++) {
   const date = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
   dates.push(date.toISOString().slice(0, 10));
-
 }
 
 // 버튼 생성 및 이벤트 설정
@@ -357,12 +134,6 @@ dates.forEach((date, i) => {
   )
 });
 
-
-
-
-
-
-
 let backClickCount = 0;
 let frontClickCount = 0;
 let plusOrMinusNumber = 0;
@@ -372,11 +143,6 @@ backBtn.addEventListener('click', () => {
   backClickCount++;
 
   plusOrMinusNumber = 5*(frontClickCount + backClickCount);
-
-	
-  //matchingDateBtnsLi
-  		
-
 
   $('#matchingDateBtnsLi').empty();
 
@@ -428,22 +194,8 @@ frontDates.forEach((date, i) => {
   $('#matchingDateBtnsLi').append(
 	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
-	
-
 });
 });
-
-
-
-
-
-
-
-
-
-
-
-
 	var checkNumber = 0;
 	var selectedDate = null;
 	function change_btn(e) {
@@ -465,7 +217,7 @@ frontDates.forEach((date, i) => {
 	var btns1 = document.querySelectorAll("#applyTypeBtn");
 	btns1.forEach(function(btn1, i) {
 		if(e2.currentTarget == btn1) {
-			btn1.classList.add("active2");
+		btn1.classList.add("active2");
 		}
 		else {
 			btn1.classList.remove("active2");
@@ -514,25 +266,10 @@ if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
 }
 });
 
-// 팀 멤버 수
-var teamMember = 4;
-
-if(checkNumber == 0){
-	toast.classList.add('show');
-	setTimeout(function() {
-        toast.classList.remove('show');
-	}, 1000);
-} else {
-	
-if(teamOrSolo == '팀' && teamMember < 5){
-	toast1.classList.add('show1');
-	setTimeout(function() {
-        toast1.classList.remove('show1');
-	}, 1000);
-} 
-}
 
 });
+
+
 </script>  
 </body>
 </html>
