@@ -3,6 +3,7 @@ const date = new Date();
 let currentYear = date.getFullYear();
 let currentMonth = date.getMonth();
 let currentDate = date.getDate();
+let matchingDateList;
 
 const calendarDates = document.querySelector("#calendarDates");
 const prevBtn = document.querySelector("#prevBtn");
@@ -27,6 +28,31 @@ function renderCalendar() {
     calendarDates.appendChild(emptyDate);
   }
 
+// 매칭 정보 불러오기
+  fetch("/schedule/" + parseInt(currentMonth + 1), {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok " + response.statusText);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        console.log(data[0].matchingDate);
+        matchingDateList = data;
+      })
+      .catch((error) => {
+        console.error(
+            "There has been a problem with your fetch operation:",
+            error
+        );
+      });
+
   // 현재 달의 날짜
   for (let i = 1; i <= daysInMonth; i++) {
     // date-wrapper
@@ -46,10 +72,22 @@ function renderCalendar() {
     // 매칭 여부
     const matchingDateElement = document.createElement("div");
 
+
     // 매칭 정보 있는 날이면 등록, 매칭 상태 불러와서 매칭 상태에 따라 다른 클래스 지정
-    if (currentMonth == 6 && i == 5)
-      // matchingDateElement.dataset.matchingStatus = "2";
-      matchingDateElement.classList.add("cal-matching-status-1");
+    // if (currentMonth == 6 && i == 5)
+    //   // matchingDateElement.dataset.matchingStatus = "2";
+    //   matchingDateElement.classList.add("cal-matching-status-1");
+
+    for (let i = 0; i < matchingDateList.length; i++) {
+      const MatchingDateNum = new Date(matchingDateList[i].matchingDate).getDate();
+      console.log(MatchingDateNum);
+      if (MatchingDateNum == i && matchingDateList[i].cancelStatus || matchingDateList[i].matchingStatus == '매칭실패')
+          // matchingDateElement.dataset.matchingStatus = "2";
+        matchingDateElement.classList.add("cal-matching-status-1");
+    }
+
+
+
 
     if (currentMonth == 6 && i == 8)
       matchingDateElement.classList.add("cal-matching-status-2");
@@ -105,7 +143,6 @@ $("#matchings-wrapper").on("click", ".cancel-matching-btn", function () {});
 
 // 결제 모달 오픈 버튼 클릭 시
 $("#matchings-wrapper").on("click", ".pay-matching-btn ", function () {
-  alert("뭔데");
   // 모달에 정보 옮겨놓기
   const matchingDate = $(this)
     .closest(".matching-wrapper")
@@ -133,3 +170,6 @@ $("#matchings-wrapper").on("click", ".pay-matching-btn ", function () {
 
   $("#payMatchingBtn").data("matchingSeq", matchingSeq);
 });
+
+//
+$(document).ready(function () {});

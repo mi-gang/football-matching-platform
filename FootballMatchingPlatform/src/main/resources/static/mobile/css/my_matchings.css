@@ -1,11 +1,11 @@
-#container{
+#container {
     /* padding: 3.3rem 1rem; */
     /* justify-content: center; */
 }
 
 
 /* 버튼 공통 */
-.btn-setting{
+.btn-setting {
     border-radius: 20px;
     border-color: transparent;
     height: 1.8rem;
@@ -19,53 +19,59 @@
     align-items: center; */
     width: 95%;
     margin: 0.5rem 0;
-  }
+}
 
-  .calendar-header {
+.calendar-header {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-  }
+    padding: 0 0.5rem;
+}
 
-  .calendar-nav{
+.calendar-nav {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0.5rem 0;
-  }
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+}
 
-  .year-month{
+.year-month {
     font-size: 1.1rem;
-  }
+}
 
-  .calendar-nav-btn{
+.calendar-nav-btn {
     width: 1.3rem;
     height: 1.3rem;
     text-align: center;
-  }
+}
 
-  #my-matching-list-btn{
+#my-matching-list-btn {
     color: #333333;
     background: #EBEBEB;
     font-size: 0.9rem;
-  }
+    margin-left: auto;
+}
 
-  .calendar-days {
+.calendar-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     padding-bottom: 0.3rem;
-  }
+}
 
-  .day {
+.day {
     text-align: center;
 }
 
-.sun{
+.sun {
     color: #FF7D7D;
 }
 
-.sat{
+.sat {
     color: #7684FF;
 }
 
@@ -73,21 +79,21 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     justify-items: center;
-  }
+}
 
-  .date-wrapper{
+.date-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
     width: 2rem;
-  }
+}
 
-  .date-wrapper > div{
+.date-wrapper > div {
     min-height: 0.4rem;
-  }
+}
 
-  .date {
+.date {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,9 +101,9 @@
     width: 2rem;
     height: 2rem;
     margin: 0.2rem 0;
-  }
+}
 
-  .click-date{
+.click-date {
     background: #DEDEDE;
     color: #333333;
     border-radius: 50%;
@@ -107,56 +113,48 @@
 }
 
 
-  .today{
+.today {
     background: #555555;
     color: #ffffff;
     border-radius: 50%;
     border-width: 0.1rem;
     /* border-top: 0.1rem; */
     box-sizing: border-box;
-  }
+}
 
-  .cal-matching-status-1{
+.cal-matching-status-1 {
     width: 0.4rem;
     height: 0.4rem;
 
     background: #D0D0D0;
     border-radius: 100px;
-  }
+}
 
-  .cal-matching-status-2{
+.cal-matching-status-2 {
     width: 0.4rem;
     height: 0.4rem;
 
     background: #EF8665;
     border-radius: 100px;
-  }
+}
 
-  .cal-matching-status-3{
+.cal-matching-status-3 {
     width: 0.4rem;
     height: 0.4rem;
 
     background: #80D87E;
     border-radius: 100px;
-  }
+}
 
 
-  /* .date:hover {
-    background-color: #f5f5f5;
-  } */
-
-
-
-
-
-
-
-
+/* .date:hover {
+  background-color: #f5f5f5;
+} */
 
 
 /* ********매칭 정보 ******** */
 
-#matchings-wrapper{
+#matchings-wrapper {
     width: 100%;
     margin: 1rem 0;
     display: flex;
@@ -169,7 +167,7 @@
     overflow-x :auto */
 }
 
-.matching-wrapper{
+.matching-wrapper {
     width: 90%;
     box-sizing: border-box;
     background: #FFFFFF;
@@ -182,14 +180,14 @@
     justify-content: center;
 }
 
-.matching-content-wrapper{
+.matching-content-wrapper {
     display: flex;
     flex-direction: column;
     row-gap: 0.4rem;
     align-items: flex-start;
 }
 
-.matching-status{
+.matching-status {
     border-radius: 20px;
     border-color: transparent;
     color: #ffffff;
@@ -197,12 +195,12 @@
     padding: 0.3rem 0.6rem;
 }
 
-.status-1{
+.status-1 {
     background: #EF8665;
 }
 
 .status-2,
-.status-3{
+.status-3 {
     background: #73A772;
 }
 
@@ -213,7 +211,7 @@
     text-align: center;
 }
 
-.matching-btn-wrapper{
+.matching-btn-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: end;
@@ -222,22 +220,22 @@
     column-gap: 0.5rem;
 }
 
-.cancel-matching-btn{
+.cancel-matching-btn {
 
 }
 
-.matching-info{
+.matching-info {
     font-weight: 700;
 }
 
-.fast-matching-wrapper{
+.fast-matching-wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
     column-gap: 0.5rem;
 }
 
-.fast-matching-wrapper > div > span{
+.fast-matching-wrapper > div > span {
     font-size: 0.9rem;
     color: #818181;
 }
@@ -248,32 +246,33 @@
 .modal-header {
     border-bottom: none;
     padding: 1.3rem 1.3rem;
-  }
-  
-  .modal-footer {
+}
+
+.modal-footer {
     justify-content: center;
     border-top: none;
     padding: 0 1.3rem 1.3rem 1.3rem;
-  }
-  
-  .btn-close {
+}
+
+.btn-close {
     width: 0.1rem;
     height: 0.1rem;
     background-size: 0.8rem;
-  }
-  
-  .modal-dialog-centered {
+}
+
+.modal-dialog-centered {
     justify-content: center;
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     width: 90%;
     border-radius: 1rem;
-  }
-  /* 공통 */
-  
-  .modal-title {
+}
+
+/* 공통 */
+
+.modal-title {
     font-weight: 700;
     font-size: 1.1rem;
     text-align: center;
-  }
+}
