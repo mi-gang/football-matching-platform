@@ -211,7 +211,7 @@
 	<!-- 일정표 -->
 	<!-- 특정 달에 맞는 매칭 정보 리스트 불러오기 -->
 	<select id="selectMatchingListByMonth" resultType="com.kosta.project.dto.MatchingScheduleListDTO">
-		SELECT ma.matching_add_seq, m.matching_date, mal.matching_success_status, mal.cancel_status
+		SELECT ma.matching_add_seq, m.matching_date, mal.matching_success_status, mal.cancel_status,  m.matching_status
 		FROM matching_adds ma
 		JOIN matching_add_lists mal ON ma.matching_add_seq = mal.matching_add_seq
 		JOIN matchings m ON mal.matching_seq = m.matching_seq
@@ -334,7 +334,7 @@
 	</select>
 	
 	<!-- 상대팀 전부 평가 완료 여부 확인하기 -->
-	<select id="selectOpposingTeamReviewStatus" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+	<select id="selectOpposingTeamReviewStatus" parameterType="com.kosta.project.dto.UserMatchingInfoDTO" resultType="boolean">
 		SELECT min(review_status)
 		FROM matchings m
 		JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
