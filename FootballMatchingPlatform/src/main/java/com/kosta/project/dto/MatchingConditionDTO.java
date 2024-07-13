@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MatchingConditionDTO {
+	String addType;
 	String matchingDate;
 	String matchingTime;
 	String fieldAddress;

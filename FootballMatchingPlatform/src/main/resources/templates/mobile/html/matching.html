@@ -244,29 +244,17 @@ const selectedButtons = document.querySelectorAll('#btnTimes button');
 const selectedTierButtons = document.querySelectorAll('#btnTimes button'); 
 
 searchButton.addEventListener('click', function() {
-const selectedList = [];    
-selectedTierButtons.forEach(function(button, i) {
-//i = 0;
-if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
-	// 검색하고자하는 정보입니다
-	selectedList[i] = button.value;
-	console.log(i+'i : '+selectedList[i]);
-	//console.log(button.value);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
-}
-//i++;
-} 
-);
+	var time = "";
+	selectedButtons.forEach(button => {
+		if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
+		time = time + button.value + " ";
+	
+		//console.log(checkNumber + selectedDate + teamOrSolo + button.value);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
+		}
+	});
+	console.log(time);
 
-checkNumber=0;
-selectedButtons.forEach(button => {
-
-if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
-	checkNumber++;
-	console.log(checkNumber + selectedDate + teamOrSolo + button.value);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
-}
-});
-
-
+	location.href = "/matchinglist"
 });
 
 
