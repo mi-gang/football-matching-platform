@@ -21,6 +21,7 @@ public class TeamMemberDTO {
 	private boolean memberDelete;
 	private String userId;
 	private int teamSeq;
+	private boolean newbie;
 	
 	private String nickname;
 	private String birthday;
