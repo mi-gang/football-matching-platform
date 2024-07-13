@@ -1,498 +1,436 @@
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title></title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <link rel="stylesheet" href="/mobile/css/common.css">
-  <link rel="stylesheet" href="/mobile/css/matchinglist.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title></title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link rel="stylesheet" href="/mobile/css/common.css">
+	<link rel="stylesheet" href="/mobile/css/matchinglist.css">
 </head>
+
 <body>
-    <!-- 모바일 컨테이너 -->
-    <div id="mobile-container">
-        <!-- 헤더 -->
-        <header></header>
-         <!-- 컨텐츠 컨테이너 -->
-        <div id="container">
-<div class = "container">
-	<div class = "w-auto h-auto filterBtnDiv">
-		<button class = "filterBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">필터</button>
-	</div>
-	<div class = "w-auto h-auto matchingCheckListDiv mt-4">
-	  	<ul id = "matchingCheckList">
-		  <div class = "ulMatchDiv mt-0" id = "matchList" >
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  data-bs-toggle="modal" data-bs-target="#checkboxModal">	  
-				<button class = "applyStatus" disabled="true" value="신청가능">신청가능</button><br>
-				<p class = "matchTime mb-0" >6/25(화) 08:00-10:00</p><br>				
-				<p class = "matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<input type = "checkbox" id="checkBtn"  >	
-			<hr>			
-		  </div>
-		  <div class = " ulMatchDiv mt-3" id = "matchList">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  data-bs-toggle="modal" data-bs-target="#checkboxModal">  
-				<button class = " applyStatus" disabled="true" value="신청가능">신청가능</button><br>
-				<p class = " matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = " matchLocation">서울 강서 신정FC</p>
-			  </div>	
-			<input type = "checkbox" id="checkBtn" >	
-			<hr>			
-		  </div>
-		  <div class = "ulMatchDiv mt-3" id = "matchList">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  data-bs-toggle="modal" data-bs-target="#checkboxModal">  
-				<button class = "applyStatus" disabled="true" value="신청완료">신청완료</button><br>
-				<p class = " matchTime mb-0">6/25(화) 10:00-12:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<input type = "checkbox" id="checkBtn"  >	
-			<hr>			
-		  </div>
-		  		  <div class = " ulMatchDiv mt-3" id = "matchList">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  data-bs-toggle="modal" data-bs-target="#checkboxModal">  
-				<button class = " applyStatus" disabled="true" value="신청가능">신청가능</button><br>
-				<p class = " matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<input type = "checkbox" id="checkBtn"  >	
-			<hr>			
-		  </div>
-		  <div class = " ulMatchDiv mt-3" id = "matchList">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  data-bs-toggle="modal" data-bs-target="#checkboxModal">  
-				<button class = " applyStatus" disabled="true" value="신청가능">신청가능</button><br>
-				<p class = " matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = "matchLocation">서울 강서 신정FC</p>
-			  </div>	
-			<input type = "checkbox" id="checkBtn"  >	
-			<hr>			
-		  </div>
-		  <div class = "ulMatchDiv mt-3" id = "matchList">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  data-bs-toggle="modal" data-bs-target="#checkboxModal">  
-				<button class = " applyStatus" disabled="true" value="마감">마감</button><br>
-				<p class = " matchTime mb-0">6/25(화) 10:00-12:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<input type = "checkbox" id="checkBtn"  >	
-			<hr>			
-		  </div>
-		  		  <div class = " ulMatchDiv mt-3" id = "matchList">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  data-bs-toggle="modal" data-bs-target="#checkboxModal">  
-				<button class = " applyStatus" disabled="true" value="신청완료">신청완료</button><br>
-				<p class = "matchTime mb-0" >6/25(화) 08:00-10:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<input type = "checkbox" id="checkBtn"  >	
-			<hr>			
-		  </div>
-		  <div class = " ulMatchDiv mt-3" id = "matchList">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  data-bs-toggle="modal" data-bs-target="#checkboxModal">  
-				<button class = " applyStatus" disabled="true" value="신청가능">신청가능</button><br>
-				<p class = "matchTime mb-0" >6/25(화) 08:00-10:00</p><br>				
-				<p class = " matchLocation">서울 강서 신정FC</p>
-			  </div>	
-			<input type = "checkbox" id="checkBtn"  >	
-			<hr>			
-		  </div>
-		  <div class = "ulMatchDiv mt-3" id = "matchList">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  data-bs-toggle="modal" data-bs-target="#checkboxModal">  
-				<button class = " applyStatus" disabled="true" value="마감">마감</button><br>
-				<p class = " matchTime mb-0">6/25(화) 10:00-12:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<input type = "checkbox" id="checkBtn"  >	
-			<hr>			
-		  </div>
-		</ul>
-	</div>
-	<button type="button" id = "applyBtn" onclick="applyFunction()" data-bs-toggle="modal" data-bs-target="#matchCheckModal">신청</button>
-<!-- 	
-	<div class="modal">
-        <div class="modal_body">
-            <h1 class = "w-auto h-auto h1Location">지역</h1>
-            <button class = "w-auto h-auto locationModalXBtn">X</button>
-    <div class = "w-auto h-auto matchingDate">
-	  <ul id = "matchingDateBtns">
-		<li><button type = "button" class = "w-auto h-auto matchingDateBtn btn m-2 p-3" onclick="change_btn(event)">서울</button></li>
-		<li><button type = "button" class = "w-auto h-auto matchingDateBtn btn m-2 p-3" onclick="change_btn(event)">인천</button></li>
-		<li><button type = "button" class = "w-auto h-auto matchingDateBtn btn m-2 p-3" onclick="change_btn(event)">부산</button></li>	
-	  </ul>
-	</div>
-	<div class = "w-auto h-auto timeZone mt-5">
-		<ul id = "locationBtns">
-		<li><button type = "button" id="locationBtn" class = "w-auto h-auto btn m-2 p-3" onclick="changeButtonColors(this)">중구</button></li>
-		<li><button type = "button" id="locationBtn1" class = "w-auto h-auto btn m-2 p-3" onclick="changeButtonColors(this)">서구</button></li>
-		<li><button type = "button" id="locationBtn2" class = "w-auto h-auto btn m-2 p-3" onclick="changeButtonColors(this)">동구</button></li>
-		<li><button type = "button" id="locationBtn3" class = "w-auto h-auto btn m-2 p-3" onclick="changeButtonColors(this)">남동구</button></li> <br>
-		<li><button type = "button" id="locationBtn4" class = "w-auto h-auto btn m-2 p-3" onclick="changeButtonColors(this)">영등포구</button></li>
-		<li><button type = "button" id="locationBtn5" class = "w-auto h-auto btn m-2 p-3" onclick="changeButtonColors(this)">강남구</button></li>
-		<li><button type = "button" id="locationBtn6" class = "w-auto h-auto btn m-2 p-3" onclick="changeButtonColors(this)">금천구</button></li>
-		
-		</ul>
-	</div>	
-          -->    
-<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-	  <div class="modal-content w-auto h-auto">
-		<div class="modal-header">
-		 
-		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		</div>
-		<div class="modal-body">
-			<h3>지역</h3>
-		  <div class = "w-auto h-auto locationCity">
-			  <ul id = "locationCityBtns">
-				<li><button type = "button" class = " locationCityBtn btn m-2 p-3" onclick="change_btn(event)" value="서울">서울</button></li>
-				<li><button type = "button" class = " locationCityBtn btn m-2 p-3" onclick="change_btn(event)" value="인천">인천</button></li>
-				<li><button type = "button" class = " locationCityBtn btn m-2 p-3" onclick="change_btn(event)" value="부산">부산</button></li>	
-			  </ul>
-			</div>
-			<hr>
-			<div id = "locationInfoDiv" class = "overflow-y-auto overflow-x-auto w-auto h-auto timeZone mt-5">
-				<ul id = "locationBtns" >
-				<li><button type = "button" id="locationBtn" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">중구</button></li>
-				<li><button type = "button" id="locationBtn1" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">서구</button></li>
-				<li><button type = "button" id="locationBtn2" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">동구</button></li>
-				<li><button type = "button" id="locationBtn3" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">남동구</button></li> 
-				<li><button type = "button" id="locationBtn4" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">영등포구</button></li>
-				<li><button type = "button" id="locationBtn5" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">강남구</button></li>
-				<li><button type = "button" id="locationBtn6" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">금천구</button></li>
-				
-				</ul>
-			</div>
-			<div id="OKOKTier">
-			  <ul id = "OKOKTierUl" >
-				  <li><button type = "button"  class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)" value="A">A등급</button></li>
-				  <li><button type = "button"  class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)" value="B">B등급</button></li>
-				  <li><button type = "button"  class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)" value="C">C등급</button></li>
-				  <li><button type = "button"  class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)" value="D">D등급</button></li>
-				  </ul>
-			</div>	
-		</div>
-		<div class="modal-footer">
-		  <button type="button" id = "searchButton">완료</button>
-		</div>
-	  </div>
-	</div>
-  </div>   
-<div class="modal" id="checkboxModal" tabindex="-1" aria-labelledby="checkboxModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-	  <div class="modal-content w-auto h-auto">
-		<div class="modal-body">
-		  <div class = "w-auto h-auto matchingDate">
-			<button type="button" class="closeButton btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			<div id = "locationInfoDiv" class = "w-auto h-auto timeZone mt-5">
-				<ul id = "locationBtns">
-					<hr class="lineUp">
-					<div class="locationInfo">
-						<img class="matchingLocationImage mx-4 mb-4" src="../img/image6.svg"/>  
-						<div ID="fieldLocation">
-							<p>구장 주소</p>
-							<div class="fieldLocationDetail">
-								<p class="mx-3">서울 강서구 까치산로28길 33-15</p>
+	<!-- 모바일 컨테이너 -->
+	<div id="mobile-container">
+		<!-- 헤더 -->
+		<header></header>
+		<!-- 컨텐츠 컨테이너 -->
+		<div id="container">
+			<div class="container">
+				<div class="w-auto h-auto filterBtnDiv">
+					<button class="filterBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">필터</button>
+				</div>
+				<div class="w-auto h-auto matchingCheckListDiv mt-4">
+					<ul id="matchingCheckList">
+						<div class="ulMatchDiv mt-0" id="matchList" th:each="matching : ${matchingList}">
+							<div class="w-auto h-auto matchInfo mt-1 mx-1" data-bs-toggle="modal"
+								data-bs-target="#checkboxModal" th:data-field-seq="${matching.fieldSeq}">
+								<button class="applyStatus" disabled="true" value="신청가능">신청가능</button>
+								<div class="d-flex" style="gap: 0.5rem;">
+									<p th:text="${matching.matchingSeq}" class="d-none"></p>
+									<p th:text="${matching.fieldSeq}" class="d-none"></p>
+									<p class="matchTime mb-0" th:text="${matching.matchingDate}">날짜</p>
+									<p class="mb-0" th:if="${matching.matchingTime == 8}"
+										th:value="${matching.matchingTime}">08:00~10:00</p>
+									<p class="mb-0" th:if="${matching.matchingTime == 10}"
+										th:value="${matching.matchingTime}">10:00~12:00</p>
+									<p class="mb-0" th:if="${matching.matchingTime == 12}"
+										th:value="${matching.matchingTime}">12:00~14:00</p>
+									<p class="mb-0" th:if="${matching.matchingTime == 14}"
+										th:value="${matching.matchingTime}">14:00~16:00</p>
+									<p class="mb-0" th:if="${matching.matchingTime == 16}"
+										th:value="${matching.matchingTime}">16:00~18:00</p>
+									<p class="mb-0" th:if="${matching.matchingTime == 18}"
+										th:value="${matching.matchingTime}">18:00~20:00</p>
+									<p class="mb-0" th:if="${matching.matchingTime == 20}"
+										th:value="${matching.matchingTime}">20:00~22:00</p>
+								</div>
+								<div class="d-flex gap-1">
+									<p class="matchLocation" th:text="${matching.fieldAddress}">주소</p>
+									<p class="matchLocation" th:text="${matching.fieldName}">구장명</p>
+								</div>
+							</div>
+							<input type="checkbox" id="checkBtn">
+							<hr>
+						</div>
+					</ul>
+				</div>
+				<button type="button" id="applyBtn" onclick="applyFunction()" data-bs-toggle="modal"
+					data-bs-target="#matchCheckModal">신청</button>
+
+				<!-- 필터 모달  -->
+				<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content w-auto h-auto">
+							<div class="modal-header">
+
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<h3>지역</h3>
+								<div class="w-auto h-auto locationCity">
+									<ul id="locationCityBtns">
+										<li><button type="button" class=" locationCityBtn btn m-2 p-3"
+												onclick="change_btn(event)" value="서울">서울</button></li>
+										<li><button type="button" class=" locationCityBtn btn m-2 p-3"
+												onclick="change_btn(event)" value="인천">인천</button></li>
+										<li><button type="button" class=" locationCityBtn btn m-2 p-3"
+												onclick="change_btn(event)" value="부산">부산</button></li>
+									</ul>
+								</div>
+								<hr>
+								<div id="locationInfoDiv"
+									class="overflow-y-auto overflow-x-auto w-auto h-auto timeZone mt-5">
+									<ul id="locationBtns">
+										<li><button type="button" id="locationBtn" class="w-3 h-2 btn m-1 p-2"
+												onclick="changeButtonColors(this)">중구</button></li>
+										<li><button type="button" id="locationBtn1" class="w-3 h-2 btn m-1 p-2"
+												onclick="changeButtonColors(this)">서구</button></li>
+										<li><button type="button" id="locationBtn2" class="w-3 h-2 btn m-1 p-2"
+												onclick="changeButtonColors(this)">동구</button></li>
+										<li><button type="button" id="locationBtn3" class="w-3 h-2 btn m-1 p-2"
+												onclick="changeButtonColors(this)">남동구</button></li>
+										<li><button type="button" id="locationBtn4" class="w-3 h-2 btn m-1 p-2"
+												onclick="changeButtonColors(this)">영등포구</button></li>
+										<li><button type="button" id="locationBtn5" class="w-3 h-2 btn m-1 p-2"
+												onclick="changeButtonColors(this)">강남구</button></li>
+										<li><button type="button" id="locationBtn6" class="w-3 h-2 btn m-1 p-2"
+												onclick="changeButtonColors(this)">금천구</button></li>
+
+									</ul>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" id="searchButton">완료</button>
 							</div>
 						</div>
-						<div ID="fieldInfomation">	
-							<p class="infoTitle">구장시설</p>
-							<div class="locationInfo11">
-								<button class="showerTF" disabled="true">샤워실</button>
-								<button class="parkTF" disabled="true">주차장</button>
-								<button class="shoesTF" disabled="true">풋살화 대여</button><br>
-								<button class="drinkTF mt-1" disabled="true">음료 판매</button>
-								<button class="ballTF" disabled="true">풋살공 대여</button>
-							</div>	
+					</div>
+				</div>
+
+				<!-- 구장 정보 모달 -->
+				<div class="modal" id="checkboxModal" tabindex="-1" aria-labelledby="checkboxModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content w-auto h-auto">
+							<div class="modal-body">
+								<div class="w-auto h-auto matchingDate">
+									<button type="button" class="closeButton btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+									<div id="locationInfoDiv" class="w-auto h-auto timeZone mt-5">
+										<ul id="locationBtns">
+											<hr class="lineUp">
+											<div class="locationInfo">
+												<img class="matchingLocationImage mx-4 mb-4"
+													src="/mobile/img/image6.svg" />
+												<div ID="fieldLocation">
+													<p>구장 주소</p>
+													<div class="fieldLocationDetail">
+														<p class="mx-3" id="field-address">서울 강서구 까치산로28길 33-15</p>
+													</div>
+												</div>
+												<div ID="fieldInfomation">
+													<p class="infoTitle">구장시설</p>
+													<div class="locationInfo11">
+														<button class="showerTF" disabled="true">샤워실</button>
+														<button class="parkTF" disabled="true">주차장</button>
+														<button class="shoesTF" disabled="true">풋살화 대여</button><br>
+														<button class="drinkTF mt-1" disabled="true">음료 판매</button>
+														<button class="ballTF" disabled="true">풋살공 대여</button>
+													</div>
+												</div>
+											</div>
+											<hr>
+										</ul>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<hr>
-				</ul>
-			</div>	
-		</div>
-		<!-- <div class="modal-footer">
-		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-		  <button type="button" class="btn btn-primary" id = "searchButton">검색</button>
-		</div> -->
-	  </div>
-	</div>
-  </div>         
-</div>		   
-  <div class="modal" id="matchCheckModal" tabindex="-1" aria-labelledby="matchCheckModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-	  <div class="modal-content w-auto h-auto">
-		<div class="modal-body">
-		  <div class = "w-auto h-auto matchingDate">
-			<button type="button" class="closeButton btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			<div id = "locationInfoDiv" class = "w-auto h-auto timeZone mt-5">
-				<h3 class="matchDateH3">6/25 (화) 서울시</h3> <br>
-				<div id="myApplyListDiv" class="overflow-auto">
-					<ul id="myApplyList">
-					</ul>
 				</div>
-			</div>	
-		</div>
-		<div class="modal-footer">
-		  <button type="button" class="btn btn-secondary" id="matchCheckCloseButton" data-bs-dismiss="modal">취소</button>
-		  <button type="button" class="btn btn-primary" id = "matchCheckApplyButton" data-bs-toggle="modal" data-bs-target="#statusCheckModal">신청</button>
-		</div>
-	  </div>
-	</div>
-  </div>         
-</div>		   
-<div class="modal" id="statusCheckModal" tabindex="-1" aria-labelledby="statusCheckModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-	  <div class="modal-content w-auto h-auto">
-		<div class="modal-body">
-		  <div class = "w-auto h-auto matchingDate">
-			<button type="button" class="closeButton btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			<div id = "locationInfoDiv" class = "w-auto h-auto timeZone mt-5">
-				<h3 class="matchDateH3">6/25 (화) 서울시</h3> <br>
-				<div id="statusCheckSuccess" class="overflow-auto">
-					<button id="statusMyApply" class="mx-5 mb-3" disabled="true">성공</button>
-					<ul id="myApplyListSuccess">
-						<li class="mx-3"><p>강서 신정FC 08:00-10:00</p></li>
-					</ul>
+
+				<!-- 매칭 신청 모달 -->
+				<div class="modal" id="matchCheckModal" tabindex="-1" aria-labelledby="matchCheckModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content w-auto h-auto">
+							<div class="modal-body">
+								<div class="w-auto h-auto matchingDate">
+									<button type="button" class="closeButton btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+									<div id="locationInfoDiv" class="w-auto h-auto timeZone mt-5">
+										<h3 class="matchDateH3">6/25 (화) 서울시</h3> <br>
+										<div id="myApplyListDiv" class="overflow-auto">
+											<ul id="myApplyList">
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="matchCheckCloseButton"
+										data-bs-dismiss="modal">취소</button>
+									<button type="button" class="btn btn-primary" id="matchCheckApplyButton"
+										data-bs-toggle="modal" data-bs-target="#statusCheckModal">신청</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div id="statusCheckFail" class="overflow-auto">
-					<button id="statusApplyFail" class="mx-5 mb-3" disabled="true">실패</button>
-					<ul id="myApplyListFail">
-						<li class="mx-3"><p>강서 신정FC 10:00-12:00</p></li>
-					</ul>
+				<div class="modal" id="statusCheckModal" tabindex="-1" aria-labelledby="statusCheckModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content w-auto h-auto">
+							<div class="modal-body">
+								<div class="w-auto h-auto matchingDate">
+									<button type="button" class="closeButton btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+									<div id="locationInfoDiv" class="w-auto h-auto timeZone mt-5">
+										<h3 class="matchDateH3">6/25 (화) 서울시</h3> <br>
+										<div id="statusCheckSuccess" class="overflow-auto">
+											<button id="statusMyApply" class="mx-5 mb-3" disabled="true">성공</button>
+											<ul id="myApplyListSuccess">
+												<li class="mx-3">
+													<p>강서 신정FC 08:00-10:00</p>
+												</li>
+											</ul>
+										</div>
+										<div id="statusCheckFail" class="overflow-auto">
+											<button id="statusApplyFail" class="mx-5 mb-3" disabled="true">실패</button>
+											<ul id="myApplyListFail">
+												<li class="mx-3">
+													<p>강서 신정FC 10:00-12:00</p>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" id="statusCheckApplyButton"
+										data-bs-toggle="modal" data-bs-target="#statusCheckModal">확인</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>	
+			</div>
 		</div>
-		<div class="modal-footer">
-		  <button type="button" class="btn btn-primary" id = "statusCheckApplyButton" data-bs-toggle="modal" data-bs-target="#statusCheckModal">확인</button>
-		</div>
-	  </div>
-	</div>
-  </div>         
-</div>		   
-        </div>
-    </div>
-        <!-- 하단 메뉴바 -->
+		<!-- 하단 메뉴바 -->
 		<nav></nav>
-</div>
-<script>
-	$(document).ready(function(){
-        $('header').load('./common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
-            $('#page-name').text('페이지 이름'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
-            $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
-        });
-        $('nav').load('./common/nav.html');
-    });
+	</div>
+	<script>
+		$(document).ready(function () {
+			$('header').load('./common/header_back.html', function () { // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+				$('#page-name').text('매칭 리스트'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
+				$('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+			});
+			$('nav').load('./common/nav.html');
 
-
-	window.onload = function(){
-		//.matchInfo
-  var cantApply = document.querySelectorAll('.matchInfo button');
-  // 마감되면 체크박스 disabled
-  cantApply.forEach(function(btn, i) {
-	if(btn.value == '마감' || btn.value == '신청완료'){
-		btn.classList.add('active');
-		const grandparentDivOfCheckbox = btn.parentNode.parentNode;
-		//checkBtn
-		const killCheckbox = grandparentDivOfCheckbox.querySelector('#checkBtn');
-		$(killCheckbox).prop('disabled', true);
-	}
-  });	
-		
-
-  var ballTF = document.querySelector('.ballTF');
-  var parkTF = document.querySelector('.parkTF');
-  var drinkTF = document.querySelector('.drinkTF');
-  var shoesTF = document.querySelector('.shoesTF');
-  var showerTF = document.querySelector('.showerTF');
-
-  let ballYN = true;
-  let parkYN = true;
-  let drinkYN = true;
-  let showerYN = true;
-  let shoesYN = false;
-
-  if (ballYN) {
-    ballTF.classList.add("active");
-  } 
-  if (drinkYN) {
-    drinkTF.classList.add("active");
-  } 
-  if (shoesYN) {
-    shoesTF.classList.add("active");
-  } 
-  if (showerYN) {
-    showerTF.classList.add("active");
-  }
-  if (parkYN) {
-    parkTF.classList.add("active");
-  }
-
-
-}
+			$('#checkboxModal').on('show.bs.modal', function (e) {
+				console.log(1);
+			});
+		});
 
 
 
+		window.onload = function () {
+			$('#checkboxModal').on('show.bs.modal', function (e) {
+				const button = $(e.relatedTarget); // Button that triggered the modal
+				const fieldSeq = button.data('field-seq');
+
+				fetch(`/matching/fieldInfo/${fieldSeq}`)
+				.then(response => response.json())
+				.then(data => {
+					fieldInfo = data.result;
+					$("#field-address").text(fieldInfo.fieldAddress + " " + fieldInfo.fieldAddressDetail);
+					
+				})
+			});
+			//.matchInfo
+			var cantApply = document.querySelectorAll('.matchInfo button');
+			// 마감되면 체크박스 disabled
+			cantApply.forEach(function (btn, i) {
+				if (btn.value == '마감' || btn.value == '신청완료') {
+					btn.classList.add('active');
+					const grandparentDivOfCheckbox = btn.parentNode.parentNode;
+					//checkBtn
+					const killCheckbox = grandparentDivOfCheckbox.querySelector('#checkBtn');
+					$(killCheckbox).prop('disabled', true);
+				}
+			});
+
+			var ballTF = document.querySelector('.ballTF');
+			var parkTF = document.querySelector('.parkTF');
+			var drinkTF = document.querySelector('.drinkTF');
+			var shoesTF = document.querySelector('.shoesTF');
+			var showerTF = document.querySelector('.showerTF');
+
+			let ballYN = true;
+			let parkYN = true;
+			let drinkYN = true;
+			let showerYN = true;
+			let shoesYN = false;
+
+			if (ballYN) {
+				ballTF.classList.add("active");
+			}
+			if (drinkYN) {
+				drinkTF.classList.add("active");
+			}
+			if (shoesYN) {
+				shoesTF.classList.add("active");
+			}
+			if (showerYN) {
+				showerTF.classList.add("active");
+			}
+			if (parkYN) {
+				parkTF.classList.add("active");
+			}
 
 
+		}
+
+		var selectedMatchDate = null;
+
+		function change_btn1(e1) {
+			var btns1 = document.querySelectorAll(".matchingDateBtn");
+			btns1.forEach(function (btn1, i) {
+				if (e1.currentTarget == btn1) {
+					btn1.classList.add("active1");
+				}
+				else {
+					btn1.classList.remove("active1");
+				}
+			});
+			selectedMatchDate = e1.currentTarget.value;
+			console.log(e1.currentTarget);
+		}
+
+		var selectedLocation = null;
+
+		function change_btn(e) {
+			var btns = document.querySelectorAll(".locationCityBtn");
+			var buttonsText = $(this).val;
+			var buttonsTextTest = $(this).prop('value');
+			btns.forEach(function (btn, i) {
+				if (e.currentTarget == btn) {
+					btn.classList.add("active");
+
+				}
+				else {
+					btn.classList.remove("active");
+				}
+
+			});
+			$("#locationInfoDiv").empty();
+
+			console.log(buttonsText);
+			console.log(buttonsTextTest);
+			if (e.currentTarget.textContent == '인천') {
+				$("#locationInfoDiv")
+					.append("<ul id = 'locationBtns'>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>연수구</button></li>" +
+						"<li><button type = 'button' id='locationBtn1' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>남동구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>남동구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>서구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>미추홀구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>중구</button></li>" +
+
+						"</ul>");
+			} else if (e.currentTarget.textContent == '서울') {
+				$("#locationInfoDiv")
+					.append("<ul id = 'locationBtns'>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>중구</button></li>" +
+						"<li><button type = 'button' id='locationBtn1' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동작구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동대문구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>서대문구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>관악구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>금천구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>양천구</button></li>" +
+
+						"</ul>");
+
+			}
+			console.log(e.currentTarget);
+			selectedLocation = e.currentTarget.value;
+		}
+
+		let selectedButton = null;
+
+		function changeButtonColors(button) {
+			const computedStyle = window.getComputedStyle(button);
+			const buttonsColor = computedStyle.backgroundColor;
+			selectedButton = button;
+			console.log(buttonsColor);
+			if (buttonsColor == 'rgb(115, 167, 114)') {
+				button.style.backgroundColor = '#FFFFFF';
+			} else {
+				button.style.backgroundColor = '#73A772';
+			}
+		}
+
+		const statusCheckApplyButton = document.querySelector('#statusCheckApplyButton');
+
+		statusCheckApplyButton.addEventListener('click', function () {
+			location.reload();
+		});
+
+		const searchButton = document.getElementById('searchButton');
+
+		searchButton.addEventListener('click', function () {
+			const selectedList = [];
+			const selectedButtons = document.querySelectorAll('#locationBtns button');
+			const selectedTierButtons = document.querySelectorAll('#OKOKTier button');
+			selectedTierButtons.forEach(function (button, i) {
+				//i = 0;
+				if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
+					// 검색하고자하는 정보입니다
+					selectedList[i] = button.value;
+					console.log(i + 'i : ' + selectedList[i]);
+					//console.log(button.value);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
+				}
+				//i++;
+			});
+
+			var j = 0;
+			selectedButtons.forEach(button => {
+
+				if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
+
+					console.log(selectedLocation + button.textContent);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
+				}
+
+			});
+		});
+
+		function applyFunction() {
+			const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+			$("#myApplyList").empty();
+			checkedCheckboxes.forEach(checkbox => {
+				const matchDiv = checkbox.parentNode;
+
+				const applyStatusText = matchDiv.querySelector('.applyStatus').textContent;
+
+				const matchTimeText = matchDiv.querySelector('.matchTime').textContent;
+
+				const matchLocationText = matchDiv.querySelector('.matchLocation').textContent;
+
+				const justTime = matchTimeText.split(' ');
+				const justFieldLocation = matchLocationText.split(' ');
 
 
+				$("#myApplyList").append("<li><p class='mx-4'>" + justTime[1] + " " + justFieldLocation[2] + "</p></li>" + "<hr>");
 
-var selectedMatchDate = null;
+				console.log(`${applyStatusText}`);
+				console.log(`${justTime[1]}`);
+				console.log(`${justFieldLocation[2]}`);
+			});
+		}
 
-function change_btn1(e1) {
-var btns1 = document.querySelectorAll(".matchingDateBtn");
-btns1.forEach(function(btn1, i) {
-	if(e1.currentTarget == btn1) {
-		btn1.classList.add("active1");
-	}
-	else {
-		btn1.classList.remove("active1");
-	}
-});
-selectedMatchDate = e1.currentTarget.value;
-console.log( e1.currentTarget );
-}
-
-
-
-	
-var selectedLocation = null;     
-	
-function change_btn(e) {
-var btns = document.querySelectorAll(".locationCityBtn");
-var buttonsText = $(this).val;
-var buttonsTextTest = $(this).prop('value');
-btns.forEach(function(btn, i) {
-	if(e.currentTarget == btn) {
-		btn.classList.add("active");
-		
-	}
-	else {
-		btn.classList.remove("active");
-	}
-	
-});
-$("#locationInfoDiv").empty();
-
-console.log(buttonsText);
-console.log(buttonsTextTest);
-if(e.currentTarget.textContent == '인천'){ 
-$("#locationInfoDiv")
-.append("<ul id = 'locationBtns'>"+
-		  "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>연수구</button></li>"+
-		  "<li><button type = 'button' id='locationBtn1' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>남동구</button></li>"+
-		  "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동구</button></li>"+
-		  "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>남동구</button></li>"+ 
-		  "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>서구</button></li>"+ 
-		  "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>미추홀구</button></li>"+
-		  "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>중구</button></li>"+
-		  
-		  "</ul>");
-} else if (e.currentTarget.textContent == '서울') {
-	$("#locationInfoDiv")
-.append("<ul id = 'locationBtns'>"+
-		  "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>중구</button></li>"+
-		  "<li><button type = 'button' id='locationBtn1' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동작구</button></li>"+
-		  "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동대문구</button></li>"+
-		  "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>서대문구</button></li>"+ 
-		  "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>관악구</button></li>"+ 
-		  "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>금천구</button></li>"+
-		  "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>양천구</button></li>"+
-		  
-		  "</ul>");
-
-}
-console.log( e.currentTarget );
-selectedLocation = e.currentTarget.value;
-}
-
-
-
-
-
-
-
-
-
-let selectedButton = null;
-
-
-function changeButtonColors(button) {
-const computedStyle = window.getComputedStyle(button);
-const buttonsColor = computedStyle.backgroundColor;
-selectedButton = button;
-console.log(buttonsColor);
-if (buttonsColor == 'rgb(115, 167, 114)') {
-button.style.backgroundColor = '#FFFFFF';
-} else {
-button.style.backgroundColor = '#73A772';
-}
-}  
-
-
-
-const statusCheckApplyButton = document.querySelector('#statusCheckApplyButton');
-
-statusCheckApplyButton.addEventListener('click', function() {
-	location.reload();
-});
-// const selectedTierButtons = document.querySelectorAll('#OKOKTier button');
-
-const searchButton = document.getElementById('searchButton');
-
-
-
-searchButton.addEventListener('click', function() {
-const selectedList = [];  
-const selectedButtons = document.querySelectorAll('#locationBtns button');  
-const selectedTierButtons = document.querySelectorAll('#OKOKTier button');  
-selectedTierButtons.forEach(function(button, i) {
-//i = 0;
-if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
-	// 검색하고자하는 정보입니다
-	selectedList[i] = button.value;
-	console.log(i+'i : '+selectedList[i]);
-	//console.log(button.value);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
-}
-//i++;
-});
-
-var j = 0;
-selectedButtons.forEach(button => {
-
-if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
-
-	console.log(selectedLocation + button.textContent);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
-}
- 
-});
-});
-
-
-
-
-
-function applyFunction() {
-  const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-	$("#myApplyList").empty();
-  checkedCheckboxes.forEach(checkbox => {
-    const matchDiv = checkbox.parentNode;
-
-    const applyStatusText = matchDiv.querySelector('.applyStatus').textContent;
-
-    const matchTimeText = matchDiv.querySelector('.matchTime').textContent;
-
-    const matchLocationText = matchDiv.querySelector('.matchLocation').textContent;
-	
-	const justTime = matchTimeText.split(' ');
-	const justFieldLocation = matchLocationText.split(' ');
-
-
-	$("#myApplyList").append("<li><p class='mx-4'>"+ justTime[1] + " " + justFieldLocation[2] + "</p></li>" + "<hr>");
-
-    console.log(`${applyStatusText}`);
-    console.log(`${justTime[1]}`);
-    console.log(`${justFieldLocation[2]}`);
-  });
-}
-
-</script>
+	</script>
 </body>
+
 </html>

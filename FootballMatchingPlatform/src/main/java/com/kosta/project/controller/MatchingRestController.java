@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kosta.project.dto.FieldsDTO;
 import com.kosta.project.service.MatchingService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,4 +35,12 @@ public class MatchingRestController {
 		result = ms.isTeam(userId);
 		return Map.of("result", result);
 	}
+
+	@GetMapping("/matching/fieldInfo/{fieldSeq}")
+	public Map<String, FieldsDTO> getFieldInfo(@PathVariable int fieldSeq) {
+		System.out.println(fieldSeq);
+		FieldsDTO fDTO = ms.getFieldInfo(fieldSeq);
+		return Map.of("result", fDTO);
+	}
+	
 }

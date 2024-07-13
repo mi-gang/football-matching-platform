@@ -254,7 +254,7 @@ searchButton.addEventListener('click', function() {
 	});
 	console.log(time);
 
-	location.href = "/matchinglist"
+	location.href = `/matchinglist?addType=${teamOrSolo}&matchingDate=${selectedDate}&matchingTime=${time}`;
 });
 
 
