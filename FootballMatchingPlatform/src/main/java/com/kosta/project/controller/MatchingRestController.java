@@ -38,7 +38,6 @@ public class MatchingRestController {
 
 	@GetMapping("/matching/fieldInfo/{fieldSeq}")
 	public Map<String, FieldsDTO> getFieldInfo(@PathVariable int fieldSeq) {
-		System.out.println(fieldSeq);
 		FieldsDTO fDTO = ms.getFieldInfo(fieldSeq);
 		return Map.of("result", fDTO);
 	}

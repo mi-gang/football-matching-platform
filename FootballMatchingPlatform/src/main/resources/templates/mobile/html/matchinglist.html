@@ -31,20 +31,20 @@
 								<div class="d-flex" style="gap: 0.5rem;">
 									<p th:text="${matching.matchingSeq}" class="d-none"></p>
 									<p th:text="${matching.fieldSeq}" class="d-none"></p>
-									<p class="matchTime mb-0" th:text="${matching.matchingDate}">날짜</p>
-									<p class="mb-0" th:if="${matching.matchingTime == 8}"
+									<p class="matchDate mb-0" th:text="${matching.matchingDate}">날짜</p>
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 8}"
 										th:value="${matching.matchingTime}">08:00~10:00</p>
-									<p class="mb-0" th:if="${matching.matchingTime == 10}"
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 10}"
 										th:value="${matching.matchingTime}">10:00~12:00</p>
-									<p class="mb-0" th:if="${matching.matchingTime == 12}"
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 12}"
 										th:value="${matching.matchingTime}">12:00~14:00</p>
-									<p class="mb-0" th:if="${matching.matchingTime == 14}"
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 14}"
 										th:value="${matching.matchingTime}">14:00~16:00</p>
-									<p class="mb-0" th:if="${matching.matchingTime == 16}"
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 16}"
 										th:value="${matching.matchingTime}">16:00~18:00</p>
-									<p class="mb-0" th:if="${matching.matchingTime == 18}"
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 18}"
 										th:value="${matching.matchingTime}">18:00~20:00</p>
-									<p class="mb-0" th:if="${matching.matchingTime == 20}"
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 20}"
 										th:value="${matching.matchingTime}">20:00~22:00</p>
 								</div>
 								<div class="d-flex gap-1">
@@ -129,7 +129,7 @@
 												<div ID="fieldLocation">
 													<p>구장 주소</p>
 													<div class="fieldLocationDetail">
-														<p class="mx-3" id="field-address">서울 강서구 까치산로28길 33-15</p>
+														<p class="mx-3" id="field-address"></p>
 													</div>
 												</div>
 												<div ID="fieldInfomation">
@@ -162,7 +162,7 @@
 									<button type="button" class="closeButton btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 									<div id="locationInfoDiv" class="w-auto h-auto timeZone mt-5">
-										<h3 class="matchDateH3">6/25 (화) 서울시</h3> <br>
+										<h3 class="matchDateH3"></h3> <br>
 										<div id="myApplyListDiv" class="overflow-auto">
 											<ul id="myApplyList">
 											</ul>
@@ -188,7 +188,7 @@
 									<button type="button" class="closeButton btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 									<div id="locationInfoDiv" class="w-auto h-auto timeZone mt-5">
-										<h3 class="matchDateH3">6/25 (화) 서울시</h3> <br>
+										<h3 class="matchDateH3"></h3> <br>
 										<div id="statusCheckSuccess" class="overflow-auto">
 											<button id="statusMyApply" class="mx-5 mb-3" disabled="true">성공</button>
 											<ul id="myApplyListSuccess">
@@ -239,14 +239,54 @@
 			$('#checkboxModal').on('show.bs.modal', function (e) {
 				const button = $(e.relatedTarget); // Button that triggered the modal
 				const fieldSeq = button.data('field-seq');
-
 				fetch(`/matching/fieldInfo/${fieldSeq}`)
-				.then(response => response.json())
-				.then(data => {
-					fieldInfo = data.result;
-					$("#field-address").text(fieldInfo.fieldAddress + " " + fieldInfo.fieldAddressDetail);
-					
-				})
+					.then(response => response.json())
+					.then(data => {
+						fieldInfo = data.result;
+						$("#field-address").text(fieldInfo.fieldAddress + " " + fieldInfo.fieldAddressDetail);
+						var ballTF = document.querySelector('.ballTF');
+						var parkTF = document.querySelector('.parkTF');
+						var drinkTF = document.querySelector('.drinkTF');
+						var shoesTF = document.querySelector('.shoesTF');
+						var showerTF = document.querySelector('.showerTF');
+
+						let ballYN = fieldInfo.rentBall;
+						let parkYN = fieldInfo.parking;
+						let drinkYN = fieldInfo.sellDrink;
+						let showerYN = fieldInfo.showerRoom;
+						let shoesYN = fieldInfo	.rentShoes;
+
+						if (!ballYN) {
+							ballTF.classList.add("active");
+						}
+						else{
+							ballTF.classList.remove("active");
+						}
+						if (!drinkYN) {
+							drinkTF.classList.add("active");
+						}
+						else{
+							drinkTF.classList.remove("active");
+						}
+						if (!shoesYN) {
+							shoesTF.classList.add("active");
+						}
+						else{
+							shoesTF.classList.remove("active");
+						}
+						if (!showerYN) {
+							showerTF.classList.add("active");
+						}
+						else{
+							showerTF.classList.remove("active");
+						}
+						if (!parkYN) {
+							parkTF.classList.add("active");
+						}
+						else{
+							parkTF.classList.remove("active");
+						}
+					})
 			});
 			//.matchInfo
 			var cantApply = document.querySelectorAll('.matchInfo button');
@@ -260,36 +300,6 @@
 					$(killCheckbox).prop('disabled', true);
 				}
 			});
-
-			var ballTF = document.querySelector('.ballTF');
-			var parkTF = document.querySelector('.parkTF');
-			var drinkTF = document.querySelector('.drinkTF');
-			var shoesTF = document.querySelector('.shoesTF');
-			var showerTF = document.querySelector('.showerTF');
-
-			let ballYN = true;
-			let parkYN = true;
-			let drinkYN = true;
-			let showerYN = true;
-			let shoesYN = false;
-
-			if (ballYN) {
-				ballTF.classList.add("active");
-			}
-			if (drinkYN) {
-				drinkTF.classList.add("active");
-			}
-			if (shoesYN) {
-				shoesTF.classList.add("active");
-			}
-			if (showerYN) {
-				showerTF.classList.add("active");
-			}
-			if (parkYN) {
-				parkTF.classList.add("active");
-			}
-
-
 		}
 
 		var selectedMatchDate = null;
@@ -411,22 +421,26 @@
 			$("#myApplyList").empty();
 			checkedCheckboxes.forEach(checkbox => {
 				const matchDiv = checkbox.parentNode;
-
+				console.log(matchDiv);
 				const applyStatusText = matchDiv.querySelector('.applyStatus').textContent;
 
+				const matchDateText = matchDiv.querySelector('.matchDate').textContent;
+				console.log(matchDateText);
 				const matchTimeText = matchDiv.querySelector('.matchTime').textContent;
-
+				console.log(matchTimeText);
 				const matchLocationText = matchDiv.querySelector('.matchLocation').textContent;
+				console.log(matchLocationText);
 
-				const justTime = matchTimeText.split(' ');
-				const justFieldLocation = matchLocationText.split(' ');
+				$(".matchDateH3").text(matchDateText);
+				// const justTime = matchTimeText.split(' ');
+				// const justFieldLocation = matchLocationText.split(' ');
 
 
-				$("#myApplyList").append("<li><p class='mx-4'>" + justTime[1] + " " + justFieldLocation[2] + "</p></li>" + "<hr>");
+				$("#myApplyList").append("<li><p class='mx-4'>" + matchTimeText + " " + matchLocationText + "</p></li>" + "<hr>");
 
-				console.log(`${applyStatusText}`);
-				console.log(`${justTime[1]}`);
-				console.log(`${justFieldLocation[2]}`);
+				// console.log(`${applyStatusText}`);
+				// console.log(`${justTime[1]}`);
+				// console.log(`${justFieldLocation[2]}`);
 			});
 		}
 

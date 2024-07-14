@@ -286,7 +286,6 @@ input[type="checkbox"]{
 }
 #fieldLocation{
 	display: flex;
-	justify-content: space-between;
 }
 .modal{
 	top:20%;
