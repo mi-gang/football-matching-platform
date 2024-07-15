@@ -6,7 +6,7 @@
       integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="../css/login.css" />
+    <link rel="stylesheet" href="mobile/css/login.css" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>로그인</title>
@@ -28,51 +28,46 @@
       </div>
       <div class="flex-center" id="logo-container">
         <div class="flex-center" id="logo">
-          <img src="../img/google.png" />
+          <img src="mobile/img/google.png" />
         </div>
       </div>
       <div class="flex-column-center">
-        <div id="join"><a href="">회원가입</a></div>
-        <div id="find"><a href="">아이디/비밀번호 찾기</a></div>
+        <div id="join"><a href="/join">회원가입</a></div>
+        <div id="find"><a href="findIDPW">아이디/비밀번호 찾기</a></div>
       </div>
     </div>
   </body>
   <script>
-    $("form").submit(function(e) {
-    e.preventDefault();
-      const form = document.getElementById('loginForm');
+    $("form").submit(function (e) {
+      e.preventDefault();
+      const form = document.getElementById("loginForm");
 
-      if(!form.id.value||!form.pw.value){
-        alert('아이디와 비밀번호 모두 입력해 주세요');
-        form.text-id.focus();
+      if (!form.id.value || !form.pw.value) {
+        alert("아이디와 비밀번호 모두 입력해 주세요");
+        form.text - id.focus();
         return false;
       }
-      
+
       $.ajax({
-        url : '/user/login',
-        type: 'POST',
-        dataType : 'json',
+        url: "/user/login",
+        type: "POST",
+        dataType: "json",
         data: {
-                userId: form.id.value,
-                password: form.pw.value
+          userId: form.id.value,
+          password: form.pw.value,
         },
         async: false,
-        success: function(response){
-            location.href = '/mainPage'
+        success: function (response) {
+          location.href = "/mainPage";
         },
-        error: function(request, status, error){
-            alert('아이디와 비밀번호를 확인해주세요');
-        }
-      })
+        error: function (request, status, error) {
+          alert("아이디와 비밀번호를 확인해주세요");
+        },
+      });
     });
 
+    $("#join").on("click", function () {});
 
-    $("#join").on("click", function () {
-      alert("회원가입 페이지로 이동");
-    });
-
-    $("#find").on("click", function () {
-      alert("아이디/비밀번호 찾기 페이지로 이동");
-    });
+    $("#find").on("click", function () {});
   </script>
 </html>
