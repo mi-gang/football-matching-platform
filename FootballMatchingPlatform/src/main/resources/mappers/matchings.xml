@@ -57,11 +57,18 @@
 		WHERE matching_seq = #{matchingSeq};
 	</select>
 	
-	<!-- 매칭 신청 등록 -->
+	<!-- 매칭 신청 등록(개인) -->
 	<select id="insertMatchingAddLists" parameterType="com.kosta.project.dto.MatchingAddListsDTO">
 		INSERT INTO matching_add_lists(matching_seq, matching_success_status, cancel_status, pay_status,
 		review_status, team_status, team, player_number, review_score, matching_add_seq)
 		VALUES (#{matchingSeq}, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, NULL, NULL, #{matchingAddSeq});
+	</select>
+	
+	<!-- 매칭 신청 등록(팀) -->
+	<select id="insertMatchingAddListsByTeam" parameterType="com.kosta.project.dto.MatchingAddListsDTO">
+		INSERT INTO matching_add_lists(matching_seq, matching_success_status, cancel_status, pay_status,
+		review_status, team_status, team, player_number, review_score, matching_add_seq)
+		VALUES (#{matchingSeq}, FALSE, FALSE, FALSE, FALSE, TRUE, #{team}, NULL, NULL, #{matchingAddSeq});
 	</select>
 	
 	<!-- 등록한 매칭에 대한 인원 확인 -->
@@ -72,6 +79,17 @@
 		AND ma.user_id = u.user_id
 		AND matching_seq = #{matchingSeq} AND cancel_status = FALSE
 		AND user_tier = #{userTier};
+	</select>
+	
+	<!-- 등록한 매칭에 대한 인원 확인(팀신청) -->
+	<select id="selectMatchingMemberCountByTeam" resultType="java.lang.Integer" parameterType="com.kosta.project.dto.MatchingCountDTO">
+		SELECT COUNT(matching_add_list_seq) 
+		FROM matching_add_lists ml, matching_adds ma, teams t
+		WHERE ml.matching_add_seq = ma.matching_add_seq
+		AND ma.team_seq = t.team_seq
+		AND matching_seq = #{matchingSeq}
+		AND team_status = 1 AND cancel_status = FALSE
+		AND team_tier = #{teamTier};
 	</select>
 	
 	<!-- 매칭 성공 시 매칭 상태 매칭중 -> 매칭성공으로 변경 -->
@@ -90,6 +108,33 @@
 		SET matching_success_status = TRUE
 		WHERE matching_seq = #{matchingSeq}
 		AND u.user_tier = #{userTier};
+	</update>
+	
+	<!-- 매칭 성공 시 팀과 등번호 배정 -->
+	<!-- 해당 매칭에 신청한 리스트 가져오기(개인) -->
+	<select id="selectMatchingMember" resultType="Integer" parameterType="com.kosta.project.dto.MatchingCountDTO">
+		SELECT matching_add_list_seq
+		FROM matching_add_lists ml, matching_adds ma, users u
+		WHERE ml.matching_add_seq = ma.matching_add_seq
+		AND ma.user_id = u.user_id
+		AND matching_seq = #{matchingSeq}
+		AND cancel_status = FALSE
+		AND user_tier = #{userTier};
+	</select>
+	
+	<!-- 팀 배정 A -->
+	<update id="updateTeamToA" parameterType="Integer">
+		UPDATE matching_add_lists SET team = "A" WHERE matching_add_list_seq = #{matchingAddListSeq};
+	</update>
+	
+	<!-- 팀 배정 B -->
+	<update id="updateTeamToB" parameterType="Integer">
+		UPDATE matching_add_lists SET team = "B" WHERE matching_add_list_seq = #{matchingAddListSeq};
+	</update>
+	
+	<!-- 등번호 배정 -->
+	<update id="updatePlayerNumber" parameterType="com.kosta.project.dto.PlayerNumberDTO">
+		UPDATE matching_add_lists SET player_number = #{playerNumber} WHERE matching_add_list_seq = #{matchingAddListSeq};
 	</update>
 	
 	<!-- 매칭 신청 결과 조회 -->

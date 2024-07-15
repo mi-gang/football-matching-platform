@@ -28,9 +28,10 @@
 							<div class="w-auto h-auto matchInfo mt-1 mx-1" data-bs-toggle="modal"
 								data-bs-target="#checkboxModal" th:data-field-seq="${matching.fieldSeq}">
 								<button class="applyStatus" disabled="true" value="신청가능">신청가능</button>
-								<div class="d-flex" style="gap: 0.5rem;">
-									<p th:text="${matching.matchingSeq}" class="d-none"></p>
-									<p th:text="${matching.fieldSeq}" class="d-none"></p>
+								<div class="d-flex align-items-center" style="gap: 0.5rem;">
+									<p th:text="${matching.matchingSeq}" class="matchSeq d-none"></p>
+									<p th:text="${matching.fieldSeq}" class="fieldSeq d-none"></p>
+									<p th:text="${matching.matchingTime}" class="matchTimeValue d-none"></p>
 									<p class="matchDate mb-0" th:text="${matching.matchingDate}">날짜</p>
 									<p class="matchTime mb-0" th:if="${matching.matchingTime == 8}"
 										th:value="${matching.matchingTime}">08:00~10:00</p>
@@ -120,10 +121,11 @@
 								<div class="w-auto h-auto matchingDate">
 									<button type="button" class="closeButton btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
-									<div id="locationInfoDiv" class="w-auto h-auto timeZone mt-5">
+									<div id="locationInfoDiv" class="w-auto h-auto timeZone">
 										<ul id="locationBtns">
 											<hr class="lineUp">
 											<div class="locationInfo">
+												<div id="field-name" class="mx-4"></div>
 												<img class="matchingLocationImage mx-4 mb-4"
 													src="/mobile/img/image6.svg" />
 												<div ID="fieldLocation">
@@ -227,13 +229,7 @@
 				$('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
 			});
 			$('nav').load('./common/nav.html');
-
-			$('#checkboxModal').on('show.bs.modal', function (e) {
-				console.log(1);
-			});
 		});
-
-
 
 		window.onload = function () {
 			$('#checkboxModal').on('show.bs.modal', function (e) {
@@ -243,6 +239,7 @@
 					.then(response => response.json())
 					.then(data => {
 						fieldInfo = data.result;
+						$("#field-name").text(fieldInfo.fieldName);
 						$("#field-address").text(fieldInfo.fieldAddress + " " + fieldInfo.fieldAddressDetail);
 						var ballTF = document.querySelector('.ballTF');
 						var parkTF = document.querySelector('.parkTF');
@@ -393,7 +390,6 @@
 		searchButton.addEventListener('click', function () {
 			const selectedList = [];
 			const selectedButtons = document.querySelectorAll('#locationBtns button');
-			const selectedTierButtons = document.querySelectorAll('#OKOKTier button');
 			selectedTierButtons.forEach(function (button, i) {
 				//i = 0;
 				if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
@@ -421,29 +417,69 @@
 			$("#myApplyList").empty();
 			checkedCheckboxes.forEach(checkbox => {
 				const matchDiv = checkbox.parentNode;
-				console.log(matchDiv);
 				const applyStatusText = matchDiv.querySelector('.applyStatus').textContent;
 
+				const matchSeq = matchDiv.querySelector('.matchSeq').textContent;
+				console.log(matchSeq);
+				const fieldSeq = matchDiv.querySelector('.fieldSeq').textContent;
+				console.log(fieldSeq);
 				const matchDateText = matchDiv.querySelector('.matchDate').textContent;
 				console.log(matchDateText);
 				const matchTimeText = matchDiv.querySelector('.matchTime').textContent;
 				console.log(matchTimeText);
+				const matchTimeValue = matchDiv.querySelector('.matchTimeValue').textContent;
+				console.log(matchTimeValue);
 				const matchLocationText = matchDiv.querySelector('.matchLocation').textContent;
 				console.log(matchLocationText);
 
 				$(".matchDateH3").text(matchDateText);
-				// const justTime = matchTimeText.split(' ');
-				// const justFieldLocation = matchLocationText.split(' ');
-
-
 				$("#myApplyList").append("<li><p class='mx-4'>" + matchTimeText + " " + matchLocationText + "</p></li>" + "<hr>");
-
-				// console.log(`${applyStatusText}`);
-				// console.log(`${justTime[1]}`);
-				// console.log(`${justFieldLocation[2]}`);
 			});
 		}
+		const url = new URL(window.location.href);
+		const addType = url.searchParams.get('addType');
+		$("#matchCheckApplyButton").on("click", function(){
+			const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+			$("#myApplyList").empty();
+			checkedCheckboxes.forEach(checkbox => {
+				const matchDiv = checkbox.parentNode;
+				const applyStatusText = matchDiv.querySelector('.applyStatus').textContent;
 
+				const matchSeq = matchDiv.querySelector('.matchSeq').textContent;
+				console.log(matchSeq);
+				const fieldSeq = matchDiv.querySelector('.fieldSeq').textContent;
+				console.log(fieldSeq);
+				const matchDateText = matchDiv.querySelector('.matchDate').textContent;
+				console.log(matchDateText);
+				const matchTimeText = matchDiv.querySelector('.matchTime').textContent;
+				console.log(matchTimeText);
+				const matchTimeValue = matchDiv.querySelector('.matchTimeValue').textContent;
+				console.log(matchTimeValue);
+				const matchLocationText = matchDiv.querySelector('.matchLocation').textContent;
+				console.log(matchLocationText);
+				fetch(`/matching`, {
+					method: "post",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						type: addType,
+						userId: "user00101",
+						userTier: "D",
+						mdto: [
+							{
+							matchingSeq: matchSeq, 
+							matchingDate: matchDateText, 
+							matchingTime: matchTimeValue, 
+							fieldAddress: matchLocationText,
+							fieldAddressDetail: "",
+							fieldName: "",
+							fieldSeq: fieldSeq}
+						]
+					})
+				})
+			});
+		});
 	</script>
 </body>
 

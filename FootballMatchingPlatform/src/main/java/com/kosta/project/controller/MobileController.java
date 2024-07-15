@@ -120,7 +120,6 @@ public class MobileController {
 									.build();
 		List<MatchingsDTO> mDTO = ms.getMatchingsList(mcDTO);
 		model.addAttribute("matchingList", mDTO);
-		System.out.println(mDTO);
 		return "matchinglist";
 	}
 	

@@ -243,6 +243,15 @@
 		AND team_member_delete = 0;
 	</select>
 	
+	<!-- 팀 이름 가져오기 -->
+	<select id="selectTeamNameById" resultType="String" parameterType="String">
+		SELECT team_name FROM teams WHERE leader_id = #{userId};
+	</select>
+	
+	<!-- 팀 티어 가져오기 -->
+	<select id="selectTeamTier" resultType="String" parameterType="String">
+		SELECT team_tier FROM teams WHERE leader_id = #{userId};
+	</select>
 	<!-- 내 팀 정보 불러오기(마이페이지) -->
 	<select id="selectTeamInfoByUserId" resultType="com.kosta.project.dto.TeamDTO">
 	    SELECT

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kosta.project.dto.AddMatchingDataDTO;
 import com.kosta.project.dto.FieldsDTO;
 import com.kosta.project.service.MatchingService;
 
@@ -23,14 +24,14 @@ public class MatchingRestController {
 	private final MatchingService ms;
 
 	@GetMapping("/matching/isLeader/{userId}")
-	Map<String, Boolean> getIsLeader(@PathVariable("userId") String userId){
+	public Map<String, Boolean> getIsLeader(@PathVariable("userId") String userId){
 		boolean isLeader = false;
 		isLeader = ms.isLeader(userId);
 		return Map.of("result", isLeader);
 	}
 	
 	@GetMapping("/matching/isTeam/{userId}")
-	Map<String, String> getIsTeam(@PathVariable("userId") String userId){
+	public Map<String, String> getIsTeam(@PathVariable("userId") String userId){
 		String result = "";
 		result = ms.isTeam(userId);
 		return Map.of("result", result);
@@ -42,4 +43,11 @@ public class MatchingRestController {
 		return Map.of("result", fDTO);
 	}
 	
+	@PostMapping("/matching")
+	public Map<String, Boolean> addMatching(@RequestBody AddMatchingDataDTO addDTO){
+		boolean result = false;
+		System.out.println(addDTO);
+		result = ms.addMatcings(addDTO);
+		return Map.of("reuslt", result);
+	}
 }
