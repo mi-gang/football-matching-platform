@@ -41,5 +41,6 @@ public class MatchingScheduleListDTO {
 	private char team;
 	private int playerNumber;
 	private boolean isleader;
+	private String fieldName;
 	
 }

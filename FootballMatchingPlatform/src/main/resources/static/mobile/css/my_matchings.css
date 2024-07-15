@@ -199,9 +199,12 @@
     background: #EF8665;
 }
 
-.status-2,
-.status-3 {
+.status-2{
     background: #73A772;
+}
+
+.status-3{
+    background: #969696;
 }
 
 .matching-info,

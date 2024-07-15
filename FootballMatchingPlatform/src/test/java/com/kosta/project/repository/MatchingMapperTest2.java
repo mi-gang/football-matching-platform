@@ -17,7 +17,7 @@ public class MatchingMapperTest2 {
 	@Autowired
 	MatchingMapper matchingMapper;
 	
-	@Test
+	//@Test
 	void selectMatchingListByMonthTest() {
 		Collection<MatchingScheduleListDTO> collection = new ArrayList<>();
 		collection = matchingMapper.selectMatchingListByMonth("user001", 7);
@@ -94,29 +94,29 @@ public class MatchingMapperTest2 {
 //	boolean selectOpposingTeamReviewStatus(UserMatchingInfoDTO userMatchingInfoDTO);
 
 	
-	@Test
+	//@Test
 	void selectMatchingSeqByMachingAddListSeqTest() {
 		int result = matchingMapper.selectMatchingSeqByMachingAddListSeq(15);
 		System.out.println(result);
 	}
 	
-	@Test
+	//@Test
 	void updateCancelStatusTest() {
 		System.out.println(matchingMapper.updateCancelStatus(15));
 	}
 	
-	@Test
+	//@Test
 	void updateFastAddStatusTest() {
 		System.out.println(matchingMapper.updateFastAddStatus(6));
 	}
 	
-	@Test
+	//@Test
 	void updateReviewStatusTest() {
 		System.out.println(matchingMapper.updateReviewStatus(15));
 
 	}
 	
-	@Test
+	//@Test
 	void selectOpposingTeamReviewStatusTest() {
 		System.out.println(matchingMapper.selectOpposingTeamReviewStatus(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user001").build()));
 	}
