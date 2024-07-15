@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
 import com.kosta.project.service.FastMatchingService;
+import com.kosta.project.service.TeamService;
 import com.kosta.project.service.MatchingService;
 
 
@@ -24,6 +25,7 @@ import com.kosta.project.service.MatchingService;
 public class MobileController {
 	
 	private final FastMatchingService fms;
+	private final TeamService ts;
 	private final MatchingService ms;
 	
 	@GetMapping("/fastmatchinglist")
@@ -198,6 +200,16 @@ public class MobileController {
 		return "team_Page";
 	}
 	
+	@GetMapping("/teamMember")
+	public String getTeamMember(@RequestParam int teamSeq, Model model) {
+		model.addAttribute("memberList", ts.getTeamMemberList(teamSeq));
+		return "team_member";
+	}
+	
+	@GetMapping("/teamCreate")
+	public String getTeamCreate() {
+		return "team_Create";
+	}
 	
 	
 	

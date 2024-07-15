@@ -19,8 +19,14 @@ public class TeamService {
 	private final TeamMapper tm;
 	
 	
+	//팀 유무
 	public String isTeam(String userId) {
 		return tm.isTeam(userId);
+	}
+	
+	//팀장 확인
+	public String getTeamLeader(int teamSeq) {
+		return tm.selectTeamLeader(teamSeq);
 	}
 	
 	// 팀 전체 순위

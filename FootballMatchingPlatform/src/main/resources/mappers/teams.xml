@@ -11,6 +11,14 @@
 		team_member_status = FALSE AND team_member_delete = FALSE; 
 	</select>
 	
+	<!-- 팀장 확인 -->
+	<select id="selectTeamLeader">
+		SELECT user_id
+		FROM team_members
+		WHERE team_seq = #{teamSeq} AND member_seq = 
+		(SELECT MIN(member_seq) FROM team_members WHERE team_seq = #{teamSeq});
+	</select>
+	
 	<!-- 팀 전체 순위 -->
  	<select id="selectTeamRankList" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT team_name AS teamName, team_rank AS teamRank, game_count AS gameCount, 
@@ -53,7 +61,7 @@
 		AND t.team_seq NOT IN(
 			SELECT t.team_seq
 			FROM teams AS t JOIN applys AS a ON t.team_seq = a.team_seq
-			WHERE a.user_id = "user00420"
+			WHERE a.user_id = #{userId}
 		)
 		GROUP BY m.team_seq;
 	</select>
@@ -149,12 +157,15 @@
 	
 	<!-- 내 팀 정보 조회 (내 팀 정보 Btn) -->
 	<select id="selectTeamInfo" resultType="com.kosta.project.dto.TeamDTO">
-		SELECT team_seq AS teamSeq, team_name AS teamName, game_count AS gameCount, win_count AS winCount, 
+		SELECT t.team_seq AS teamSeq, team_name AS teamName, game_count AS gameCount, win_count AS winCount, 
 		if(game_count = 0, 0, 100*(win_count/game_count)) AS odds, NVL(team_rank, 0) AS teamRank, team_tier AS teamTier,
-		team_score AS teamScore, possible_a AS possA, possible_b AS possB, possible_c AS possC, 
-		possible_d AS possD, week_type AS weekType, week_time AS weekTime, hope_time AS hopeTime, hometown, content
-		FROM teams 
-		WHERE team_seq = (SELECT team_seq FROM team_members WHERE user_id = #{userId} AND team_member_status = FALSE
+		team_score AS teamScore, possible_a AS possA, possible_b AS possB, possible_c AS possC, recruitment,
+		possible_d AS possD, week_type AS weekType, week_time AS weekTime, hope_time AS hopeTime, hometown, content, 
+		COUNT(case when team_member_status=FALSE AND team_member_delete=FALSE
+		then 1 END) AS memberCount
+		FROM teams AS t
+			JOIN team_members AS tm ON t.team_seq = tm.team_seq
+		WHERE t.team_seq = (SELECT team_seq FROM team_members WHERE user_id = #{userId} AND team_member_status = FALSE
 		AND team_member_delete=FALSE);
 	</select>
 	
@@ -197,10 +208,12 @@
 
 	<!-- 팀원 목록 -->
 	<select id="selectTeamMemberList" resultType="com.kosta.project.dto.TeamMemberDTO">
-		SELECT nickname, birthday, gender, user_tier AS userTier, email
+		SELECT m.user_id, nickname, birthday, gender, user_tier AS userTier, email, m.join_date AS joinDate,
+		if(CURDATE()-m.join_date &lt;= 3, TRUE, FALSE) AS newbie, YEAR(CURDATE()) - YEAR(birthday) + 1 AS age
 		FROM users u, team_members m
 		WHERE u.user_id = m.user_id AND m.team_seq = #{teamSeq} AND 
-		team_member_status = FALSE AND team_member_delete = FALSE;
+		team_member_status = FALSE AND team_member_delete = FALSE
+		ORDER BY member_seq;
 	</select>
 
 
