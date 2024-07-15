@@ -45,8 +45,14 @@ public interface UserMapper {
 	// 비밀번호 업데이트하기
 	void updatePasswordByUserId(String password, String userId);
 	
+	// 개인 순위 top1 불러오기
+	UserDTO selectTopOneUser();
+	
+	// 개인 순위 top2 불러오기
+	UserDTO selectTopTwoUser();
+	
 	// 개인 순위 top3 불러오기
-	List<UserDTO> selectTopThreeUsersList();
+	UserDTO selectTopThreeUser();
 	
 	// 개인 순위 top100 불러오기
 	List<UserDTO> selectTopHundredUsersList(); 

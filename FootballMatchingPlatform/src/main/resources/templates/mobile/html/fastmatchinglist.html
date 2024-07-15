@@ -5,7 +5,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="/mobile/css/common.css">
 </head>
 <style>
 
@@ -237,37 +237,131 @@ input[type="checkbox"]{
 }
 
 
-.matchingDate{
-	white-space:nowrap;
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.matchingDate {
+	white-space: nowrap;
+
 }
 
-.matchingDateBtn{
-	border-radius:6rem;
-	background-color:#FFFFFF;
-	color:#626262;
-	width:2rem;
-	height:2rem;
-	font-size:0.66rem;
-	border-color:#626262;
+.matchingDateBtn0 {
+	border-radius: 6rem;
+	background-color: #FFFFFF;
+	color: #626262;
+	width: 2rem;
+	height: 2rem;
+	font-size: 0.8rem;
+	border-color: #626262;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
+
+.matchingDateBtn1 {
+	border-radius: 6rem;
+	background-color: #FFFFFF;
+	color: #626262;
+	width: 2rem;
+	height: 2rem;
+	font-size: 0.8rem;
+	border-color: #626262;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.matchingDateBtn2 {
+	border-radius: 6rem;
+	background-color: #FFFFFF;
+	color: #626262;
+	width: 2rem;
+	height: 2rem;
+	font-size: 0.8rem;
+	border-color: #626262;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.matchingDateBtn3 {
+	border-radius: 6rem;
+	background-color: #FFFFFF;
+	color: #626262;
+	width: 2rem;
+	height: 2rem;
+	font-size: 0.8rem;
+	border-color: #626262;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.matchingDateBtn4 {
+	border-radius: 6rem;
+	background-color: #FFFFFF;
+	color: #626262;
+	width: 2rem;
+	height: 2rem;
+	font-size: 0.8rem;
+	border-color: #626262;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
 
 #matchingDateBtns {
-	
+	white-space: nowrap;
 	font-size: 0;
 }
+
 #matchingDateBtns li {
 	display: inline-block;
 	margin-left: -1px;
 }
+
 #matchingDateBtns li:first-child {
 	margin-left: 0;
 }
-
-
-.matchingDateBtn:hover, .matchingDateBtn.active1 {
-	background: #73A772;
+#matchingDateBtn:hover,
+#matchingDateBtn.aaactive90 {
+	background: #73a772;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
 #searchButton{
     background: #73A772;
     color: #FFFFFF;
@@ -296,112 +390,69 @@ input[type="checkbox"]{
 	
 	<div class = "w-auto h-auto filterBtnDiv">
 		<button class = "filterBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">필터</button>
-        <select class="filterSelectbox mt-4 form-select">
+        <select class="filterSelectbox mt-4 form-select" onchange="selectedValueOnChange()">
             <option selected value="1">가까운 일정순</option>
             <option value="2">인원이 많은 순</option>
             <option value="3">인원이 적은 순</option>
         </select>
 	</div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<div class = "w-auto h-auto matchingCheckListDiv mt-4">
-	  	<ul id = "matchingCheckList">
-		  <div class = "ulMatchDiv mt-0" id = "matchList1" >
+		<ul id = "matchingCheckList"  class="matching-list">
+		  <div class = "ulMatchDiv mt-2" th:each="i : ${fastmatchinglist}" id = "matchList1" >
 			  <div class = "w-auto h-auto matchInfo mt-1 mx-1">	  
-				<button class = "applyStatus" disabled="true" >9/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = "matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = "matchLocation">서울 강남 풋살FC</p>
+				<button class = "applyStatus" th:value="${i.matchingSeq}" disabled="true" th:text="${i.playerCount} + '/10명'"></button>
+                <button class="matchOKTier" disabled="true" th:text="${i.matchingTier}"></button><br>
+				<p class = "matchTime mb-0" th:text="${i.matchingDate} + ' ' + ${i.matchingTime} + ':00 ~ ' + ${i.matchingTime + 2} + ':00'"></p><br>				
+				<p class = "matchLocation" th:text="${i.fieldAddress} + ' ' + ${i.fieldAddressDetail}"></p>
 			  </div>	
-              <img class="matchingLocationImage" src="../img/image6.svg"/>
+              <img class="matchingLocationImage"  src=""/>
 			<hr>			
 		  </div>
-		  <div class = " ulMatchDiv mt-3" id = "matchList2">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >9/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = " matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = " matchLocation">서울 강서 신정FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  <div class = "ulMatchDiv mt-3" id = "matchList3">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = "applyStatus" disabled="true" >7/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = " matchTime mb-0">6/25(화) 10:00-12:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  
-		  
-		  		  <div class = " ulMatchDiv mt-3" id = "matchList1">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >9/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = " matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  <div class = " ulMatchDiv mt-3" id = "matchList2">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >9/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = " matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = "matchLocation">서울 강서 신정FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  <div class = "ulMatchDiv mt-3" id = "matchList3">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >7/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = " matchTime mb-0">6/25(화) 10:00-12:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  
-		  
-		  		  <div class = " ulMatchDiv mt-3" id = "matchList1">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >9/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = "matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  <div class = " ulMatchDiv mt-3" id = "matchList2">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >9/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = "matchTime mb-0">6/25(화) 08:00-10:00</p><br>				
-				<p class = " matchLocation">서울 강서 신정FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  <div class = "ulMatchDiv mt-3" id = "matchList3">
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1"  >  
-				<button class = " applyStatus" disabled="true" >7/10명</button>
-                <button class="matchOKTier" disabled="true">A등급</button><br>
-				<p class = " matchTime mb-0">6/25(화) 10:00-12:00</p><br>				
-				<p class = " matchLocation">서울 강남 풋살FC</p>
-			  </div>	
-			<img class="matchingLocationImage" src="../img/image6.svg"/>	
-			<hr>			
-		  </div>
-		  
 		</ul>
+		
+		<ul id = "matchingCheckList" class="matching-list">
+		  <div class = "ulMatchDiv mt-2"  th:each="i : ${fastmatchinglistS}"  id = "matchList1" >
+			  <div class = "w-auto h-auto matchInfo mt-1 mx-1">	  
+				<button class = "applyStatus" th:value="${i.matchingSeq}" disabled="true" th:text="${i.playerCount} + '/10명'"></button>
+                <button class="matchOKTier" disabled="true" th:text="${i.matchingTier}"></button><br>
+				<p class = "matchTime mb-0" th:text="${i.matchingDate} + ' ' + ${i.matchingTime} + ':00 ~ ' + ${i.matchingTime + 2} + ':00'"></p><br>				
+				<p class = "matchLocation" th:text="${i.fieldAddress} + ' ' + ${i.fieldAddressDetail}"></p>
+			  </div>	
+              <img class="matchingLocationImage"  src=""/>
+			<hr>			
+		  </div>
+		</ul>
+		
+		<ul id = "matchingCheckList" class="matching-list">
+		  <div class = "ulMatchDiv mt-2" th:each="i : ${fastmatchinglistB}"  id = "matchList1" >
+			  <div class = "w-auto h-auto matchInfo mt-1 mx-1">	  
+				<button class = "applyStatus" th:value="${i.matchingSeq}" disabled="true" th:text="${i.playerCount} + '/10명'"></button>
+                <button class="matchOKTier" disabled="true" th:text="${i.matchingTier}"></button><br>
+				<p class = "matchTime mb-0" th:text="${i.matchingDate} + ' ' + ${i.matchingTime} + ':00 ~ ' + ${i.matchingTime + 2} + ':00'"></p><br>				
+				<p class = "matchLocation" th:text="${i.fieldAddress} + ' ' + ${i.fieldAddressDetail}"></p>
+			  </div>	
+              <img class="matchingLocationImage"  src=""/>
+			<hr>			
+		  </div>
+		</ul>
+		
 	</div>
+	
+	
 	
 	
 	
@@ -455,19 +506,19 @@ input[type="checkbox"]{
       </div>
       <div class="modal-body">
         <h3>날짜</h3>
-        <div class = "matchingDate">
+	<div class = "matchingDate">
 
-            <ul id = "matchingDateBtns">
-                <button type = "button" id="backBtn" class = "btn"><</button>
-              <li><button type = "button" class = "matchingDateBtn btn m-1 p-1" onclick="change_btn1(event)" value="2024-06-27">27</button></li>
-              <li><button type = "button" class = "matchingDateBtn btn m-1 p-1" onclick="change_btn1(event)" value="2024-06-28">28</button></li>
-              <li><button type = "button" class = "matchingDateBtn btn m-1 p-1" onclick="change_btn1(event)" value="2024-06-29">29</button></li>
-              <li><button type = "button" class = "matchingDateBtn btn m-1 p-1" onclick="change_btn1(event)" value="2024-06-30">30</button></li>
-              <li><button type = "button" class = "matchingDateBtn btn m-1 p-1" onclick="change_btn1(event)" value="2024-07-01">1</button></li>
-              <button type = "button" id="frontBtn" class = "btn">></button> 	
-            </ul>
-          
-          </div>
+	  <ul id = "matchingDateBtns">
+	  	<li><button type = "button" id="backBtn" class = "btn"><</button></li>
+	<li>	
+		<div id = "matchingDateBtnsLi">
+
+		</div>
+	</li>
+		<li><button type = "button" id="frontBtn" class = "btn">></button></li> 	
+	  </ul>
+
+	</div>
           <h3>지역</h3>
         <div class = "w-auto h-auto locationCity">
             <ul id = "locationCityBtns">
@@ -542,20 +593,185 @@ input[type="checkbox"]{
     });
 
 
+window.onload = function() {
+	const matchingLists1 = $('.matching-list');
+
+    matchingLists1.hide(); // 모든 리스트 숨기기
+
+    matchingLists1.eq(0).show(); // 첫 번째 리스트만 보여주기	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const today = new Date(); // 오늘 날짜
+const TODAY_BUTTON_VALUE = today.toISOString().slice(0, 10); // '오늘' 버튼의 value 값 (YYYY-MM-DD)
+
+const matchingDateBtns = document.getElementById('matchingDateBtns'); // 버튼 목록 요소
+const backBtn = document.getElementById('backBtn'); // 이전 날짜 버튼
+const frontBtn = document.getElementById('frontBtn'); // 다음 날짜 버튼
+
+// 오늘부터 5일까지의 날짜 배열
+const dates = [];
+
+for (let i = 0; i <= 4; i++) {
+  const date = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
+  dates.push(date.toISOString().slice(0, 10));
+}
+
+// 버튼 생성 및 이벤트 설정
+dates.forEach((date, i) => {
+	console.log(i)
+  $('#matchingDateBtnsLi').append(
+	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='changeButtonColors1(this)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+  )
+});
+
+let backClickCount = 0;
+let frontClickCount = 0;
+let plusOrMinusNumber = 0;
+// 이전 날짜 버튼 클릭 이벤트
+backBtn.addEventListener('click', () => {
+  // 이전 5일 버튼 생성 및 이벤트 설정...
+  backClickCount++;
+
+  plusOrMinusNumber = 5*(frontClickCount + backClickCount);
+
+  $('#matchingDateBtnsLi').empty();
+
+  const backDates = [];
+
+  const newStartDate = new Date(dates[0]); // 첫 번째 버튼의 날짜를 기준으로 -5일
+  newStartDate.setDate(newStartDate.getDate() - plusOrMinusNumber);
+  console.log(newStartDate)
+  console.log(dates[0])
+  for (let i = 0; i <= 4; i++) {
+
+  const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
+  backDates.push(date.toISOString().slice(0, 10));
+}
+
+// 버튼 생성 및 이벤트 설정
+backDates.forEach((date, i) => {
+	console.log(i)
+  $('#matchingDateBtnsLi').append(
+	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='changeButtonColors1(this)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+  )
+});
+});
+
+//다음 날짜 버튼 클릭 이벤트
+frontBtn.addEventListener('click', () => {
+  // 이전 5일 버튼 생성 및 이벤트 설정...
+  frontClickCount++;
+
+  plusOrMinusNumber = 5*(frontClickCount + backClickCount);
+
+  $('#matchingDateBtnsLi').empty();
+
+  const frontDates = [];
+
+  const newStartDate = new Date(dates[0]); // 첫 번째 버튼의 날짜를 기준으로 -5일
+  newStartDate.setDate(newStartDate.getDate() + plusOrMinusNumber);
+  console.log(newStartDate)
+  console.log(dates[0])
+  for (let i = 0; i <= 4; i++) {
+
+  const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
+  frontDates.push(date.toISOString().slice(0, 10));
+}
+
+// 버튼 생성 및 이벤트 설정
+frontDates.forEach((date, i) => {
+	console.log(i)
+  $('#matchingDateBtnsLi').append(
+	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='changeButtonColors1(this)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+  )
+});
+});
+	var checkNumber = 0;
+	var selectedDate = null;
+	function change_btn(e) {
+	var btns = document.querySelectorAll("#matchingDateBtn");
+	btns.forEach(function(btn, i) {
+		if(e.currentTarget == btn) {
+			btn.classList.add("active90");
+		}
+		else {
+			btn.classList.remove("active90");
+		}
+	});
+	console.log( e.currentTarget.value );
+	selectedDate = e.currentTarget.value;
+	}
+	
+	var teamOrSolo = null;
+	function change_btn2(e2) {
+	var btns1 = document.querySelectorAll("#applyTypeBtn");
+	btns1.forEach(function(btn1, i) {
+		if(e2.currentTarget == btn1) {
+		btn1.classList.add("active2");
+		}
+		else {
+			btn1.classList.remove("active2");
+		}
+	});
+	console.log( e2.currentTarget.value );
+	teamOrSolo = e2.currentTarget.value;
+	}
+	
+	function changeButtonColors(button) {
+  const computedStyle = window.getComputedStyle(button);
+  const buttonsColor = computedStyle.backgroundColor;
+  selectedButton = button;
+  console.log(buttonsColor);
+  if (buttonsColor == 'rgb(115, 167, 114)') {
+    button.style.backgroundColor = '#828282';
+  } else {
+    button.style.backgroundColor = '#73A772';
+  }
+}  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     var selectedMatchDate = null;
 
     function change_btn1(e1) {
 	var btns1 = document.querySelectorAll(".matchingDateBtn");
 	btns1.forEach(function(btn1, i) {
 		if(e1.currentTarget == btn1) {
-			btn1.classList.add("active1");
+			btn1.classList.add("aaactive90");
 		}
 		else {
-			btn1.classList.remove("active1");
+			btn1.classList.remove("aaactive90");
 		}
 	});
     selectedMatchDate = e1.currentTarget.value;
-	console.log( e1.currentTarget );
+	console.log( e1.currentTarget.value );
 	}
 
 
@@ -636,6 +852,59 @@ function changeButtonColors(button) {
 
 // const selectedTierButtons = document.querySelectorAll('#OKOKTier button');
 
+
+
+
+
+
+
+
+
+
+
+//	<div class = "w-auto h-auto matchingCheckListDiv mt-4">
+//		<ul id = "matchingCheckList" th:each="i : ${fastmatchinglist}">
+//		  <div class = "ulMatchDiv mt-0" id = "matchList1" >
+//			  <div class = "w-auto h-auto matchInfo mt-1 mx-1">	  
+//				<button class = "applyStatus" th:value="${i.matchingSeq}" disabled="true" th:text="${i.playerCount} + '/10명'"></button>
+//               <button class="matchOKTier" disabled="true" th:text="${i.matchingTier}"></button><br>
+//				<p class = "matchTime mb-0" th:text="${i.matchingDate} + ' ' + ${i.matchingTime} + ':00 ~ ' + ${i.matchingTime + 2} + ':00'"></p><br>				
+//				<p class = "matchLocation" th:text="${i.fieldAddress} + ' ' + ${i.fieldAddressDetail}"></p>
+//			  </div>	
+//             <img class="matchingLocationImage"  src="${i.fieldImg}"/>
+//			<hr>			
+//		  </div>
+//		</ul>
+//	</div>
+
+
+
+//filterSelectbox
+
+const filterSelectbox = document.querySelector('.filterSelectbox');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const searchButton = document.getElementById('searchButton');
 
 
@@ -655,12 +924,18 @@ searchButton.addEventListener('click', function() {
     //i++;
 });
 
-var j = 0;
+
+	// 아직 비동기 시작도 안 함
+
+
+
   selectedButtons.forEach(button => {
 
     if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
 
 		console.log(selectedMatchDate + selectedLocation + button.textContent);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
+		
+		
     }
      
   });
@@ -669,14 +944,49 @@ var j = 0;
 
 
 
-const clickableDivs = document.querySelectorAll('.matchInfo');
-clickableDivs.forEach(div => {
-  div.addEventListener('click', function() {
-    //const link = this.dataset.link;
-    //window.location.href = link;
-    // 아무 링크나 걸어놓은 거임
-    window.location.href = 'https://news.naver.com/';
-  });
+	
+
+  function selectedValueOnChange(){
+    const selectedValue123 = $('.filterSelectbox').val();
+	const matchingLists = $('.matching-list');
+
+    matchingLists.hide(); // 모든 리스트 숨기기
+
+    if (selectedValue123 == 1) {
+      console.log(selectedValue123)
+      matchingLists.eq(0).show(); // 첫 번째 리스트만 보여주기
+    } else if (selectedValue123 == 2) {
+      console.log(selectedValue123)
+      matchingLists.eq(1).show(); // 두 번째 리스트만 보여주기
+    } else if (selectedValue123 == 3) {
+      console.log(selectedValue123)
+      matchingLists.eq(2).show(); // 세 번째 리스트만 보여주기
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const containerElement = document.querySelector('.matchInfo'); // Replace with actual parent container selector
+
+containerElement.addEventListener('click', (event) => {
+  if (event.target.classList.contains('matchInfo')) {
+    const clickedDiv = event.target;   
+
+    const applyStatusElement = clickedDiv.querySelector('.applyStatus');
+    const applyStatusValue = applyStatusElement.value;
+    window.location.href = '/fastmatchinginfo/' + applyStatusValue;
+  }
 });
 
 

@@ -14,6 +14,10 @@ public class FieldsDTO {
 	String fieldImg;
 	String fieldAddress;
 	String fieldAddressDetail;
+	String matchingTier;
+	String fieldContent;
+	String matchingDate;
+	int matchingTime;
 	boolean showerRoom;
 	boolean rentBall;
 	boolean rentShoes;

@@ -12,8 +12,12 @@ import com.kosta.project.dto.TeamMemberDTO;
 @Mapper
 public interface TeamMapper {
 	
+	String isTeam(String userId);
+	String selectTeamLeader(int teamSeq); 
+	
 	List<TeamDTO> selectTeamRankList();
 	List<TeamDTO> selectSearchTeamRankList(String search);
+	List<TeamDTO> selectPossibleJoinTeamByUser(String userId);
 	
 	List<TeamDTO> selectPossibleJoinTeam();
 	List<TeamDTO> selectSearchPossibleTeam(String search);
@@ -52,8 +56,9 @@ public interface TeamMapper {
 	
 	boolean updateTeamDismantleStatus(int teamSeq);
 	
-	int selectTeamSeq(String userId);
-	
+	Integer selectTeamSeq(String userId);
+	String selectTeamNameById(String userId);
+	String selectTeamTier(String userId);
 	int selectTeamMemberCount(String userId);
 	int selectTeamMemberCNT(int teamSeq);
 	

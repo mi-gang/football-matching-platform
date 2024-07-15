@@ -49,13 +49,23 @@ public class MainPageService {
 		return fm.selectField(fieldSeq);
 	}
 	// 다가오는 경기 일정 불러오기
-	public List<MatchingDTO> getMatchingAlready(String userId) {
+	public MatchingDTO getMatchingAlready(String userId) {
 		return mm.selectMatchingAlready(userId);
 	}
 	
-	// 점수 높은 사용자 3명 불러오기
-	public List<UserDTO> getTopThreeUsersList() {
-		return um.selectTopThreeUsersList();
+	// top1 불러오기
+	public UserDTO getTopOneUser() {
+		return um.selectTopOneUser();
+	}
+	
+	// top2 불러오기
+	public UserDTO getTopTwoUser() {
+		return um.selectTopTwoUser();
+	}
+	
+	// top3 불러오기
+	public UserDTO getTopThreeUser() {
+		return um.selectTopThreeUser();
 	}
 	
 	// 점수 높은 사용자 100명 불러오기

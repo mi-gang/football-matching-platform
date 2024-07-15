@@ -13,6 +13,7 @@ import com.kosta.project.dto.MatchingCountDTO;
 import com.kosta.project.dto.MatchingDTO;
 import com.kosta.project.dto.MatchingScheduleListDTO;
 import com.kosta.project.dto.MatchingsDTO;
+import com.kosta.project.dto.PlayerNumberDTO;
 import com.kosta.project.dto.UserMatchingInfoDTO;
 import com.kosta.project.dto.UserPlayInfoDTO;
 import com.kosta.project.dto.addMatchingsDTO;
@@ -27,9 +28,15 @@ public interface MatchingMapper {
 	int selectMatchingAddSeq();
 	String selectMatchingStatus(int matchingSeq);
 	void insertMatchingAddLists(MatchingAddListsDTO dto);
+	void insertMatchingAddListsByTeam(MatchingAddListsDTO dto);
 	int selectMatchingMemberCount(MatchingCountDTO dto);
+	int selectMatchingMemberCountByTeam(MatchingCountDTO dto);
 	void updateMatchings(int matchingSeq);
 	void updateMatchingAddLists(MatchingCountDTO dto);
+	List<Integer> selectMatchingMember(MatchingCountDTO dto);
+	void updateTeamToA(int matchingAddListSeq);
+	void updateTeamToB(int matchingAddListSeq);
+	void updatePlayerNumber(PlayerNumberDTO dto);
 	List<MatchingConditionDTO> selectMatchingAddResult(int matchingAddSeq);
 	List<FastMatchingDTO> selectFastMatchingList();
 	List<FastMatchingDTO> selectFastMatchingListBySmall();
@@ -67,6 +74,6 @@ public interface MatchingMapper {
 	int selectTeamScore(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
 	
 	// 다가오는 경기 일정을 불러옵니다.
-	List<MatchingDTO> selectMatchingAlready(String userId);
+	MatchingDTO selectMatchingAlready(String userId);
 
 }

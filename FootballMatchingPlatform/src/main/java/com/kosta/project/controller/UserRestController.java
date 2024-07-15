@@ -25,10 +25,10 @@ public class UserRestController {
 	private final UserService us;
 	
 	//로그인하기 (세션에 본인 등급 넣기-상단 네비에 넣을 용도, 시/도)
-	@GetMapping("/login")
-	public UserDTO getUserLogin(@RequestParam String userId,String password) {
-		return us.getUserLogin(userId, password);
-	}
+//	@GetMapping("/login")
+//	public UserDTO getUserLogin(@RequestParam String userId,String password) {
+//		return us.getUserLogin(userId, password);
+//	}
 	
 	//소셜 로그인하기
 	@GetMapping("/snslogin")

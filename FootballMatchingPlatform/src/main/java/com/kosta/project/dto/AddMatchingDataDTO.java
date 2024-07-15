@@ -6,14 +6,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
 public class AddMatchingDataDTO {
 	String type;
 	String userId;
 	String userTier;
-	List<MatchingsDTO> mDTO;
+	List<MatchingsDTO> mdto;
 }

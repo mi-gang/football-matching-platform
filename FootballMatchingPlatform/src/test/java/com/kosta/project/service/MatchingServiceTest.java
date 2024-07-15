@@ -12,6 +12,7 @@ import com.kosta.project.dto.AddMatchingDataDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
 import com.kosta.project.repository.FieldMapper;
+import com.kosta.project.repository.MatchingMapper;
 import com.kosta.project.repository.TeamMapper;
 import com.kosta.project.service.MatchingService;
 
@@ -36,8 +37,8 @@ public class MatchingServiceTest {
 	//@Test
 	public void getMatchingsList() {
 		MatchingConditionDTO dto = MatchingConditionDTO.builder()
-				.matchingDate("2024-07-10")
-				.matchingTime("14 16")
+				.matchingDate("2024-07-15")
+				.matchingTime("8")
 				.build();
 		List<MatchingsDTO> matchingsDTO = ms.getMatchingsList(dto);
 		for(int i=0; i<matchingsDTO.size(); i++) {
@@ -57,10 +58,10 @@ public class MatchingServiceTest {
 	
 	//@Test
 	void getFieldInfoTest() {
-		System.out.println(ms.getFieldInfo(4));
+		System.out.println(ms.getFieldInfo(7));
 	}
 	
-	@Test
+	//@Test
 	void addMatcingsTest() {
 		MatchingConditionDTO dto = MatchingConditionDTO.builder()
 				.matchingDate("2024-07-10")
@@ -72,7 +73,7 @@ public class MatchingServiceTest {
 				.type("개인")
 				.userId("user002")
 				.userTier("D")
-				.mDTO(matchingsDTO)
+				.mdto(matchingsDTO)
 				.build();
 		ms.addMatcings(addDTO);
 //		ms.addMatcings(addDTO);

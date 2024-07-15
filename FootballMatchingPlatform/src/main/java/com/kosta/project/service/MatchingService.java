@@ -17,6 +17,7 @@ import com.kosta.project.dto.MatchingAddListsDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingCountDTO;
 import com.kosta.project.dto.MatchingsDTO;
+import com.kosta.project.dto.PlayerNumberDTO;
 import com.kosta.project.dto.AddMatchingDataDTO;
 import com.kosta.project.dto.addMatchingListInfo;
 import com.kosta.project.dto.addMatchingsDTO;
@@ -72,7 +73,6 @@ public class MatchingService {
 
 	public List<MatchingsDTO> getMatchingsList(MatchingConditionDTO dto){
 		List<MatchingsDTO> resList = null;
-		Set<Integer> existingFieldSeqs = new HashSet<>();
 		String matchingTime = dto.getMatchingTime();
 		String[] matchingTimes = matchingTime.split(" ");
 		ArrayList<String> matchingTimeList = new ArrayList<String>(Arrays.asList(matchingTimes));
@@ -134,37 +134,6 @@ public class MatchingService {
 				resList.add(addDTO);
 			}
 		}
-		//		for(int i=0; i<matchingTimeList.size(); i++) {
-		//			String time = matchingTimeList.get(i);
-		//			
-		//			// possField : 3, 4, 5, 7
-		//			for(int j=0; j<possField.size(); j++) {
-		//				CloseTimeDTO ctDTO = CloseTimeDTO.builder()
-		//						.closedDate(dto.getMatchingDate())
-		//						.closedTime(time)
-		//						.fieldSeq(possField.get(j))
-		//						.build();
-		//				
-		//				if(!fm.selectCloseTime(ctDTO).isEmpty()) {
-		//					continue;
-		//				}
-		//				
-		//				// possField 구장 정보 저장 - address, name
-		//				addMatchingListInfo amlDTO = fm.selectFieldAddressAndName(possField.get(j));
-		//				MatchingsDTO addDTO = MatchingsDTO.builder()
-		//						.matchingDate(dto.getMatchingDate())
-		//						.matchingTime(Integer.parseInt(time))
-		//						.fieldAddress(amlDTO.getFieldAddress())
-		//						.fieldName(amlDTO.getFieldName())
-		//						.fieldSeq(amlDTO.getFieldSeq())
-		//						.build();
-		//				
-		//				if(resList.get(i).getFieldSeq() != addDTO.getFieldSeq()) {
-		//					System.out.println(i + ": " + resList.get(i).getFieldSeq() + ", " + addDTO.getFieldSeq());
-		//					resList.add(addDTO);
-		//				}
-		//			}
-		//		}
 
 		return resList;
 	}
@@ -197,17 +166,17 @@ public class MatchingService {
 	}
 
 	public boolean addMatcings(AddMatchingDataDTO dto) {
-		for(int i=0; i<dto.getMDTO().size(); i++) {
-			if(dto.getMDTO().get(i).getMatchingSeq() == 0) {
+		for(int i=0; i<dto.getMdto().size(); i++) {
+			if(dto.getMdto().get(i).getMatchingSeq() == 0) {
 				addMatchingsDTO aDTO = addMatchingsDTO.builder()
-						.matchingDate(dto.getMDTO().get(i).getMatchingDate())
-						.matchingTime(dto.getMDTO().get(i).getMatchingTime())
-						.fieldSeq(dto.getMDTO().get(i).getFieldSeq())
+						.matchingDate(dto.getMdto().get(i).getMatchingDate())
+						.matchingTime(dto.getMdto().get(i).getMatchingTime())
+						.fieldSeq(dto.getMdto().get(i).getFieldSeq())
 						.build();
 				mm.insertMatchings(aDTO);
 			}
 			else {
-				if(!mm.selectMatchingStatus(dto.getMDTO().get(i).getMatchingSeq()).equals("매칭중")) {
+				if(!mm.selectMatchingStatus(dto.getMdto().get(i).getMatchingSeq()).equals("매칭중")) {
 					return false;
 				}
 			}
@@ -224,21 +193,68 @@ public class MatchingService {
 		int matchingAddSeq = mm.selectMatchingAddSeq();
 		System.out.println(matchingAddSeq);
 		
-		for(int i=0; i<dto.getMDTO().size(); i++) {
-			MatchingAddListsDTO addListDTO = MatchingAddListsDTO.builder()
-					.matchingSeq(dto.getMDTO().get(i).getMatchingSeq())
-					.matchingAddSeq(matchingAddSeq)
-					.build();
-			mm.insertMatchingAddLists(addListDTO);
-			MatchingCountDTO mcDTO = MatchingCountDTO.builder()
-					.matchingSeq(addListDTO.getMatchingSeq())
-					.userTier(dto.getUserTier())
-					.build();
-			int playerCount = mm.selectMatchingMemberCount(mcDTO);
-			
-			if(playerCount == 10) {
-				mm.updateMatchings(addListDTO.getMatchingSeq());
-				mm.updateMatchingAddLists(mcDTO);
+		for(int i=0; i<dto.getMdto().size(); i++) {
+			if(dto.getType().equals("팀")) {
+				String teamName = tm.selectTeamNameById(dto.getUserId());
+				MatchingAddListsDTO addListDTO = MatchingAddListsDTO.builder()
+						.matchingSeq(dto.getMdto().get(i).getMatchingSeq())
+						.matchingAddSeq(matchingAddSeq)
+						.team(teamName)
+						.build();
+				mm.insertMatchingAddListsByTeam(addListDTO);
+				MatchingCountDTO mcDTO = MatchingCountDTO.builder()
+						.matchingSeq(dto.getMdto().get(i).getMatchingSeq())
+						.teamTier(tm.selectTeamTier(dto.getUserId()))
+						.build();
+				int teamCount = mm.selectMatchingMemberCountByTeam(mcDTO);
+				
+				if(teamCount == 2) {
+					mm.updateMatchings(addListDTO.getMatchingSeq());
+					mm.updateMatchingAddLists(mcDTO);
+				}
+			}
+			else if(dto.getType().equals("개인")) {
+				MatchingAddListsDTO addListDTO = MatchingAddListsDTO.builder()
+						.matchingSeq(dto.getMdto().get(i).getMatchingSeq())
+						.matchingAddSeq(matchingAddSeq)
+						.build();
+				mm.insertMatchingAddLists(addListDTO);
+				MatchingCountDTO mcDTO = MatchingCountDTO.builder()
+						.matchingSeq(addListDTO.getMatchingSeq())
+						.userTier(dto.getUserTier())
+						.build();
+				int playerCount = mm.selectMatchingMemberCount(mcDTO);
+				
+				if(playerCount == 10) {
+					mm.updateMatchings(addListDTO.getMatchingSeq());
+					mm.updateMatchingAddLists(mcDTO);
+//					List<Integer> matchingAddListSeq = mm.selectMatchingMember(mcDTO);
+//					System.out.println(matchingAddListSeq);
+//					int playerNumber = 1;
+//					for(int j=0; j<matchingAddListSeq.size(); j++) {
+//						if(j < 5) {
+//							mm.updateTeamToA(matchingAddListSeq.get(j));
+//							PlayerNumberDTO pnDTO = PlayerNumberDTO.builder()
+//									.matchingAddListSeq(matchingAddListSeq.get(j))
+//									.playerNumber(playerNumber)
+//									.build();
+//							mm.updatePlayerNumber(pnDTO);
+//							playerNumber++;
+//							if(playerNumber == 6) {
+//								playerNumber = 1;
+//							}
+//						}
+//						else {
+//							mm.updateTeamToB(matchingAddListSeq.get(j));
+//							PlayerNumberDTO pnDTO = PlayerNumberDTO.builder()
+//									.matchingAddListSeq(matchingAddListSeq.get(j))
+//									.playerNumber(playerNumber)
+//									.build();
+//							mm.updatePlayerNumber(pnDTO);
+//							playerNumber++;
+//						}
+//					}
+				}
 			}
 		}
 

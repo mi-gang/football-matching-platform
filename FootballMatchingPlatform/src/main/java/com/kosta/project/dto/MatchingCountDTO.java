@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class MatchingCountDTO {
 	int matchingSeq;
 	String userTier;
+	String teamTier;
 }

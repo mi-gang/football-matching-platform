@@ -45,7 +45,7 @@
 	
 	<!-- 구장 정보 조회(매칭신청 할 때) -->
 	<select id="selectFieldInfo" resultType="com.kosta.project.dto.FieldsDTO" parameterType="java.lang.Integer">
-		SELECT field_name as fieldName, MIN(field_img) as fieldImg, field_address as fieldAddress, field_address_detail as fieldAddressDetail, 
+		SELECT field_name as fieldName, MIN(field_img) as fieldImg, field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_content as fieldContent
 		shower_room as showerRoom, rent_ball as rentBall, rent_shoes as rentShoes, parking, sell_drink as sellDrink
 		FROM fields f, field_imgs fi
 		WHERE f.field_seq = #{fieldSeq}
@@ -86,7 +86,7 @@
 	<select id="selectFastMatchingInfo" resultType="com.kosta.project.dto.FieldsDTO" parameterType="Integer">
 		SELECT field_img as fieldImg, matching_date as matchingDate, matching_time as matchingTime, 
 		matching_tier as matchingTier, field_name as fieldName, field_address as fieldAddress,
-		field_address_detail as fieldAddress, shower_room as showerRoom, rent_ball as rentBall, 
+		field_address_detail as fieldAddressDetail, shower_room as showerRoom, rent_ball as rentBall, 
 		rent_shoes as rentShoes, parking, sell_drink as sellDrink, field_content as fieldContent
 		FROM field_imgs fi, matchings m, fields f
 		WHERE fi.field_seq = f.field_seq AND f.field_seq = m.field_seq

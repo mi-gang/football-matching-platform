@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>등록된 구장 리스트</title>
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/addedFieldList.css">
+    <link rel="stylesheet" href="/mobile/css/common.css">
+    <link rel="stylesheet" href="/mobile/css/addedFieldList.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
@@ -19,102 +19,39 @@
         <div id="container">
             <div id="content-header">
                 <div id="filter-container">
-                    <img id="filter" src="../img/filter.svg">
+                    <img id="filter" src="/mobile/img/filter.svg">
                     <div id="filter-text">지역</div>
                 </div>
                 <div id="search-container">
                     <input id="search-keyword" placeholder="검색어를 입력하세요">
-                    <img id="search" src="../img/search.svg">
+                    <img id="search" src="/mobile/img/search.svg">
                 </div>
             </div>
-            <div id="list-container">
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
+            
+            <ul id="list-container" th:each="i : ${addedFieldList}">
+            
+            	<div class="content-box" th:value="${i.fieldSeq}">
+                    <div class="content-text" th:value="${i.fieldSeq}">
+                    	<span th:value="${i.fieldSeq}" class = "hihihi"></span>
+                        <div class="content-title" th:value="${i.fieldSeq}" th:text="${i.fieldName}"></div>
+                        <div class="content-address" th:text="${i.fieldAddress} + ' ' + ${i.fieldAddressDetail}">서울 강서구 화곡동 산 199</div>
+                        <div class="content-info">
+						  <span th:if="${i.showerRoom} ? '샤워실 ' : ''"></span>
+						  <span th:if="${i.parking} ? '주차장 ' : ''"></span>
+						  <span th:if="${i.sellDrink} ? '음료판매 ' : ''"></span>
+						  <span th:if="${i.rentShoes} ? '축구화 대여 ' : ''"></span>
+						  <span th:if="${i.rentBall} ? '축구공 대여 ' : ''"></span>
+						</div>
                     </div>
-                    <img src="../img/구장 사진.svg">
+                    <img src="/mobile/img/구장 사진.svg">
                 </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-                <div class="content-box">
-                    <div class="content-text">
-                        <div class="content-title">신정 FC 화정 구장</div>
-                        <div class="content-address">서울 강서구 화곡동 산 199</div>
-                        <div class="content-info">샤워실 주차장 풋살화 대여 음료판매 풋살볼 대여</div>
-                    </div>
-                    <img src="../img/구장 사진.svg">
-                </div>
-                <div class="line-bottom"></div>
-
-            </div>
+            	<div class="line-bottom"></div>
+            </ul>
+            
             <div id="modal-location">
                 <div id="top-location">
                     <div id="text-modal-top">지역</div>
-                    <img id="close" src="../img/Close.svg">
+                    <img id="close" src="/mobile/img/Close.svg">
                 </div>
                 <div id="location-list">
                     <div class="location-line">
@@ -158,10 +95,27 @@
                 $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
             });
         });
+		
+		
+		// 링크 아직 안 걸렸음. value값을 아직 가져오지 못함.
+//		const containerElement = document.querySelector('.content-text');
+//		
+//		containerElement.addEventListener('click', (event) => {
+ // 		if (event.target.classList.contains('content-text')) {
+  // 		const clickedDiv = event.target;
+   	//	const addedFieldInfo = clickedDiv.querySelector('.hihihi');
+  	  //  const addedFieldInfoValue = addedFieldInfo.value; // th:value 속성 접근
+			
+	   // console.log(addedFieldInfoValue);
 
-        $(".content-box").on("click", function () {
-            alert("구장 상세 정보 페이지로 이동");
-        })
+	    //alert("구장 상세 정보 페이지로 이동");
+    	//window.location.href = '/addedFieldInfo/' + addedFieldInfoValue;
+  		//}
+		//});
+		
+		//hrefFieldInfo()
+
+
 
         $("#search").on("click", function () {
             alert($("#search-keyword").val());

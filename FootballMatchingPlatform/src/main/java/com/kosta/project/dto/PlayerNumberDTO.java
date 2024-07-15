@@ -1,17 +1,18 @@
 package com.kosta.project.dto;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MatchingConditionDTO {
-	String addType;
-	String matchingDate;
-	String matchingTime;
-	String fieldAddress;
+public class PlayerNumberDTO {
+	private int matchingAddListSeq;
+	private int playerNumber;
 }

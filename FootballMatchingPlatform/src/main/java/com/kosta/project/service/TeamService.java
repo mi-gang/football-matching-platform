@@ -18,6 +18,17 @@ public class TeamService {
 	
 	private final TeamMapper tm;
 	
+	
+	//팀 유무
+	public String isTeam(String userId) {
+		return tm.isTeam(userId);
+	}
+	
+	//팀장 확인
+	public String getTeamLeader(int teamSeq) {
+		return tm.selectTeamLeader(teamSeq);
+	}
+	
 	// 팀 전체 순위
 	public List<TeamDTO> getTeamRankList(){	
 		List<TeamDTO> list = tm.selectTeamRankList();
@@ -33,6 +44,11 @@ public class TeamService {
 	// 가입 가능 팀 목록
 	public List<TeamDTO> getPossibleJoinTeam(){
 		List<TeamDTO> list = tm.selectPossibleJoinTeam();			
+		return list;
+	}
+	
+	public List<TeamDTO> gettPossibleJoinTeamByUser(String userId){
+		List<TeamDTO> list = tm.selectPossibleJoinTeamByUser(userId);			
 		return list;
 	}
 	
