@@ -45,6 +45,23 @@ public class ScheduleRestController {
         return new ResponseEntity<>(matchingScheduleListDTOS, HttpStatus.OK);
     }
 
+    @GetMapping("/matches/count")
+    public ResponseEntity<Integer> getMatchingListCount(@SessionAttribute("userId") String userId) {
+
+        // 세션으로 유저 아이디 구하기
+        // @SessionAttribute("userId") String userId
+        int totalCount = scheduleService.getMatchingListCount(userId);
+
+        return new ResponseEntity<>(totalCount, HttpStatus.OK);
+    }
+
+
+
+
+
+
+
+
     // 날짜 포맷 검증
     private boolean isValidDateFormat(String date) {
         try {

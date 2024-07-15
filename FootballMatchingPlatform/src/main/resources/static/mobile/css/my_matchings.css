@@ -243,6 +243,20 @@
     color: #818181;
 }
 
+#matchingTotalNumInfo{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    justify-content: flex-start
+}
+
+#matchingTotalNumInfo > p{
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
 
 /* 부트스트랩 속성 변경 */
 
