@@ -243,3 +243,20 @@ font-size: 0.8rem;
   width: 1.2rem;
   height: 1.2rem;
 }
+
+#createTeam > button{
+	background-color : #73A772;
+	color: white;
+
+}
+
+#createTeam{
+	position : fixed;
+	left: 50%;
+	bottom : 8%;
+    transform: translate(-50%, 0);
+}
+
+.deleteMemberBox{
+	width : 16%;
+}

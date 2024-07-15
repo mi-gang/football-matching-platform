@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kosta.project.service.FastMatchingService;
+import com.kosta.project.service.TeamService;
 
 
 @Controller
@@ -16,6 +17,7 @@ import com.kosta.project.service.FastMatchingService;
 public class MobileController {
 	
 	private final FastMatchingService fms;
+	private final TeamService ts;
 	
 	@GetMapping("/fastmatchinglist")
 	public String getFastMatchingList(Model model) {
@@ -182,6 +184,16 @@ public class MobileController {
 		return "team_Page";
 	}
 	
+	@GetMapping("/teamMember")
+	public String getTeamMember(@RequestParam int teamSeq, Model model) {
+		model.addAttribute("memberList", ts.getTeamMemberList(teamSeq));
+		return "team_member";
+	}
+	
+	@GetMapping("/teamCreate")
+	public String getTeamCreate() {
+		return "team_Create";
+	}
 	
 	
 	

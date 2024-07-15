@@ -13,6 +13,7 @@ import com.kosta.project.dto.TeamMemberDTO;
 public interface TeamMapper {
 	
 	String isTeam(String userId);
+	String selectTeamLeader(int teamSeq); 
 	
 	List<TeamDTO> selectTeamRankList();
 	List<TeamDTO> selectSearchTeamRankList(String search);

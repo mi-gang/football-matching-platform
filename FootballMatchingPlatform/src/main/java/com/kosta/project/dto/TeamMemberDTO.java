@@ -22,6 +22,7 @@ public class TeamMemberDTO {
 	private String userId;
 	private int teamSeq;
 	private boolean newbie;
+	private int age;
 	
 	private String nickname;
 	private String birthday;

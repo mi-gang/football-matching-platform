@@ -1,15 +1,15 @@
+
 //팀 유무 판단
-const userId = "user001";
+const userId = "user010";
 isTeam(userId);
 
-//초기값
-allTeamRank();
-
-
-// 전체 순위 클릭 시
+// 전체 팀 순위 클릭 시
 $('#allTeamRank').on('click', function () {
   $(".selectBtn").removeClass('btnClick');
   $("#allTeamRank > button").addClass('btnClick');
+  $("#searchBox").show();
+  $("#createTeamBox").removeClass("d-block");
+  $("#createTeamBox").addClass("d-none");
   allTeamRank();
 })
 
@@ -17,17 +17,27 @@ $('#allTeamRank').on('click', function () {
 $('#possJoin').on('click', function () {
   $(".selectBtn").removeClass('btnClick');
   $("#possJoin > button").addClass('btnClick');
-
+  $("#createTeamBox").removeClass("d-none");	// 팀 생성하기 버튼
+  $("#createTeamBox").addClass("d-block");
   possJoinTeam();
+})
+
+// 팀 생성하기 버튼 클릭 시
+$('#addTeam').on('click',function(){
+	location.replace('/teamCreate');
 })
 
 // 내 팀 정보 클릭 시
 $("#myTeamInfo").on('click', function () {
   $(".selectBtn").removeClass('btnClick');
   $("#myTeamInfo > button").addClass('btnClick');
-  $("#searchBox").hide(); 
+  $("#searchBox").hide();
   myTeamInfo();
 })
+
+$("#searchTeamButton").on("click", function () {
+  alert("팀 검색");
+});
 
 // 팀 유무 확인
 function isTeam(userId) {
@@ -35,13 +45,21 @@ function isTeam(userId) {
     .then(response => response.json())
     .then(data => {
       var userId = data.result;
-      console.log(userId)
+
       if (data.result === " ") {
         $("#myTeamInfo").hide();
+        $(".selectBtn").removeClass('btnClick');
+        $("#allTeamRank > button").addClass('btnClick');
+        $("#searchBox").show();
+        allTeamRank();
       }
       else {
         $("#possJoin").hide();
         $("#joinList").hide();
+        $(".selectBtn").removeClass('btnClick');
+        $("#myTeamInfo > button").addClass('btnClick');
+        $("#searchBox").hide();
+        myTeamInfo();
       }
 
     })
@@ -76,18 +94,45 @@ function allTeamRank() {
     })
 }
 
+function teamInfo(){
+	$(".teamInfo").on('click', function(){
+		alert("팀정보");
+	})
+}
+
+
+
 // 가입 신청 버튼
 function joinBtnClick() {
-  $(".joinBtn").on('click', function () {
-    $(".joinBtn").removeClass('btnClick');
-    $(this).addClass('btnClick');
-    alert("가입신청");
-  })
+  
+	$('#addApply').on('show.bs.modal', function(event) {          
+		teamName = $(event.relatedTarget).data('name');
+		$('#teamModalTitle').text(teamName);
+		
+		var teamSeq = $(event.relatedTarget).data('teamno');
+		
+		$("#addTeamApply").on('click',function(){
+			$.ajax({
+		      url: "/team/applyTeam/"+teamSeq,
+		      type: "Post",
+		      dataType: "json",
+		      success: function(data) {
+		          res = data.result;
+		          location.reload(true);
+		      },
+		      error: function() {
+		          alert("error");
+		      }
+		    });
+		})
+		
+	});
 }
+
 
 //가입 가능팀 조회
 function possJoinTeam() {
-  fetch("/team/possJoin")
+  fetch("/team/possJoin/" + userId)
     .then(response => response.json())
     .then(data => {
       let res = data.result;
@@ -122,36 +167,46 @@ function possJoinTeam() {
               <div class="content-member p-0">` + res[i].memberCount + `/10명</div>
            </div>
            <div class="col d-flex justify-content-end p-0">
-              <button class="joinBtn rounded-5 p-2">가입신청</button>
+              <button class="joinBtn rounded-5 p-2"
+              data-bs-toggle="modal" data-bs-target="#addApply"
+              data-teamno = "`+ res[i].teamSeq+`" 
+              data-name="`+ res[i].teamName +`">가입신청</button>
             </div>
          </div>`;
 
       }
       $('#dataBox').html(str);
 
+	  teamInfo();
       joinBtnClick();
 
     })
 }
 
 
-// function myTeamMember(teamSeq){
+// ====================== 팀 있을 경우 ======================
 
-//   const URL  = "/team/myTeamMember/"+teamSeq;
+// [ 버튼 이벤트 ]
+// 팀 나가기
+function updateMemberStatus() {
+	$('#updateMemberStatus').on('click',function(){
+		  $.ajax({
+		    url: "/team/updateStatus/"+userId,
+		    type: "PUT",
+		    dataType: "json",
+		    success: function(data) {
+		        res = data.result;
+		        location.reload(true);
+		    },
+		    error: function() {
+		        alert("error");
+		    }
+		  });
+	})
+}
 
-//   var ok = false;
 
-//   const A = async() => {
-//     const response = await fetch(URL);
-//     const data = await response.json();
-//     ok = true;
-//     return data;
-//   }
-
-//   (async()=>{
-//     console.log(await A().result)
-//   })()
-// }
+// 팀원 조회
 function myTeamMember(teamSeq){
   let res = {};
   $.ajax({
@@ -170,15 +225,41 @@ function myTeamMember(teamSeq){
   return res;
 }
 
-const today = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`;
+// 팀장 조회
+function getTeamLeader(teamSeq){
+	let res = {};
+	$.ajax({
+	    url: "/team/leader/"+teamSeq,
+	    type: "GET",
+	    async: false,
+	    dataType: "json",
+	    success: function(data) {
+	        res = data.result;
+	    },
+	    error: function() {
+	        alert("error");
+	    }
+  	});
 
+	return res;
+}
+
+// [더보기] 팀원 정보
+function moreTeamMember(){
+	$('#moreTeamMember').on('click',function(){
+		location.replace('/teamMember');
+	})
+}
 // 내 팀정보
 function myTeamInfo() {
   fetch("/team/myTeam/" + userId)
     .then(response => response.json())
     .then(data => {
       let res = data.result;
+      $("#searchBox").hide();
+      console.log(res);
       const members = myTeamMember(res.teamSeq);
+      const leader = getTeamLeader(res.teamSeq);
       let str = "";
 
       str += `
@@ -192,8 +273,8 @@ function myTeamInfo() {
                     </div>
                     <div class="d-flex flex-column gap-1">
                         <div class="">
-                            `+ res.teamRank +" "+ res.teamTier+"등급"+
-                            `<span class="team-score">[`+res.teamScore+`]</span>
+                            `+ res.teamRank +"위 "+ res.teamTier+"등급"+
+                            `<span class="team-score">[`+res.teamScore+`점]</span>
                         </div>
                         <div class="">`+res.gameCount+"전 "+ res.winCount+`승
                             <span class="team-score">(승률 `+ res.odds+`%)</span>
@@ -223,16 +304,20 @@ function myTeamInfo() {
                         </div>
                     </div>
                     <div class="d-flex justify-content-end team-img">
-                        <img src="../img/구장 사진.svg">
+                        <img src="/mobile/img/구장 사진.svg">
                     </div>
                 </div>
 
                 <!-- 팀원 -->
                 <div class="d-flex justify-content-between w-100 ps-2 mt-2">
                     <div>팀원</div>
-                    <!-- 팀장일 경우에만 -->
-                    <div><a href="#" class="link-secondary pe-2">더보기</a></div>
-                </div>
+                   
+                    <!-- 팀장일 경우에만 -->`;                
+                    if(leader === userId){
+						str += `<div><a href="/teamMember?teamSeq=`+res.teamSeq+`" class="link-secondary pe-2 id='moreTeamMember'">더보기</a></div>`;
+					}               
+                    
+              str += `</div>
                 <div class="d-flex w-100 border border-2 rounded-4 p-3 justify-content-center flex-wrap gap-3"
                 id="memberList">
                     `;
@@ -294,28 +379,44 @@ function myTeamInfo() {
                             `+ res.content +`
                         </div>
                     </div>
-                </div>
+                </div>`
 
-                <div class="d-flex gap-2 justify-content-center mb-2">
+			if(leader === userId){
+				str += `<div class="d-flex gap-2 justify-content-center mb-2">`;
+				
+				if(!res.recruitment){
+              		str +=`<div class="">
+                        		<button type="button" class="joinBtn p-2 ps-4 pe-4" id="addMember">팀원 추가 모집</button>
+                  			</div>`;					
+				}
+	
+              	str +=`<div class="">
+                        	<button type="button" class="joinBtn p-2 ps-4 pe-4" id="deleteTeam">팀 해체하기</button>
+                   		</div>
+                	</div>`;
+			}	
+			else{
+		str += `<div class="d-flex gap-2 justify-content-center mb-2">
                     <div class="">
-                        <button type="button" class="joinBtn p-2 ps-4 pe-4" id="addMember">팀원 추가 모집</button>
+                        <button type="button" class="joinBtn p-2 ps-4 pe-4" id="updateMemberStatusBtn"
+                        data-bs-toggle="modal" data-bs-target="#setStatus">팀 나가기</button>
                     </div>
-                    <div class="">
-                        <button type="button" class="joinBtn p-2 ps-4 pe-4" id="deleteTeam">팀 해체하기</button>
-                    </div>
-                </div>
-
-                <div class="d-flex gap-2 justify-content-center mb-2">
-                    <div class="">
-                        <button type="button" class="joinBtn p-2 ps-4 pe-4" id="deleteTeam">팀 나가기</button>
-                    </div>
-                </div>
-      `
-      $('#dataBox').html(str);
-
+                </div>`;
+			}
+             
+      	$('#dataBox').html(str);
+		updateMemberStatus();
+		moreTeamMember();
     })
 }
 
-$("#searchTeamButton").on("click", function () {
-  alert("팀 검색");
-});
+
+// 팀 해체하기
+$('#deleteTeam').on('click',function(){
+	
+	
+	
+	
+})
+
+
