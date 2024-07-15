@@ -72,7 +72,11 @@ function renderCalendar() {
             currentYear + "-" + formattedMonth + "-" + formattedDay
         );
         dateElement.textContent = tmpDate;
-        if (tmpDate == currentDate) dateElement.classList.add("today");
+        console.log(tmpDate)
+        console.log(currentDate)
+        nowdate = new Date();
+        if (currentYear == nowdate.getFullYear() && currentMonth ==nowdate.getMonth() && currentDate == tmpDate)
+            dateElement.classList.add("today");
 
         // 매칭 여부
         const matchingDateElement = document.createElement("div");
@@ -175,6 +179,7 @@ $(".calendar-dates").on("click", ".date-wrapper", function () {
                         // matching-wrapper div 생성
                         const matchingWrapper = document.createElement('div');
                         matchingWrapper.className = 'matching-wrapper';
+                        matchingWrapper.setAttribute('data-matchingSeq', item.matchingSeq);
 
                         // matching-content-wrapper div 생성
                         const matchingContentWrapper = document.createElement('div');
@@ -190,6 +195,22 @@ $(".calendar-dates").on("click", ".date-wrapper", function () {
                         else if (item.matchingStatus == '매칭실패' || item.matchingStatus == '경기취소')
                             matchingStatus.className = 'matching-status status-3';
 
+
+                        // 빠른 매칭만 - fast-matching-wrapper div 생성
+                        const fastMatchingWrapper = document.createElement('div');
+                        fastMatchingWrapper.className = 'fast-matching-wrapper';
+                        // 빠른 매칭만 - matching-user-count span 생성
+                        const matchingUserCount = document.createElement('span');
+                        matchingUserCount.className = 'matching-user-count';
+                        matchingUserCount.textContent = item.userCount;
+                        // 빠른 매칭만 - user count와 total count를 담는 div 생성
+                        const userCountWrapper = document.createElement('div');
+                        userCountWrapper.appendChild(matchingUserCount);
+                        userCountWrapper.appendChild(document.createTextNode('/10명'));
+                        // 빠른 매칭만 - fast-matching-wrapper에 status와 user count 추가
+                        fastMatchingWrapper.appendChild(matchingStatus);
+                        fastMatchingWrapper.appendChild(userCountWrapper);
+
                         // matching-info div 생성
                         const matchingInfo = document.createElement('div');
                         matchingInfo.className = 'matching-info';
@@ -202,7 +223,9 @@ $(".calendar-dates").on("click", ".date-wrapper", function () {
                         // matching-time-info span 생성
                         const matchingTimeInfo = document.createElement('span');
                         matchingTimeInfo.className = 'matching-time-info';
-                        matchingTimeInfo.innerHTML  = '&nbsp;' + item.matchingTime + ':00 - ' + parseInt((item.matchingTime) + 2) + ':00';
+
+                        let formattedmatchingTime = item.matchingTime.toString().padStart(2, '0');
+                        matchingTimeInfo.innerHTML  = '&nbsp;' + formattedmatchingTime + ':00 - ' + parseInt((item.matchingTime) + 2) + ':00';
 
                         // matching-field-info span 생성
                         const matchingFieldInfo = document.createElement('span');
@@ -222,15 +245,36 @@ $(".calendar-dates").on("click", ".date-wrapper", function () {
                         const matchingBtnWrapper = document.createElement('div');
                         matchingBtnWrapper.className = 'matching-btn-wrapper';
 
-                        // cancel-matching-btn 버튼 생성
-                        const cancelMatchingBtn = document.createElement('button');
-                        cancelMatchingBtn.className = 'cancel-matching-btn btn-setting';
-                        cancelMatchingBtn.setAttribute('data-bs-toggle', 'modal');
-                        cancelMatchingBtn.setAttribute('data-bs-target', '#cancelMatchingModal');
-                        cancelMatchingBtn.textContent = '매칭 취소';
+                        console.log(!item.matchingStatus === '경기확정')
 
-                        // matching-btn-wrapper에 버튼 추가
-                        matchingBtnWrapper.appendChild(cancelMatchingBtn);
+                        // 경기 확정 상태 아닐 때만
+                        if (item.matchingStatus != '경기확정' && item.matchingStatus != '매칭실패' && item.matchingStatus != '경기취소') {
+
+                            if (item.matchingStatus != '매칭중') {
+                                // pay-matching-btn 버튼 생성
+                                const payMatchingBtn = document.createElement('button');
+                                payMatchingBtn.className = 'pay-matching-btn btn-setting';
+                                payMatchingBtn.setAttribute('data-bs-toggle', 'modal');
+                                payMatchingBtn.setAttribute('data-bs-target', '#payMatchingModal');
+                                if (item.payStatus) {
+                                    payMatchingBtn.textContent = '결제 완료';
+                                    payMatchingBtn.disabled = true;
+                                } else {
+                                    payMatchingBtn.textContent = '결제하기';
+                                }
+                                matchingBtnWrapper.appendChild(payMatchingBtn);
+                            }
+
+                            // cancel-matching-btn 버튼 생성
+                            const cancelMatchingBtn = document.createElement('button');
+                            cancelMatchingBtn.className = 'cancel-matching-btn btn-setting';
+                            cancelMatchingBtn.setAttribute('data-bs-toggle', 'modal');
+                            cancelMatchingBtn.setAttribute('data-bs-target', '#cancelMatchingModal');
+                            cancelMatchingBtn.textContent = '매칭 취소';
+
+                            // matching-btn-wrapper에 버튼 추가
+                            matchingBtnWrapper.appendChild(cancelMatchingBtn);
+                        }
 
                         // matching-wrapper에 content wrapper와 button wrapper 추가
                         matchingWrapper.appendChild(matchingContentWrapper);
@@ -238,6 +282,7 @@ $(".calendar-dates").on("click", ".date-wrapper", function () {
 
                         // 'matchings-wrapper' 요소에 matching-wrapper 추가
                         document.getElementById('matchings-wrapper').appendChild(matchingWrapper);
+
                     });
                 } else {
                     console.error('Expected an array but got:', data);
@@ -251,7 +296,7 @@ $(".calendar-dates").on("click", ".date-wrapper", function () {
 
 // 일정 전체보기 클릭 시
     $("#my-matching-list-btn").on("click", function () {
-        alert("일정 전체보기 페이지 이동");
+        location.href = '/myMatchingList';
     });
 
 // 매칭 취소 버튼 클릭 시
