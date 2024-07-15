@@ -27,6 +27,12 @@ body {
     align-items: center;
 }
 
+#loginForm{
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .text{
     margin-bottom: 0.9rem;
 }
