@@ -101,7 +101,7 @@ public class ScheduleService {
 		
 		try {
 		    for (UserMatchingInfoDTO userMatchingInfoDTO : userMatchingInfoDTOs) {
-		    	// 각 사용자 별 등수에 맞는 점수 추가하기
+				// 각 사용자 별 등수에 맞는 점수 추가하기
 		        if (!matchingMapper.updateReviewScore(userMatchingInfoDTO)) {
 		            throw new RuntimeException("Failed to update review score for " + userMatchingInfoDTO);
 		        }

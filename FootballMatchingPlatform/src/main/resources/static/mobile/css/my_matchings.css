@@ -199,9 +199,12 @@
     background: #EF8665;
 }
 
-.status-2,
-.status-3 {
+.status-2{
     background: #73A772;
+}
+
+.status-3{
+    background: #969696;
 }
 
 .matching-info,
@@ -238,6 +241,20 @@
 .fast-matching-wrapper > div > span {
     font-size: 0.9rem;
     color: #818181;
+}
+
+#matchingTotalNumInfo{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    justify-content: flex-start
+}
+
+#matchingTotalNumInfo > p{
+    font-size: 1.1rem;
+    font-weight: 700;
 }
 
 
