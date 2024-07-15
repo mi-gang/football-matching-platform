@@ -136,7 +136,7 @@ public class UserRestController {
 	}
 	
 	// 선택한 문의 내역 상세 보기
-	@GetMapping("/pathDetailInfo")
+	@GetMapping("/pathDetailInfo/{}")
 	public Map<String, InquiryDTO> getDetailInfoByInquirySeq(int inquirySeq) {
 		return Map.of("result", us.getDetailInfoByInquirySeq(inquirySeq));
 	}
