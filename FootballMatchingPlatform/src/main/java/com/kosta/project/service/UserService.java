@@ -25,9 +25,21 @@ public class UserService {
 	
 	//로그인하기 (세션에 본인 등급 넣기-상단 네비에 넣을 용도, 시/도)
 	public UserDTO getUserLogin(String userId, String password) {
+		//1. 회원 정보 및 비밀번호 조회
+		UserDTO user = um.selectUserLogin(userId, password);
+		//2. 회원정보 체크
+		if(user != null) {
 		um.setUserLastLoginDateByUserId(userId); 
 		return um.selectUserLogin(userId, password);
+		}
+		else return null;
 	}
+	
+	public String setUserLastLoginDateByUserId(String userId) {
+		um.setUserLastLoginDateByUserId(userId);
+		return "ok";
+	}
+	
 	//소셜 로그인하기
 	public UserDTO getUserSnsLogin(String userId, String password) {
 		um.setUserLastLoginDateByUserId(userId); 

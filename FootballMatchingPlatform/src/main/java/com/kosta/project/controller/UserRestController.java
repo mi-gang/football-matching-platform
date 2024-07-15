@@ -7,33 +7,62 @@ import com.kosta.project.dto.TeamDTO;
 import com.kosta.project.dto.UserDTO;
 import com.kosta.project.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserRestController {
 	
 	private final UserService us;
 	
 	//로그인하기 (세션에 본인 등급 넣기-상단 네비에 넣을 용도, 시/도)
-//	@GetMapping("/login")
-//	public UserDTO getUserLogin(@RequestParam String userId,String password) {
-//		return us.getUserLogin(userId, password);
-//	}
+	@GetMapping("/login")
+	public UserDTO getUserLogin(@RequestParam String userId,String password){
+		
+		return us.getUserLogin(userId, password);
+	}
+	
+	@PostMapping("/login")
+	public UserDTO login(@RequestParam String userId,String password, HttpServletRequest request) {
+		
+		//1. 회원 정보 조회
+		
+		UserDTO user = us.getUserLogin(userId,password);
+		
+		//2. 세션에 회원정보 저장
+		if(user != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("loginUser", user);
+		}
+		
+		return user;
+	}
 	
 	//소셜 로그인하기
 	@GetMapping("/snslogin")
 	public UserDTO getUserSnsLogin(String userId, String password) {
 		return us.getUserSnsLogin(userId, password);
+	}
+	
+	//로그아웃
+	@PostMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "/user/login";
 	}
 	
 	// 아이디 중복 여부 확인하기
