@@ -56,7 +56,8 @@ public interface TeamMapper {
 	boolean updateTeamDismantleStatus(int teamSeq);
 	
 	Integer selectTeamSeq(String userId);
-	
+	String selectTeamNameById(String userId);
+	String selectTeamTier(String userId);
 	int selectTeamMemberCount(String userId);
 	int selectTeamMemberCNT(int teamSeq);
 	
