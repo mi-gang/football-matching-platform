@@ -23,8 +23,8 @@ public class MatchingDTO {
 	private String matchingStatus;
 	private Date matchingDate;
 	private int matchingTime;
-	private String feildAddress;
-	private String feildAddressDetail;
-	private String feildName;
+	private String fieldAddress;
+	private String fieldAddressDetail;
+	private String fieldName;
 	private int fieldSeq;
 }

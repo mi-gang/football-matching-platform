@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>개인 순위</title>
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/ranking.css">
+    <link rel="stylesheet" href="/mobile/css/common.css">
+    <link rel="stylesheet" href="/mobile/css/ranking.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -18,175 +18,37 @@
             <div id="title-container">
                 <div>TOP 100</div>
             </div>
+            <div class="real-content-container">
             <div class="content-container" id="first-rank-content-container">
                 <div class="first-content-container">
-                    <div class="ranking">1위</div>
+                    <div class="ranking" th:text="${getTopOneUser.userRank} + '위'">1위</div>
                     <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
+                        <div class="nickname" th:text="${getTopOneUser.nickname}">풋살킹</div>
+                        <div class="teamname" th:text="${getTopOneUser.teamName}">슛돌이</div>
                     </div>
                 </div>
                 <div class="second-content-container">
-                    <div class="tier first-rank">A</div>
-                    <div class="score first-rank">1205점</div>
+                    <div class="tier first-rank" th:text="${getTopOneUser.userTier}">A</div>
+                    <div class="score first-rank" th:text="${getTopOneUser.userScore} + '점'">1205점</div>
                 </div>
             </div>
-            <div class="content-container">
+            </div>
+            <ul class="real-content-container" id="real-content-container" th:each="i : ${getTopHundredUsersList}">
+             <div class="content-container">
                 <div class="first-content-container">
-                    <div class="ranking">1위</div>
+                    <div class="ranking" th:text="${i.userRank} + '위'">1위</div>
                     <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
+                        <div class="nickname" th:text="${i.nickname}">풋살킹</div>
+                        <div class="teamname" th:text="${i.teamName}">슛돌이</div>
                     </div>
                 </div>
                 <div class="second-content-container">
-                    <div class="tier">A</div>
-                    <div class="score">1205점</div>
+                    <div class="tier" th:text="${i.userTier}">A</div>
+                    <div class="score" th:text="${i.userScore} + '점'">1205점</div>
                 </div>
             </div>
-            <div class="content-container">
-                <div class="first-content-container">
-                    <div class="ranking">1위</div>
-                    <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
-                    </div>
-                </div>
-                <div class="second-content-container">
-                    <div class="tier">A</div>
-                    <div class="score">1205점</div>
-                </div>
-            </div>
-            <div class="content-container">
-                <div class="first-content-container">
-                    <div class="ranking">1위</div>
-                    <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
-                    </div>
-                </div>
-                <div class="second-content-container">
-                    <div class="tier">A</div>
-                    <div class="score">1205점</div>
-                </div>
-            </div>
-            <div class="content-container">
-                <div class="first-content-container">
-                    <div class="ranking">1위</div>
-                    <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
-                    </div>
-                </div>
-                <div class="second-content-container">
-                    <div class="tier">A</div>
-                    <div class="score">1205점</div>
-                </div>
-            </div>
-            <div class="content-container">
-                <div class="first-content-container">
-                    <div class="ranking">1위</div>
-                    <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
-                    </div>
-                </div>
-                <div class="second-content-container">
-                    <div class="tier">A</div>
-                    <div class="score">1205점</div>
-                </div>
-            </div>
-            <div class="content-container">
-                <div class="first-content-container">
-                    <div class="ranking">1위</div>
-                    <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
-                    </div>
-                </div>
-                <div class="second-content-container">
-                    <div class="tier">A</div>
-                    <div class="score">1205점</div>
-                </div>
-            </div>
-            <div class="content-container">
-                <div class="first-content-container">
-                    <div class="ranking">1위</div>
-                    <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
-                    </div>
-                </div>
-                <div class="second-content-container">
-                    <div class="tier">A</div>
-                    <div class="score">1205점</div>
-                </div>
-            </div>
-            <div class="content-container">
-                <div class="first-content-container">
-                    <div class="ranking">1위</div>
-                    <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
-                    </div>
-                </div>
-                <div class="second-content-container">
-                    <div class="tier">A</div>
-                    <div class="score">1205점</div>
-                </div>
-            </div>
-            <div class="content-container">
-                <div class="first-content-container">
-                    <div class="ranking">1위</div>
-                    <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
-                    </div>
-                </div>
-                <div class="second-content-container">
-                    <div class="tier">A</div>
-                    <div class="score">1205점</div>
-                </div>
-            </div>
-            <div class="content-container">
-                <div class="first-content-container">
-                    <div class="ranking">1위</div>
-                    <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
-                    </div>
-                </div>
-                <div class="second-content-container">
-                    <div class="tier">A</div>
-                    <div class="score">1205점</div>
-                </div>
-            </div>
-            <div class="content-container">
-                <div class="first-content-container">
-                    <div class="ranking">1위</div>
-                    <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
-                    </div>
-                </div>
-                <div class="second-content-container">
-                    <div class="tier">A</div>
-                    <div class="score">1205점</div>
-                </div>
-            </div>
-            <div class="content-container">
-                <div class="first-content-container">
-                    <div class="ranking">1위</div>
-                    <div class="name">
-                        <div class="nickname">풋살킹</div>
-                        <div class="teamname">슛돌이</div>
-                    </div>
-                </div>
-                <div class="second-content-container">
-                    <div class="tier">A</div>
-                    <div class="score">1205점</div>
-                </div>
-            </div>
+            </ul>
+         
         </div>
     </div>
     

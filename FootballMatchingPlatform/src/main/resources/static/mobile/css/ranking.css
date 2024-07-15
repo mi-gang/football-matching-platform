@@ -18,6 +18,8 @@
     margin-right: 1.5rem;
 }
 
+
+
 .content-container {
     display: flex;
     justify-content: space-between;
@@ -26,6 +28,12 @@
 
     padding: 1rem;
 }
+
+.real-content-container{
+	width:100%;
+}
+
+
 
 #first-rank-content-container {
     background: linear-gradient(90deg, #D2F2EB 0%, #89A2E1 100%);

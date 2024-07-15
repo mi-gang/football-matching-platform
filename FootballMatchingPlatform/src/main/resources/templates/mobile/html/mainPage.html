@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메인 화면</title>
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/mainPage.css">
+    <link rel="stylesheet" href="/mobile/css/common.css">
+    <link rel="stylesheet" href="/mobile/css/mainPage.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
@@ -32,13 +32,13 @@
                     <div>다가오는 경기 일정</div>
                     <div class="all-see-container" id="schedule">
                         <div class="all-see">전체 보기</div>
-                        <img class="arrow" src="../img/right arrow.svg">
+                        <img class="arrow" src="/mobile/img/right arrow.svg">
                     </div>
                 </div>
-                <div id="info-schedule">
-                    <div id="matching-state">경기 확정</div>
-                    <div id="time">2024년 7월 3일 18:00 - 20:00</div>
-                    <div id="location">서울 강서 신정FC 우쩌구 구장</div>
+                <div id="info-schedule" th:if="${getMatchingAlready != null}">
+                    <div id="matching-state" th:text="${getMatchingAlready.matchingStatus}"></div>
+                    <div id="time" th:text="${#dates.format(getMatchingAlready.matchingDate, 'yyyy년MM월dd일')} + ' ' + ${getMatchingAlready.matchingTime} + ':00 ~ ' + ${getMatchingAlready.matchingTime + 2} + ':00'">2024년 7월 3일 18:00 - 20:00</div>
+                    <div id="location" th:text="${getMatchingAlready.fieldAddress} + ' ' + ${getMatchingAlready.fieldAddressDetail} + ' ' + ${getMatchingAlready.fieldName}">서울 강서 신정FC 우쩌구 구장</div>
                 </div>
             </div>
             <div class="info-container">
@@ -46,39 +46,39 @@
                     <div>개인 랭킹 top 3</div>
                     <div class="all-see-container" id="rank">
                         <div class="all-see">전체 보기</div>
-                        <img class="arrow" src="../img/right arrow.svg">
+                        <img class="arrow" src="/mobile/img/right arrow.svg">
                     </div>
                 </div>
                 <div id="info-rank">
                     <div id="first-rank">
                         <div>
-                            <div>1</div><img src="../img/-.svg">
+                            <div>1</div><img src="/mobile/img/-.svg">
                         </div>
-                        <div>풋살킹</div>
-                        <div>1205점</div>
+                        <div th:text="${getTopOneUser.nickname}"></div>
+                        <div th:text="${getTopOneUser.userScore} + '점'">1205점</div>
                     </div>
                     <div id="middle-rank">
                         <div>
-                            <div>2</div><img src="../img/up.svg">
+                            <div>2</div><img src="/mobile/img/up.svg">
                         </div>
-                        <div>aewvy</div>
-                        <div>1156점</div>
+                        <div th:text="${getTopTwoUser.nickname}"></div>
+                        <div th:text="${getTopTwoUser.userScore} + '점'"></div>
                     </div>
                     <div id="last-rank">
                         <div>
-                            <div>3</div><img src="../img/down.svg">
+                            <div>3</div><img src="/mobile/img/down.svg">
                         </div>
-                        <div>뿡칫치</div>
-                        <div>1148점</div>
+                        <div th:text="${getTopTwoUser.nickname}">뿡칫치</div>
+                        <div th:text="${getTopTwoUser.userScore} + '점'"></div>
                     </div>
                 </div>
                 <div id="field-info-container">
                     <div id="field-info">
                         <div id="ball-container">
-                            <img src="../img/ball.svg">
+                            <img src="/mobile/img/ball.svg">
                         </div>
                         <div>등록된 구장 정보</div>
-                        <img src="../img/right arrows.svg">
+                        <img src="/mobile/img/right arrows.svg">
                     </div>
                 </div>
             </div>
@@ -91,34 +91,40 @@
         // header, nav 내용 불러오기
         $(document).ready(function () {
             $('header').load('./common/header.html', function () { // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
-                $('#page-name').html('<img src="../img/foot.svg">'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
+                $('#page-name').html('<img src="/mobile/img/foot.svg">'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
                 $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
             });
             $('nav').load('./common/nav.html');
         });
 
         $("#matching").on("click", function () {
-            alert("매칭신청 페이지로 이동");
+            
+            location.href = '/matching';
         })
 
         $("#fast").on("click", function () {
-            alert("빠른신청리스트 페이지로 이동");
+            
+            location.href = '/fastmatchinglist';
         })
 
         $("#schedule").on("click", function () {
-            alert("전체 일정 조회 페이지로 이동");
+           
+            location.href = '/myCalendar';
         })
 
         $("#info-schedule").on("click", function () {
-            alert("상세 일정 조회 페이지로 이동");
+
+            location.href = '/myMatchingList';
         })
 
         $("#rank").on("click", function () {
-            alert("전체 순위 페이지로 이동");
+
+            location.href = '/ranking';
         })
 
         $("#field-info").on("click", function () {
-            alert("등록된 구장 정보 리스트 조회 페이지로 이동");
+            
+            location.href = '/addedFieldList';
         })
     </script>
 </body>

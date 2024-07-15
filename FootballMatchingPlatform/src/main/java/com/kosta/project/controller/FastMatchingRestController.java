@@ -31,18 +31,20 @@ public class FastMatchingRestController {
 	
 	
 	// 필터 Big
-//	@PostMapping
-//	public Map<String, List<FastMatchingDTO>> getFastMatchingListByBigAndDateAndRegionAndTier(@RequestBody FastMatchingConditionDTO fmcDTO) {
-//		
-//		//fms.getFastMatchingListBySmallAndDateAndRegionAndTier(fmcDTO)
-//		//List<FastMatchingDTO> data = fms.getFastMatchingListBySmallAndDateAndRegionAndTier(fmcDTO)
-//				
-//		//if로 한 메서드에서 처리해도 될 거 같긴 함ㅇㅇ;;
-//		
-//		return Map.of("result", fms.getFastMatchingListByBigAndDateAndRegionAndTier(fmcDTO));
-//	}
-//	
-//	
+	@PostMapping("/api/fastmatchinglist")
+	public Map<String, List<FastMatchingDTO>> getFastMatchingListByBigAndDateAndRegionAndTier(@RequestBody FastMatchingConditionDTO fmcDTO) {
+		
+		
+		
+		fms.getFastMatchingListBySmallAndDateAndRegionAndTier(fmcDTO);
+		List<FastMatchingDTO> data = fms.getFastMatchingListBySmallAndDateAndRegionAndTier(fmcDTO);
+				
+		//if로 한 메서드에서 처리해도 될 거 같긴 함ㅇㅇ;;
+		
+		return Map.of("result", fms.getFastMatchingListByBigAndDateAndRegionAndTier(fmcDTO));
+	}
+	
+	
 //	// 필터 Small
 //	@PostMapping
 //	public Map<String, List<FastMatchingDTO>> getFastMatchingListBySmallAndDateAndRegionAndTier(@RequestBody FastMatchingConditionDTO fmcDTO) {
