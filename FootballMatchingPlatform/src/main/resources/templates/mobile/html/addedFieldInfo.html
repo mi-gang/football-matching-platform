@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>구장 상세 정보</title>
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/addedFieldInfo.css">
+    <link rel="stylesheet" href="/mobile/css/common.css">
+    <link rel="stylesheet" href="/mobile/css/addedFieldInfo.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -15,26 +15,26 @@
         <header></header>
          <!-- 컨텐츠 컨테이너 -->
         <div id="container">
-            <img id="img-field" src="../img/구장 사진.svg">
+            <img id="img-field" src="/mobile/img/구장 사진.svg">
             <div id="title-container">
-                <div>신정FC 우쩌구 구장</div>
-                <div>서울 강서구 화곡동 산 199</div>
+                <div th:text="${addedFieldInfo.fieldName}"></div>
+                <div th:text="${addedFieldInfo.fieldAddress} + ' ' + ${addedFieldInfo.fieldAddressDetail}">서울 강서구 화곡동 산 199</div>
             </div>
             <hr>
             <div id="info-container">
                 <div>구장시설</div>
                 <div id="info-list">
-                    <div>샤워실</div>
-                    <div>주차장</div>
-                    <div>풋살화 대여</div>
-                    <div>음료 판매</div>
-                    <div>풋살공 대여</div>
+                  <span th:if="${addedFieldInfo.showerRoom} ? '샤워실 ' : ''"></span>
+				  <span th:if="${addedFieldInfo.parking} ? '주차장 ' : ''"></span>
+				  <span th:if="${addedFieldInfo.sellDrink} ? '음료판매 ' : ''"></span>
+			      <span th:if="${addedFieldInfo.rentShoes} ? '축구화 대여 ' : ''"></span>
+				  <span th:if="${addedFieldInfo.rentBall} ? '축구공 대여 ' : ''"></span>
                 </div>
             </div>
             <hr>
             <div id="content-container">
                 <div>소개글</div>
-                <ul id="content">
+                <ul id="content" th:text="${addedFieldInfo.fieldContent}">
 
                 </ul>
             </div>

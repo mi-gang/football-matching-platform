@@ -74,6 +74,6 @@ public interface MatchingMapper {
 	int selectTeamScore(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
 	
 	// 다가오는 경기 일정을 불러옵니다.
-	List<MatchingDTO> selectMatchingAlready(String userId);
+	MatchingDTO selectMatchingAlready(String userId);
 
 }

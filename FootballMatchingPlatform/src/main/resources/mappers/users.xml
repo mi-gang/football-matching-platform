@@ -114,23 +114,48 @@
   </update>
 
 	
-	<!-- 개인순위 top3명 불러오기 -->
-  <select id="selectTopThreeUsersList" resultType="com.kosta.project.dto.UserDTO">
-    SELECT user_rank as userRank, nickname, user_score as userScore
-    FROM users WHERE 3 >= user_rank
-    AND user_rank >= 1
-    order by user_rank
-    LIMIT 3
+  <!-- 개인순위 top1 불러오기 -->
+  <select id="selectTopOneUser" resultType="com.kosta.project.dto.UserDTO">
+    SELECT users.user_rank as userRank, users.nickname, users.user_score as userScore, 
+    CASE WHEN teams.team_name IS NULL THEN '' ELSE teams.team_name END AS teamName
+    FROM users
+	 LEFT JOIN team_members
+	 ON team_members.user_id = users.user_id
+	 LEFT JOIN teams
+	 ON teams.team_seq = team_members.team_seq
+	 WHERE 1 = users.user_rank;
   </select>
+  
+  <!-- 개인순위 top2 불러오기 -->
+  <select id="selectTopTwoUser" resultType="com.kosta.project.dto.UserDTO">
+    SELECT user_rank as userRank, nickname, user_score as userScore
+    FROM users WHERE 2 = user_rank
+  </select>
+ 
+  <!-- 개인순위 top3 불러오기 -->
+  <select id="selectTopThreeUser" resultType="com.kosta.project.dto.UserDTO">
+    SELECT user_rank as userRank, nickname, user_score as userScore
+    FROM users WHERE 3 = user_rank
+  </select>
+      
+  
+  
+  
 	
 	
 	<!-- 개인순위 top100명 불러오기 -->
   <select id="selectTopHundredUsersList" resultType="com.kosta.project.dto.UserDTO">
-    SELECT user_rank as userRank, nickname, user_score as userScore
-    FROM users WHERE 100 >= user_rank
-    AND user_rank >= 1
-    order by user_rank
-    LIMIT 100
+    SELECT users.user_rank as userRank, users.user_tier as userTier, users.nickname, users.user_score as userScore, 
+    CASE WHEN teams.team_name IS NULL THEN '' ELSE teams.team_name END AS teamName
+    FROM users
+	 LEFT JOIN team_members
+	 ON team_members.user_id = users.user_id
+	 LEFT JOIN teams
+	 ON teams.team_seq = team_members.team_seq
+	 WHERE 100 >= users.user_rank
+    AND users.user_rank > 1
+    order by users.user_rank
+    LIMIT 99;
   </select>
 
 

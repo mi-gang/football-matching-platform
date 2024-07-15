@@ -36,6 +36,6 @@ public class UserDTO {
 	private Date suspendedTime;
 	private String userStatus;
 	private float winRate;
-	
+	private String teamName;
 	
 }
