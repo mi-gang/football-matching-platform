@@ -148,14 +148,14 @@ public class UserMapperTestJuho {
 	
 	
 	// 개인 순위 top3 불러오기
-	@Test
-	void selectTopThreeUsersListTest() {
-		List<UserDTO> top3 = um.selectTopThreeUsersList();
-        for (UserDTO userDTO : top3) {
-            System.out.println("탑3 " + "순위 : " + userDTO.getUserRank() + ", 닉네임 : " + userDTO.getNickname() + ", 점수 : " + userDTO.getUserScore());
-        }
-		
-	}	
+//	@Test
+//	void selectTopThreeUsersListTest() {
+//		List<UserDTO> top3 = um.selectTopThreeUsersList();
+//        for (UserDTO userDTO : top3) {
+//            System.out.println("탑3 " + "순위 : " + userDTO.getUserRank() + ", 닉네임 : " + userDTO.getNickname() + ", 점수 : " + userDTO.getUserScore());
+//        }
+//
+//	}
 		
 	
 	// 개인 순위 top100 불러오기

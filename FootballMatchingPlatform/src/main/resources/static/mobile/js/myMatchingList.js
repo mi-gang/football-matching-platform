@@ -93,16 +93,15 @@ $("#payMatchingBtn").on("click", function () {
     })
         .then(response => {
             if (response.ok) {
-                $("#paymentSuccessModal").modal("show"); // 모달 다시 열기
-            } else {
+                // Bootstrap 5에서 모달을 여는 방법
+                var myModal = new bootstrap.Modal(document.getElementById('paymentSuccessModal'), {
+                    keyboard: false
+                });
+                myModal.show();            } else {
                 return response.text().then(errorText => {
                     throw new Error(errorText);
                 });
             }
-        })
-        .then(result => {
-            console.log(result); // "Payment status updated successfully."
-            alert(result);
         })
         .catch(error => {
             console.error("Fetch error:", error);
