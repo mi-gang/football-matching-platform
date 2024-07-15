@@ -1,6 +1,7 @@
 package com.kosta.project.controller;
 
 import com.kosta.project.dto.MatchingScheduleListDTO;
+import com.kosta.project.dto.UserMatchingInfoDTO;
 import com.kosta.project.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,13 +47,41 @@ public class ScheduleRestController {
     }
 
     @GetMapping("/matches/count")
-    public ResponseEntity<Integer> getMatchingListCount(@SessionAttribute("userId") String userId) {
+    public ResponseEntity<Integer> getMatchingListCount() {
 
         // 세션으로 유저 아이디 구하기
         // @SessionAttribute("userId") String userId
+        String userId = "user001";
         int totalCount = scheduleService.getMatchingListCount(userId);
 
         return new ResponseEntity<>(totalCount, HttpStatus.OK);
+    }
+
+    @GetMapping("/matches")
+    public ResponseEntity<Collection<MatchingScheduleListDTO>> getMatchingList() {
+
+        // 세션으로 유저 아이디 구하기
+        // @SessionAttribute("userId") String userId
+        String userId = "user001";
+        Collection<MatchingScheduleListDTO> matchingScheduleListDTOS = new ArrayList<>();
+        matchingScheduleListDTOS = scheduleService.getMatchingList(userId);
+
+        return new ResponseEntity<>(matchingScheduleListDTOS, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{matchingSeq}/payment")
+    public ResponseEntity<String> setPayStatus(
+            @PathVariable int matchingSeq) {
+
+        //  @SessionAttribute("userId") String userId
+        String userId = "user001";
+
+        try {
+            scheduleService.setPayStatus((UserMatchingInfoDTO.builder().matchingSeq(matchingSeq).userId(userId).build()));
+            return ResponseEntity.ok("Payment status updated successfully.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update payment status.");
+        }
     }
 
 

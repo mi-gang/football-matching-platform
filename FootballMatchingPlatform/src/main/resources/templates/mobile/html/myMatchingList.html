@@ -95,8 +95,8 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="modal-body-wrapper">
-                    <h4 class="modal-title matching-info"></h4>
-                    <p class="matching-field"></p>
+                    <h4 class="modal-title modal-matching-info"></h4>
+                    <p class="modal-matching-field"></p>
                     <span>총 금액 </span>
                     <span>10,000원 </span>
                 </div>
@@ -118,6 +118,42 @@
     </div>
 </div>
 
+<!-- 결제 모달 -->
+<div class="modal" id="paymentSuccessModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                ></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="modal-body-wrapper">
+                    <span> 결제 완료되었습니다. </span>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+<!--                <button-->
+<!--                        type="button"-->
+<!--                        class="btn-setting"-->
+<!--                        id="payMatchingBtn"-->
+<!--                        data-bs-toggle="modal"-->
+<!--                        data-bs-dismiss="modal"-->
+<!--                >-->
+<!--                    닫기-->
+<!--                </button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     // header, nav 내용 불러오기
     $(document).ready(function () {
@@ -128,6 +164,6 @@
         $('nav').load('/common/nav.html');
     });
 </script>
-<script src="/mobile/js/my_matchings.js"></script>
+<script src="/mobile/js/myMatchingList.js"></script>
 </body>
 </html>

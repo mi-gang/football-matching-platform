@@ -249,12 +249,13 @@
 		SELECT m.matching_seq, m.matching_date, m.matching_time, m.fast_add_status, m.matching_status,
 		m.a_score, m.b_score, ma.matching_add_seq,
 		mal.matching_add_list_seq, mal.matching_success_status, mal.cancel_status, mal.pay_status,
-		mal.review_status, mal.team_status, mal.team, mal.player_number
+		mal.review_status, mal.team_status, mal.team, mal.player_number, f.field_name
 		FROM matching_adds ma
 		JOIN matching_add_lists mal ON ma.matching_add_seq = mal.matching_add_seq
 		JOIN matchings m ON mal.matching_seq = m.matching_seq
+		JOIN fields f on m.field_seq = f.field_seq
 		WHERE ma.user_id = #{userId}
-		ORDER BY m.matching_date, m.matching_time desc
+		ORDER BY m.matching_date DESC, m.matching_time DESC
 	</select>
 	
 	<!-- 결제 상태 변경하기 -->

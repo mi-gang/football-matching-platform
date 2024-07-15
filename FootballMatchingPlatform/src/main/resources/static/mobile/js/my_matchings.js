@@ -322,8 +322,8 @@ $(".calendar-dates").on("click", ".date-wrapper", function () {
         console.log(matchingDate);
         console.log(matchingTime);
         console.log(matchingField);
-        $(".matching-info").text(matchingDate + " " + matchingTime);
-        $(".matching-field").text(matchingField);
+        $(".modal-matching-info").text(matchingDate + " " + matchingTime);
+        $(".modal-matching-field").text(matchingField);
 
         const matchingSeq = $(this)
             .closest(".matching-wrapper")
