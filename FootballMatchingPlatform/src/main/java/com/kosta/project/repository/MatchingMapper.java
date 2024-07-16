@@ -23,9 +23,11 @@ public interface MatchingMapper {
 	List<MatchingsDTO> selectMatchingsList(MatchingConditionDTO dto);
 	List<MatchingsDTO> selectMatchingsListByRegion(MatchingConditionDTO dto);
 	void insertMatchings(addMatchingsDTO dto);
+	int selectMaxMatchingSeq();
 	void insertMatchingAdds(String userId);
 	void insertMatchingAddsByTeam(int teamSeq);
-	int selectMatchingAddSeq();
+	int selectMatchingAddSeq(String userId);
+	int selectMatchingAddSeqByTeam(int teamSeq);
 	String selectMatchingStatus(int matchingSeq);
 	void insertMatchingAddLists(MatchingAddListsDTO dto);
 	void insertMatchingAddListsByTeam(MatchingAddListsDTO dto);

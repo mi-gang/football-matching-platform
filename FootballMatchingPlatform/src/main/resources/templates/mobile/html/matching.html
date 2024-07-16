@@ -102,7 +102,6 @@ for (let i = 0; i <= 4; i++) {
 
 // 버튼 생성 및 이벤트 설정
 dates.forEach((date, i) => {
-	console.log(i)
   $('#matchingDateBtnsLi').append(
 	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
@@ -124,8 +123,6 @@ backBtn.addEventListener('click', () => {
 
   const newStartDate = new Date(dates[0]); // 첫 번째 버튼의 날짜를 기준으로 -5일
   newStartDate.setDate(newStartDate.getDate() - plusOrMinusNumber);
-  console.log(newStartDate)
-  console.log(dates[0])
   for (let i = 0; i <= 4; i++) {
 
   const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
@@ -134,7 +131,6 @@ backBtn.addEventListener('click', () => {
 
 // 버튼 생성 및 이벤트 설정
 backDates.forEach((date, i) => {
-	console.log(i)
   $('#matchingDateBtnsLi').append(
 	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
@@ -154,8 +150,6 @@ frontBtn.addEventListener('click', () => {
 
   const newStartDate = new Date(dates[0]); // 첫 번째 버튼의 날짜를 기준으로 -5일
   newStartDate.setDate(newStartDate.getDate() + plusOrMinusNumber);
-  console.log(newStartDate)
-  console.log(dates[0])
   for (let i = 0; i <= 4; i++) {
 
   const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
@@ -164,7 +158,6 @@ frontBtn.addEventListener('click', () => {
 
 // 버튼 생성 및 이벤트 설정
 frontDates.forEach((date, i) => {
-	console.log(i)
   $('#matchingDateBtnsLi').append(
 	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
@@ -182,7 +175,6 @@ frontDates.forEach((date, i) => {
 			btn.classList.remove("active90");
 		}
 	});
-	console.log( e.currentTarget.value );
 	selectedDate = e.currentTarget.value;
 	}
 	
@@ -197,7 +189,6 @@ frontDates.forEach((date, i) => {
 			btn1.classList.remove("active2");
 		}
 	});
-	console.log( e2.currentTarget.value );
 	teamOrSolo = e2.currentTarget.value;
 	}
 	
@@ -205,7 +196,6 @@ frontDates.forEach((date, i) => {
   const computedStyle = window.getComputedStyle(button);
   const buttonsColor = computedStyle.backgroundColor;
   selectedButton = button;
-  console.log(buttonsColor);
   if (buttonsColor == 'rgb(115, 167, 114)') {
     button.style.backgroundColor = '#828282';
   } else {

@@ -166,6 +166,7 @@ public class MatchingService {
 	}
 
 	public boolean addMatcings(AddMatchingDataDTO dto) {
+		List<Integer> matchingSeqList = new ArrayList<Integer>();
 		for(int i=0; i<dto.getMdto().size(); i++) {
 			if(dto.getMdto().get(i).getMatchingSeq() == 0) {
 				addMatchingsDTO aDTO = addMatchingsDTO.builder()
@@ -174,6 +175,7 @@ public class MatchingService {
 						.fieldSeq(dto.getMdto().get(i).getFieldSeq())
 						.build();
 				mm.insertMatchings(aDTO);
+				matchingSeqList.add(mm.selectMaxMatchingSeq());
 			}
 			else {
 				if(!mm.selectMatchingStatus(dto.getMdto().get(i).getMatchingSeq()).equals("매칭중")) {
@@ -182,17 +184,18 @@ public class MatchingService {
 			}
 		}
 		
+		int matchingAddSeq = 0;
 		if(dto.getType().equals("개인")) {
 			mm.insertMatchingAdds(dto.getUserId());
+			matchingAddSeq = mm.selectMatchingAddSeq(dto.getUserId());
 		}
 		else if(dto.getType().equals("팀")) {
 			int teamSeq = tm.selectTeamSeq(dto.getUserId());
 			mm.insertMatchingAddsByTeam(teamSeq);
+			matchingAddSeq = mm.selectMatchingAddSeqByTeam(teamSeq);
 		}
 
-		int matchingAddSeq = mm.selectMatchingAddSeq();
-		System.out.println(matchingAddSeq);
-		
+		int j = 0;
 		for(int i=0; i<dto.getMdto().size(); i++) {
 			if(dto.getType().equals("팀")) {
 				String teamName = tm.selectTeamNameById(dto.getUserId());
@@ -218,6 +221,10 @@ public class MatchingService {
 						.matchingSeq(dto.getMdto().get(i).getMatchingSeq())
 						.matchingAddSeq(matchingAddSeq)
 						.build();
+				if(addListDTO.getMatchingSeq() == 0) {
+					addListDTO.setMatchingSeq(matchingSeqList.get(j));
+					j++;
+				}
 				mm.insertMatchingAddLists(addListDTO);
 				MatchingCountDTO mcDTO = MatchingCountDTO.builder()
 						.matchingSeq(addListDTO.getMatchingSeq())
@@ -259,5 +266,21 @@ public class MatchingService {
 		}
 
 		return true;
+	}
+	
+	public List<MatchingConditionDTO> getMatchingAddResult(AddMatchingDataDTO addDTO){
+		List<MatchingConditionDTO> mcDTOList = null;
+		int matchingAddSeq = 0;
+		
+		if(addDTO.getType().equals("개인")) {
+			matchingAddSeq = mm.selectMatchingAddSeq(addDTO.getUserId());
+		}
+		else if(addDTO.getType().equals("팀")) {
+			int teamSeq = tm.selectTeamSeq(addDTO.getUserId());
+			matchingAddSeq = mm.selectMatchingAddSeqByTeam(teamSeq);
+		}
+		
+		mcDTOList = mm.selectMatchingAddResult(matchingAddSeq);
+		return mcDTOList;
 	}
 }

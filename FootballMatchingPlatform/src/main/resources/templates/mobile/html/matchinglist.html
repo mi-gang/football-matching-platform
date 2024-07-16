@@ -23,9 +23,9 @@
 					<button class="filterBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">필터</button>
 				</div>
 				<div class="w-auto h-auto matchingCheckListDiv mt-4">
-					<ul id="matchingCheckList">
+					<ul id="matchingCheckList" class="d-flex flex-column gap-1">
 						<div class="ulMatchDiv mt-0" id="matchList" th:each="matching : ${matchingList}">
-							<div class="w-auto h-auto matchInfo mt-1 mx-1" data-bs-toggle="modal"
+							<div class="h-auto matchInfo mt-1 mx-1" data-bs-toggle="modal"
 								data-bs-target="#checkboxModal" th:data-field-seq="${matching.fieldSeq}">
 								<button class="applyStatus" disabled="true" value="신청가능">신청가능</button>
 								<div class="d-flex align-items-center" style="gap: 0.5rem;">
@@ -50,7 +50,7 @@
 								</div>
 								<div class="d-flex gap-1">
 									<p class="matchLocation" th:text="${matching.fieldAddress}">주소</p>
-									<p class="matchLocation" th:text="${matching.fieldName}">구장명</p>
+									<p class="fieldName" th:text="${matching.fieldName}">구장명</p>
 								</div>
 							</div>
 							<input type="checkbox" id="checkBtn">
@@ -67,7 +67,6 @@
 					<div class="modal-dialog">
 						<div class="modal-content w-auto h-auto">
 							<div class="modal-header">
-
 								<button type="button" class="btn-close" data-bs-dismiss="modal"
 									aria-label="Close"></button>
 							</div>
@@ -75,11 +74,11 @@
 								<h3>지역</h3>
 								<div class="w-auto h-auto locationCity">
 									<ul id="locationCityBtns">
-										<li><button type="button" class=" locationCityBtn btn m-2 p-3"
+										<li><button type="button" class=" locationCityBtn btn m-2"
 												onclick="change_btn(event)" value="서울">서울</button></li>
-										<li><button type="button" class=" locationCityBtn btn m-2 p-3"
+										<li><button type="button" class=" locationCityBtn btn m-2"
 												onclick="change_btn(event)" value="인천">인천</button></li>
-										<li><button type="button" class=" locationCityBtn btn m-2 p-3"
+										<li><button type="button" class=" locationCityBtn btn m-2"
 												onclick="change_btn(event)" value="부산">부산</button></li>
 									</ul>
 								</div>
@@ -101,12 +100,11 @@
 												onclick="changeButtonColors(this)">강남구</button></li>
 										<li><button type="button" id="locationBtn6" class="w-3 h-2 btn m-1 p-2"
 												onclick="changeButtonColors(this)">금천구</button></li>
-
 									</ul>
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" id="searchButton">완료</button>
+								<button type="button" id="searchButton" data-bs-dismiss="modal">완료</button>
 							</div>
 						</div>
 					</div>
@@ -163,7 +161,8 @@
 								<div class="w-auto h-auto matchingDate">
 									<button type="button" class="closeButton btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
-									<div id="locationInfoDiv" class="w-auto h-auto timeZone mt-5">
+									<div id="locationInfoDiv"
+										class="w-auto h-auto timeZone d-flex flex-column align-items-center">
 										<h3 class="matchDateH3"></h3> <br>
 										<div id="myApplyListDiv" class="overflow-auto">
 											<ul id="myApplyList">
@@ -181,6 +180,7 @@
 						</div>
 					</div>
 				</div>
+				<!-- 매칭 신청 결과 모달-->
 				<div class="modal" id="statusCheckModal" tabindex="-1" aria-labelledby="statusCheckModalLabel"
 					aria-hidden="true">
 					<div class="modal-dialog">
@@ -218,6 +218,7 @@
 					</div>
 				</div>
 			</div>
+			<div class="toast" id="toast">구를 선택해주세요!</div>
 		</div>
 		<!-- 하단 메뉴바 -->
 		<nav></nav>
@@ -251,36 +252,36 @@
 						let parkYN = fieldInfo.parking;
 						let drinkYN = fieldInfo.sellDrink;
 						let showerYN = fieldInfo.showerRoom;
-						let shoesYN = fieldInfo	.rentShoes;
+						let shoesYN = fieldInfo.rentShoes;
 
 						if (!ballYN) {
 							ballTF.classList.add("active");
 						}
-						else{
+						else {
 							ballTF.classList.remove("active");
 						}
 						if (!drinkYN) {
 							drinkTF.classList.add("active");
 						}
-						else{
+						else {
 							drinkTF.classList.remove("active");
 						}
 						if (!shoesYN) {
 							shoesTF.classList.add("active");
 						}
-						else{
+						else {
 							shoesTF.classList.remove("active");
 						}
 						if (!showerYN) {
 							showerTF.classList.add("active");
 						}
-						else{
+						else {
 							showerTF.classList.remove("active");
 						}
 						if (!parkYN) {
 							parkTF.classList.add("active");
 						}
-						else{
+						else {
 							parkTF.classList.remove("active");
 						}
 					})
@@ -312,7 +313,6 @@
 				}
 			});
 			selectedMatchDate = e1.currentTarget.value;
-			console.log(e1.currentTarget);
 		}
 
 		var selectedLocation = null;
@@ -329,12 +329,8 @@
 				else {
 					btn.classList.remove("active");
 				}
-
 			});
 			$("#locationInfoDiv").empty();
-
-			console.log(buttonsText);
-			console.log(buttonsTextTest);
 			if (e.currentTarget.textContent == '인천') {
 				$("#locationInfoDiv")
 					.append("<ul id = 'locationBtns'>" +
@@ -345,7 +341,6 @@
 						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>서구</button></li>" +
 						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>미추홀구</button></li>" +
 						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>중구</button></li>" +
-
 						"</ul>");
 			} else if (e.currentTarget.textContent == '서울') {
 				$("#locationInfoDiv")
@@ -357,11 +352,8 @@
 						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>관악구</button></li>" +
 						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>금천구</button></li>" +
 						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>양천구</button></li>" +
-
 						"</ul>");
-
 			}
-			console.log(e.currentTarget);
 			selectedLocation = e.currentTarget.value;
 		}
 
@@ -371,7 +363,6 @@
 			const computedStyle = window.getComputedStyle(button);
 			const buttonsColor = computedStyle.backgroundColor;
 			selectedButton = button;
-			console.log(buttonsColor);
 			if (buttonsColor == 'rgb(115, 167, 114)') {
 				button.style.backgroundColor = '#FFFFFF';
 			} else {
@@ -382,34 +373,82 @@
 		const statusCheckApplyButton = document.querySelector('#statusCheckApplyButton');
 
 		statusCheckApplyButton.addEventListener('click', function () {
-			location.reload();
+			location.href = "/mainPage";
 		});
 
 		const searchButton = document.getElementById('searchButton');
 
 		searchButton.addEventListener('click', function () {
+			var region = "";
 			const selectedList = [];
 			const selectedButtons = document.querySelectorAll('#locationBtns button');
-			selectedTierButtons.forEach(function (button, i) {
-				//i = 0;
-				if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
-					// 검색하고자하는 정보입니다
-					selectedList[i] = button.value;
-					console.log(i + 'i : ' + selectedList[i]);
-					//console.log(button.value);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
-				}
-				//i++;
-			});
 
-			var j = 0;
 			selectedButtons.forEach(button => {
-
 				if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
-
-					console.log(selectedLocation + button.textContent);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
+					region = region + button.textContent + " ";
 				}
-
 			});
+
+			if (region == "") {
+				toast.classList.add('show');
+				setTimeout(function () {
+					toast.classList.remove('show');
+				}, 1000);
+				return;
+			}
+
+			const url = new URL(window.location.href);
+			const matchingDate = url.searchParams.get('matchingDate');
+			const matchingTime = url.searchParams.get('matchingTime');
+
+			fetch(`/matchinglistByRegion?matchingDate=${matchingDate}&matchingTime=${matchingTime}&region=${region}`)
+				.then(response => response.json())
+				.then(data => {
+					var matchingListByRegion = data.result;
+					console.log(matchingListByRegion);
+					$("#matchingCheckList").html("");
+					if (matchingListByRegion.length == 0) {
+						console.log("없음");
+						$("#matchingCheckList").append(
+							"<div class='d-flex flex-column'>" +
+							"<img src=/mobile/img/ball.svg/>" +
+							"<div>신청 가능한 구장이 없습니다!</div>" +
+							"</div>"
+						);
+					}
+					else {
+						for (var i = 0; i < matchingListByRegion.length; i++) {
+							$("#matchingCheckList").append(
+								`<div class="ulMatchDiv mt-0" id="matchList">
+								<div class="h-auto matchInfo mt-1 mx-1" data-bs-toggle="modal" 
+								data-bs-target="#checkboxModal" data-field-seq="${matchingListByRegion[i].fieldSeq}">
+									<button class="applyStatus" disabled="true" value="신청가능">신청가능</button>
+									<div class="d-flex align-items-center" style="gap: 0.5rem;">
+										<p class="matchSeq d-none">${matchingListByRegion[i].matchingSeq}</p>
+										<p class="fieldSeq d-none">${matchingListByRegion[i].fieldSeq}</p>
+										<p class="matchTimeValue d-none">${matchingListByRegion[i].matchingTime}</p>
+										<p class="matchDate mb-0">${matchingListByRegion[i].matchingDate}</p>
+										<p class="matchTime mb-0" value="${matchingListByRegion[i].matchingTime}"></p>
+									</div>
+									<div class="d-flex gap-1">
+										<p class="matchLocation">${matchingListByRegion[i].fieldAddress}</p>
+										<p class="fieldName">${matchingListByRegion[i].fieldName}</p>
+									</div>
+								</div>
+							<input type="checkbox" id="checkBtn">
+							<hr>
+							</div>`
+							);
+							$(".matchTime[value=8]").text("08:00~10:00");
+							$(".matchTime[value=10]").text("10:00~12:00");
+							$(".matchTime[value=12]").text("12:00~14:00");
+							$(".matchTime[value=14]").text("14:00~16:00");
+							$(".matchTime[value=16]").text("16:00~18:00");
+							$(".matchTime[value=18]").text("18:00~20:00");
+							$(".matchTime[value=20]").text("20:00~22:00");
+						}
+					}
+				})
 		});
 
 		function applyFunction() {
@@ -431,14 +470,22 @@
 				console.log(matchTimeValue);
 				const matchLocationText = matchDiv.querySelector('.matchLocation').textContent;
 				console.log(matchLocationText);
+				const fieldNameText = matchDiv.querySelector('.fieldName').textContent;
+				console.log(fieldNameText);
 
 				$(".matchDateH3").text(matchDateText);
-				$("#myApplyList").append("<li><p class='mx-4'>" + matchTimeText + " " + matchLocationText + "</p></li>" + "<hr>");
+				$("#myApplyList").append(
+					"<li><p class='mx-4 mb-1'>" + fieldNameText + "</p>" +
+					"<p class='mx-4 mb-1'>" + matchTimeText + " " + matchLocationText + "</p></li>" + "<hr class='my-0'>"
+				);
 			});
 		}
+
 		const url = new URL(window.location.href);
 		const addType = url.searchParams.get('addType');
-		$("#matchCheckApplyButton").on("click", function(){
+
+		const mdtoList = [];
+		$("#matchCheckApplyButton").on("click", function () {
 			const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
 			$("#myApplyList").empty();
 			checkedCheckboxes.forEach(checkbox => {
@@ -457,28 +504,29 @@
 				console.log(matchTimeValue);
 				const matchLocationText = matchDiv.querySelector('.matchLocation').textContent;
 				console.log(matchLocationText);
-				fetch(`/matching`, {
-					method: "post",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({
-						type: addType,
-						userId: "user00101",
-						userTier: "D",
-						mdto: [
-							{
-							matchingSeq: matchSeq, 
-							matchingDate: matchDateText, 
-							matchingTime: matchTimeValue, 
-							fieldAddress: matchLocationText,
-							fieldAddressDetail: "",
-							fieldName: "",
-							fieldSeq: fieldSeq}
-						]
-					})
+
+				mdtoList.push({
+					matchingSeq: matchSeq,
+					matchingDate: matchDateText,
+					matchingTime: matchTimeValue,
+					fieldAddress: matchLocationText,
+					fieldAddressDetail: "",
+					fieldName: "",
+					fieldSeq: fieldSeq
 				})
 			});
+			fetch(`/matching`, {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					type: addType,
+					userId: "user00101",
+					userTier: "D",
+					mdto: mdtoList
+				})
+			})
 		});
 	</script>
 </body>
