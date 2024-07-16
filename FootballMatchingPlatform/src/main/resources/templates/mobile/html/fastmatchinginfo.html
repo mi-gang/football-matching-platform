@@ -109,6 +109,21 @@ body{
     margin-left: 6rem;
 }
 
+
+.realSimpleBuy{
+    border-radius:3rem;
+    background-color: #73A772;
+    color:#FFFFFF;
+    font-size:0.8rem;
+    border:none;
+    width: 8rem;
+    height: 2rem;   
+    margin-left: 6rem;
+}
+
+
+
+
 .simpleClose{
     margin-left: 18rem;
 }
@@ -240,18 +255,41 @@ body{
     <div class="modal-dialog">
       <div class="modal-content w-auto h-auto">
         <div class="modal-body">
-        <form id="buyForm" action="#" method="post">  
+        <div id="buyForm">  
           <!-- name 지정 안 해놓음 -->  
           <button type="button" class="simpleClose btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          <p class="simpleTime" name="" th:text="${fastmatchinginfo.matchingDate} + ' ' + ${fastmatchinginfo.matchingTime} + ':00 ~ ' + ${fastmatchinginfo.matchingTime} + ':00'"></p>
-          <p class="simpleLocation" name="" th:text="${fastmatchinginfo.fieldAddress} + ' ' + ${fastmatchinginfo.fieldAddressDetail}"></p>
-          <p class="simplePrice" name="">금액 10,000원</p>
-          <button type="submit" class="simpleBuy" id = "buyButton">결제하기</button> 
-        </form>
+          <p class="simpleTime"  th:text="${fastmatchinginfo.matchingDate} + ' ' + ${fastmatchinginfo.matchingTime} + ':00 ~ ' + ${fastmatchinginfo.matchingTime} + ':00'"></p>
+          <p class="simpleLocation"  th:text="${fastmatchinginfo.fieldAddress} + ' ' + ${fastmatchinginfo.fieldAddressDetail}"></p>
+          <p class="simplePrice" >금액 10,000원</p>
+          <button type="button" class="simpleBuy" aria-label="Close" id = "buyButton">결제하기</button> 
+        </div>
         </div>
       </div>
     </div>
   </div>         
+        
+        
+        
+        
+        
+        
+   <div class="modal" id="realBuyCheckModal" tabindex="-1" aria-labelledby="realBuyCheckModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content w-auto h-auto">
+        <div class="modal-body">
+        <div id="realBuyForm">  
+          <!-- name 지정 안 해놓음 -->  
+          <p>결제가 완료되었습니다.</p>
+          <button type="button" class="realSimpleBuy" onclick="location.href='/mainPage'" id = "buyButton">확인</button> 
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>         
+        
+        
+        
+        
            
 
   <div class="toast" id="toast">등급이 맞지 않습니다.</div>
@@ -279,12 +317,12 @@ body{
 
     // header, nav 내용 불러오기
     $(document).ready(function(){
-        $('header').load('./common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+        $('header').load('/common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
             $('#page-name').text('페이지 이름'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
             $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
            
         });
-        $('nav').load('./common/nav.html');
+        $('nav').load('/common/nav.html');
     });
 
     
@@ -322,8 +360,6 @@ window.onload = function(){
 
 
 
-// 유저 타입 불러오시면 됩니다. 서스펜드 약자임
-const getUserType = 'D';
 
 // $(document).ready(function() {
 // $('#buyForm').on('submit', function(event) {
@@ -352,15 +388,32 @@ const getUserType = 'D';
 
 
 
-// 세션에서 유저 티어 불러오시면 됩니다
-const getUserTier = 'A';
 
 const getMatchTier = $('#getMatchTier').val();
 
 $(document).ready(function() {
-    $('#buyForm').on('submit', function(event) {
+    $('.simpleBuy').on('click', function(event) {
       //        // D는 delete의 약자임(혹시나 해서 넣음)
-       if(getUserType == 'S' || getUserType == 'D'){
+      
+      
+      
+      
+      
+      
+      
+      
+       $.ajax({
+            type: 'get',
+            url: '/api/is/suspended/user',
+            //contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+
+
+           	console.log(response.result)	
+   
+      
+       if(response.result == "true"){
         event.preventDefault();
         $('#buyButton').prop('disabled', true);
         var toast1 = document.getElementById('toast1');
@@ -371,11 +424,35 @@ $(document).ready(function() {
         $('#buyButton').prop('disabled', false);
       }, 1000);
       return;
-     }   
+     }  
+       
+            	
+            
+        }).fail(function(error){
+            alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
+        })
+      
+      
+      
+       
+      
+      
+      
+      
+      
+             $.ajax({
+            type: 'get',
+            url: '/api/is/user/tier',
+            //contentType : 'application/json; charset=utf-8',
         
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
 
 
-    if(getMatchTier == getUserTier) {
+           	console.log(response.result)	
+   
+      
+    
+    if(getMatchTier != response.result) {
             event.preventDefault();
         $('#buyButton').prop('disabled', true);
         var toast = document.getElementById('toast');
@@ -385,8 +462,21 @@ $(document).ready(function() {
         toast.classList.remove('show');
         $('#buyButton').prop('disabled', false);
       }, 1000);
-    } 
+    } else {
+    $('#buyCheckModal').hide();
+     	$('#realBuyCheckModal').show();
+    }
+    
+     
     });
+       
+            	
+            
+        }).fail(function(error){
+            alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
+        })
+      
+ 
     
    
 });
