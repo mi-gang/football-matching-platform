@@ -113,10 +113,10 @@ public class MobileController {
 		return "join";
 	}
 	
-/*	@GetMapping("/login")
+	@GetMapping("/login")
 	public String getLogin() {
 		return "login";
-	}*/
+	}
 	
 	@GetMapping("/mainPage")
 	public String getMainPage(HttpServletRequest request, Model model) {
