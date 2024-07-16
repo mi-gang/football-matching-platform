@@ -34,6 +34,11 @@
 		VALUES (#{matchingDate}, #{matchingTime}, 0, "매칭중", NULL, NULL, NULL, #{fieldSeq});
 	</insert>
 	
+	<!-- 가장 최근 등록된 매칭 시퀀스 가져오기 -->
+	<select id="selectMaxMatchingSeq" resultType="Integer">
+		SELECT MAX(matching_seq) FROM matchings
+	</select>
+	
 	<!-- 매칭 신청 정보 등록(개인) -->
 	<insert id="insertMatchingAdds" parameterType="java.lang.String">
 		INSERT INTO matching_adds(matching_add_date, user_id, team_seq)

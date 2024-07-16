@@ -1,11 +1,14 @@
 package com.kosta.project.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kosta.project.dto.AddMatchingDataDTO;
 import com.kosta.project.dto.FieldsDTO;
+import com.kosta.project.dto.MatchingConditionDTO;
+import com.kosta.project.dto.MatchingsDTO;
 import com.kosta.project.service.MatchingService;
 
 import lombok.RequiredArgsConstructor;
@@ -41,6 +44,20 @@ public class MatchingRestController {
 	public Map<String, FieldsDTO> getFieldInfo(@PathVariable int fieldSeq) {
 		FieldsDTO fDTO = ms.getFieldInfo(fieldSeq);
 		return Map.of("result", fDTO);
+	}
+	
+	@GetMapping("/matchinglistByRegion")
+	public Map<String, List<MatchingsDTO>> getMatchingListByRegion(String matchingDate, String matchingTime, String region){
+		List<MatchingsDTO> mDTOList = null;
+		MatchingConditionDTO mcDTO = MatchingConditionDTO.builder()
+				.matchingDate(matchingDate)
+				.matchingTime(matchingTime)
+				.fieldAddress(region)
+				.build();
+		System.out.println(mcDTO);
+		mDTOList = ms.getMatchingsListByRegion(mcDTO);
+		System.out.println(mDTOList);
+		return Map.of("result", mDTOList);
 	}
 	
 	@PostMapping("/matching")

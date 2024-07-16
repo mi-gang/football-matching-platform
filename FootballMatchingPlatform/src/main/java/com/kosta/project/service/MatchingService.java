@@ -166,6 +166,7 @@ public class MatchingService {
 	}
 
 	public boolean addMatcings(AddMatchingDataDTO dto) {
+		List<Integer> matchingSeqList = new ArrayList<Integer>();
 		for(int i=0; i<dto.getMdto().size(); i++) {
 			if(dto.getMdto().get(i).getMatchingSeq() == 0) {
 				addMatchingsDTO aDTO = addMatchingsDTO.builder()
@@ -174,6 +175,7 @@ public class MatchingService {
 						.fieldSeq(dto.getMdto().get(i).getFieldSeq())
 						.build();
 				mm.insertMatchings(aDTO);
+				matchingSeqList.add(mm.selectMaxMatchingSeq());
 			}
 			else {
 				if(!mm.selectMatchingStatus(dto.getMdto().get(i).getMatchingSeq()).equals("매칭중")) {
@@ -191,8 +193,8 @@ public class MatchingService {
 		}
 
 		int matchingAddSeq = mm.selectMatchingAddSeq();
-		System.out.println(matchingAddSeq);
-		
+
+		int j = 0;
 		for(int i=0; i<dto.getMdto().size(); i++) {
 			if(dto.getType().equals("팀")) {
 				String teamName = tm.selectTeamNameById(dto.getUserId());
@@ -218,6 +220,10 @@ public class MatchingService {
 						.matchingSeq(dto.getMdto().get(i).getMatchingSeq())
 						.matchingAddSeq(matchingAddSeq)
 						.build();
+				if(addListDTO.getMatchingSeq() == 0) {
+					addListDTO.setMatchingSeq(matchingSeqList.get(j));
+					j++;
+				}
 				mm.insertMatchingAddLists(addListDTO);
 				MatchingCountDTO mcDTO = MatchingCountDTO.builder()
 						.matchingSeq(addListDTO.getMatchingSeq())

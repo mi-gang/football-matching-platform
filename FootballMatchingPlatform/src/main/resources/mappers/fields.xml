@@ -45,7 +45,7 @@
 	
 	<!-- 구장 정보 조회(매칭신청 할 때) -->
 	<select id="selectFieldInfo" resultType="com.kosta.project.dto.FieldsDTO" parameterType="java.lang.Integer">
-		SELECT field_name as fieldName, MIN(field_img) as fieldImg, field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_content as fieldContent
+		SELECT field_name as fieldName, MIN(field_img) as fieldImg, field_address as fieldAddress, field_address_detail as fieldAddressDetail,
 		shower_room as showerRoom, rent_ball as rentBall, rent_shoes as rentShoes, parking, sell_drink as sellDrink
 		FROM fields f, field_imgs fi
 		WHERE f.field_seq = #{fieldSeq}

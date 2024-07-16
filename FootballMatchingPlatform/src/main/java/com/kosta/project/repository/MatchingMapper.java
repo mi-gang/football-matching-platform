@@ -23,6 +23,7 @@ public interface MatchingMapper {
 	List<MatchingsDTO> selectMatchingsList(MatchingConditionDTO dto);
 	List<MatchingsDTO> selectMatchingsListByRegion(MatchingConditionDTO dto);
 	void insertMatchings(addMatchingsDTO dto);
+	int selectMaxMatchingSeq();
 	void insertMatchingAdds(String userId);
 	void insertMatchingAddsByTeam(int teamSeq);
 	int selectMatchingAddSeq();

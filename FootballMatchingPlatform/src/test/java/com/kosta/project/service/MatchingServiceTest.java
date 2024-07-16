@@ -46,14 +46,15 @@ public class MatchingServiceTest {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void getMatchingsListByRegion() {
 		MatchingConditionDTO dto = MatchingConditionDTO.builder()
-				.matchingDate("2024-07-10")
-				.matchingTime("14 16")
-				.fieldAddress("금천구 영등포구")
+				.matchingDate("2024-07-16")
+				.matchingTime("8 10")
+				.fieldAddress("미추홀구")
 				.build();
 		List<MatchingsDTO> matchingsDTO = ms.getMatchingsListByRegion(dto);
+		System.out.println(matchingsDTO);
 	}
 	
 	//@Test
