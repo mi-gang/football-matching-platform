@@ -131,7 +131,7 @@
 	<!-- 가입 신청된 목록 조회 -->
 	<select id="selectApplyTeamList" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT t.team_seq, team_name, possible_a AS possA, possible_b AS possB, possible_c AS possC,
-		possible_d AS possD, week_type, week_time, hope_time,
+		possible_d AS possD, week_type, week_time, hope_time, hometown,
 		COUNT(case when tm.team_member_status=FALSE AND tm.team_member_delete=FALSE then 1 END)
 		AS memberCount
 		FROM applys a
@@ -219,7 +219,8 @@
 
 	<!-- [팀장] 가입 신청 목록 조회 -->
 	<select id="selectApplyList" resultType="com.kosta.project.dto.ApplyDTO">
-		SELECT a.user_id AS userId, nickname, birthday, gender, user_tier AS userTier, email
+		SELECT a.user_id AS userId, nickname, birthday, gender, user_tier AS userTier, email,
+		YEAR(CURDATE()) - YEAR(birthday) + 1 AS age
 		FROM users u, applys a
 		WHERE u.user_id = a.user_id AND a.team_seq = (SELECT team_seq FROM teams WHERE team_name=
 		(SELECT team_name FROM teams WHERE leader_id=#{userId}))

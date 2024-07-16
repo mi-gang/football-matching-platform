@@ -79,7 +79,7 @@
     </div>
 
     <!-- 가입 신청 모달 -->
-    <div class="modal" id="addApply" tabindex="-1">
+    <div class="modal" id="addApplyModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content align-items-center">
           <div class="modal-header border-bottom-0 m-2">
@@ -96,7 +96,42 @@
       </div>
     </div>
 
+	<!-- 가입신청 취소 모달 -->
+	<div class="modal" id="cancelModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content align-items-center">
+          <div class="modal-header border-bottom-0 m-2">
+            <h1 class="modal-title fs-5" id="teamModalTitle2"></h1>
+          </div>
+          <div class="modal-body">
+            <p>가입 신청을 취소 하시겠습니까?</p>
+          </div>
+          <div class="modal-footer justify-content-center border-top-0">
+            <button type="button" class="btn btn-success" id="cancelApply">취소하기</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 팀 해체하기 모달 -->
+   	<div class="modal" id="deleteTeamModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content align-items-center">
 
+          <div class="modal-body mt-4">
+            <p>팀을 해체 하시겠습니까?</p>
+          </div>
+          <div class="modal-footer justify-content-center border-top-0">
+            <button type="button" class="btn btn-success" id="deleteTeam">해체하기</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" id="cancel">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="tost_message">팀원이 존재합니다.</div>
+    
     <!-- 하단 메뉴바 -->
     <nav></nav>
   </div>

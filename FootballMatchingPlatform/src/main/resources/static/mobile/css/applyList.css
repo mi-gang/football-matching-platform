@@ -5,6 +5,10 @@
     padding-bottom: 0;
 }
 
+.email{
+	font-size : 0.8rem;
+}
+
 #title-container {
     display: flex;
     justify-content: space-between;
@@ -37,13 +41,15 @@
     margin-right: 4rem;
 }
 
-button {
-    position: fixed;
-    left: 50%;
+#createTeam{
+	position : fixed;
+	left: 50%;
+	bottom : 8%;
     transform: translate(-50%, 0);
-    bottom: 4rem;
-    background: #73A772;
-    border: 1px solid #73A772;
-    border-radius: 20px;
-    color: #ffffff;
+}
+
+#createTeam > button{
+	background-color : #73A772;
+	color: white;
+
 }

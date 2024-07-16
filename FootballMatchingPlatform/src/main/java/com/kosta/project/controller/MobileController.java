@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
+import com.kosta.project.dto.TeamDTO;
 import com.kosta.project.service.FastMatchingService;
 import com.kosta.project.service.MainPageService;
 
@@ -71,14 +72,7 @@ public class MobileController {
 	@GetMapping("/addScore")
 	public String getAddScore() {
 		return "addScore";
-	}
-	
-	@GetMapping("/applyList")
-	public String getApplyList() {
-		return "applyList";
-	}
-	
-	
+	}	
 	
 	
 	
@@ -243,8 +237,22 @@ public class MobileController {
 		return "team_member";
 	}
 	
+	@GetMapping("/applyList")
+	public String getApplyList(Model model) {
+		model.addAttribute("applyList", ts.getApplyList("user00104"));
+		return "team_applyList";
+	}
+	
 	@GetMapping("/teamCreate")
-	public String getTeamCreate() {
+	public String getTeamCreate(@RequestParam(required = false) Integer teamSeq, Model model) {
+		TeamDTO dto = null;
+		if(teamSeq == null) {
+			dto = new TeamDTO();
+		}else {
+			int no = teamSeq.intValue();
+			dto = ts.getTeamInfoByModal(no);
+		}
+		model.addAttribute("team", dto);
 		return "team_Create";
 	}
 	

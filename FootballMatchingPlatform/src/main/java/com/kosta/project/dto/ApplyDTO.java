@@ -26,6 +26,7 @@ public class ApplyDTO {
 	private String nickname;
 	private String birthday;
 	private String gender;
+	private int age;
 	private String userTier;
 	private String email;
 }
