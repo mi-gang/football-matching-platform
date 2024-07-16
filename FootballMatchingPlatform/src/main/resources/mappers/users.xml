@@ -83,8 +83,7 @@
         address, game_count, win_count, user_rank, last_login_date, join_date, user_score, report_count,
         suspended_time, user_status, user_tier)
     VALUES (#{userId}, #{password}, #{nickname}, #{name}, #{birthday}, #{gender}, #{phoneNumber}, #{email},
-        #{address}, #{gameCount}, #{winCount}, #{userRank}, #{lastLoginDate}, #{joinDate}, #{userScore}, #{reportCount},
-        #{suspendedTime}, #{userStatus}, #{userTier})
+        #{address},  0, 0, 0, null, NOW(), 100, 0, NULL, "U", "D")
   </insert>
 
 

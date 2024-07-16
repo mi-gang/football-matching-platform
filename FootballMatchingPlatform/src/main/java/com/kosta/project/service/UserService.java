@@ -69,8 +69,8 @@ public class UserService {
 	}
 	
 	//회원가입하기
-	public void addUserJoin(UserDTO userDTO) {
-		um.insertUserJoin(userDTO);
+	public void addUserJoin(UserDTO dto) {
+		um.insertUserJoin(dto.getUserId(),dto.getPassword(),dto.getNickname(),dto.getName(),dto.getBirthday(),dto.getGender(),dto.getPhoneNumber(),dto.getEmail(),dto.getAddress());
 	}
 	
 	//이름, 이메일이 일치하는 아이디 불러오기

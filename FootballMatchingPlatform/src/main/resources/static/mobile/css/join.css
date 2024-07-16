@@ -69,7 +69,6 @@ input{
 #text-name{
     margin-right: 20.5rem;
 }
-
 #text-id{
     margin-right: 19rem;
 }
@@ -134,6 +133,10 @@ button{
 .click{
     background-color: #73A772;
     color: #FFFFFF;
+}
+
+#invalid-name-check-fail{
+    color: #FF7D7D;	
 }
 
 #invalid-pw-check-success{
