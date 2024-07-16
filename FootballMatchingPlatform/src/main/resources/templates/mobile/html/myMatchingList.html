@@ -67,13 +67,48 @@
                 <button
                         type="button"
                         class="btn-setting"
-                        id="withdrawModal-btn"
+                        id="cancelModalBtn"
                         data-bs-toggle="modal"
                         data-bs-dismiss="modal"
-                        data-bs-target="#withdrawModal-3"
                 >
                     취소하기
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 취소 완료 모달 -->
+<div class="modal" id="cancelSuccessModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+<!--                <button-->
+<!--                        type="button"-->
+<!--                        class="btn-close"-->
+<!--                        data-bs-dismiss="modal"-->
+<!--                ></button>-->
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="modal-body-wrapper">
+                    <h4 class="modal-title">취소 완료되었습니다.</h4>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                                <button
+                                        type="button"
+                                        class="btn-setting"
+                                        id="cancelSuccessModalBtn"
+                                        data-bs-toggle="modal"
+                                        data-bs-dismiss="modal"
+                                >
+                                    닫기
+                                </button>
             </div>
         </div>
     </div>
@@ -118,7 +153,7 @@
     </div>
 </div>
 
-<!-- 결제 모달 -->
+<!-- 결제 완료 모달 -->
 <div class="modal" id="paymentSuccessModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -134,7 +169,7 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="modal-body-wrapper">
-                    <span> 결제 완료되었습니다. </span>
+                    <h4 class="modal-title">결제 완료되었습니다.</h4>
                 </div>
             </div>
 

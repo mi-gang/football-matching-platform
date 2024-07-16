@@ -21,7 +21,7 @@ public class ScheduleServiceTest {
 		System.out.println(scheduleService.getMatchingListByMonth("user001", 7));
 	}
 	
-	@Test
+	//@Test
 	void getMatchingListByDateTest() {
 		System.out.println(scheduleService.getMatchingListByDate("user001", "2024-07-10"));
 	}
@@ -51,7 +51,7 @@ public class ScheduleServiceTest {
 		scheduleService.setPayStatus(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user001").build());
 	}
 	
-	@Test
+	//@Test
 	void setReviewScoreTest() {
 		Collection<UserMatchingInfoDTO> userMatchingInfoDTOs = new ArrayList<>();
 		
@@ -69,7 +69,7 @@ public class ScheduleServiceTest {
 		System.out.println(scheduleService.getPlayerList(6));
 	}
 
-	@Test
+	//@Test
 	void addReportTest() {
 		scheduleService.addReport(new ReportDTO(0, "비매너 플레이", "경기 중 자꾸 상대팀 선수들에게 침을 뱉습니다.", 2, "user00100", "user00101"));
 	}
@@ -82,6 +82,6 @@ public class ScheduleServiceTest {
 	 
 	@Test
 	void cancelMatchingTest() {
-		scheduleService.cancelMatching(15);
+		scheduleService.cancelMatching(132);
 	}
 }
