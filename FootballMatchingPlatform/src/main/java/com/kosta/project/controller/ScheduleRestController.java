@@ -1,6 +1,7 @@
 package com.kosta.project.controller;
 
 import com.kosta.project.dto.MatchingScheduleListDTO;
+import com.kosta.project.dto.ReportDTO;
 import com.kosta.project.dto.UserMatchingInfoDTO;
 import com.kosta.project.dto.UserPlayInfoDTO;
 import com.kosta.project.service.ScheduleService;
@@ -129,9 +130,27 @@ public class ScheduleRestController {
         return new ResponseEntity<>(userPlayInfoDTOS, HttpStatus.OK);
     };
 
+    @PostMapping("/review-scores")
+    public ResponseEntity<String> setReviewScores(@RequestBody Collection<UserMatchingInfoDTO> userMatchingInfoDTOs, @RequestParam int matchingAddListSeq) {
+        try {
+            scheduleService.setReviewScore(userMatchingInfoDTOs, matchingAddListSeq);
+            return ResponseEntity.ok("set Review Scores successfully.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to set Review Scores: " + e.getMessage());
+        }
+    };
 
-
-
+    @PostMapping("report")
+    public ResponseEntity<String> addReport(@RequestBody ReportDTO reportDTO) {
+        try {
+            scheduleService.addReport(reportDTO);
+            return ResponseEntity.ok("add report successfully.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to add report: " + e.getMessage());
+        }
+    };
 
 
     // 날짜 포맷 검증

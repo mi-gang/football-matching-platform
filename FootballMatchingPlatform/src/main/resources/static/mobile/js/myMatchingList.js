@@ -72,9 +72,10 @@ $("#matchings-wrapper").on("click", ".cancel-matching-btn", function () {
 
 // 매칭 취소 모달 - 취소하기 버튼 클릭 시
 $("#cancelModalBtn").on("click", function (){
-    let matchingAddListSeq = $("#cancelModalBtn").data("matchingAddListSeq");
+    let matchingAddListSeq = $("#cancelModalBtn").attr("data-matchingAddListSeq");
+    console.log(matchingAddListSeq);
 
-    if ($("#myElement").hasClass("cancel-matching")) {
+    if ($("#cancelModalBtn").hasClass("cancel-matching")) {
         fetch(`/schedule/matching-add-list-seq/${matchingAddListSeq}/cancel`, {
             method: "PATCH",
             headers: {
@@ -99,7 +100,7 @@ $("#cancelModalBtn").on("click", function (){
                 console.error("Fetch error:", error);
                 alert("An error occurred while updating cancel status.");
             });
-    } else if($("#myElement").hasClass("remove-matching")) {
+    } else if($("#cancelModalBtn").hasClass("remove-matching")) {
         fetch(`/schedule/matching-add-list-seq/${matchingAddListSeq}`, {
             method: "DELETE",
             headers: {
@@ -110,7 +111,6 @@ $("#cancelModalBtn").on("click", function (){
             .then(response => {
                 if (response.ok) {
                     modal.show()
-
                 } else {
                     return response.text().then(errorText => {
                         throw new Error(errorText);
@@ -127,7 +127,7 @@ $("#cancelModalBtn").on("click", function (){
 
 //매칭 취소 완료, 닫기 버튼 클릭 시
 $("#cancelSuccessModalBtn").on("click", function () {
-    location.href = '/schedule/matches';
+    location.href = '/myMatchingList';
 });
 
 
@@ -254,6 +254,13 @@ $(document).ready(function () {
 });
 
 
+
+
+
+
+
+
+
 // 매칭 리스트 생성
 function getMatchigList(item) {
     // matching-wrapper div 생성
@@ -269,11 +276,13 @@ function getMatchigList(item) {
     // matching-status span 생성
     const matchingStatus = document.createElement('span');
     matchingStatus.textContent = item.matchingStatus;
+    if (item.cancelStatus)
+        matchingStatus.textContent = '매칭취소';
 
     matchingStatus.className = 'matching-status status-2';
     if (item.matchingStatus == '매칭중')
         matchingStatus.className = 'matching-status status-1';
-    else if (item.matchingStatus == '매칭실패' || item.matchingStatus == '경기취소')
+    else if (item.matchingStatus == '매칭실패' || item.matchingStatus == '경기취소' || item.cancelStatus)
         matchingStatus.className = 'matching-status status-3';
 
 
