@@ -2,6 +2,8 @@ package com.kosta.project.controller;
 
 import java.util.List;
 
+import com.kosta.project.dto.UserMatchingInfoDTO;
+import com.kosta.project.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
-import com.kosta.project.service.FastMatchingService;
-import com.kosta.project.service.MainPageService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import com.kosta.project.service.TeamService;
-import com.kosta.project.service.MatchingService;
 
 
 @Controller
@@ -32,6 +30,7 @@ public class MobileController {
 	private final MainPageService mps;
 	private final TeamService ts;
 	private final MatchingService ms;
+	private final ScheduleService ss;
 	
 	@GetMapping("/fastmatchinglist")
 	public String getFastMatchingList(Model model) {
@@ -68,8 +67,14 @@ public class MobileController {
 		return "addedFieldInfo";
 	}
 	
-	@GetMapping("/addScore")
-	public String getAddScore() {
+	@GetMapping("/addScore/{matchingSeq}")
+	public String getAddScore(@PathVariable("matchingSeq") int matchingSeq, Model model) {
+
+		String userId = "user001";
+
+		model.addAttribute("playerList", ss.getOpposingTeamPlayerList(UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingSeq).build()));
+		model.addAttribute("matchingSeq", matchingSeq);
+
 		return "addScore";
 	}
 	

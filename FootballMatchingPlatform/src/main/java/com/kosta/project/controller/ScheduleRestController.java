@@ -2,6 +2,7 @@ package com.kosta.project.controller;
 
 import com.kosta.project.dto.MatchingScheduleListDTO;
 import com.kosta.project.dto.UserMatchingInfoDTO;
+import com.kosta.project.dto.UserPlayInfoDTO;
 import com.kosta.project.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -84,7 +85,49 @@ public class ScheduleRestController {
         }
     }
 
+    @DeleteMapping("/matching-add-list-seq/{matchingAddListSeq}")
+    public ResponseEntity<Void> removeMatching(@PathVariable int matchingAddListSeq) {
+        try {
+            scheduleService.revmoveMatching(matchingAddListSeq);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
+//    @PatchMapping("/matching-add-list-seq/{matchingAddListSeq}")
+//    public ResponseEntity<String> cancelMatching(@PathVariable int matchingAddListSeq) {
+//
+//        try {
+//            scheduleService.cancelMatching(matchingAddListSeq);
+//            return ResponseEntity.ok("Cancel status updated successfully.");
+//        } catch (RuntimeException e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update cancel status.");
+//        }
+//    }
+
+    @PatchMapping("/matching-add-list-seq/{matchingAddListSeq}/cancel")
+    public ResponseEntity<String> cancelMatching(@PathVariable int matchingAddListSeq) {
+        try {
+            scheduleService.cancelMatching(matchingAddListSeq);
+            return ResponseEntity.ok("Cancel status updated successfully.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to update cancel status: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/{matchingSeq}/opposing-players")
+    public ResponseEntity<Collection<UserPlayInfoDTO>> getOpposingTeamPlayerList(@PathVariable int matchingSeq) {
+        // 세션으로 유저 아이디 구하기
+        // @SessionAttribute("userId") String userId
+        String userId = "user001";
+
+        Collection<UserPlayInfoDTO> userPlayInfoDTOS = new ArrayList<>();
+        userPlayInfoDTOS = scheduleService.getOpposingTeamPlayerList(UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingSeq).build());
+
+        return new ResponseEntity<>(userPlayInfoDTOS, HttpStatus.OK);
+    };
 
 
 
