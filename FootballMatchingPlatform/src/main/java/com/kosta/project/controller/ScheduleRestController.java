@@ -1,9 +1,6 @@
 package com.kosta.project.controller;
 
-import com.kosta.project.dto.MatchingScheduleListDTO;
-import com.kosta.project.dto.ReportDTO;
-import com.kosta.project.dto.UserMatchingInfoDTO;
-import com.kosta.project.dto.UserPlayInfoDTO;
+import com.kosta.project.dto.*;
 import com.kosta.project.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -131,9 +129,9 @@ public class ScheduleRestController {
     };
 
     @PostMapping("/review-scores")
-    public ResponseEntity<String> setReviewScores(@RequestBody Collection<UserMatchingInfoDTO> userMatchingInfoDTOs, @RequestParam int matchingAddListSeq) {
+    public ResponseEntity<String> setReviewScores(@RequestBody UserScoreInfoDTO userMatchingInfoDTOs, @RequestParam int matchingAddListSeq) {
         try {
-            scheduleService.setReviewScore(userMatchingInfoDTOs, matchingAddListSeq);
+            scheduleService.setReviewScore(userMatchingInfoDTOs.getInfoDTOS(), matchingAddListSeq);
             return ResponseEntity.ok("set Review Scores successfully.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

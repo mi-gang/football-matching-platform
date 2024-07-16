@@ -338,7 +338,9 @@ function getMatchigList(item) {
     console.log(!item.matchingStatus === '경기확정')
 
     // 경기 확정 상태 아닐 때만
-    if (item.matchingStatus != '경기확정' && item.matchingStatus != '매칭실패' && item.matchingStatus != '경기취소' && item.matchingStatus != '경기완료') {
+    if (item.matchingStatus != '경기확정' && item.matchingStatus != '매칭실패'
+        && item.matchingStatus != '경기취소' && item.matchingStatus != '경기완료'
+        && !item.cancelStatus) {
 
         if (item.matchingStatus != '매칭중') {
             // pay-matching-btn 버튼 생성
