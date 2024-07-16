@@ -136,13 +136,8 @@ public class TeamService {
 	}
 	
 	// [팀장] 팀 해체하기
-	public boolean setTeamDismantleStatus(String userId) {
-		boolean res = false;
-		if(tm.selectTeamMemberCount(userId) == 1) {
-			int teamSeq = tm.selectTeamSeq(userId);
-			res = tm.updateTeamDismantleStatus(teamSeq);
-		}
-		return res;
+	public boolean setTeamDismantleStatus(int teamSeq) {
+		return tm.updateTeamDismantleStatus(teamSeq);
 	}
 	
 	// 팀 나가기

@@ -1,7 +1,7 @@
 
 //팀 유무 판단
-const userId = "user010";
-isTeam(userId);
+const userId = "user001";
+isTeam();
 
 // 전체 팀 순위 클릭 시
 $('#allTeamRank').on('click', function () {
@@ -22,6 +22,15 @@ $('#possJoin').on('click', function () {
   possJoinTeam();
 })
 
+// 가입 신청 목록
+$('#joinList').on('click', function(){
+	$(".selectBtn").removeClass('btnClick');
+  	$("#joinList > button").addClass('btnClick');
+  	$("#createTeamBox").removeClass("d-block");
+ 	$("#createTeamBox").addClass("d-none");
+  	joinList();
+})
+
 // 팀 생성하기 버튼 클릭 시
 $('#addTeam').on('click',function(){
 	location.replace('/teamCreate');
@@ -40,11 +49,10 @@ $("#searchTeamButton").on("click", function () {
 });
 
 // 팀 유무 확인
-function isTeam(userId) {
-  fetch("/team/isTeam/" + userId)
+function isTeam() {
+  fetch("/team/isTeam")
     .then(response => response.json())
     .then(data => {
-      var userId = data.result;
 
       if (data.result === " ") {
         $("#myTeamInfo").hide();
@@ -66,7 +74,8 @@ function isTeam(userId) {
 }
 
 
-// 전체 팀 순위
+/* =========== 팀 순위 목록 =========== */
+
 function allTeamRank() {
   fetch("/team/rank")
     .then(response => response.json())
@@ -101,11 +110,12 @@ function teamInfo(){
 }
 
 
+/* =========== 가입 가능한 팀 목록 =========== */
 
 // 가입 신청 버튼
 function joinBtnClick() {
   
-	$('#addApply').on('show.bs.modal', function(event) {          
+	$('#addApplyModal').on('show.bs.modal', function(event) {          
 		teamName = $(event.relatedTarget).data('name');
 		$('#teamModalTitle').text(teamName);
 		
@@ -130,9 +140,10 @@ function joinBtnClick() {
 }
 
 
+
 //가입 가능팀 조회
 function possJoinTeam() {
-  fetch("/team/possJoin/" + userId)
+  fetch("/team/possJoin")
     .then(response => response.json())
     .then(data => {
       let res = data.result;
@@ -168,7 +179,7 @@ function possJoinTeam() {
            </div>
            <div class="col d-flex justify-content-end p-0">
               <button class="joinBtn rounded-5 p-2"
-              data-bs-toggle="modal" data-bs-target="#addApply"
+              data-bs-toggle="modal" data-bs-target="#addApplyModal"
               data-teamno = "`+ res[i].teamSeq+`" 
               data-name="`+ res[i].teamName +`">가입신청</button>
             </div>
@@ -183,8 +194,109 @@ function possJoinTeam() {
     })
 }
 
+/* =========== 가입 신청 목록 =========== */
+
+// 신청 취소 버튼
+function cancelBtnClick(){
+	
+	$('#cancelModal').on('show.bs.modal', function(event) {          
+		teamName = $(event.relatedTarget).data('name');
+		$('#teamModalTitle2').text(teamName);
+		var teamSeq = $(event.relatedTarget).data('teamno');
+		
+		$("#cancelApply").on('click',function(){
+			$.ajax({
+		      url: "/team/cancel/"+teamSeq,
+		      type: "delete",
+		      dataType: "json",
+		      success: function(data) {
+		          res = data.result;
+		          location.reload(true);
+		      },
+		      error: function() {
+		          alert("error");
+		      }
+		    });
+		})
+		
+	});
+}
+
+function joinList(){
+  fetch("/team/joinApply")
+    .then(response => response.json())
+    .then(data => {
+      let res = data.result;
+
+      let str = "";
+      for (var i in res) {
+		str += `
+		<div class="content-container border border-2 rounded-4 p-3">
+          <div class="teamInfo col-9 d-flex align-items-center content-text p-0">
+            <div class="d-flex">
+              <div class="content-title pe-2">`+ res[i].teamName +`</div>
+              <div class="content-tier ps-1">`;
+
+        if (res[i].possA == false && res[i].possB == false &&
+          res[i].possC == false && res[i].possD == false) {
+          str += '<span class="badge rounded-5">남녀무관</span>';
+        }
+        else {
+          if (res[i].possA == true)
+            str += '<span class="badge rounded-5">A</span>';
+          if (res[i].possB == true)
+            str += '<span class="badge rounded-5">B</span>';
+          if (res[i].possC == true)
+            str += '<span class="badge rounded-5">C</span>';
+          if (res[i].possD == true)
+            str += '<span class="badge rounded-5">D</span>';
+        }
+        
+        str += `</div>
+              </div>
+              <div class="content-info">`+ res[i].weekType + `/` +
+          res[i].weekTime + `/` + res[i].hopeTime + `/` + res[i].hometown + `</div>
+              <div class="content-member p-0">` + res[i].memberCount + `/10명</div>
+           </div>
+
+          <div class="col d-flex justify-content-end p-0">
+            <button class="cancelApply rounded-5 p-2"
+             data-bs-toggle="modal" data-bs-target="#cancelModal"
+              data-teamno = "`+ res[i].teamSeq+`" 
+              data-name="`+ res[i].teamName +`">신청취소</button>
+          </div>
+        </div>
+		`;
+      }
+      $('#dataBox').html(str);
+	  cancelBtnClick();
+    })	
+    
+}
+
 
 // ====================== 팀 있을 경우 ======================
+
+// 팀장 조회
+function getTeamLeader(teamSeq){
+	let res = {};
+	$.ajax({
+	    url: "/team/leader/"+teamSeq,
+	    type: "GET",
+	    async: false,
+	    dataType: "json",
+	    success: function(data) {
+	        res = data.result;
+	    },
+	    error: function() {
+	        alert("error");
+	    }
+  	});
+
+	return res;
+}
+
+
 
 // [ 버튼 이벤트 ]
 // 팀 나가기
@@ -206,6 +318,7 @@ function updateMemberStatus() {
 }
 
 
+
 // 팀원 조회
 function myTeamMember(teamSeq){
   let res = {};
@@ -225,24 +338,6 @@ function myTeamMember(teamSeq){
   return res;
 }
 
-// 팀장 조회
-function getTeamLeader(teamSeq){
-	let res = {};
-	$.ajax({
-	    url: "/team/leader/"+teamSeq,
-	    type: "GET",
-	    async: false,
-	    dataType: "json",
-	    success: function(data) {
-	        res = data.result;
-	    },
-	    error: function() {
-	        alert("error");
-	    }
-  	});
-
-	return res;
-}
 
 // [더보기] 팀원 정보
 function moreTeamMember(){
@@ -252,12 +347,12 @@ function moreTeamMember(){
 }
 // 내 팀정보
 function myTeamInfo() {
-  fetch("/team/myTeam/" + userId)
+  fetch("/team/myTeam")
     .then(response => response.json())
     .then(data => {
       let res = data.result;
       $("#searchBox").hide();
-      console.log(res);
+
       const members = myTeamMember(res.teamSeq);
       const leader = getTeamLeader(res.teamSeq);
       let str = "";
@@ -389,9 +484,16 @@ function myTeamInfo() {
                         		<button type="button" class="joinBtn p-2 ps-4 pe-4" id="addMember">팀원 추가 모집</button>
                   			</div>`;					
 				}
+				else{
+              		str +=`<div class="">
+                        		<button type="button" class="joinBtn p-2 ps-4 pe-4" id="joinApplyList">신청 목록</button>
+                  			</div>`;						
+				}
 	
               	str +=`<div class="">
-                        	<button type="button" class="joinBtn p-2 ps-4 pe-4" id="deleteTeam">팀 해체하기</button>
+                        	<button type="button" class="joinBtn p-2 ps-4 pe-4" id="deleteTeamBtn"
+                        	 data-bs-toggle="modal" data-bs-target="#deleteTeamModal"
+                        	>팀 해체하기</button>
                    		</div>
                 	</div>`;
 			}	
@@ -407,16 +509,39 @@ function myTeamInfo() {
       	$('#dataBox').html(str);
 		updateMemberStatus();
 		moreTeamMember();
+		getJoinApplyListAndDeleteTeam(res.memberCount, res.teamSeq);
     })
 }
 
+// 신청 목록 & 팀 해체하기
+function getJoinApplyListAndDeleteTeam(memberCount, teamSeq){
+	// 신청목록
+	$('#joinApplyList').on('click', function(){
+		location.replace('/applyList?teamSeq='+teamSeq);
+	})
+	
+	//추가모집하기
+	$('#addMember').on('click',function(){
+		location.href="/teamCreate?teamSeq="+teamSeq;
+	})
+	
+	//팀 해체하기
+	$('#deleteTeam').on('click', function(){
+		if(memberCount !== 1){	
+			console.log("팀원존재");
+			tostOn();
+		}else{
+			console.log("해체완료")
+		}	
+	})
+	
+}
 
-// 팀 해체하기
-$('#deleteTeam').on('click',function(){
-	
-	
-	
-	
-})
+function tostOn(){
+	$("#tost_message").addClass("active");
+    setTimeout(function(){
+		$("#tost_message").removeClass("active");
+    },1000);
+}
 
 
