@@ -28,19 +28,19 @@
                 </div>
             </div>
             
-            <ul id="list-container" th:each="i : ${addedFieldList}">
+            <ul id="list-container" >
             
-            	<div class="content-box" th:value="${i.fieldSeq}">
-                    <div class="content-text" th:value="${i.fieldSeq}">
+            	<div class="content-box" th:each="i : ${addedFieldList}">
+                    <div class="content-text" th:value="${i.fieldSeq}" onclick="location.href='/addedFieldInfo/'">
                     	<span th:value="${i.fieldSeq}" class = "hihihi"></span>
                         <div class="content-title" th:value="${i.fieldSeq}" th:text="${i.fieldName}"></div>
                         <div class="content-address" th:text="${i.fieldAddress} + ' ' + ${i.fieldAddressDetail}">서울 강서구 화곡동 산 199</div>
                         <div class="content-info">
-						  <span th:if="${i.showerRoom} ? '샤워실 ' : ''"></span>
-						  <span th:if="${i.parking} ? '주차장 ' : ''"></span>
-						  <span th:if="${i.sellDrink} ? '음료판매 ' : ''"></span>
-						  <span th:if="${i.rentShoes} ? '축구화 대여 ' : ''"></span>
-						  <span th:if="${i.rentBall} ? '축구공 대여 ' : ''"></span>
+						  <p th:if="${i.showerRoom}">샤워실 </p>
+						  <p th:if="${i.parking}">주차장 </p>
+						  <p th:if="${i.sellDrink}">음료판매 </p>
+						  <p th:if="${i.rentShoes}">축구화 대여 </p>
+						  <p th:if="${i.rentBall}">축구공 대여 </p>
 						</div>
                     </div>
                     <img src="/mobile/img/구장 사진.svg">
@@ -97,6 +97,70 @@
         });
 		
 		
+		
+		window.onload = function(){
+		$('#list-container').empty();
+		
+			 $.ajax({
+            type: 'get',
+            url: '/api/field',
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            $('#list-container').empty();
+            for(let i = 0; i<response.result.length; i++){
+            	var showerRoom = "";
+            	var parking = "";
+            	var sellDrink = "";
+            	var rentBall = "";
+            	var rentShoes = "";
+            	if(response.result[i].showerRoom){
+            		showerRoom = "샤워실 ";
+            	}
+            	if(response.result[i].parking){
+            		parking = "주차장 ";
+            	}
+            	if(response.result[i].sellDrink){
+            		sellDrink = "음료판매 ";
+            	}
+            	if(response.result[i].rentBall){
+            		rentBall = "축구공 대여 ";
+            	}
+            	if(response.result[i].rentShoes){
+            		rentShoes = "축구화 대여 ";
+            	}
+            	
+            
+            
+            
+            
+            	console.log(response.result[i].fieldName)	
+            	$('#list-container').append("<div class='content-box'>" +
+                  "<div class='content-text' onclick=\"location.href='/addedFieldInfo/" + response.result[i].fieldSeq +"' \"> " +
+                    "<span class = 'hihihi'></span> " +
+                     "<div class='content-title'>" + response.result[i].fieldName +"</div> " +
+                      "<div class='content-address'>" + response.result[i].fieldAddress +"</div> " +
+                      "<div class='content-info'> " +
+						showerRoom 
+						 + parking
+						 + sellDrink
+						 + rentBall
+					 + rentShoes +
+					"</div>" +
+                  "</div>" +
+                  "<img src='/mobile/img/구장 사진.svg'>" +
+             "</div>" +
+           "<div class='line-bottom'></div>");
+            }
+            
+        }).fail(function(error){
+            alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
+        })
+        
+		
+		}
+		
+		
 		// 링크 아직 안 걸렸음. value값을 아직 가져오지 못함.
 //		const containerElement = document.querySelector('.content-text');
 //		
@@ -119,6 +183,72 @@
 
         $("#search").on("click", function () {
             alert($("#search-keyword").val());
+            
+            
+            const data = $("#search-keyword").val();
+            
+             $.ajax({
+            type: 'post',
+            url: '/api/field/search',
+            data: JSON.stringify(data),
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            $('#list-container').empty();
+            for(let i = 0; i<response.result.length; i++){
+            	var showerRoom = "";
+            	var parking = "";
+            	var sellDrink = "";
+            	var rentBall = "";
+            	var rentShoes = "";
+            	if(response.result[i].showerRoom){
+            		showerRoom = "샤워실 ";
+            	}
+            	if(response.result[i].parking){
+            		parking = "주차장 ";
+            	}
+            	if(response.result[i].sellDrink){
+            		sellDrink = "음료판매 ";
+            	}
+            	if(response.result[i].rentBall){
+            		rentBall = "축구공 대여 ";
+            	}
+            	if(response.result[i].rentShoes){
+            		rentShoes = "축구화 대여 ";
+            	}
+            	
+            
+            
+            
+            
+            	console.log(response.result[i].fieldName)	
+            	$('#list-container').append("<div class='content-box'>" +
+                  "<div class='content-text' onclick=\"location.href='/addedFieldInfo/" + response.result[i].fieldSeq +"' \"> " +
+                    "<span class = 'hihihi'></span> " +
+                     "<div class='content-title'>" + response.result[i].fieldName +"</div> " +
+                      "<div class='content-address'>" + response.result[i].fieldAddress +"</div> " +
+                      "<div class='content-info'> " +
+						showerRoom 
+						 + parking
+						 + sellDrink
+						 + rentBall
+					 + rentShoes +
+					"</div>" +
+                  "</div>" +
+                  "<img src='/mobile/img/구장 사진.svg'>" +
+             "</div>" +
+           "<div class='line-bottom'></div>");
+            }
+            
+        }).fail(function(error){
+            alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
+        })
+        
+        
+            
+            
+            
+            
         })
 
         $("#filter-container").on("click", function () {
@@ -168,7 +298,7 @@
                     </div>
                     <div class="gu-line">
                         <input type="checkbox" id="강화군" value="강화군" name="gu"><label for="강화군">강화군</label>
-                        <input type="checkbox" id="옹진군" value="옹진군" name="gu"><label for="옹진군">옹진군</label>
+                        <input type="checkbox" id="미추홀구" value="미추홀구" name="gu"><label for="미추홀구">미추홀구</label>
                     </div>`
                 )
             }
@@ -220,7 +350,88 @@
                 return;
             }
 
-            alert(location + " " + gu_arr);
+
+            
+        for(let i = 0; i<gu_arr.length; i++){    
+            
+        const data = location + " " + gu_arr[i];
+        console.log(data)
+        $.ajax({
+            type: 'post',
+            url: '/api/field/fillter',
+            data: JSON.stringify(data),
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            console.log('ㅎㅇ')
+			console.log(response.result.length)
+			$('#list-container').empty();
+			for(let i = 0; i<response.result.length; i++){
+				            	var showerRoom = "";
+            	var parking = "";
+            	var sellDrink = "";
+            	var rentBall = "";
+            	var rentShoes = "";
+            	if(response.result[i].showerRoom){
+            		showerRoom = "샤워실 ";
+            	}
+            	if(response.result[i].parking){
+            		parking = "주차장 ";
+            	}
+            	if(response.result[i].sellDrink){
+            		sellDrink = "음료판매 ";
+            	}
+            	if(response.result[i].rentBall){
+            		rentBall = "축구공 대여 ";
+            	}
+            	if(response.result[i].rentShoes){
+            		rentShoes = "축구화 대여 ";
+            	}
+            	
+            
+            
+            
+            
+            	console.log(response.result[i].fieldName)	
+            	$('#list-container').append("<div class='content-box'>" +
+                  "<div class='content-text' onclick=\"location.href='/addedFieldInfo/" + response.result[i].fieldSeq +"' \"> " +
+                    "<span class = 'hihihi'></span> " +
+                     "<div class='content-title'>" + response.result[i].fieldName +"</div> " +
+                      "<div class='content-address'>" + response.result[i].fieldAddress +"</div> " +
+                      "<div class='content-info'> " +
+						showerRoom 
+						 + parking
+						 + sellDrink
+						 + rentBall
+					 + rentShoes +
+					"</div>" +
+                  "</div>" +
+                  "<img src='/mobile/img/구장 사진.svg'>" +
+             "</div>" +
+           "<div class='line-bottom'></div>");
+				
+				
+			}
+			
+			
+        }).fail(function(error){
+            alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
+        })
+            
+         }   
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             $("#modal-location").css("display", "none");
         })
     </script>

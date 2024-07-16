@@ -35,7 +35,7 @@ public class MainPageService {
 	
 	// 특정 지역에 있는 구장 불러오기
 	/* 리턴 타입이 리스트여야 하지 않나? (사실 잘 모름) 테스트 해보고 어찌저찌하셈ㅇㅇ */
-	public FieldDTO getFieldListRegion(String fieldAddress) {
+	public List<FieldDTO> getFieldListRegion(String fieldAddress) {
 		return fm.selectFieldListByRegion(fieldAddress);
 	}
 	
@@ -73,7 +73,10 @@ public class MainPageService {
 		return um.selectTopHundredUsersList();
 	}
 	
-	
+	// 모든 구장 목록 중 구장 상세 정보 불러오기
+	public FieldDTO getFieldInfoDetail(int fieldSeq) {
+		return fm.selectFieldInfoDetail(fieldSeq);
+	}
 	
 	
 }

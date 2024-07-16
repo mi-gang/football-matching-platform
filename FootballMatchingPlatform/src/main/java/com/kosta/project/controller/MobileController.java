@@ -37,10 +37,11 @@ public class MobileController {
 	public String getFastMatchingList(Model model) {
 		model.addAttribute("fastmatchinglist", fms.getFastMatchingList());
 		
-		model.addAttribute("fastmatchinglistS", fms.getFastMatchingListBySmall());
-		
-		model.addAttribute("fastmathinglistB", fms.getFastMatchingListByBig());
-		
+		/*
+		 * model.addAttribute("fastmatchinglistS", fms.getFastMatchingListBySmall());
+		 * 
+		 * model.addAttribute("fastmathinglistB", fms.getFastMatchingListByBig());
+		 */		
 		return "fastmatchinglist";
 	}
 	

@@ -337,8 +337,8 @@ input[type="checkbox"]{
 #matchingDateBtns li:first-child {
 	margin-left: 0;
 }
-#matchingDateBtn:hover,
-#matchingDateBtn.aaactive90 {
+
+.matchingDateBtn.active90 {
 	background: #73a772;
 }
 
@@ -411,45 +411,9 @@ input[type="checkbox"]{
 
 
 	<div class = "w-auto h-auto matchingCheckListDiv mt-4">
-		<ul id = "matchingCheckList"  class="matching-list">
-		  <div class = "ulMatchDiv mt-2" th:each="i : ${fastmatchinglist}" id = "matchList1" >
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1">	  
-				<button class = "applyStatus" th:value="${i.matchingSeq}" disabled="true" th:text="${i.playerCount} + '/10명'"></button>
-                <button class="matchOKTier" disabled="true" th:text="${i.matchingTier}"></button><br>
-				<p class = "matchTime mb-0" th:text="${i.matchingDate} + ' ' + ${i.matchingTime} + ':00 ~ ' + ${i.matchingTime + 2} + ':00'"></p><br>				
-				<p class = "matchLocation" th:text="${i.fieldAddress} + ' ' + ${i.fieldAddressDetail}"></p>
-			  </div>	
-              <img class="matchingLocationImage"  src=""/>
-			<hr>			
-		  </div>
+		<ul id="matchingCheckList" class = "matching-list">
+			<h1>로딩 중</h1>
 		</ul>
-		
-		<ul id = "matchingCheckList" class="matching-list">
-		  <div class = "ulMatchDiv mt-2"  th:each="i : ${fastmatchinglistS}"  id = "matchList1" >
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1">	  
-				<button class = "applyStatus" th:value="${i.matchingSeq}" disabled="true" th:text="${i.playerCount} + '/10명'"></button>
-                <button class="matchOKTier" disabled="true" th:text="${i.matchingTier}"></button><br>
-				<p class = "matchTime mb-0" th:text="${i.matchingDate} + ' ' + ${i.matchingTime} + ':00 ~ ' + ${i.matchingTime + 2} + ':00'"></p><br>				
-				<p class = "matchLocation" th:text="${i.fieldAddress} + ' ' + ${i.fieldAddressDetail}"></p>
-			  </div>	
-              <img class="matchingLocationImage"  src=""/>
-			<hr>			
-		  </div>
-		</ul>
-		
-		<ul id = "matchingCheckList" class="matching-list">
-		  <div class = "ulMatchDiv mt-2" th:each="i : ${fastmatchinglistB}"  id = "matchList1" >
-			  <div class = "w-auto h-auto matchInfo mt-1 mx-1">	  
-				<button class = "applyStatus" th:value="${i.matchingSeq}" disabled="true" th:text="${i.playerCount} + '/10명'"></button>
-                <button class="matchOKTier" disabled="true" th:text="${i.matchingTier}"></button><br>
-				<p class = "matchTime mb-0" th:text="${i.matchingDate} + ' ' + ${i.matchingTime} + ':00 ~ ' + ${i.matchingTime + 2} + ':00'"></p><br>				
-				<p class = "matchLocation" th:text="${i.fieldAddress} + ' ' + ${i.fieldAddressDetail}"></p>
-			  </div>	
-              <img class="matchingLocationImage"  src=""/>
-			<hr>			
-		  </div>
-		</ul>
-		
 	</div>
 	
 	
@@ -595,10 +559,35 @@ input[type="checkbox"]{
 
 window.onload = function() {
 	const matchingLists1 = $('.matching-list');
+    $('#matchingCheckList').empty();
 
-    matchingLists1.hide(); // 모든 리스트 숨기기
-
-    matchingLists1.eq(0).show(); // 첫 번째 리스트만 보여주기	
+     $.ajax({
+            type: 'get',
+            url: '/api/fastmatchinglist',
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            console.log('ㅎㅇ')
+			console.log(response.result)
+			for(let i = 0; i<response.result.length; i++){
+				$('#matchingCheckList').append(
+	"<div class = 'ulMatchDiv mt-2' id = 'matchList1' onclick=\"location.href='/fastmatchinginfo/' + " + response.result[i].matchingSeq + " \">" + 
+		"<div class = 'w-auto h-auto matchInfo mt-1 mx-1'>" +
+		 "<button class = 'applyStatus' disabled='true'> " + response.result[i].playerCount + "/10명" + " </button>" +
+		 "<button class='matchOKTier' disabled='true'>" + response.result[i].matchingTier + "</button><br>" +
+		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
+		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
+		"</div>" +
+		"<img class='matchingLocationImage'  src=''/>" +
+	  "<hr>" +			
+	"</div>");
+				
+			} 
+			
+        }).fail(function(error){
+            alert(JSON.stringify(error));
+        })
+	
 }
 
 
@@ -634,7 +623,7 @@ for (let i = 0; i <= 4; i++) {
 dates.forEach((date, i) => {
 	console.log(i)
   $('#matchingDateBtnsLi').append(
-	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='changeButtonColors1(this)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn11(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
 });
 
@@ -666,7 +655,7 @@ backBtn.addEventListener('click', () => {
 backDates.forEach((date, i) => {
 	console.log(i)
   $('#matchingDateBtnsLi').append(
-	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='changeButtonColors1(this)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn11(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
 });
 });
@@ -696,24 +685,24 @@ frontBtn.addEventListener('click', () => {
 frontDates.forEach((date, i) => {
 	console.log(i)
   $('#matchingDateBtnsLi').append(
-	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='changeButtonColors1(this)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn11(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
 });
 });
 	var checkNumber = 0;
 	var selectedDate = null;
-	function change_btn(e) {
-	var btns = document.querySelectorAll("#matchingDateBtn");
-	btns.forEach(function(btn, i) {
-		if(e.currentTarget == btn) {
-			btn.classList.add("active90");
+	function change_btn11(e11) {
+	var btns09 = document.querySelectorAll(".matchingDateBtn");
+	btns09.forEach(function(btn09, i) {
+		if(e11.currentTarget == btn09) {
+			btn09.classList.add("active90");
 		}
 		else {
-			btn.classList.remove("active90");
+			btn09.classList.remove("active90");
 		}
 	});
-	console.log( e.currentTarget.value );
-	selectedDate = e.currentTarget.value;
+	console.log( e11.currentTarget.value );
+	selectedDate = e11.currentTarget.value;
 	}
 	
 	var teamOrSolo = null;
@@ -758,21 +747,21 @@ frontDates.forEach((date, i) => {
 
 
 
-    var selectedMatchDate = null;
+//   var selectedMatchDate = null;
 
-    function change_btn1(e1) {
-	var btns1 = document.querySelectorAll(".matchingDateBtn");
-	btns1.forEach(function(btn1, i) {
-		if(e1.currentTarget == btn1) {
-			btn1.classList.add("aaactive90");
-		}
-		else {
-			btn1.classList.remove("aaactive90");
-		}
-	});
-    selectedMatchDate = e1.currentTarget.value;
-	console.log( e1.currentTarget.value );
-	}
+//    function change_btn1(e1) {
+//	var btns1 = document.querySelectorAll(".matchingDateBtn");
+//	btns1.forEach(function(btn1, i) {
+//		if(e1.currentTarget == btn1) {
+//			btn1.classList.add("aaactive90");
+//		}
+//		else {
+//			btn1.classList.remove("aaactive90");
+//		}
+//	});
+//    selectedMatchDate = e1.currentTarget.value;
+//	console.log( e1.currentTarget.value );
+//	}
 
 
     
@@ -910,11 +899,15 @@ const searchButton = document.getElementById('searchButton');
 
 
 searchButton.addEventListener('click', function() {
+    $('#matchingCheckList').empty();
     const selectedList = [];  
+    const selectedValue12345 = $('.filterSelectbox').val();
   const selectedButtons = document.querySelectorAll('#locationBtns button');  
   const selectedTierButtons = document.querySelectorAll('#OKOKTier button');  
   selectedTierButtons.forEach(function(button, i) {
     //i = 0;
+    
+    
     if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
         // 검색하고자하는 정보입니다
         selectedList[i] = button.value;
@@ -922,23 +915,113 @@ searchButton.addEventListener('click', function() {
 		//console.log(button.value);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
     }
     //i++;
-});
+    
+      selectedButtons.forEach(button => {
 
-
-	// 아직 비동기 시작도 안 함
-
-
-
-  selectedButtons.forEach(button => {
-
-    if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
-
-		console.log(selectedMatchDate + selectedLocation + button.textContent);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
-		
+    if (button.style.backgroundColor == 'rgb(115, 167, 114)' && (selectedList[i] == 'A' || selectedList[i] == 'B' || selectedList[i] == 'C' || selectedList[i] == 'D') && (selectedValue12345 == 1 || selectedValue12345 == 2)) {
+		console.log(selectedDate + selectedLocation + button.textContent + selectedList[i]);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
+	
+	
+	
+	
+	    const data = {
+            'matchingDate' : selectedDate,
+			'fieldAddress' : selectedLocation + ' ' + button.textContent,
+			'matchingTier' : selectedList[i]
+        }
+        $.ajax({
+            type: 'post',
+            url: '/api/fastmatchinglistb',
+            data: JSON.stringify(data),
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            console.log('ㅎㅇ')
+			console.log(response.result)
+			
+			for(let i = 0; i<response.result.length; i++){
+				$('#matchingCheckList').append(
+	"<div class = 'ulMatchDiv mt-2' id = 'matchList1' onclick=\"location.href='/fastmatchinginfo/' + " + response.result[i].matchingSeq + " \">" + 
+		"<div class = 'w-auto h-auto matchInfo mt-1 mx-1'>" +
+		 "<button class = 'applyStatus' disabled='true'> " + response.result[i].playerCount + "/10명" + " </button>" +
+		 "<button class='matchOKTier' disabled='true'>" + response.result[i].matchingTier + "</button><br>" +
+		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
+		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
+		"</div>" +
+		"<img class='matchingLocationImage'  src=''/>" +
+	  "<hr>" +			
+	"</div>" 
+  );
+				
+			} 
+        }).fail(function(error){
+            alert(JSON.stringify(error));
+        })
+	
+	
 		
     }
      
+     
+     
+    if (button.style.backgroundColor == 'rgb(115, 167, 114)' && (selectedList[i] == 'A' || selectedList[i] == 'B' || selectedList[i] == 'C' || selectedList[i] == 'D') && selectedValue12345 == 3) {
+	console.log(selectedDate + selectedLocation + button.textContent + selectedList[i]);  // 검색 시에 이 값 그대로 controller에 날려주면 됩니다
+	
+	const data = {
+            'matchingDate' : selectedDate,
+			'fieldAddress' : selectedLocation + ' ' + button.textContent,
+			'matchingTier' : selectedList[i]
+        }
+        $.ajax({
+            type: 'post',
+            url: '/api/fastmatchinglists',
+            data: JSON.stringify(data),
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            console.log('ㅎㅇ')
+			console.log(response.result)
+			for(let i = 0; i<response.result.length; i++){
+				$('#matchingCheckList').append(
+	"<div class = 'ulMatchDiv mt-2' id = 'matchList1' onclick=\"location.href='/fastmatchinginfo/' + " + response.result[i].matchingSeq + " \">" + 
+		"<div class = 'w-auto h-auto matchInfo mt-1 mx-1'>" +
+		 "<button class = 'applyStatus' disabled='true'> " + response.result[i].playerCount + "/10명" + " </button>" +
+		 "<button class='matchOKTier' disabled='true'>" + response.result[i].matchingTier + "</button><br>" +
+		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
+		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
+		"</div>" +
+		"<img class='matchingLocationImage'  src=''/>" +
+	  "<hr>" +			
+	"</div>");
+				
+			} 
+			
+        }).fail(function(error){
+            alert(JSON.stringify(error));
+        })
+		
+    }
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
   });
+    
+    
+    
+});
+
+
+
+
+
+
 });
 
 
@@ -949,18 +1032,108 @@ searchButton.addEventListener('click', function() {
   function selectedValueOnChange(){
     const selectedValue123 = $('.filterSelectbox').val();
 	const matchingLists = $('.matching-list');
+	$('#matchingCheckList').empty();
 
-    matchingLists.hide(); // 모든 리스트 숨기기
+	
 
     if (selectedValue123 == 1) {
       console.log(selectedValue123)
-      matchingLists.eq(0).show(); // 첫 번째 리스트만 보여주기
+		
+        $.ajax({
+            type: 'get',
+            url: '/api/fastmatchinglist',
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            console.log('ㅎㅇ')
+			console.log(response.result)
+			for(let i = 0; i<response.result.length; i++){
+				$('#matchingCheckList').append(
+	"<div class = 'ulMatchDiv mt-2' id = 'matchList1' onclick=\"location.href='/fastmatchinginfo/' + " + response.result[i].matchingSeq + " \">" + 
+		"<div class = 'w-auto h-auto matchInfo mt-1 mx-1'>" +
+		 "<button class = 'applyStatus' disabled='true'> " + response.result[i].playerCount + "/10명" + " </button>" +
+		 "<button class='matchOKTier' disabled='true'>" + response.result[i].matchingTier + "</button><br>" +
+		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
+		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
+		"</div>" +
+		"<img class='matchingLocationImage'  src=''/>" +
+	  "<hr>" +			
+	"</div>");
+				
+			} 
+			
+        }).fail(function(error){
+            alert(JSON.stringify(error));
+        })
+
+
+
     } else if (selectedValue123 == 2) {
       console.log(selectedValue123)
-      matchingLists.eq(1).show(); // 두 번째 리스트만 보여주기
+
+		
+        $.ajax({
+            type: 'get',
+            url: '/api/fastmatchinglist/big',
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            console.log('ㅎㅇ')
+			console.log(response.result)
+			for(let i = 0; i<response.result.length; i++){
+				$('#matchingCheckList').append(
+	"<div class = 'ulMatchDiv mt-2' id = 'matchList1' onclick=\"location.href='/fastmatchinginfo/' + " + response.result[i].matchingSeq + " \">" + 
+		"<div class = 'w-auto h-auto matchInfo mt-1 mx-1'>" +
+		 "<button class = 'applyStatus' disabled='true'> " + response.result[i].playerCount + "/10명" + " </button>" +
+		 "<button class='matchOKTier' disabled='true'>" + response.result[i].matchingTier + "</button><br>" +
+		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
+		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
+		"</div>" +
+		"<img class='matchingLocationImage'  src=''/>" +
+	  "<hr>" +			
+	"</div>");
+				
+			} 
+			
+        }).fail(function(error){
+            alert(JSON.stringify(error));
+        })
+
+
     } else if (selectedValue123 == 3) {
       console.log(selectedValue123)
-      matchingLists.eq(2).show(); // 세 번째 리스트만 보여주기
+
+		
+        $.ajax({
+            type: 'get',
+            url: '/api/fastmatchinglist/small',
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            console.log('ㅎㅇ')
+			console.log(response.result)
+			for(let i = 0; i<response.result.length; i++){
+				$('#matchingCheckList').append(
+	"<div class = 'ulMatchDiv mt-2' id = 'matchList1' onclick=\"location.href='/fastmatchinginfo/' + " + response.result[i].matchingSeq + " \">" + 
+		"<div class = 'w-auto h-auto matchInfo mt-1 mx-1'>" +
+		 "<button class = 'applyStatus' disabled='true'> " + response.result[i].playerCount + "/10명" + " </button>" +
+		 "<button class='matchOKTier' disabled='true'>" + response.result[i].matchingTier + "</button><br>" +
+		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
+		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
+		"</div>" +
+		"<img class='matchingLocationImage'  src=''/>" +
+	  "<hr>" +			
+	"</div>");
+				
+			} 
+			
+        }).fail(function(error){
+            alert(JSON.stringify(error));
+        })
+
+
+
+
     }
   }
 

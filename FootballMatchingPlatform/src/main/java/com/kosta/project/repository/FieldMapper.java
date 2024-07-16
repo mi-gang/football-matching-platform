@@ -14,9 +14,12 @@ import com.kosta.project.dto.addMatchingListInfo;
 public interface FieldMapper {
 	List<FieldDTO> selectFieldList();
 	List<FieldDTO> selectFieldListByFieldName(String fieldName);
-	FieldDTO selectFieldListByRegion(String fieldAddress);
+	List<FieldDTO> selectFieldListByRegion(String fieldAddress);
 	FieldDTO selectFieldListByFieldNameAndRegion(FieldDTO dto);
 	FieldDTO selectField(int fieldSeq);
+	
+	// 전 구장 정보 불러오기 중 구장 정보 상세 보기
+	FieldDTO selectFieldInfoDetail(int fieldSeq);
 	
 	FieldsDTO selectFieldInfo(int fieldSeq);
 	addMatchingListInfo selectFieldAddressAndName(int fieldSeq);
