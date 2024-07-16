@@ -67,4 +67,15 @@ public class MatchingRestController {
 		result = ms.addMatcings(addDTO);
 		return Map.of("reuslt", result);
 	}
+	
+	@GetMapping("/matchingAddResult")
+	public Map<String, List<MatchingConditionDTO>> getMatchingAddResult(String addType, String userId){
+		List<MatchingConditionDTO> mcDTOList = null;
+		AddMatchingDataDTO addDTO = AddMatchingDataDTO.builder()
+				.type(addType)
+				.userId(userId)
+				.build();
+		mcDTOList = ms.getMatchingAddResult(addDTO);
+		return Map.of("result", mcDTOList);
+	}
 }

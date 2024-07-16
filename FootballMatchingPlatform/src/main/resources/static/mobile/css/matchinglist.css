@@ -100,7 +100,8 @@ input[type="checkbox"]{
 }
 
 .matchInfo{
-	margin-right:2rem;
+	width: 15rem;
+	overflow-x: hidden;
 }
 
 .applyStatus{
@@ -126,7 +127,7 @@ input[type="checkbox"]{
 	white-space: nowrap;
 }
 
-.matchLocation{
+.matchLocation, .fieldName{
 	font-size:0.9rem;
 }
 
@@ -145,7 +146,6 @@ input[type="checkbox"]{
 	background-color:#FFFFFF;
 	color:#626262;
 	width:4rem;
-	height:3rem;
 	font-size:1rem;
 	border-color:#626262;
     text-align: center;
@@ -314,9 +314,7 @@ input[type="checkbox"]{
     color:#a5a5a5 !important;
     border:1px solid #a5a5a5 !important;
 }
-.matchDateH3{
-	margin-left: 8rem;
-}
+
 #matchCheckCloseButton{
 	background: #828282;
     color: #FFFFFF;
@@ -346,7 +344,7 @@ input[type="checkbox"]{
 }
 
 #myApplyListDiv{
-	height: 10rem;
+	height: 12rem;
 }
 
 .applyStatus.active{

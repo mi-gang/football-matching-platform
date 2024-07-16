@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.kosta.project.dto.AddMatchingDataDTO;
 import com.kosta.project.dto.FastMatchingConditionDTO;
 import com.kosta.project.dto.MatchingAddListsDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
@@ -62,7 +63,11 @@ public class MatchingsMapperTest {
 	
 	//@Test
 	void selectMatchingAddSeqTest() {
-		System.out.println(mm.selectMatchingAddSeq());
+		AddMatchingDataDTO addDTO = AddMatchingDataDTO.builder()
+				.type("개인")
+				.userId("user00101")
+				.build();
+		System.out.println(mm.selectMatchingAddSeq(addDTO.getUserId()));
 	}
 	
 	//@Test

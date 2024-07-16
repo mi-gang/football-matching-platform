@@ -51,9 +51,14 @@
 		VALUES(NOW(), NULL, #{teamSeq});
 	</insert>
 	
-	<!-- 매칭 신청 정보 시퀀스 가져오기 -->
-	<select id="selectMatchingAddSeq" resultType="java.lang.Integer">
-		SELECT max(matching_add_seq) FROM matching_adds;
+	<!-- 매칭 신청 정보 시퀀스 가져오기(개인) -->
+	<select id="selectMatchingAddSeq" resultType="java.lang.Integer" parameterType="String">
+		SELECT max(matching_add_seq) FROM matching_adds WHERE user_id = #{userId};
+	</select>
+	
+	<!-- 매칭 신청 정보 시퀀스 가져오기(팀) -->
+	<select id="selectMatchingAddSeqByTeam" resultType="java.lang.Integer" parameterType="Integer">
+		SELECT max(matching_add_seq) FROM matching_adds WHERE team_seq = #{teamSeq};
 	</select>
 	
 	<!-- 신청 할 매칭 상태 조회 -->

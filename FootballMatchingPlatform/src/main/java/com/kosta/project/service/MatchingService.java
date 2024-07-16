@@ -184,15 +184,16 @@ public class MatchingService {
 			}
 		}
 		
+		int matchingAddSeq = 0;
 		if(dto.getType().equals("개인")) {
 			mm.insertMatchingAdds(dto.getUserId());
+			matchingAddSeq = mm.selectMatchingAddSeq(dto.getUserId());
 		}
 		else if(dto.getType().equals("팀")) {
 			int teamSeq = tm.selectTeamSeq(dto.getUserId());
 			mm.insertMatchingAddsByTeam(teamSeq);
+			matchingAddSeq = mm.selectMatchingAddSeqByTeam(teamSeq);
 		}
-
-		int matchingAddSeq = mm.selectMatchingAddSeq();
 
 		int j = 0;
 		for(int i=0; i<dto.getMdto().size(); i++) {
@@ -265,5 +266,21 @@ public class MatchingService {
 		}
 
 		return true;
+	}
+	
+	public List<MatchingConditionDTO> getMatchingAddResult(AddMatchingDataDTO addDTO){
+		List<MatchingConditionDTO> mcDTOList = null;
+		int matchingAddSeq = 0;
+		
+		if(addDTO.getType().equals("개인")) {
+			matchingAddSeq = mm.selectMatchingAddSeq(addDTO.getUserId());
+		}
+		else if(addDTO.getType().equals("팀")) {
+			int teamSeq = tm.selectTeamSeq(addDTO.getUserId());
+			matchingAddSeq = mm.selectMatchingAddSeqByTeam(teamSeq);
+		}
+		
+		mcDTOList = mm.selectMatchingAddResult(matchingAddSeq);
+		return mcDTOList;
 	}
 }

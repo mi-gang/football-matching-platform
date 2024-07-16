@@ -46,7 +46,7 @@ public class MatchingServiceTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void getMatchingsListByRegion() {
 		MatchingConditionDTO dto = MatchingConditionDTO.builder()
 				.matchingDate("2024-07-16")
@@ -85,5 +85,15 @@ public class MatchingServiceTest {
 //		ms.addMatcings(addDTO);
 //		ms.addMatcings(addDTO);
 //		ms.addMatcings(addDTO);
+	}
+	
+	@Test
+	void getMatchingAddResultTest() {
+		AddMatchingDataDTO addDTO = AddMatchingDataDTO.builder()
+				.type("개인")
+				.userId("user00101")
+				.build();
+		System.out.println(ms.getMatchingAddResult(addDTO));
+		
 	}
 }

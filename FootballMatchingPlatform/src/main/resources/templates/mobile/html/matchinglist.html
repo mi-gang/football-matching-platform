@@ -23,9 +23,9 @@
 					<button class="filterBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">필터</button>
 				</div>
 				<div class="w-auto h-auto matchingCheckListDiv mt-4">
-					<ul id="matchingCheckList">
+					<ul id="matchingCheckList" class="d-flex flex-column gap-1">
 						<div class="ulMatchDiv mt-0" id="matchList" th:each="matching : ${matchingList}">
-							<div class="w-auto h-auto matchInfo mt-1 mx-1" data-bs-toggle="modal"
+							<div class="h-auto matchInfo mt-1 mx-1" data-bs-toggle="modal"
 								data-bs-target="#checkboxModal" th:data-field-seq="${matching.fieldSeq}">
 								<button class="applyStatus" disabled="true" value="신청가능">신청가능</button>
 								<div class="d-flex align-items-center" style="gap: 0.5rem;">
@@ -50,7 +50,7 @@
 								</div>
 								<div class="d-flex gap-1">
 									<p class="matchLocation" th:text="${matching.fieldAddress}">주소</p>
-									<p class="matchLocation" th:text="${matching.fieldName}">구장명</p>
+									<p class="fieldName" th:text="${matching.fieldName}">구장명</p>
 								</div>
 							</div>
 							<input type="checkbox" id="checkBtn">
@@ -74,11 +74,11 @@
 								<h3>지역</h3>
 								<div class="w-auto h-auto locationCity">
 									<ul id="locationCityBtns">
-										<li><button type="button" class=" locationCityBtn btn m-2 p-3"
+										<li><button type="button" class=" locationCityBtn btn m-2"
 												onclick="change_btn(event)" value="서울">서울</button></li>
-										<li><button type="button" class=" locationCityBtn btn m-2 p-3"
+										<li><button type="button" class=" locationCityBtn btn m-2"
 												onclick="change_btn(event)" value="인천">인천</button></li>
-										<li><button type="button" class=" locationCityBtn btn m-2 p-3"
+										<li><button type="button" class=" locationCityBtn btn m-2"
 												onclick="change_btn(event)" value="부산">부산</button></li>
 									</ul>
 								</div>
@@ -161,7 +161,8 @@
 								<div class="w-auto h-auto matchingDate">
 									<button type="button" class="closeButton btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
-									<div id="locationInfoDiv" class="w-auto h-auto timeZone mt-5">
+									<div id="locationInfoDiv"
+										class="w-auto h-auto timeZone d-flex flex-column align-items-center">
 										<h3 class="matchDateH3"></h3> <br>
 										<div id="myApplyListDiv" class="overflow-auto">
 											<ul id="myApplyList">
@@ -387,14 +388,15 @@
 					region = region + button.textContent + " ";
 				}
 			});
-			
-			if(region == ""){
+
+			if (region == "") {
 				toast.classList.add('show');
-				setTimeout(function(){
+				setTimeout(function () {
 					toast.classList.remove('show');
 				}, 1000);
 				return;
 			}
+
 			const url = new URL(window.location.href);
 			const matchingDate = url.searchParams.get('matchingDate');
 			const matchingTime = url.searchParams.get('matchingTime');
@@ -408,7 +410,7 @@
 					if (matchingListByRegion.length == 0) {
 						console.log("없음");
 						$("#matchingCheckList").append(
-							"<div class='d-flex flex-column'>" + 
+							"<div class='d-flex flex-column'>" +
 							"<img src=/mobile/img/ball.svg/>" +
 							"<div>신청 가능한 구장이 없습니다!</div>" +
 							"</div>"
@@ -417,8 +419,8 @@
 					else {
 						for (var i = 0; i < matchingListByRegion.length; i++) {
 							$("#matchingCheckList").append(
-							`<div class="ulMatchDiv mt-0" id="matchList">
-								<div class="w-auto h-auto matchInfo mt-1 mx-1" data-bs-toggle="modal" 
+								`<div class="ulMatchDiv mt-0" id="matchList">
+								<div class="h-auto matchInfo mt-1 mx-1" data-bs-toggle="modal" 
 								data-bs-target="#checkboxModal" data-field-seq="${matchingListByRegion[i].fieldSeq}">
 									<button class="applyStatus" disabled="true" value="신청가능">신청가능</button>
 									<div class="d-flex align-items-center" style="gap: 0.5rem;">
@@ -430,7 +432,7 @@
 									</div>
 									<div class="d-flex gap-1">
 										<p class="matchLocation">${matchingListByRegion[i].fieldAddress}</p>
-										<p class="matchLocation">${matchingListByRegion[i].fieldName}</p>
+										<p class="fieldName">${matchingListByRegion[i].fieldName}</p>
 									</div>
 								</div>
 							<input type="checkbox" id="checkBtn">
@@ -468,9 +470,14 @@
 				console.log(matchTimeValue);
 				const matchLocationText = matchDiv.querySelector('.matchLocation').textContent;
 				console.log(matchLocationText);
+				const fieldNameText = matchDiv.querySelector('.fieldName').textContent;
+				console.log(fieldNameText);
 
 				$(".matchDateH3").text(matchDateText);
-				$("#myApplyList").append("<li><p class='mx-4'>" + matchTimeText + " " + matchLocationText + "</p></li>" + "<hr>");
+				$("#myApplyList").append(
+					"<li><p class='mx-4 mb-1'>" + fieldNameText + "</p>" +
+					"<p class='mx-4 mb-1'>" + matchTimeText + " " + matchLocationText + "</p></li>" + "<hr class='my-0'>"
+				);
 			});
 		}
 
