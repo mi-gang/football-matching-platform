@@ -72,8 +72,8 @@ public class UserRestController {
 	}
 	
 	// 닉네임 중복 여부 확인하기
-	@GetMapping("/getUserNickname")
-	public boolean getUserNicknameByNickname(String nickname) {
+	@PostMapping("/getUserNickname")
+	public boolean getUserNicknameByNickname(@RequestParam String nickname) {
 		return us.getUserNicknameByNickname(nickname);
 	}
 	

@@ -139,6 +139,20 @@ button{
     color: #FF7D7D;	
 }
 
+#invalid-id-success{
+	color: #73A772;
+}
+
+#
+
+#invalid-nickname{
+	color: #73A772;
+}
+
+#invalid-nickname-doub{
+	color: #FF7D7D;
+}
+
 #invalid-pw-check-success{
     color: #73A772;
 }

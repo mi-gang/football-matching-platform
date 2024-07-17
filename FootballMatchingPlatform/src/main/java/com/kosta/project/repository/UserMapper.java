@@ -28,13 +28,13 @@ public interface UserMapper {
 	String selectUserIdByUserId(String userId);
 	
 	// 닉네임 중복 체크용 닉네임 불러오기
-	String selectUserNicknameByNickname(String nickname);
+	Integer selectUserNicknameByNickname(String nickname);
 	
 	// 이메일 중복 체크용 이메일 불러오기
 	String selectEmailByEmail(String email);
 	
 	// 회원가입하기
-	void insertUserJoin(UserDTO userDTO);// DTO 내에 들어가는 데이터들은 업무 명세서에 자세히 나와있습니다. 개인 순위는 기본값인 0으로 들어갑니다.
+	// DTO 내에 들어가는 데이터들은 업무 명세서에 자세히 나와있습니다. 개인 순위는 기본값인 0으로 들어갑니다.
 	void insertUserJoin(String userId, String password, String nickname, String name, Date birthday, String gender,
 			String phoneNumber, String email, String address);
 	// 이름, 이메일 일치하는 아이디 불러오기

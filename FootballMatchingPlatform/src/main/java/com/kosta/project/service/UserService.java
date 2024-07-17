@@ -56,9 +56,10 @@ public class UserService {
 
 	// 닉네임 중복 여부 확인하기
 	public boolean getUserNicknameByNickname(String nickname) {
-		if (um.selectUserNicknameByNickname(nickname) == null)
-			return true;
-		else return false;
+		System.out.println(nickname);
+		if (um.selectUserNicknameByNickname(nickname) > 0)
+			return false;
+		else return true;	
 	}
 
 	// 이메일 중복 여부 확인하기
