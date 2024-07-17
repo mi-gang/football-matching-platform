@@ -24,11 +24,11 @@
             <div id="info-container">
                 <div>구장시설</div>
                 <div id="info-list">
-                  <span th:if="${addedFieldInfo.showerRoom} ? '샤워실 ' : ''"></span>
-				  <span th:if="${addedFieldInfo.parking} ? '주차장 ' : ''"></span>
-				  <span th:if="${addedFieldInfo.sellDrink} ? '음료판매 ' : ''"></span>
-			      <span th:if="${addedFieldInfo.rentShoes} ? '축구화 대여 ' : ''"></span>
-				  <span th:if="${addedFieldInfo.rentBall} ? '축구공 대여 ' : ''"></span>
+                  <p th:if="${addedFieldInfo.showerRoom}">샤워실 </p>
+				  <p th:if="${addedFieldInfo.parking}">주차장 </p>
+				  <p th:if="${addedFieldInfo.sellDrink}">음료판매 </p>
+			      <p th:if="${addedFieldInfo.rentShoes}">축구화 대여 </p>
+				  <p th:if="${addedFieldInfo.rentBall}">축구공 대여 </p>
                 </div>
             </div>
             <hr>
@@ -44,7 +44,7 @@
     <script>
     // header, nav 내용 불러오기
     $(document).ready(function(){
-        $('header').load('./common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+        $('header').load('/common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
             $('#page-name').text('신정FC 우쩌구 구장'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
             $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
         });
