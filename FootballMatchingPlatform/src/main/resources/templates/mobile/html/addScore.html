@@ -298,25 +298,30 @@
                 // });
                 // console.log(players)
 
-                const userMatchingInfoDTOs =
-                        playerList.map(player => ({
+
+                // let infoDTOS = {infoDTOS: playerList.map(player => ({
+                //         userId: player.userId,
+                //         matchingSeq: parseInt(getMatchingSeq()),
+                //         score: parseInt($(checkedList[j++]).val())
+                //     }))};
+
+                let infoDTOS = playerList.map(player => ({
                         userId: player.userId,
                         matchingSeq: parseInt(getMatchingSeq()),
                         score: parseInt($(checkedList[j++]).val())
-                    }))
-                console.log(userMatchingInfoDTOs)
+                    }));
 
                 if (checkedList.length != 5) {
                     tostOn("등수를 입력해 주세요");
                 }
                 else
-                    fetch('/schedule/review-scores', {
+                    fetch('/schedule/review-scores?matchingAddListSeq='+6, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            "matchingAddListSeq": 6,
+                            "infoDTOS" : infoDTOS
                         }),
                         credentials: "include" // 세션 정보를 포함
                     })

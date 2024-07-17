@@ -102,9 +102,9 @@ public class TeamsServiceTest {
 	}
 	
 	//@Test		해체하기
-	void setTeamDismantleStatus(){
-		System.out.println(ts.setTeamDismantleStatus("user999"));
-	}
+//	void setTeamDismantleStatus(){
+//		System.out.println(ts.setTeamDismantleStatus("user999"));
+//	}
 	
 	//@Test		// 팀장 가입 목록
 	void selectApplyList(){

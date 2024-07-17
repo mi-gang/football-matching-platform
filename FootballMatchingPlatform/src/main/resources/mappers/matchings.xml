@@ -443,7 +443,7 @@
                         JOIN matching_adds ma
                              ON mal.matching_add_seq = ma.matching_add_seq
                WHERE ma.user_id = #{userId}
-                 AND mal.matching_add_list_seq = #{matchingAddSeq})
+                 AND mal.matching_seq = #{matchingSeq})
     </select>
 
     <!-- 경기 결과 점수 불러오기 -->
