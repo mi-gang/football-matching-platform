@@ -279,6 +279,57 @@
         ORDER BY m.matching_date desc
     </select>
 
+    <!-- 해당 매칭에 대해 팀장 여부 확인하기 -->
+    <select id="isTeamLeader" parameterType="com.kosta.project.dto.UserMatchingInfoDTO" resultType="boolean">
+        SELECT COUNT(t.team_seq)
+        FROM teams t
+                 JOIN matching_adds ma ON t.team_seq = ma.team_seq
+                 JOIN matching_add_lists mal ON ma.matching_add_seq = mal.matching_add_seq
+                 JOIN matchings m ON m.matching_seq = mal.matching_seq
+        WHERE t.leader_id = #{userId}
+          AND m.matching_seq = #{matchingSeq}
+          AND t.team_dismantle_status = 0;
+    </select>
+
+    <!-- 상대팀 전부 평가 완료 여부 확인하기 -->
+    <select id="selectOpposingTeamReviewStatus" parameterType="com.kosta.project.dto.UserMatchingInfoDTO"
+            resultType="boolean">
+        SELECT min(review_status)
+        FROM matchings m
+                 JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
+                 JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
+                 JOIN users u ON ma.user_id = u.user_id
+        WHERE m.matching_seq = #{matchingSeq}
+          AND mal.matching_success_status = 1
+          AND mal.cancel_status = 0
+          AND mal.team !=
+              (SELECT mal.team
+               FROM matching_add_lists mal
+                        JOIN matching_adds ma
+                             ON mal.matching_add_seq = ma.matching_add_seq
+               WHERE ma.user_id = #{userId}
+                 AND mal.matching_seq = #{matchingSeq})
+    </select>
+
+    <!-- getTeamNames -->
+    <select id="getTeamNames" parameterType="com.kosta.project.dto.UserMatchingInfoDTO" resultType="string">
+        SELECT
+            t.team_name
+        FROM teams t
+        WHERE t.team_seq IN (
+            SELECT ma.team_seq
+            FROM matching_adds ma
+                     JOIN matching_add_lists mal ON mal.matching_add_seq = ma.matching_add_seq
+            WHERE mal.matching_seq = #{matchingSeq} AND mal.team_status = 1
+        )
+        ORDER BY CASE WHEN t.team_seq = (SELECT team_seq FROM users WHERE user_id = #{userId}) THEN 1 ELSE 2 END
+    </select>
+
+    <resultMap id="teamNamesResultMap" type="java.util.Map">
+        <result property="1" column="team_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="2" column="team_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </resultMap>
+
     <!-- 특정 날짜에 맞는 매칭 리스트 불러오기 -->
     <select id="selectMatchingListByDate" resultType="com.kosta.project.dto.MatchingScheduleListDTO">
         SELECT m.matching_seq,
@@ -458,26 +509,6 @@
           AND u.user_id != #{userId};
     </select>
 
-    <!-- 상대팀 전부 평가 완료 여부 확인하기 -->
-    <select id="selectOpposingTeamReviewStatus" parameterType="com.kosta.project.dto.UserMatchingInfoDTO"
-            resultType="boolean">
-        SELECT min(review_status)
-        FROM matchings m
-                 JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
-                 JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
-                 JOIN users u ON ma.user_id = u.user_id
-        WHERE m.matching_seq = #{matchingSeq}
-          AND mal.matching_success_status = 1
-          AND mal.cancel_status = 0
-          AND mal.team !=
-              (SELECT mal.team
-               FROM matching_add_lists mal
-                        JOIN matching_adds ma
-                             ON mal.matching_add_seq = ma.matching_add_seq
-               WHERE ma.user_id = #{userId}
-                 AND mal.matching_seq = #{matchingSeq})
-    </select>
-
     <!-- 경기 결과 점수 불러오기 -->
     <select id="selectReviewScore" resultType="int" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
         SELECT mal.review_score
@@ -499,18 +530,6 @@
                  JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
         WHERE ma.user_id = #{userId}
           AND m.matching_seq = #{matchingSeq}
-    </select>
-
-    <!-- 해당 매칭에 대해 팀장 여부 확인하기 -->
-    <select id="isTeamLeader" parameterType="com.kosta.project.dto.UserMatchingInfoDTO" resultType="boolean">
-        SELECT COUNT(t.team_seq)
-        FROM teams t
-                 JOIN matching_adds ma ON t.team_seq = ma.team_seq
-                 JOIN matching_add_lists mal ON ma.matching_add_seq = mal.matching_add_seq
-                 JOIN matchings m ON m.matching_seq = mal.matching_seq
-        WHERE t.leader_id = #{userId}
-          AND m.matching_seq = #{matchingSeq}
-          AND t.team_dismantle_status = 0;
     </select>
 
     <select id="selectMatchingAlready" parameterType="java.lang.String" resultType="com.kosta.project.dto.MatchingDTO">

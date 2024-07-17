@@ -124,17 +124,21 @@ public class MatchingMapperTest2 {
 //	int selectMatchingAddListSeqCount(int matchingAddSeq);
 //	boolean deleteMatchingAdd(int matchingAddListSeq);
 
-	@Test
+	//@Test
 	void selectMatchingAddSeqByMatchingAddListSeqTest() {
 		System.out.println(matchingMapper.selectMatchingAddSeqByMatchingAddListSeq(6));
 	}
 
-	@Test
+	//@Test
 	void selectMatchingAddListSeqCountTest() {
 		System.out.println(matchingMapper.selectMatchingAddListSeqCount(6));
 	}
 
+	@Test
+	void getTeamNamesTest() {
+		System.out.println(matchingMapper.getTeamNames(UserMatchingInfoDTO.builder().matchingSeq(145).userId("user00120").build()));
+	}
 
-	
-	
+
+
 }

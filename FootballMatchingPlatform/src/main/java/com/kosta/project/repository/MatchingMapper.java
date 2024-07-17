@@ -2,6 +2,7 @@ package com.kosta.project.repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -49,9 +50,11 @@ public interface MatchingMapper {
 	
 	// 일정표
 	List<MatchingScheduleListDTO> selectMatchingListByMonth(String userId, int month);
-	List<MatchingScheduleListDTO> selectMatchingListByDate(String userId, String date);
 	boolean isTeamLeader(UserMatchingInfoDTO userMatchingInfoDTO);
 	boolean selectOpposingTeamReviewStatus(UserMatchingInfoDTO userMatchingInfoDTO);
+	List<String> getTeamNames(UserMatchingInfoDTO userMatchingInfoDTO);
+	List<MatchingScheduleListDTO> selectMatchingListByDate(String userId, String date);
+
 
 	int selectMatchingListCount(String userId);
 	List<MatchingScheduleListDTO> selectMatchingList(String userId);

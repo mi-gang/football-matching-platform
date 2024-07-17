@@ -255,23 +255,38 @@ function getMatchigList(item) {
         matchingStatus.className = 'matching-status status-3';
 
 
-    // 빠른 매칭만 - fast-matching-wrapper div 생성
+    // fast-matching-wrapper div 생성
     const fastMatchingWrapper = document.createElement('div');
     fastMatchingWrapper.className = 'fast-matching-wrapper';
-    // 빠른 매칭만 - matching-user-count span 생성
-    const matchingUserCount = document.createElement('span');
-    matchingUserCount.className = 'matching-user-count';
-    matchingUserCount.textContent = item.userCount;
-    // 빠른 매칭만 - user count와 total count를 담는 div 생성
-    const userCountWrapper = document.createElement('div');
-    userCountWrapper.appendChild(matchingUserCount);
-    userCountWrapper.appendChild(document.createTextNode('/10명'));
-    // 빠른 매칭만 - fast-matching-wrapper에 status와 user count 추가
+    // fast-matching-wrapper에 status 추가
     fastMatchingWrapper.appendChild(matchingStatus);
-    fastMatchingWrapper.appendChild(userCountWrapper);
 
-    if (item.fastAddStatus)
+    if (item.fastAddStatus && !item.cancelStatus){
+        // // 빠른 매칭만 - matching-user-count span 생성
+        // const matchingUserCount = document.createElement('span');
+        // matchingUserCount.className = 'matching-user-count';
+        // matchingUserCount.textContent = item.userCount;
+        //
+        // // 빠른 매칭만 - user count와 total count를 담는 div 생성
+        // const userCountWrapper = document.createElement('div');
+        // userCountWrapper.appendChild(matchingUserCount);
+        // userCountWrapper.appendChild(document.createTextNode('/10명'));
 
+        // 빠른 매칭만 - fast-matching-wrapper에 status와 user count 추가
+        // fastMatchingWrapper.appendChild(userCountWrapper);
+
+        const matchingUserCountWrapper = document.createElement('div');
+        fastMatchingWrapper.appendChild(matchingUserCountWrapper);
+
+        const matchingUserCount = document.createElement('span');
+        matchingUserCount.classList.add('matching-user-count');
+        matchingUserCount.textContent = '9';
+        matchingUserCountWrapper.appendChild(matchingUserCount);
+
+        const matchingUserCountText = document.createElement('span');
+        matchingUserCountText.textContent = '/10명';
+        matchingUserCountWrapper.appendChild(matchingUserCountText);
+    }
 
     // matching-info div 생성
     const matchingInfo = document.createElement('div');
@@ -300,8 +315,15 @@ function getMatchigList(item) {
 
     // matching-content-wrapper에 모든 요소 추가
     matchingContentWrapper.appendChild(matchingStatus);
+    matchingContentWrapper.appendChild(fastMatchingWrapper);
     matchingContentWrapper.appendChild(matchingInfo);
-    matchingContentWrapper.appendChild(matchingFieldInfo);
+
+    if (item.payStatus) {
+        const payInfo = document.createElement('span');
+        payInfo.classList.add('pay-info');
+        payInfo.textContent = '결제 금액 : 10,000원';
+        matchingContentWrapper.appendChild(payInfo);
+    }
 
     // matching-btn-wrapper div 생성
     const matchingBtnWrapper = document.createElement('div');
