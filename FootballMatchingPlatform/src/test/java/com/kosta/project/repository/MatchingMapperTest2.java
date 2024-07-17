@@ -24,7 +24,7 @@ public class MatchingMapperTest2 {
 		System.out.println(collection);
 	}
 	
-	@Test
+	//@Test
 	void selectMatchingListByDateTest() {
 		Collection<MatchingScheduleListDTO> collection = new ArrayList<>();
 		collection = matchingMapper.selectMatchingListByDate("user001", "2024-07-10");
@@ -73,9 +73,9 @@ public class MatchingMapperTest2 {
 	}
 	
 	//@Test
-	void selectPlayerListTest() {
+	void myTeamPlayerListTest() {
 		Collection<UserPlayInfoDTO> infoDTOs = new ArrayList<UserPlayInfoDTO>();
-		infoDTOs = matchingMapper.selectPlayerList(6);
+		infoDTOs = matchingMapper.myTeamPlayerList(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user001").build());
 		System.out.println(infoDTOs);
 	}
 	
@@ -112,15 +112,29 @@ public class MatchingMapperTest2 {
 	
 	//@Test
 	void updateReviewStatusTest() {
-		System.out.println(matchingMapper.updateReviewStatus(15));
-
+		System.out.println(matchingMapper.updateReviewStatus(88));
 	}
 	
 	//@Test
 	void selectOpposingTeamReviewStatusTest() {
 		System.out.println(matchingMapper.selectOpposingTeamReviewStatus(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user001").build()));
 	}
-	
+
+//	int selectMatchingAddSeqByMatchingAddListSeq(int matchingAddListSeq);
+//	int selectMatchingAddListSeqCount(int matchingAddSeq);
+//	boolean deleteMatchingAdd(int matchingAddListSeq);
+
+	@Test
+	void selectMatchingAddSeqByMatchingAddListSeqTest() {
+		System.out.println(matchingMapper.selectMatchingAddSeqByMatchingAddListSeq(6));
+	}
+
+	@Test
+	void selectMatchingAddListSeqCountTest() {
+		System.out.println(matchingMapper.selectMatchingAddListSeqCount(6));
+	}
+
+
 	
 	
 }

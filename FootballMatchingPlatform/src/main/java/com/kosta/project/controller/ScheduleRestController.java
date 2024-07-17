@@ -1,6 +1,7 @@
 package com.kosta.project.controller;
 
 import com.kosta.project.dto.*;
+import com.kosta.project.repository.MatchingMapper;
 import com.kosta.project.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,15 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/schedule")
 public class ScheduleRestController {
     private final ScheduleService scheduleService;
+    private final MatchingMapper matchingMapper;
 
     @GetMapping("/month/{month}")
     public ResponseEntity<Collection<MatchingScheduleListDTO>> getMatchingListByMonth(@PathVariable int month) {
@@ -69,15 +69,15 @@ public class ScheduleRestController {
         return new ResponseEntity<>(matchingScheduleListDTOS, HttpStatus.OK);
     }
 
-    @PatchMapping("/{matchingSeq}/payment")
+    @PatchMapping("/{matchingAddListSeq}/payment")
     public ResponseEntity<String> setPayStatus(
-            @PathVariable int matchingSeq) {
+            @PathVariable int matchingAddListSeq) {
 
         //  @SessionAttribute("userId") String userId
         String userId = "user001";
 
         try {
-            scheduleService.setPayStatus((UserMatchingInfoDTO.builder().matchingSeq(matchingSeq).userId(userId).build()));
+            scheduleService.setPayStatus((UserMatchingInfoDTO.builder().matchingAddListSeq(matchingAddListSeq).userId(userId).build()));
             return ResponseEntity.ok("Payment status updated successfully.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update payment status.");
@@ -87,7 +87,7 @@ public class ScheduleRestController {
     @DeleteMapping("/matching-add-list-seq/{matchingAddListSeq}")
     public ResponseEntity<Void> removeMatching(@PathVariable int matchingAddListSeq) {
         try {
-            scheduleService.revmoveMatching(matchingAddListSeq);
+            scheduleService.removeMatching(matchingAddListSeq);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -130,6 +130,7 @@ public class ScheduleRestController {
 
     @PostMapping("/review-scores")
     public ResponseEntity<String> setReviewScores(@RequestBody UserScoreInfoDTO userMatchingInfoDTOs, @RequestParam int matchingAddListSeq) {
+
         try {
             scheduleService.setReviewScore(userMatchingInfoDTOs.getInfoDTOS(), matchingAddListSeq);
             return ResponseEntity.ok("set Review Scores successfully.");
@@ -137,6 +138,18 @@ public class ScheduleRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to set Review Scores: " + e.getMessage());
         }
+    };
+
+    @GetMapping("/{matchingSeq}/my-team-players")
+    public ResponseEntity<Collection<UserPlayInfoDTO>> getMyTeamPlayerList(@PathVariable int matchingSeq) {
+        // 세션으로 유저 아이디 구하기
+        // @SessionAttribute("userId") String userId
+        String userId = "user001";
+
+        Collection<UserPlayInfoDTO> userPlayInfoDTOS = new ArrayList<>();
+        userPlayInfoDTOS = scheduleService.getMyTeamPlayerList(UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingSeq).build());
+
+        return new ResponseEntity<>(userPlayInfoDTOS, HttpStatus.OK);
     };
 
     @PostMapping("report")
@@ -154,6 +167,25 @@ public class ScheduleRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to add report: " + e.getMessage());
         }
+    };
+
+    @GetMapping("/{matchingSeq}/score")
+    public ResponseEntity<Map<String, Integer>> getScore(@PathVariable int matchingSeq) {
+
+        // 세션으로 유저 아이디 구하기
+        // @SessionAttribute("userId") String userId
+        String userId = "user001";
+        Map<String, Integer> map = new HashMap<>();
+        map = scheduleService.getReviewScoreAndTeamScore(UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingSeq).build());
+
+        Integer teamScore = map.get("teamScore");
+        if (teamScore != null && teamScore == 0) {
+            map.put("teamScore", -10);
+        } else if (teamScore != null && teamScore == 1) {
+            map.put("teamScore", 10);
+        }
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
     };
 
 

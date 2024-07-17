@@ -2,6 +2,7 @@ package com.kosta.project.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,9 @@ public class ScheduleServiceTest {
 		scheduleService.setPayStatus(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user00103").build());
 	}
 	
-	//@Test
+	@Test
 	void revmoveMatchingTest() {
-		scheduleService.revmoveMatching(16);
+		scheduleService.removeMatching(195);
 	}
 	
 	//@Test
@@ -51,9 +52,9 @@ public class ScheduleServiceTest {
 		scheduleService.setPayStatus(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user001").build());
 	}
 	
-	//@Test
+	@Test
 	void setReviewScoreTest() {
-		Collection<UserMatchingInfoDTO> userMatchingInfoDTOs = new ArrayList<>();
+		List<UserMatchingInfoDTO> userMatchingInfoDTOs = new ArrayList<>();
 		
 		userMatchingInfoDTOs.add(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user00105").score(2).build());
 		userMatchingInfoDTOs.add(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user00106").score(1).build());
@@ -61,12 +62,12 @@ public class ScheduleServiceTest {
 		userMatchingInfoDTOs.add(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user00108").score(-1).build());
 		userMatchingInfoDTOs.add(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user00109").score(-2).build());
 		
-		scheduleService.setReviewScore(userMatchingInfoDTOs, 15);
+		scheduleService.setReviewScore(userMatchingInfoDTOs, 88);
 	}
 	
 	//@Test
 	void getPlayerListTest() {
-		System.out.println(scheduleService.getPlayerList(6));
+		System.out.println(scheduleService.getMyTeamPlayerList(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user001").build()));
 	}
 
 	//@Test
@@ -80,7 +81,7 @@ public class ScheduleServiceTest {
 	}
 	
 	 
-	@Test
+	//@Test
 	void cancelMatchingTest() {
 		scheduleService.cancelMatching(132);
 	}

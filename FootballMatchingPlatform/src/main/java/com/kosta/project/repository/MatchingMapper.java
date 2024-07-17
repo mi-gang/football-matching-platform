@@ -48,15 +48,18 @@ public interface MatchingMapper {
 	String selectMatchingTier(int matchingSeq);
 	
 	// 일정표
-	Collection<MatchingScheduleListDTO> selectMatchingListByMonth(String userId, int month);
-	Collection<MatchingScheduleListDTO> selectMatchingListByDate(String userId, String date);
+	List<MatchingScheduleListDTO> selectMatchingListByMonth(String userId, int month);
+	List<MatchingScheduleListDTO> selectMatchingListByDate(String userId, String date);
 	boolean isTeamLeader(UserMatchingInfoDTO userMatchingInfoDTO);
 	boolean selectOpposingTeamReviewStatus(UserMatchingInfoDTO userMatchingInfoDTO);
-	
+
 	int selectMatchingListCount(String userId);
-	Collection<MatchingScheduleListDTO> selectMatchingList(String userId);
-	boolean updatePayStatus(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
-	
+	List<MatchingScheduleListDTO> selectMatchingList(String userId);
+	boolean updatePayStatus(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingAddListSeq
+
+	int selectMatchingAddSeqByMatchingAddListSeq(int matchingAddListSeq);
+	int selectMatchingAddListSeqCount(int matchingAddSeq);
+	boolean deleteMatchingAdd(int matchingAddListSeq);
 	boolean deleteMatching(int matchingAddListSeq);
 	
 	int selectMatchingSeqByMachingAddListSeq(int matchingAddListSeq);
@@ -64,12 +67,12 @@ public interface MatchingMapper {
 	boolean updateFastAddStatus(int matchingSeq);
 	
 	// 상대팀 평가
-	Collection<UserPlayInfoDTO> selectOpposingTeamPlayerList (UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
+	List<UserPlayInfoDTO> selectOpposingTeamPlayerList (UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
 	boolean updateReviewScore(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq, int score
-	boolean updateReviewStatus(int matchingAddListSeq);
+	boolean updateReviewStatus(int matchingAddListSeq);// String userId, int matchingSeq
 	
 	
-	Collection<UserPlayInfoDTO> selectPlayerList(int matchingSeq);
+	List<UserPlayInfoDTO> myTeamPlayerList(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
 	
 	// 점수 확인
 	int selectReviewScore(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq

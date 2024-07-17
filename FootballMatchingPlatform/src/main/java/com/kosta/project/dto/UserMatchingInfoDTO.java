@@ -14,5 +14,6 @@ import lombok.ToString;
 public class UserMatchingInfoDTO {
 	private String userId;
 	private int matchingSeq;
+	private int matchingAddListSeq;
 	private int score;
 }

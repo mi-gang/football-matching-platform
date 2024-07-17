@@ -1,9 +1,10 @@
-// 모달 요소 선택
-let cancelSuccessModal = document.getElementById('cancelSuccessModal')
 
-// 모달 초기화
-var modal = new bootstrap.Modal(cancelSuccessModal)
-
+// 모달 선택 함수
+function getModal(modalId){
+    let modalElement = document.getElementById(modalId)
+    var modal = new bootstrap.Modal(modalElement)
+    return modal;
+}
 
 // 날짜 클릭 시
 $(".calendar-dates").on("click", ".date-wrapper", function () {
@@ -85,11 +86,7 @@ $("#cancelModalBtn").on("click", function (){
         })
             .then(response => {
                 if (response.ok) {
-                    // modal.show()
-                    var myModal = new bootstrap.Modal(document.getElementById('cancelSuccessModal'), {
-                        keyboard: false
-                    });
-                    myModal.show();
+                    getModal('cancelSuccessModal').show();
                 } else {
                     return response.text().then(errorText => {
                         throw new Error(errorText);
@@ -98,7 +95,8 @@ $("#cancelModalBtn").on("click", function (){
             })
             .catch(error => {
                 console.error("Fetch error:", error);
-                alert("An error occurred while updating cancel status.");
+                getModal('cancelSuccessModal').show();
+                $('#cancelModalText').text("취소 실패<br>다시 시도해주세요.");
             });
     } else if($("#cancelModalBtn").hasClass("remove-matching")) {
         fetch(`/schedule/matching-add-list-seq/${matchingAddListSeq}`, {
@@ -110,7 +108,7 @@ $("#cancelModalBtn").on("click", function (){
         })
             .then(response => {
                 if (response.ok) {
-                    modal.show()
+                    getModal('cancelSuccessModal').show();
                 } else {
                     return response.text().then(errorText => {
                         throw new Error(errorText);
@@ -119,11 +117,11 @@ $("#cancelModalBtn").on("click", function (){
             })
             .catch(error => {
                 console.error("Fetch error:", error);
-                alert("An error occurred while delete matching.");
+                getModal('cancelSuccessModal').show();
+                $('#cancelModalText').text("취소 실패<br>다시 시도해주세요.");
             });
     }
 });
-
 
 //매칭 취소 완료, 닫기 버튼 클릭 시
 $("#cancelSuccessModalBtn").on("click", function () {
@@ -155,22 +153,20 @@ $(document).ready(function () {
         $(".modal-matching-info").text(matchingDate + " " + matchingTime);
         $(".modal-matching-field").text(matchingField);
 
-        const matchingSeq = $(this)
+        const matchingAddListSeq = $(this)
             .closest(".matching-wrapper")
-            .attr("data-matchingSeq");
+            .attr("data-matchingAddListSeq");
         // const matchingSeq = $(this).closest('.matching-wrapper').data('matchingSeq');
 
-        $("#payMatchingBtn").attr("data-matching-seq", matchingSeq);
-
-        console.log(matchingSeq)
+        $("#payMatchingBtn").attr("data-matching-add-list-seq", matchingAddListSeq);
     });
 });
 
 // 결제 버튼 클릭 시
 $("#payMatchingBtn").on("click", function () {
 
-    let matchingSeq = $("#payMatchingBtn").data("matching-seq");
-    fetch(`/schedule/${matchingSeq}/payment`, {
+    let matchingAddListSeq = $("#payMatchingBtn").data("matching-add-list-seq");
+    fetch(`/schedule/${matchingAddListSeq}/payment`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -179,22 +175,26 @@ $("#payMatchingBtn").on("click", function () {
     })
         .then(response => {
             if (response.ok) {
-                // Bootstrap 5에서 모달을 여는 방법
-                var myModal = new bootstrap.Modal(document.getElementById('paymentSuccessModal'), {
-                    keyboard: false
-                });
-                myModal.show();
+                console.log(getModal('paymentSuccessModal'))
+                getModal('paymentSuccessModal').show();
             } else {
                 return response.text().then(errorText => {
                     throw new Error(errorText);
                 });
+
             }
         })
         .catch(error => {
             console.error("Fetch error:", error);
-            alert("An error occurred while updating payment status.");
+            getModal('paymentSuccessModal').show();
+            $('#paymentModalText').text("결제 실패<br>다시 시도해주세요.");
         });
 
+});
+
+// 결제 완료 후 닫기 버튼 클릭 시
+$("#paymentSuccessModalBtn").on("click", function () {
+    location.href = '/myMatchingList';
 });
 
 // 선수 평가 클릭 시
@@ -202,7 +202,41 @@ $("#matchings-wrapper").on("click", ".review-matching-btn", function () {
     const matchingSeq = $(this)
         .closest(".matching-wrapper")
         .attr("data-matchingSeq");
-    location.href = '/addScore/'+ matchingSeq;
+    const matchingAddListSeq = $(this)
+        .closest(".matching-wrapper")
+        .attr("data-matchingAddListSeq");
+    location.href = '/addScore/'+ matchingSeq + '/' + matchingAddListSeq;
+});
+
+// 내 점수 확인 클릭 시
+$("#matchings-wrapper").on("click", ".matching-score-btn", function () {
+    const matchingSeq = $(this)
+        .closest(".matching-wrapper")
+        .attr("data-matchingSeq");
+    fetch(`/schedule/${matchingSeq}/score`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data)
+            console.log(data.reviewScore)
+            console.log(data.teamScore)
+            $("#resultScore").text(data.reviewScore);
+            $("#reviewScore").text(data.teamScore);
+            $("#totalScore").text(data.reviewScore+data.teamScore);
+            getModal('scoreModal').show();
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
 });
 
 
@@ -348,6 +382,7 @@ function getMatchigList(item) {
             payMatchingBtn.className = 'pay-matching-btn btn-setting';
             payMatchingBtn.setAttribute('data-bs-toggle', 'modal');
             payMatchingBtn.setAttribute('data-bs-target', '#payMatchingModal');
+            // payMatchingBtn.setAttribute('data-matching-seq', item.matchingSeq);
             if (item.payStatus) {
                 payMatchingBtn.textContent = '결제 완료';
                 payMatchingBtn.disabled = true;
