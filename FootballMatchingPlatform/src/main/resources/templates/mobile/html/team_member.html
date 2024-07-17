@@ -83,6 +83,9 @@
     </div>
 
     <script>
+    	const url = new URL(window.location.href);
+		const urlParams = url.searchParams;
+		var teamSeq = urlParams.get('teamSeq');
         // header, nav 내용 불러오기
         $(document).ready(function () {
             $("header").load("./common/header_back.html", function () {
@@ -99,7 +102,7 @@
                 membername = $(event.relatedTarget).data('membername');
                 $('#teamModalTitle').text("[ " + membername + " ]");
 				memberId = $(event.relatedTarget).data('memberid')
-				console.log(memberId);
+
 				deleteMemberClick(memberId);
             });
         }
@@ -111,9 +114,7 @@
 					type: "Put",
 	                dataType: "json",
 	                success: function (data) {
-	                    res = data.result;
-	                    console.log(res);
-	                    location.reload(true);
+						location.href="/teamMember?teamSeq="+teamSeq;
 	                },
 	                error: function () {
 	                    alert("error");

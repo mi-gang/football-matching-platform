@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kosta.project.dto.ApplyDTO;
 import com.kosta.project.dto.TeamDTO;
 import com.kosta.project.dto.TeamMemberDTO;
+import com.kosta.project.dto.TeamScheduleDTO;
 import com.kosta.project.repository.TeamMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -53,8 +54,8 @@ public class TeamService {
 	}
 	
 	// 가입 가능 팀 목록 - 검색
-	public List<TeamDTO> getSearchPossibleTeam(String search){
-		List<TeamDTO> list = tm.selectSearchPossibleTeam(search);
+	public List<TeamDTO> getSearchPossibleTeam(String search, String userId){
+		List<TeamDTO> list = tm.selectSearchPossibleTeam(search, userId);
 		return list;
 	} 
 	
@@ -134,6 +135,19 @@ public class TeamService {
 		TeamDTO dto = tm.selectTeamInfo(userId);
 		return dto;
 	}
+	
+	// 다가오는 일정
+	public TeamScheduleDTO getTeamSchedule(int teamSeq) {
+		TeamScheduleDTO dto = new TeamScheduleDTO();
+		if(tm.selectTeamschedule(teamSeq) != null) {
+			dto = tm.selectTeamschedule(teamSeq);
+			dto.setRival(tm.selectRival(teamSeq, dto.getMatchingSeq()));
+		}
+
+		System.out.println("service : " + dto);
+		return dto;
+	}
+	
 	
 	// [팀장] 팀 해체하기
 	public boolean setTeamDismantleStatus(int teamSeq) {

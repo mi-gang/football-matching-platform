@@ -6,8 +6,8 @@
 	<!-- 팀 유무 확인 -->
 	<select id="isTeam">
 		SELECT user_id
-		FROM team_members
-		WHERE user_id = #{userId} AND 
+		FROM team_members tm, teams t
+		WHERE user_id = #{userId} AND tm.team_seq = t.team_seq AND team_dismantle_status = FALSE AND
 		team_member_status = FALSE AND team_member_delete = FALSE; 
 	</select>
 	
@@ -74,8 +74,12 @@
 		hope_time AS hopeTime, hometown, COUNT(case when team_member_status=FALSE AND team_member_delete=FALSE
 		then 1 END) AS memberCount
 		FROM teams t, team_members m
-		WHERE t.team_seq = m.team_seq AND recruitment = TRUE AND team_dismantle_status = FALSE 
-		AND team_name REGEXP #{search}
+		WHERE t.team_seq = m.team_seq AND team_name REGEXP #{search} AND recruitment = TRUE AND team_dismantle_status = FALSE
+		AND t.team_seq NOT IN(
+			SELECT t.team_seq
+			FROM teams AS t JOIN applys AS a ON t.team_seq = a.team_seq
+			WHERE a.user_id = #{userId}
+		)
 		GROUP BY m.team_seq;
 	</select>
 	
@@ -167,6 +171,40 @@
 			JOIN team_members AS tm ON t.team_seq = tm.team_seq
 		WHERE t.team_seq = (SELECT team_seq FROM team_members WHERE user_id = #{userId} AND team_member_status = FALSE
 		AND team_member_delete=FALSE);
+	</select>
+	
+	
+	<!-- 다가오는 일정 -->
+	<select id="selectTeamschedule" resultType="com.kosta.project.dto.TeamScheduleDTO">
+		SELECT m.matching_status      as matchingStatus,
+		       m.matching_date        as matchingDate,
+		       m.matching_time        as matchingTime,
+		       m.matching_seq			AS matchingSeq,
+		       f.field_address        as fieldAddress,
+			    f.field_address_detail as fieldAddressDetail,
+		       f.field_name           as fieldName,
+		       t.team_seq					AS teamSeq
+		FROM matchings m
+		       INNER JOIN fields f ON m.field_seq = f.field_seq
+		       INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+		       INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+		       INNER JOIN teams t ON ma.team_seq = t.team_seq
+		WHERE t.team_seq = #{teamSeq}
+			   AND (m.matching_status = '경기확정' OR m.matching_status = '매칭성공')
+		      AND m.matching_date - curdate() >= 0
+		      AND m.fast_add_status = 0
+		      ORDER BY m.matching_date DESC,
+		      	      m.matching_time DESC
+		LIMIT 1;	
+	</select>
+	
+	<select id="selectRival">
+		SELECT team_name 
+		FROM matchings m
+			INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+		   INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+		   INNER JOIN teams t ON ma.team_seq = t.team_seq
+		WHERE t.team_seq != (SELECT team_seq FROM teams WHERE team_seq = #{teamSeq}) AND m.matching_seq= #{matchingSeq};	
 	</select>
 	
 	

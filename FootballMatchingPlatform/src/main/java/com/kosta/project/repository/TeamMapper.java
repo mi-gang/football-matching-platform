@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.kosta.project.dto.ApplyDTO;
 import com.kosta.project.dto.TeamDTO;
 import com.kosta.project.dto.TeamMemberDTO;
+import com.kosta.project.dto.TeamScheduleDTO;
 
 @Mapper
 public interface TeamMapper {
@@ -20,7 +21,10 @@ public interface TeamMapper {
 	List<TeamDTO> selectPossibleJoinTeamByUser(String userId);
 	
 	List<TeamDTO> selectPossibleJoinTeam();
-	List<TeamDTO> selectSearchPossibleTeam(String search);
+	List<TeamDTO> selectSearchPossibleTeam(String search, String userId);
+	
+	TeamScheduleDTO selectTeamschedule(int teamSeq);
+	String selectRival(int teamSeq, int matchingSeq);
 	
 	// 팀생성	
 	String selectTeamName(String teamName);	// 팀 이름 중복확인
