@@ -18,7 +18,6 @@
             <div id="title-container">
                 <div>TOP 100</div>
             </div>
-            <div class="real-content-container">
             <div class="content-container" id="first-rank-content-container">
                 <div class="first-content-container">
                     <div class="ranking" th:text="${getTopOneUser.userRank} + '위'">1위</div>
@@ -32,9 +31,7 @@
                     <div class="score first-rank" th:text="${getTopOneUser.userScore} + '점'">1205점</div>
                 </div>
             </div>
-            </div>
-            <ul class="real-content-container" id="real-content-container" th:each="i : ${getTopHundredUsersList}">
-             <div class="content-container">
+             <div class="content-container" th:each="i : ${getTopHundredUsersList}">
                 <div class="first-content-container">
                     <div class="ranking" th:text="${i.userRank} + '위'">1위</div>
                     <div class="name">
@@ -47,7 +44,6 @@
                     <div class="score" th:text="${i.userScore} + '점'">1205점</div>
                 </div>
             </div>
-            </ul>
          
         </div>
     </div>
