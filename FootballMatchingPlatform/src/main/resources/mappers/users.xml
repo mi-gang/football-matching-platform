@@ -61,8 +61,8 @@
 	
 	
 	<!-- 닉네임 중복 체크용 닉네임 불러오기 -->
-  <select id="selectUserNicknameByNickname" parameterType="java.lang.String" resultType="java.lang.String">
-      SELECT nickname
+  <select id="selectUserNicknameByNickname" parameterType="java.lang.String" resultType="java.lang.Integer">
+      SELECT count(nickname)
       FROM users
       WHERE nickname = #{nickname}
   </select>	

@@ -21,14 +21,15 @@
         <input id="name">
         <div class="text-container">
             <div class="text" id="text-id">아이디</div>
-            <div class="text-invalid" id="invalid-id">사용할 수 없는 아이디입니다.</div>
+            <div class="text-invalid" id="invalid-id-success">사용할 가능한 아이디입니다.</div>
+            <div class="text-invalid" id="invalid-id-fail">사용할 수 없는 아이디입니다.</div>
             <div class="text-invalid" id="invalid-id-doub">중복된 아이디입니다.</div>
         </div>
         <input id="id">
         <div class="text-container">
             <div class="text" id="text-nickname">닉네임</div>
-            <div class="text-invalid" id="invalid-nickname">사용할 수 없는 닉네임입니다.</div>
-            <div class="text-invalid" id="invalid-nickname-doub">중복된 닉네임입니다.</div>
+            <div class="text-invalid" id="invalid-nickname">사용 가능한 닉네임 입니다.</div>
+            <div class="text-invalid" id="invalid-nickname-doub">중복된 닉네임 입니다.</div>
         </div>
         <input id="nickname">
         <div class="text-container">
@@ -52,7 +53,7 @@
             <button class="gender" id="f" value="0">여</button>
         </div>
         <div class="text" id="text-phone">전화번호</div>
-        <input id="phone">
+        <input type="text" class="form-control" oninput="hypenTel	(this)" maxlength="13">
         <div class="text-container">
             <div class="text" id="text-email">이메일</div>
             <div class="text-invalid" id="invalid-email">사용할 수 없는 이메일입니다.</div>
@@ -99,6 +100,7 @@
         const getNameCheck = RegExp(/^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/);
         const getIdCheck = RegExp(/^[a-zA-Z0-9]{6,14}$/);
         const getPwCheck = RegExp(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/);
+        const specialCheck = RegExp(/[`~!@#$%^&*|\\\'\";:\/?]/);
                 
         //이름 유효성 검사
         $("#name").keyup(function(){
@@ -117,8 +119,62 @@
 				$("#invalid-name-check-fail").css("display","none");
 			}	
 		})
-        //비밀번호 유효성 검사
-        
+		//아이디 유효성 검사
+		$("#id").on("change",function(){
+        	if($("#id").val() !=""){
+				if(!getIdCheck.test($("#id").val())){
+					$("#text-id").css("margin-right","7.65rem");
+					$("#invalid-id").css("display", "block");
+					}
+				else{
+					$("#text-id").css("margin-right","19rem");
+					$("#invalid-id").css("display", "none");
+					}
+				}
+			else {
+				$("#text-id").css("margin-right","19rem");
+				$("#invalid-id").css("display","none");
+			}	
+		})
+		//닉네임 중복 검사
+		$("#nickname").on("change",function(){
+			const nickname = $("#nickname").val();
+			console.log(nickname);
+			$.ajax({
+				type: 'post',
+				url: "/user/getUserNickname",
+				data: {"nickname":nickname},
+				dataType: 'text',
+				success: function(response){					
+				if($("#nickname").val() != ""){
+					console.log(response);
+					if(response == true){
+						$("#text-nickname").css("margin-right","7rem");
+						$("#invalid-nickname").css("display", "block");
+						$("#invalid-nickname-doub").css("display", "none");
+					}
+					else{
+						$("#text-nickname").css("margin-right","10.5rem");
+						$("#invalid-nickname").css("display", "none");
+						$("#invalid-nickname-doub").css("display", "block");
+					}
+				}
+				else{
+					$("#text-nickname").css("margin-right","19rem");
+					$("#invalid-nickname").css("display", "none");
+					$("#invalid-nickname-doub").css("display", "none");
+				}},
+				error: function(error){
+					alert("오류" + error);
+				}
+			})
+		})
+        //전화번호 자동 형식
+        const hypenTel = (target) => {
+			target.value = target.value
+   			.replace(/[^0-9]/g, '')
+   			.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+		}
 		//비밀번호 일치여부 검사
         $("#pw-check").on("keyup", function () {
             if ($("#pw").val() != "") {
