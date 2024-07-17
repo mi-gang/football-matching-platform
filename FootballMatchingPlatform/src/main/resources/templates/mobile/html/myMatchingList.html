@@ -192,8 +192,8 @@
 <script>
     // header, nav 내용 불러오기
     $(document).ready(function () {
-        $('header').load('/common/header.html', function () {
-            $('#page-name').text('일정표');
+        $('header').load('/common/header_back.html', function () {
+            $('#page-name').text('일정 전체보기');
             $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
         });
         $('nav').load('/common/nav.html');

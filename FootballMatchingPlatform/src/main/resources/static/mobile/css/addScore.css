@@ -87,3 +87,38 @@
     opacity: 100%;
     bottom: 100px;
 }
+
+/* 부트스트랩 속성 변경 */
+
+.modal-header {
+    border-bottom: none;
+    padding: 1.3rem 1.3rem;
+}
+
+.modal-footer {
+    justify-content: center;
+    border-top: none;
+    padding: 0 1.3rem 1.3rem 1.3rem;
+}
+
+.btn-close {
+    width: 0.1rem;
+    height: 0.1rem;
+    background-size: 0.8rem;
+}
+
+.modal-dialog-centered {
+    justify-content: center;
+}
+
+.modal-content {
+    width: 90%;
+    border-radius: 1rem;
+}
+
+/* 버튼 공통 */
+.btn-setting {
+    border-radius: 20px;
+    border-color: transparent;
+    height: 1.8rem;
+}

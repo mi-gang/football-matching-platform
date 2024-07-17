@@ -141,6 +141,12 @@ public class ScheduleRestController {
 
     @PostMapping("report")
     public ResponseEntity<String> addReport(@RequestBody ReportDTO reportDTO) {
+
+        // 세션으로 유저 아이디 구하기
+        // @SessionAttribute("userId") String userId
+        String userId = "user001";
+        reportDTO.setUserId(userId);
+
         try {
             scheduleService.addReport(reportDTO);
             return ResponseEntity.ok("add report successfully.");

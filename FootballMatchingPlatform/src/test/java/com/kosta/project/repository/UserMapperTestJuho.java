@@ -113,7 +113,7 @@ public class UserMapperTestJuho {
 			
 			
 			
-			um.insertUserJoin(userDTO);	
+//			um.insertUserJoin(userDTO);
 		//}
 		
 	}	
