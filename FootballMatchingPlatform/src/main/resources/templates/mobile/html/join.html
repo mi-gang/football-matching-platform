@@ -21,7 +21,8 @@
         <input id="name">
         <div class="text-container">
             <div class="text" id="text-id">아이디</div>
-            <div class="text-invalid" id="invalid-id">사용할 수 없는 아이디입니다.</div>
+            <div class="text-invalid" id="invalid-id-success">사용할 가능한 아이디입니다.</div>
+            <div class="text-invalid" id="invalid-id-fail">사용할 수 없는 아이디입니다.</div>
             <div class="text-invalid" id="invalid-id-doub">중복된 아이디입니다.</div>
         </div>
         <input id="id">
@@ -153,13 +154,13 @@
 						$("#invalid-nickname-doub").css("display", "none");
 					}
 					else{
-						$("#text-nickname").css("margin-right","7.65rem");
+						$("#text-nickname").css("margin-right","10.5rem");
 						$("#invalid-nickname").css("display", "none");
 						$("#invalid-nickname-doub").css("display", "block");
 					}
 				}
 				else{
-					$("#text-nickname").css("margin-right","7.65rem");
+					$("#text-nickname").css("margin-right","19rem");
 					$("#invalid-nickname").css("display", "none");
 					$("#invalid-nickname-doub").css("display", "none");
 				}},
