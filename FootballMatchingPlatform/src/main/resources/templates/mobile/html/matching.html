@@ -49,16 +49,11 @@
 		<li><button type = "button" id="btnTime6" class = "btn m-1 p-2" onclick="changeButtonColors(this)" value=20>20~22</button></li>
 		</ul>
 	</div>
-	
 	<button type="button" id = "showBtn">조회</button>
-
-
-
 	<div class="toast" id="toast">정지된 팀원이 있습니다.</div>
 	<div class="toast1" id="toast1">팀원이 부족합니다.</div>
 	<div class="toast2" id="toast2">날짜와 시간을 선택해주세요!</div>
 </div>
-
 </div>
 	
 <!-- 하단 메뉴바 -->
@@ -66,20 +61,21 @@
 
 </div>
 <script type="text/javascript">
+var userId = "[[${session.loginUser.getUserId}]]";
+var userTier = "[[${session.loginUser.getUserTier}]]";
 $(document).ready(function(){
 	var isLeader
-	$('header').load('./common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+	$('header').load('./common/header.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
 		$('#page-name').text('매칭 신청'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
-		$('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+		$('#user-tier').text(userTier); // 나중에 세션에서 usertier 구해서 넣기
 	});
 	$('nav').load('./common/nav.html');
-	fetch("/matching/isLeader/user002")
+	fetch(`/matching/isLeader/${userId}`)
 	.then(response => response.json())
 	.then(data => {
 		isLeader = data.result;
 		console.log(isLeader);
 		if(isLeader == false){
-			alert("팀장이 아닙니다!");
 			$("button[value=팀]").css("pointer-events", "none");
 		}
 	})
@@ -214,7 +210,7 @@ searchButton.addEventListener('click', function() {
 		time = time + button.value + " ";
 		}
 	});
-	fetch("/matching/isTeam/user00101")
+	fetch(`/matching/isTeam/${userId}`)
 			.then(response => response.json())
 			.then(data => {
 			isTeam = data.result;
@@ -238,7 +234,7 @@ searchButton.addEventListener('click', function() {
 					}, 1000);
 				}
 				else if(isTeam == "true"){
-					location.href = `/matchinglist?addType=${teamOrSolo}&matchingDate=${selectedDate}&matchingTime=${time}`;
+					location.href = `/matchinglist?userId=${userId}&addType=${teamOrSolo}&matchingDate=${selectedDate}&matchingTime=${time}`;
 				}
 			}
 			else if(teamOrSolo == "개인"){
@@ -249,7 +245,7 @@ searchButton.addEventListener('click', function() {
 					}, 1000);
 				}
 				else{
-					location.href = `/matchinglist?addType=${teamOrSolo}&matchingDate=${selectedDate}&matchingTime=${time}`;
+					location.href = `/matchinglist?userId=${userId}&addType=${teamOrSolo}&matchingDate=${selectedDate}&matchingTime=${time}`;
 				}
 			}
 		})

@@ -189,24 +189,21 @@
 								<div class="w-auto h-auto matchingDate">
 									<button type="button" class="closeButton btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
-									<div id="locationInfoDiv" class="w-auto h-auto timeZone mt-5">
+									<div id="locationInfoDiv" class="w-auto h-auto timeZone">
 										<h3 class="matchDateH3"></h3> <br>
 										<div id="statusCheckSuccess" class="overflow-auto">
-											<button id="statusMyApply" class="mx-5 mb-3" disabled="true">성공</button>
+											<button id="statusMyApply" class="mb-3" disabled="true">신청결과</button>
 											<ul id="myApplyListSuccess">
-												<li class="mx-3">
-													<p>강서 신정FC 08:00-10:00</p>
-												</li>
 											</ul>
 										</div>
-										<div id="statusCheckFail" class="overflow-auto">
-											<button id="statusApplyFail" class="mx-5 mb-3" disabled="true">실패</button>
+										<!--										<div id="statusCheckFail" class="overflow-auto">
+											<button id="statusApplyFail" class="mb-3" disabled="true">실패</button>
 											<ul id="myApplyListFail">
-												<li class="mx-3">
+												<li>
 													<p>강서 신정FC 10:00-12:00</p>
 												</li>
 											</ul>
-										</div>
+										</div>-->
 									</div>
 								</div>
 								<div class="modal-footer">
@@ -224,6 +221,8 @@
 		<nav></nav>
 	</div>
 	<script>
+		var userId = "[[${session.loginUser.getUserId}]]";
+		var tier = "[[${session.loginUser.getUserTier}]]";
 		$(document).ready(function () {
 			$('header').load('./common/header_back.html', function () { // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
 				$('#page-name').text('매칭 리스트'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
@@ -515,6 +514,7 @@
 					fieldSeq: fieldSeq
 				})
 			});
+
 			fetch(`/matching`, {
 				method: "post",
 				headers: {
@@ -522,18 +522,34 @@
 				},
 				body: JSON.stringify({
 					type: addType,
-					userId: "user00101",
-					userTier: "D",
+					userId: userId,
+					userTier: tier,
 					mdto: mdtoList
 				})
 			})
-			fetch(`/matchingAddResult/${addType}/${userId}`)
+			.then(data => {
+				return fetch(`/matchingAddResult?addType=${addType}&userId=${userId}`);
+			})
 			.then(response => response.json())
 			.then(data => {
-				console.log(data.result);
+				var matchingAddResult = data.result;
+				console.log(matchingAddResult);
+				for (var i = 0; i < matchingAddResult.length; i++) {
+					$("#myApplyListSuccess").append(
+						`<li value=${matchingAddResult[i].matchingTime}>${matchingAddResult[i].fieldName}</li>
+						<p class="matchTimeValue d-none">${matchingAddResult[i].matchingTime}</p>
+						`
+					)
+				}
+				$("#myApplyListSuccess li[value=8]").text($("#myApplyListSuccess li[value=8]").text() + " 08:00~10:00");
+				$("#myApplyListSuccess li[value=10]").text($("#myApplyListSuccess li[value=10]").text() + " 10:00~12:00");
+				$("#myApplyListSuccess li[value=12]").text($("#myApplyListSuccess li[value=12]").text() + " 12:00~14:00");
+				$("#myApplyListSuccess li[value=14]").text($("#myApplyListSuccess li[value=14]").text() + " 14:00~16:00");
+				$("#myApplyListSuccess li[value=16]").text($("#myApplyListSuccess li[value=16]").text() + " 16:00~18:00");
+				$("#myApplyListSuccess li[value=18]").text($("#myApplyListSuccess li[value=18]").text() + " 18:00~20:00");
+				$("#myApplyListSuccess li[value=20]").text($("#myApplyListSuccess li[value=20]").text() + " 20:00~22:00");
 			})
 		});
 	</script>
 </body>
-
 </html>

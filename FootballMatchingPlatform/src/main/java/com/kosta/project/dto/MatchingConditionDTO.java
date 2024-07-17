@@ -10,8 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MatchingConditionDTO {
+	String userId;
+	int teamSeq;
 	String addType;
 	String matchingDate;
 	String matchingTime;
 	String fieldAddress;
+	String fieldName;
 }

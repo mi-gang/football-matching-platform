@@ -63,7 +63,6 @@ public class MatchingRestController {
 	@PostMapping("/matching")
 	public Map<String, Boolean> addMatching(@RequestBody AddMatchingDataDTO addDTO){
 		boolean result = false;
-		System.out.println(addDTO);
 		result = ms.addMatcings(addDTO);
 		return Map.of("reuslt", result);
 	}

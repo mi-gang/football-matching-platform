@@ -31,6 +31,7 @@
   font-size: 12px;
   line-height: 14px;
   color: #FFFFFF;
+  padding-right: 1.3rem;
 }
 
 .info-container {
@@ -179,4 +180,10 @@
   padding-left: 1rem;
   padding-bottom: 0;
   gap: 1rem;
+}
+
+#container > img{
+	height: 9rem;
+	border: 1px solid #DBDBDB;
+  	border-radius: 10px;
 }

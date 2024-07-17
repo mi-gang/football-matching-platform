@@ -20,6 +20,7 @@ import com.kosta.project.dto.addMatchingsDTO;
 
 @Mapper
 public interface MatchingMapper {
+	List<MatchingsDTO> selectMatchingsListAll(MatchingConditionDTO dto);
 	List<MatchingsDTO> selectMatchingsList(MatchingConditionDTO dto);
 	List<MatchingsDTO> selectMatchingsListByRegion(MatchingConditionDTO dto);
 	void insertMatchings(addMatchingsDTO dto);

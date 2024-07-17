@@ -148,13 +148,16 @@ public class MobileController {
 	}
 	
 	@GetMapping("/matchinglist")
-	public String getMatchingList(Model model, String addType, String matchingDate, String matchingTime) {
+	public String getMatchingList(Model model, String userId, String addType, String matchingDate, String matchingTime) {
 		MatchingConditionDTO mcDTO = MatchingConditionDTO.builder()
+									.userId(userId)
 									.addType(addType)
 									.matchingDate(matchingDate)
 									.matchingTime(matchingTime)
 									.build();
+		System.out.println(mcDTO);
 		List<MatchingsDTO> mDTO = ms.getMatchingsList(mcDTO);
+		
 		model.addAttribute("matchingList", mDTO);
 		return "matchinglist";
 	}
