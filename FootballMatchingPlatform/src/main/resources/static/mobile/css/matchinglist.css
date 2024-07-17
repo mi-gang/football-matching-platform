@@ -354,7 +354,6 @@ input[type="checkbox"]{
 #statusMyApply{
 	border-radius: 3rem;
 	border:2px solid #73A772;
-	width: 4rem;
 	height: 2rem;
 	color: #000000;
 }
@@ -405,4 +404,7 @@ input[type="checkbox"]{
 
 ul{
 	padding: 0;
+}
+.matchDateH3{
+	text-align: center;
 }

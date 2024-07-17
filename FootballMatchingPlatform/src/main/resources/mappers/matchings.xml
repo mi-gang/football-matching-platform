@@ -2,9 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kosta.project.repository.MatchingMapper">
-
-	<!-- 매칭 중인 목록 조회 -->
-	<select id="selectMatchingsList" resultType="com.kosta.project.dto.MatchingsDTO" parameterType="com.kosta.project.dto.MatchingConditionDTO">
+	<!-- 모든 매칭 목록 조회(날짜,시간) -->
+	<select id="selectMatchingsListAll" resultType="com.kosta.project.dto.MatchingsDTO" parameterType="com.kosta.project.dto.MatchingConditionDTO">
 		SELECT matching_seq as matchingSeq, matching_date as matchingDate, 
 		matching_time as matchingTime, field_address as fieldAddress, 
 		field_address_detail as fieldAddressDetail, field_name as fieldName, m.field_seq
@@ -12,7 +11,25 @@
 		WHERE m.field_seq = f.field_seq
 		AND matching_date = #{matchingDate}
 		AND matching_time = #{matchingTime}
+	</select>
+	<!-- 매칭 중인 목록 조회(매칭중 and 이미 신청한 목록 제외) -->
+	<select id="selectMatchingsList" resultType="com.kosta.project.dto.MatchingsDTO" parameterType="com.kosta.project.dto.MatchingConditionDTO">
+		SELECT DISTINCT m.matching_seq as matchingSeq, matching_date as matchingDate, 
+		matching_time as matchingTime, field_address as fieldAddress, 
+		field_address_detail as fieldAddressDetail, field_name as fieldName, m.field_seq
+		FROM matchings m, fields f, matching_add_lists mal, matching_adds ma
+		WHERE m.field_seq = f.field_seq
+		AND ma.matching_add_seq = mal.matching_add_seq
+		AND mal.matching_seq = m.matching_seq
+		AND matching_date = #{matchingDate}
+		AND matching_time = #{matchingTime}
 		AND matching_status = "매칭중"
+		AND m.matching_seq NOT IN (
+		SELECT m.matching_seq 
+		FROM matchings m, matching_adds ma, matching_add_lists mal
+		WHERE (ma.user_id = #{userId} OR ma.team_seq = #{teamSeq})
+		AND ma.matching_add_seq = mal.matching_add_seq
+		AND mal.matching_seq = m.matching_seq);
 	</select>
 	
 	<!-- 매칭 중인 목록 지역별 조회 -->
@@ -149,7 +166,7 @@
 	
 	<!-- 매칭 신청 결과 조회 -->
  	<select id="selectMatchingAddResult" resultType="com.kosta.project.dto.MatchingConditionDTO" parameterType="Integer">
- 		SELECT matching_date as matchingDate, field_address as fieldAddress, 
+ 		SELECT matching_date as matchingDate, field_address as fieldAddress, field_name as fieldName,
  		matching_time as matchingTime
 		FROM matching_add_lists ml, matchings m, fields f
 		WHERE ml.matching_seq = m.matching_seq

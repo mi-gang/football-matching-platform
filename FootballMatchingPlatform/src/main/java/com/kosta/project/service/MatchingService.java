@@ -72,38 +72,54 @@ public class MatchingService {
 	}
 
 	public List<MatchingsDTO> getMatchingsList(MatchingConditionDTO dto){
-		List<MatchingsDTO> resList = null;
 		String matchingTime = dto.getMatchingTime();
 		String[] matchingTimes = matchingTime.split(" ");
 		ArrayList<String> matchingTimeList = new ArrayList<String>(Arrays.asList(matchingTimes));
+		List<MatchingsDTO> matchingListAllByTime = new ArrayList<MatchingsDTO>();
+		List<MatchingsDTO> matchingListAll = new ArrayList<MatchingsDTO>();
 		List<MatchingsDTO> matchingListByTime = new ArrayList<MatchingsDTO>();
 		List<MatchingsDTO> matchingList = new ArrayList<MatchingsDTO>();
-
+		String userId = dto.getUserId();
 		for(int i=0; i<matchingTimeList.size(); i++) {
 			dto.setMatchingTime(matchingTimeList.get(i));
-			matchingListByTime = mm.selectMatchingsList(dto);
+			if(dto.getAddType().equals("개인")) {
+				dto.setTeamSeq(0);
+				matchingListByTime = mm.selectMatchingsList(dto);
+				matchingListAllByTime = mm.selectMatchingsListAll(dto);
+				System.out.println(matchingListByTime);
+				System.out.println(matchingListAllByTime);
+			}
+			else if(dto.getAddType().equals("팀")) {
+				dto.setTeamSeq(tm.selectTeamSeq(userId));
+				dto.setUserId("null");
+				matchingListByTime = mm.selectMatchingsList(dto);
+				matchingListAllByTime = mm.selectMatchingsListAll(dto);
+			}
 			for(int j=0; j<matchingListByTime.size(); j++) {
 				matchingList.add(matchingListByTime.get(j));
 			}
+			
+			for(int j=0; j<matchingListAllByTime.size(); j++) {
+				matchingListAll.add(matchingListAllByTime.get(j));
+			}
 		}
+
 		// 입력값에 따른 매칭중인 매칭정보 ex) 24-07-10, 14시 입력
 
-		resList = matchingList;
 		// 이용 가능한 구장번호 가져오기
 		List<Integer> possField = fm.selectFieldSeq();
 
 		boolean ck = false;
 		// timeList : 14
-		for(int i=0; i<possField.size(); i++) {
-
-			int fieldSeq = possField.get(i);
+		for(int j=0; j<matchingTimes.length; j++) {
+			String time = matchingTimes[j];
 
 			//time : 14, 16
-			for(int j=0; j<matchingTimes.length; j++) {
-				String time = matchingTimes[j];
+			for(int i=0; i<possField.size(); i++) {
+				int fieldSeq = possField.get(i);
 
-				for(int k=0; k < resList.size(); k++) {
-					if(resList.get(k).getMatchingTime() == Integer.parseInt(time) && resList.get(k).getFieldSeq()==fieldSeq) {
+				for(int k=0; k < matchingListAll.size(); k++) {
+					if(matchingListAll.get(k).getMatchingTime() == Integer.parseInt(time) && matchingListAll.get(k).getFieldSeq()==fieldSeq) {
 						ck = true;
 						break;
 					}
@@ -131,11 +147,10 @@ public class MatchingService {
 						.fieldName(amlDTO.getFieldName())
 						.fieldSeq(amlDTO.getFieldSeq())
 						.build();
-				resList.add(addDTO);
+				matchingList.add(addDTO);
 			}
 		}
-
-		return resList;
+		return matchingList;
 	}
 
 	public List<MatchingsDTO> getMatchingsListByRegion(MatchingConditionDTO dto){
@@ -194,7 +209,7 @@ public class MatchingService {
 			mm.insertMatchingAddsByTeam(teamSeq);
 			matchingAddSeq = mm.selectMatchingAddSeqByTeam(teamSeq);
 		}
-
+		System.out.println("신청 정보: " + matchingAddSeq);
 		int j = 0;
 		for(int i=0; i<dto.getMdto().size(); i++) {
 			if(dto.getType().equals("팀")) {
@@ -274,6 +289,7 @@ public class MatchingService {
 		
 		if(addDTO.getType().equals("개인")) {
 			matchingAddSeq = mm.selectMatchingAddSeq(addDTO.getUserId());
+			System.out.println("신청결과: " + matchingAddSeq);
 		}
 		else if(addDTO.getType().equals("팀")) {
 			int teamSeq = tm.selectTeamSeq(addDTO.getUserId());
