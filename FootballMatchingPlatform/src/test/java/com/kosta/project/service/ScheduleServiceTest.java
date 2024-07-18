@@ -22,9 +22,9 @@ public class ScheduleServiceTest {
 		System.out.println(scheduleService.getMatchingListByMonth("user001", 7));
 	}
 	
-	//@Test
+	@Test
 	void getMatchingListByDateTest() {
-		System.out.println(scheduleService.getMatchingListByDate("user001", "2024-07-10"));
+		System.out.println(scheduleService.getMatchingListByDate("user001","D", "2024-07-10"));
 	}
 	
 	//@Test
@@ -42,7 +42,7 @@ public class ScheduleServiceTest {
 		scheduleService.setPayStatus(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user00103").build());
 	}
 	
-	@Test
+	//@Test
 	void revmoveMatchingTest() {
 		scheduleService.removeMatching(195);
 	}

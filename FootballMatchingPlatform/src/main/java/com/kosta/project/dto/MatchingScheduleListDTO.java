@@ -45,6 +45,6 @@ public class MatchingScheduleListDTO {
 	private String fieldName;
 	private String myTeamName;
 	private String opposingTeamName;
-
+	private int totalUserCount;
 	
 }

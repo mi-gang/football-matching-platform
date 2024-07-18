@@ -72,6 +72,7 @@ public interface MatchingMapper {
 	// 상대팀 평가
 	List<UserPlayInfoDTO> selectOpposingTeamPlayerList (UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq
 	boolean updateReviewScore(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq, int score
+	boolean updateUserScore(UserMatchingInfoDTO userMatchingInfoDTO); // String userId, int matchingSeq, int score
 	boolean updateReviewStatus(int matchingAddListSeq);// String userId, int matchingSeq
 	
 	

@@ -27,8 +27,7 @@ $("label").on('click', function () {
 // 등록하기 버튼 클릭 시
 $("#submitBtn").on('click', function () {
     let checkedList = $("input:radio[class=btn-check]:checked"); // 라디오 체크된 배열
-    let players = [];
-    let matchingSeq = $('#submitBtn').attr('data-matchingSeq');
+    // let matchingSeq = $('#submitBtn').attr('data-matchingSeq');
     let matchingAddListSeq = $('#submitBtn').attr('data-matchingAddListSeq');
 
     for (i = 0; i < checkedList.length; i++) {

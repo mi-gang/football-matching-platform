@@ -17,7 +17,7 @@ public class MatchingMapperTest2 {
 	@Autowired
 	MatchingMapper matchingMapper;
 	
-	//@Test
+	@Test
 	void selectMatchingListByMonthTest() {
 		Collection<MatchingScheduleListDTO> collection = new ArrayList<>();
 		collection = matchingMapper.selectMatchingListByMonth("user001", 7);
@@ -27,7 +27,7 @@ public class MatchingMapperTest2 {
 	//@Test
 	void selectMatchingListByDateTest() {
 		Collection<MatchingScheduleListDTO> collection = new ArrayList<>();
-		collection = matchingMapper.selectMatchingListByDate("user001", "2024-07-10");
+		collection = matchingMapper.selectMatchingListByDate("user001", "2024-07-18");
 		System.out.println(collection);
 	}
 	
@@ -71,7 +71,15 @@ public class MatchingMapperTest2 {
 		result = matchingMapper.updateReviewScore(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user001").score(3).build());
 		System.out.println(result);
 	}
-	
+
+	//@Test
+	void updateUserScoreTest() {
+		boolean result = false;
+		result = matchingMapper.updateUserScore(UserMatchingInfoDTO.builder().matchingSeq(6).userId("user001").score(3).build());
+		System.out.println(result);
+	}
+
+
 	//@Test
 	void myTeamPlayerListTest() {
 		Collection<UserPlayInfoDTO> infoDTOs = new ArrayList<UserPlayInfoDTO>();
@@ -134,7 +142,7 @@ public class MatchingMapperTest2 {
 		System.out.println(matchingMapper.selectMatchingAddListSeqCount(6));
 	}
 
-	@Test
+	//@Test
 	void getTeamNamesTest() {
 		System.out.println(matchingMapper.getTeamNames(UserMatchingInfoDTO.builder().matchingSeq(145).userId("user00120").build()));
 	}

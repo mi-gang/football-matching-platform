@@ -38,10 +38,11 @@ public class ScheduleRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        // 세션으로 유저 아이디 구하기
+        // 세션으로 유저 아이디, 티어 구하기
         String userId = "user001";
+        String userTier = "D";
         Collection<MatchingScheduleListDTO> matchingScheduleListDTOS = new ArrayList<>();
-        matchingScheduleListDTOS = scheduleService.getMatchingListByDate(userId, date);
+        matchingScheduleListDTOS = scheduleService.getMatchingListByDate(userId, userTier, date);
 
         return new ResponseEntity<>(matchingScheduleListDTOS, HttpStatus.OK);
     }

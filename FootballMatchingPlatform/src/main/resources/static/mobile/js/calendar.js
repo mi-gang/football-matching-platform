@@ -280,12 +280,55 @@ function getMatchigList(item) {
 
         const matchingUserCount = document.createElement('span');
         matchingUserCount.classList.add('matching-user-count');
-        matchingUserCount.textContent = '9';
+        matchingUserCount.textContent = item.totalUserCount;
         matchingUserCountWrapper.appendChild(matchingUserCount);
 
         const matchingUserCountText = document.createElement('span');
         matchingUserCountText.textContent = '/10명';
         matchingUserCountWrapper.appendChild(matchingUserCountText);
+    }
+
+    // 경기 확정 시 등번호 생성
+    if (item.matchingStatus == '경기확정' || item.matchingStatus == '경기완료'){
+        const playerNumber = document.createElement('span');
+        playerNumber.textContent = item.playerNumber;
+
+        if (item.team == 'a')
+            playerNumber.className = 'my-player-number a-team';
+        else
+            playerNumber.className = 'my-player-number b-team';
+
+        fastMatchingWrapper.appendChild(playerNumber);
+    }
+
+    // 경기 확정 시 등번호 생성
+    if (item.teamStatus){
+        const teamElement = document.createElement('span');
+        teamElement.textContent = '팀';
+        teamElement.className = 'team';
+
+        fastMatchingWrapper.appendChild(teamElement);
+    }
+
+    // 경기 완료 시 점수 표기
+    if (item.matchingStatus == '경기완료'){
+        const matchingScoreWrapper = document.createElement('div');
+        matchingScoreWrapper.className = 'matching-score-wrapper';
+
+        const aScore = document.createElement('span');
+        // matchingScoreWrapper.className = 'matching-score-wrapper';
+        aScore.textContent = item.ascore;
+
+        const span = document.createElement('span');
+        span.textContent = ' : ';
+
+        const bScore = document.createElement('span');
+        bScore.textContent = item.bscore;
+
+        matchingScoreWrapper.appendChild(aScore);
+        matchingScoreWrapper.appendChild(span);
+        matchingScoreWrapper.appendChild(bScore);
+        fastMatchingWrapper.appendChild(matchingScoreWrapper);
     }
 
     // matching-info div 생성
@@ -314,15 +357,39 @@ function getMatchigList(item) {
     matchingInfo.appendChild(matchingTimeInfo);
 
     // matching-content-wrapper에 모든 요소 추가
-    matchingContentWrapper.appendChild(matchingStatus);
     matchingContentWrapper.appendChild(fastMatchingWrapper);
     matchingContentWrapper.appendChild(matchingInfo);
+    matchingContentWrapper.appendChild(matchingFieldInfo);
 
-    if (item.payStatus) {
+    // 결제 완료 시 결제 금액 표기
+    if (item.payStatus && item.matchingStatus != '매칭실패' && !item.cancelStatus) {
         const payInfo = document.createElement('span');
         payInfo.classList.add('pay-info');
         payInfo.textContent = '결제 금액 : 10,000원';
         matchingContentWrapper.appendChild(payInfo);
+    }
+
+    // 팀 매칭 시 매칭 성공부터 팀 이름 표기
+    if (item.teamStatus && item.matchingStatus != '매칭실패' && !item.cancelStatus
+            && (item.matchingStatus == '매칭성공' || item.matchingStatus == '경기확정' || item.matchingStatus == '경기완료')) {
+
+        const teamInfoWrapper = document.createElement('div');
+        teamInfoWrapper.className = 'team-info';
+
+        const myTeamName = document.createElement('span');
+        // matchingScoreWrapper.className = 'matching-score-wrapper';
+        myTeamName.textContent = item.myTeamName;
+
+        const span = document.createElement('span');
+        span.textContent = ' VS ';
+
+        const opposingTeamName = document.createElement('span');
+        opposingTeamName.textContent = item.opposingTeamName;
+
+        teamInfoWrapper.appendChild(myTeamName);
+        teamInfoWrapper.appendChild(span);
+        teamInfoWrapper.appendChild(opposingTeamName);
+        matchingContentWrapper.appendChild(teamInfoWrapper);
     }
 
     // matching-btn-wrapper div 생성
@@ -331,7 +398,7 @@ function getMatchigList(item) {
 
     console.log(!item.matchingStatus === '경기확정')
 
-    // 경기 확정 상태 아닐 때만
+    // 경기 확정 상태 아닐 때만 버튼 표기
     if (item.matchingStatus != '경기확정' && item.matchingStatus != '매칭실패'
         && item.matchingStatus != '경기취소' && item.matchingStatus != '경기완료'
         && !item.cancelStatus) {
@@ -389,7 +456,6 @@ function getMatchigList(item) {
 
         matchingBtnWrapper.appendChild(reviewMatchingBtn);
         matchingBtnWrapper.appendChild(matchingScoreBtn);
-
     }
 
     // matching-wrapper에 content wrapper와 button wrapper 추가

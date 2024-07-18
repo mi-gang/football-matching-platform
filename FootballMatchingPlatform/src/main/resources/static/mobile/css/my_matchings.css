@@ -195,6 +195,34 @@
     padding: 0.3rem 0.6rem;
 }
 
+.team{
+    font-weight: 400;
+    border-radius: 14px;
+    border-color: transparent;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+    color: #ffffff;
+    background: #545454;
+}
+
+.a-team{
+    font-weight: 700;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+    color: #ffffff;
+    background-color: #545454;
+}
+
+.b-team{
+    font-weight: 700;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+    color: #696969;
+    border: 1.6px solid #bbbbbb;
+}
+
 .status-1 {
     background: #EF8665;
 }
@@ -209,7 +237,8 @@
 
 .matching-info,
 .matching-field-info,
-.pay-info {
+.pay-info,
+.team-info{
     padding-left: 0.5rem;
     text-align: center;
 }
@@ -236,9 +265,11 @@
     flex-direction: row;
     align-items: center;
     column-gap: 0.5rem;
+    padding-left: 0.3rem;
 }
 
-.fast-matching-wrapper > div > span {
+.fast-matching-wrapper > div > span,
+.pay-info{
     font-size: 0.9rem;
     color: #818181;
 }

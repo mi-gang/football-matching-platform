@@ -2,13 +2,10 @@ package com.kosta.project.service;
 
 import java.util.*;
 
+import com.kosta.project.dto.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kosta.project.dto.MatchingScheduleListDTO;
-import com.kosta.project.dto.ReportDTO;
-import com.kosta.project.dto.UserMatchingInfoDTO;
-import com.kosta.project.dto.UserPlayInfoDTO;
 import com.kosta.project.repository.MatchingMapper;
 import com.kosta.project.repository.ReportMapper;
 
@@ -26,22 +23,39 @@ public class ScheduleService {
 	}
 
 	/** 특정 날짜에 맞는 매칭 리스트 확인하기 */
-	public Collection<MatchingScheduleListDTO> getMatchingListByDate(String userId, String date) {
+	public Collection<MatchingScheduleListDTO> getMatchingListByDate(String userId, String userTier, String date) {
 
 		Collection<MatchingScheduleListDTO> scheduleListDTOs = new ArrayList<MatchingScheduleListDTO>();
-		
+
 		// 특정 날짜에 맞는 매칭 리스트 불러오기
 		scheduleListDTOs = matchingMapper.selectMatchingListByDate(userId, date);
 
+
 		for (MatchingScheduleListDTO matchingScheduleListDTO : scheduleListDTOs) {
-			UserMatchingInfoDTO userMatchingInfoDTO = UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingScheduleListDTO.getMatchingSeq()).build();
+			int matchingSeq = matchingScheduleListDTO.getMatchingSeq();
+
+			UserMatchingInfoDTO userMatchingInfoDTO = UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingSeq).build();
 			// 팀장 여부 추가하기
-			if (matchingScheduleListDTO.isTeamStatus()) {
-			matchingScheduleListDTO.setIsleader(matchingMapper.isTeamLeader(userMatchingInfoDTO));				
-			}
+			if (matchingScheduleListDTO.isTeamStatus())
+				matchingScheduleListDTO.setIsleader(matchingMapper.isTeamLeader(userMatchingInfoDTO));
+
 			// 상대팀 전부 평가 완료 여부 추가하기(내가 리뷰 작성했을 때만 - 리뷰 작성 안하면 작성 하라고만 띄우기)
-			if (matchingScheduleListDTO.isReviewStatus()) {
-				matchingScheduleListDTO.setOpposingTeamReviewStatus(matchingMapper.selectOpposingTeamReviewStatus(userMatchingInfoDTO));				
+			if (matchingScheduleListDTO.isReviewStatus())
+				matchingScheduleListDTO.setOpposingTeamReviewStatus(matchingMapper.selectOpposingTeamReviewStatus(userMatchingInfoDTO));
+
+			// 팀 매칭중일때 팀 명 추가하기
+			if(matchingScheduleListDTO.isTeamStatus()) {
+				List<String> list = matchingMapper.getTeamNames(userMatchingInfoDTO);
+				if (list.size() > 0) {
+					matchingScheduleListDTO.setMyTeamName(list.get(0));
+					matchingScheduleListDTO.setOpposingTeamName(list.get(1));
+				}
+			}
+
+			// 빠른 매칭 시 명 수 추가하기
+			if (matchingScheduleListDTO.isFastAddStatus()){
+				matchingScheduleListDTO.setTotalUserCount(matchingMapper.selectMatchingMemberCount
+						(MatchingCountDTO.builder().matchingSeq(matchingSeq).userTier(userTier).build()));
 			}
 		}
 		return scheduleListDTOs;
@@ -134,6 +148,9 @@ public class ScheduleService {
 		        if (!matchingMapper.updateReviewScore(userMatchingInfoDTO)) {
 		            throw new RuntimeException("Failed to update review score for " + userMatchingInfoDTO);
 		        }
+				if (!matchingMapper.updateUserScore(userMatchingInfoDTO)) {
+					throw new RuntimeException("Failed to update user score for " + userMatchingInfoDTO);
+				}
 		    }
 		    // 매칭(개인) - 리뷰 작성 상태 등록하기
 		    if (!matchingMapper.updateReviewStatus(matchingAddListSeq)) {

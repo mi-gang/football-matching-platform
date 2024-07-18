@@ -325,11 +325,6 @@
         ORDER BY CASE WHEN t.team_seq = (SELECT team_seq FROM users WHERE user_id = #{userId}) THEN 1 ELSE 2 END
     </select>
 
-    <resultMap id="teamNamesResultMap" type="java.util.Map">
-        <result property="1" column="team_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-        <result property="2" column="team_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-    </resultMap>
-
     <!-- 특정 날짜에 맞는 매칭 리스트 불러오기 -->
     <select id="selectMatchingListByDate" resultType="com.kosta.project.dto.MatchingScheduleListDTO">
         SELECT m.matching_seq,
@@ -473,13 +468,23 @@
         ORDER BY player_number asc;
     </select>
 
-    <!-- 각 사용자 별 등수에 맞는 점수 추가하기 -->
+    <!-- 각 사용자 별 등수에 맞는 점수 추가하기 (matching_add_lists 테이블) -->
     <update id="updateReviewScore" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
         update matching_add_lists mal
             JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
         set mal.review_score = mal.review_score + #{score}
         WHERE mal.matching_seq = #{matchingSeq}
           AND ma.user_id = #{userId}
+    </update>
+
+    <!-- 각 사용자 별 등수에 맞는 점수 추가하기 (users 테이블) -->
+    <update id="updateUserScore" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+        update users u
+            join mydb.matching_adds ma on u.user_id = ma.user_id
+            join mydb.matching_add_lists mal on ma.matching_add_seq = mal.matching_add_seq
+        set user_score = user_score + #{score}
+        where mal.matching_seq = #{matchingSeq}
+          and u.user_id = #{userId}
     </update>
 
     <!-- 매칭(개인) - 리뷰 작성 상태 등록하기 -->
