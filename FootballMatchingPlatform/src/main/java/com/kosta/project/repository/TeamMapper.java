@@ -2,10 +2,12 @@ package com.kosta.project.repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.kosta.project.dto.ApplyDTO;
+import com.kosta.project.dto.MemberCountDTO;
 import com.kosta.project.dto.TeamDTO;
 import com.kosta.project.dto.TeamMemberDTO;
 import com.kosta.project.dto.TeamScheduleDTO;
@@ -22,6 +24,7 @@ public interface TeamMapper {
 	
 	List<TeamDTO> selectPossibleJoinTeam();
 	List<TeamDTO> selectSearchPossibleTeam(String search, String userId);
+	Set<TeamDTO> selectFilterPossibleTeam(String location, String gu, String userId);
 	
 	TeamScheduleDTO selectTeamschedule(int teamSeq);
 	String selectRival(int teamSeq, int matchingSeq);
@@ -37,7 +40,7 @@ public interface TeamMapper {
 	List<TeamDTO> selectApplyTeamList(String userId); //가입 신청된 목록
 	
 	TeamDTO selectTeamInfoByModal(int teamSeq);		// 모달창 팀 정보
-	List<Map<String, Integer>> selectTeamMemberTierAndCount(int teamSeq); // 모달 팀원 정보
+	List<MemberCountDTO> selectTeamMemberTierAndCount(int teamSeq); // 모달 팀원 정보
 	
 	boolean updateApplyTeamMemberStatus(String userId);	// 신청 상태 변경 - 팀 허락
 	

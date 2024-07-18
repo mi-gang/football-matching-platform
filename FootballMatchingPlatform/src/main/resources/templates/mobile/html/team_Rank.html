@@ -145,7 +145,7 @@
 
 
     <!-- 팀 정보 모달 -->
-    <div class="modal" id = "teamInfoModal" tabindex="-1">
+    <div class="modal" id="teamInfoModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header border-bottom-0 pb-0">
@@ -158,19 +158,19 @@
                 <div class="fs-4">개인 등급</div>
                 <div class="d-flex gap-1">
                   <div>A</div>
-                  <div>0명</div>
+                  <div id="cntA">0명</div>
                 </div>
                 <div class="d-flex gap-1">
                   <div>B</div>
-                  <div>2명</div>
+                  <div id="cntB">0명</div>
                 </div>
                 <div class="d-flex gap-1">
                   <div>C</div>
-                  <div>2명</div>
+                  <div id="cntC">0명</div>
                 </div>
                 <div class="d-flex gap-1">
                   <div>D</div>
-                  <div>1명</div>
+                  <div id="cntD">0명</div>
                 </div>
               </div>
               <div class="d-flex flex-column">
@@ -217,36 +217,35 @@
           </div>
 
           <div class="modal-body">
+
             <h3>지역</h3>
-            <div class="w-auto h-auto locationCity">
-              <ul id="locationCityBtns">
-                <li><button type="button" class=" locationCityBtn btn m-2" onclick="change_btn(event)"
-                    value="서울">서울</button></li>
-                <li><button type="button" class=" locationCityBtn btn m-2" onclick="change_btn(event)"
-                    value="인천">인천</button></li>
-                <li><button type="button" class=" locationCityBtn btn m-2" onclick="change_btn(event)"
-                    value="부산">부산</button></li>
-              </ul>
+            <div id="location-list">
+              <div class="location-line">
+                <input type="radio" id="서울" value="서울" name="location"><label for="서울">서울</label>
+                <input type="radio" id="경기" value="경기" name="location"><label for="경기">경기</label>
+                <input type="radio" id="인천" value="인천" name="location"><label for="인천">인천</label>
+                <input type="radio" id="부산" value="부산" name="location"><label for="부산">부산</label>
+                <input type="radio" id="대전" value="대전" name="location"><label for="대전">대전</label>
+              </div>
+              <div class="location-line">
+                <input type="radio" id="대구" value="대구" name="location"><label for="대구">대구</label>
+                <input type="radio" id="울산" value="울산" name="location"><label for="울산">울산</label>
+                <input type="radio" id="세종" value="세종" name="location"><label for="세종">세종</label>
+                <input type="radio" id="광주" value="광주" name="location"><label for="광주">광주</label>
+                <input type="radio" id="강원" value="강원" name="location"><label for="강원">강원</label>
+              </div>
+              <div class="location-line">
+                <input type="radio" id="충북" value="충북" name="location"><label for="충북">충북</label>
+                <input type="radio" id="충남" value="충남" name="location"><label for="충남">충남</label>
+                <input type="radio" id="경북" value="경북" name="location"><label for="경북">경북</label>
+                <input type="radio" id="경남" value="경남" name="location"><label for="경남">경남</label>
+                <input type="radio" id="제주" value="제주" name="location"><label for="제주">제주</label>
+              </div>
             </div>
             <hr>
-            <div id="locationInfoDiv" class="overflow-y-auto overflow-x-auto w-auto h-auto timeZone mt-5">
-              <ul id="locationBtns">
-                <li><button type="button" id="locationBtn" class="w-3 h-2 btn m-1 p-2"
-                    onclick="changeButtonColors(this)">중구</button></li>
-                <li><button type="button" id="locationBtn1" class="w-3 h-2 btn m-1 p-2"
-                    onclick="changeButtonColors(this)">서구</button></li>
-                <li><button type="button" id="locationBtn2" class="w-3 h-2 btn m-1 p-2"
-                    onclick="changeButtonColors(this)">동구</button></li>
-                <li><button type="button" id="locationBtn3" class="w-3 h-2 btn m-1 p-2"
-                    onclick="changeButtonColors(this)">남동구</button></li>
-                <li><button type="button" id="locationBtn4" class="w-3 h-2 btn m-1 p-2"
-                    onclick="changeButtonColors(this)">영등포구</button></li>
-                <li><button type="button" id="locationBtn5" class="w-3 h-2 btn m-1 p-2"
-                    onclick="changeButtonColors(this)">강남구</button></li>
-                <li><button type="button" id="locationBtn6" class="w-3 h-2 btn m-1 p-2"
-                    onclick="changeButtonColors(this)">금천구</button></li>
-              </ul>
+            <div id="gu-list">
             </div>
+
           </div>
 
           <div class="modal-footer justify-content-center border-top-0">
