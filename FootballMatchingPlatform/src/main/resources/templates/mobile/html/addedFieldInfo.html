@@ -24,11 +24,12 @@
             <div id="info-container">
                 <div>구장시설</div>
                 <div id="info-list">
-                  <p th:if="${addedFieldInfo.showerRoom}">샤워실 </p>
-				  <p th:if="${addedFieldInfo.parking}">주차장 </p>
-				  <p th:if="${addedFieldInfo.sellDrink}">음료판매 </p>
-			      <p th:if="${addedFieldInfo.rentShoes}">축구화 대여 </p>
-				  <p th:if="${addedFieldInfo.rentBall}">축구공 대여 </p>
+                  <button class="showerTF" disabled="true" th:value="${addedFieldInfo.showerRoom}">샤워실</button>
+		          <button class="parkTF" disabled="true" th:value="${addedFieldInfo.parking}">주차장</button>
+ 		       	  <button class="shoesTF" disabled="true" th:value="${addedFieldInfo.rentShoes}">풋살화 대여</button><br>
+        		  <button class="drinkTF mt-1" disabled="true" th:value="${addedFieldInfo.sellDrink}">음료 판매</button>
+       			  <button class="ballTF" disabled="true" th:value="${addedFieldInfo.rentBall}">풋살공 대여</button>
+
                 </div>
             </div>
             <hr>
@@ -65,6 +66,65 @@
 
         $("#content").html(str);
     });
+    
+    
+    
+    
+    
+    
+    window.onload = function(){
+  var ballTF = document.querySelector('.ballTF');
+  var parkTF = document.querySelector('.parkTF');
+  var drinkTF = document.querySelector('.drinkTF');
+  var shoesTF = document.querySelector('.shoesTF');
+  var showerTF = document.querySelector('.showerTF');
+
+  let ballYN = ballTF.value;
+  let parkYN = parkTF.value;
+  let drinkYN = drinkTF.value;
+  let showerYN = showerTF.value;
+  let shoesYN = shoesTF.value;
+
+
+
+
+  if (ballYN == 'true') {
+  	console.log('ballYN' + ballYN)
+    $('.ballTF').css('background-color', '#73A772');
+    $('.ballTF').css('border-radius', '#73A772');
+  } 
+  if (drinkYN == 'true') {
+    console.log('drinkYN' + drinkYN)
+    $('.drinkTF').css('background-color', '#73A772');
+    $('.drinkTF').css('border-radius', '#73A772');
+  } 
+  if (shoesYN == 'true') {
+    console.log('shoesYN' + shoesYN)    
+    $('.shoesTF').css('background-color', '#73A772');
+    $('.shoesTF').css('border-radius', '#73A772');
+  } 
+  if (showerYN == 'true') {
+    console.log('showerYN' + showerYN)
+    $('.showerTF').css('background-color', '#73A772');
+    $('.showerTF').css('border-radius', '#73A772');  
+  } 
+  if (parkYN == 'true') {
+    console.log('parkYN' + parkYN)
+    $('.parkTF').css('background-color', '#73A772');
+    $('.parkTF').css('border-radius', '#73A772');
+  } 
+      setTimeout(function() {
+      	console.log('ㅎㅇㅎㅇ')  
+      }, 1000);	
+}
+
+    
+    
+    
+    
+    
+    
+    
     </script>
 </body>
 </html>

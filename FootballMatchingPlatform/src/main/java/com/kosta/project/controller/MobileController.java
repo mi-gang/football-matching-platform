@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
 import com.kosta.project.dto.TeamDTO;
+import com.kosta.project.dto.UserDTO;
 import com.kosta.project.service.FastMatchingService;
 import com.kosta.project.service.MainPageService;
 
@@ -36,8 +37,15 @@ public class MobileController {
 	private final ScheduleService ss;
 	
 	@GetMapping("/fastmatchinglist")
-	public String getFastMatchingList(Model model) {
-		model.addAttribute("fastmatchinglist", fms.getFastMatchingList());
+	public String getFastMatchingList(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		UserDTO user = (UserDTO) session.getAttribute("loginUser");
+		
+		
+		String userId = user.getUserId();
+		System.out.println("세션이 잘 가져와지는지? : " + userId);
+		model.addAttribute("fastmatchinglist", fms.getFastMatchingList(userId));
 		
 		/*
 		 * model.addAttribute("fastmatchinglistS", fms.getFastMatchingListBySmall());
@@ -122,9 +130,14 @@ public class MobileController {
 	
 	@GetMapping("/mainPage")
 	public String getMainPage(HttpServletRequest request, Model model) {
+		
 		HttpSession session = request.getSession();
 		
-		String userId = "user001";
+		UserDTO user = (UserDTO) session.getAttribute("loginUser");
+		
+		String userId = user.getUserId();
+		
+		
 		
 		model.addAttribute("getMatchingAlready", mps.getMatchingAlready(userId));
 		

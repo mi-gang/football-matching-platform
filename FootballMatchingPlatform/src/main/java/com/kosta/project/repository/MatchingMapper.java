@@ -40,9 +40,9 @@ public interface MatchingMapper {
 	void updateTeamToB(int matchingAddListSeq);
 	void updatePlayerNumber(PlayerNumberDTO dto);
 	List<MatchingConditionDTO> selectMatchingAddResult(int matchingAddSeq);
-	List<FastMatchingDTO> selectFastMatchingList();
-	List<FastMatchingDTO> selectFastMatchingListBySmall();
-	List<FastMatchingDTO> selectFastMatchingListByBig();
+	List<FastMatchingDTO> selectFastMatchingList(String userId);
+	List<FastMatchingDTO> selectFastMatchingListBySmall(String userId);
+	List<FastMatchingDTO> selectFastMatchingListByBig(String userId);
 	List<FastMatchingDTO> selectFastMatchingListBySmallAndDateAndRegionAndTier(FastMatchingConditionDTO dto);
 	List<FastMatchingDTO> selectFastMatchingListByBigAndDateAndRegionAndTier(FastMatchingConditionDTO dto);
 	String selectMatchingTier(int matchingSeq);
@@ -78,4 +78,9 @@ public interface MatchingMapper {
 	// 다가오는 경기 일정을 불러옵니다.
 	MatchingDTO selectMatchingAlready(String userId);
 
+	// 빠른 매칭 결제하기
+	boolean insertMatchingAddForFastMatching(String userId);
+	boolean insertFastMatchingAndPay(UserMatchingInfoDTO umiDTO);
+	int selectFastMatchingCountForPay(int matchingSeq);
+	boolean updateFastMatchingStatusByFastMatchingSeq(int matchingSeq);
 }
