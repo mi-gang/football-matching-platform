@@ -116,29 +116,31 @@ $("#search").on("click", function () {
 		  
 	      $('#dataBox').html(str);
 	      joinBtnClick();
-	
-			$('#teamInfoModal').on('show.bs.modal', function (event) {
-				 teamSeq = $(event.relatedTarget).data('teamseq');
-				 teamName = $(event.relatedTarget).data('teamname');
-				 teamScore = $(event.relatedTarget).data('teamscore');
-				 teamTier = $(event.relatedTarget).data('teamtier');
-				 teamRank = $(event.relatedTarget).data('teamrank');
-				 gameCount = $(event.relatedTarget).data('gamecount');
-				 winCount = $(event.relatedTarget).data('wincount');
-				 
-				 console.log(winCount);
-				 odds = $(event.relatedTarget).data('odds');
-				 $("#teamTitleModal").text(teamName);
-				 $("#info-rank").text(teamRank);
-				 $("#info-tier").text(teamTier);
-				 $("#info-score").text(teamScore);
-				 $("#info-count").text(gameCount + "전 " +winCount + "승");
-				 $("#info-odds").text(odds+"%");
-				 				 
-			});  
+	      teamInfoShow();
 	    })			
 	}
 });	
+
+function teamInfoShow(){
+	$('#teamInfoModal').on('show.bs.modal', function (event) {
+		teamSeq = $(event.relatedTarget).data('teamseq');
+		teamName = $(event.relatedTarget).data('teamname');
+		teamScore = $(event.relatedTarget).data('teamscore');
+		teamTier = $(event.relatedTarget).data('teamtier');
+		teamRank = $(event.relatedTarget).data('teamrank');
+		gameCount = $(event.relatedTarget).data('gamecount');
+		winCount = $(event.relatedTarget).data('wincount');
+		content = $(event.relatedTarget).data('content');
+		odds = $(event.relatedTarget).data('odds');
+		$("#teamTitleModal").text(teamName);
+		$("#info-rank").text(teamRank + "위");
+		$("#info-tier").text(teamTier);
+		$("#info-score").text(teamScore+"점");
+		$("#info-count").text(gameCount + "전 " +winCount + "승");
+		$("#info-odds").text(odds+"%");
+		$("#info-content").text(content);				 				 
+	}); 
+}
 
 
 // 팀 유무 확인
@@ -215,7 +217,8 @@ function strRes(res){
                 data-teamtier="`+ res[i].teamTier +`"
                 data-gamecount="`+ res[i].gameCount +`"
                 data-wincount="`+ res[i].winCount +`"
-                data-odds="`+ res[i].odds +`">
+                data-odds="`+ res[i].odds +`"
+                data-content="`+ res[i].content +`">
                   <div class="d-flex">
                       <div class="content-title pe-2">`+ res[i].teamName + `</div>
                       <div class="content-tier ps-1">`;
@@ -259,16 +262,11 @@ function possJoinTeam() {
     .then(response => response.json())
     .then(data => {
       let res = data.result;
-      str = strRes(res);      
+      str = strRes(res);   
+      console.log(res);   
       $('#dataBox').html(str);
- 		
- 		$('#teamInfoModal').on('show.bs.modal', function (event) {
-			 teamSeq = $(event.relatedTarget).data('teamseq');
-			 teamName = $(event.relatedTarget).data('teamname');
-			 $("#teamTitleModal").text(teamName);
-			 
-		});  
       
+      teamInfoShow();      
       joinBtnClick();    
 
     })

@@ -111,7 +111,6 @@ public class TeamRestController {
 		if(ts.getTeamSchedule(teamSeq) != null) {
 			dto = ts.getTeamSchedule(teamSeq);
 		}
-		System.out.println(dto);
 		return Map.of("result", dto);
 	}
 	

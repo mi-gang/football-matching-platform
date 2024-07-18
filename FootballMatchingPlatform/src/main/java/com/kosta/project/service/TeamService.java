@@ -143,8 +143,6 @@ public class TeamService {
 			dto = tm.selectTeamschedule(teamSeq);
 			dto.setRival(tm.selectRival(teamSeq, dto.getMatchingSeq()));
 		}
-
-		System.out.println("service : " + dto);
 		return dto;
 	}
 	
