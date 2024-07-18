@@ -1,7 +1,9 @@
 package com.kosta.project.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,22 @@ public class TeamsServiceTest {
 	//@Test
 	void getSearchList() {
 		System.out.println(ts.getSearchTeamRankList("뭐"));
-		System.out.println(ts.getSearchPossibleTeam("뭐"));
+		//System.out.println(ts.getSearchPossibleTeam("뭐"));
+	}
+	
+	@Test
+	void testest() {
+		String hometown = "서울 강남구,강동구,";
+		
+		String[] gu = hometown.split(",");
+		
+		for(String s : gu)
+			System.out.println(s);
+		
+//		Set<TeamDTO> list = ts.getFilterPossibleTeam(hometown, "user00258");
+//		for(TeamDTO d : list)
+//			System.out.println(d);
+		
 	}
 	
 	//@Test
@@ -75,7 +92,7 @@ public class TeamsServiceTest {
 		System.out.println(ts.addTeam(dto));
 	}
 	
-	@Test
+	//@Test
 	void getApplyTeamList() {
 		System.out.println(ts.getApplyTeamList("user00410"));
 	}

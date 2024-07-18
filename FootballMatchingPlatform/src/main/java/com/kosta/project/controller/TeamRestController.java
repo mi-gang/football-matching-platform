@@ -2,6 +2,7 @@ package com.kosta.project.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.coyote.Request;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.thymeleaf.TemplateEngine;
 
+import com.kosta.project.dto.MemberCountDTO;
 import com.kosta.project.dto.TeamDTO;
 import com.kosta.project.dto.TeamMemberDTO;
 import com.kosta.project.dto.TeamScheduleDTO;
@@ -97,6 +99,13 @@ public class TeamRestController {
 		return Map.of("result", ts.getSearchPossibleTeam(search, userId));
 	}
 	
+	// 가입 가능 팀 조회 - 필터
+	@GetMapping("/filter/{hometown}")
+	public Map<String, Set<TeamDTO>> getFilterPossibleTeam(@PathVariable("hometown") String hometown, @SessionAttribute(name = "loginUser", required = false) UserDTO user){
+		String userId = user.getUserId();
+		return Map.of("result", ts.getFilterPossibleTeam(hometown, userId));
+	}
+	
 	// 가입 신청 된 목록
 	@GetMapping("/joinApply")
 	public Map<String, List<TeamDTO>> getJoin(@SessionAttribute(name = "loginUser", required = false) UserDTO user){
@@ -104,6 +113,7 @@ public class TeamRestController {
 		return Map.of("result", ts.getApplyTeamList(userId));
 	}
 	
+	// 다가오는 일정
 	@GetMapping("/teamSchedule/{teamSeq}")
 	public Map<String, TeamScheduleDTO> getSchedule(@PathVariable("teamSeq") int teamSeq){
 		
@@ -131,6 +141,11 @@ public class TeamRestController {
 	@GetMapping("/teamInfo/{teamSeq}")
 	public Map<String, TeamDTO> getTeamInfo(@PathVariable("teamSeq") int teamSeq){
 		return Map.of("result", ts.getTeamInfoByModal(teamSeq));
+	}
+	
+	@GetMapping("/teamInfoMember/{teamSeq}")
+	public Map<String, List<MemberCountDTO>> getTeamMemberTier(@PathVariable("teamSeq") int teamSeq){
+		return Map.of("result", ts.getTeamMemberTierAndCount(teamSeq));
 	}
 	
 	// 팀 가입 신청하기

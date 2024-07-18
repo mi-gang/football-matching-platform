@@ -1,11 +1,14 @@
 package com.kosta.project.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
 import com.kosta.project.dto.ApplyDTO;
+import com.kosta.project.dto.MemberCountDTO;
 import com.kosta.project.dto.TeamDTO;
 import com.kosta.project.dto.TeamMemberDTO;
 import com.kosta.project.dto.TeamScheduleDTO;
@@ -42,6 +45,26 @@ public class TeamService {
 		return list;
 	}
 	
+	// 필터 적용
+	public Set<TeamDTO> getFilterPossibleTeam(String hometown, String userId){
+		Set<TeamDTO> resList = new HashSet<>();
+		//서울 강남구,강북구
+		
+		
+		String[] arr = hometown.split(" ");
+		String location = arr[0];
+		String[] gu = arr[1].split(",");
+		
+		Set<TeamDTO> list = new HashSet<>();
+		for(int i=0; i<gu.length;i++) {
+			Set<TeamDTO> tmplist = tm.selectFilterPossibleTeam(location, gu[i], userId);
+			for(TeamDTO dto : tmplist)
+				list.add(dto);
+		}
+		
+		return list;
+	}
+	
 	// 가입 가능 팀 목록
 	public List<TeamDTO> getPossibleJoinTeam(){
 		List<TeamDTO> list = tm.selectPossibleJoinTeam();			
@@ -66,8 +89,8 @@ public class TeamService {
 	}
 	
 	// 가입 가능 팀원 정보 by 모달
-	public List<Map<String, Integer>> getTeamMemberTierAndCount(int teamSeq){
-		List<Map<String, Integer>> list = tm.selectTeamMemberTierAndCount(teamSeq);
+	public List<MemberCountDTO> getTeamMemberTierAndCount(int teamSeq){
+		List<MemberCountDTO> list = tm.selectTeamMemberTierAndCount(teamSeq);
 		return list;
 	}
 	

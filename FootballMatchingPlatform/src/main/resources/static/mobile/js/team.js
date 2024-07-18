@@ -1,7 +1,9 @@
 
 //팀 유무 판단
 const userId = $('#sessionId').text();
+const tier = $('#sessionTier').text();
 console.log(userId);
+
 isTeam();
 
 // 전체 팀 순위 클릭 시
@@ -105,7 +107,7 @@ $("#search").on("click", function () {
 	}
 	else{
 		if(!search){
-			allTeamRank();
+			possJoinTeam();
 			return;
 		}
 	  fetch("/team/possJoin/"+search)
@@ -121,34 +123,13 @@ $("#search").on("click", function () {
 	}
 });	
 
-function teamInfoShow(){
-	$('#teamInfoModal').on('show.bs.modal', function (event) {
-		teamSeq = $(event.relatedTarget).data('teamseq');
-		teamName = $(event.relatedTarget).data('teamname');
-		teamScore = $(event.relatedTarget).data('teamscore');
-		teamTier = $(event.relatedTarget).data('teamtier');
-		teamRank = $(event.relatedTarget).data('teamrank');
-		gameCount = $(event.relatedTarget).data('gamecount');
-		winCount = $(event.relatedTarget).data('wincount');
-		content = $(event.relatedTarget).data('content');
-		odds = $(event.relatedTarget).data('odds');
-		$("#teamTitleModal").text(teamName);
-		$("#info-rank").text(teamRank + "위");
-		$("#info-tier").text(teamTier);
-		$("#info-score").text(teamScore+"점");
-		$("#info-count").text(gameCount + "전 " +winCount + "승");
-		$("#info-odds").text(odds+"%");
-		$("#info-content").text(content);				 				 
-	}); 
-}
-
 
 // 팀 유무 확인
 function isTeam() {
   fetch("/team/isTeam")
     .then(response => response.json())
     .then(data => {
-		console.log(data.result);
+
       if (data.result === " ") {
         $("#myTeamInfo").hide();
         $(".selectBtn").removeClass('btnClick');
@@ -203,6 +184,67 @@ function allTeamRank() {
 
 /* =========== 가입 가능한 팀 목록 =========== */
 
+// 팀 정보 - 멤버 티어와 인원수
+function teamInfoMember(teamSeq){
+  let res = {};
+
+  $.ajax({
+    url: "/team/teamInfoMember/"+teamSeq,
+    type: "GET",
+    async: false,
+    dataType: "json",
+    success: function(data) {
+        res = data.result;
+    },
+    error: function() {
+        alert("error");
+    }
+  });
+
+  return res;
+}
+
+
+function teamInfoShow(){
+	$('#teamInfoModal').on('show.bs.modal', function (event) {
+
+		teamSeq = $(event.relatedTarget).data('teamseq');
+		teamName = $(event.relatedTarget).data('teamname');
+		teamScore = $(event.relatedTarget).data('teamscore');
+		teamTier = $(event.relatedTarget).data('teamtier');
+		teamRank = $(event.relatedTarget).data('teamrank');
+		gameCount = $(event.relatedTarget).data('gamecount');
+		winCount = $(event.relatedTarget).data('wincount');
+		content = $(event.relatedTarget).data('content');
+		odds = $(event.relatedTarget).data('odds');
+		
+		let res = teamInfoMember(teamSeq);
+		$("#cntA").text("0명");
+		$("#cntB").text("0명");
+		$("#cntC").text("0명");
+		$("#cntD").text("0명");
+		for(i=0; i<res.length; i++){
+			if(res[i].userTier === "A")
+				$("#cntA").text(res[i].tierCount+"명");
+			else if(res[i].userTier === "B")
+				$("#cntB").text(res[i].tierCount+"명");
+			else if(res[i].userTier === "C")
+				$("#cntC").text(res[i].tierCount+"명");
+			else if(res[i].userTier === "D")
+				$("#cntD").text(res[i].tierCount+"명");										
+		}
+		
+		$("#teamTitleModal").text(teamName);
+		$("#info-rank").text(teamRank + "위");
+		$("#info-tier").text(teamTier);
+		$("#info-score").text(teamScore+"점");
+		$("#info-count").text(gameCount + "전 " +winCount + "승");
+		$("#info-odds").text(odds+"%");
+		$("#info-content").text(content);					 				 
+	}); 
+}
+
+
 function strRes(res){
 	let str = "";
 	for (var i in res) {
@@ -247,7 +289,11 @@ function strRes(res){
               <button class="joinBtn rounded-5 p-2"
               data-bs-toggle="modal" data-bs-target="#addApplyModal"
               data-teamno = "`+ res[i].teamSeq+`" 
-              data-name="`+ res[i].teamName +`">가입신청</button>
+              data-name="`+ res[i].teamName +`"
+              data-possa="`+ res[i].possA +`"
+              data-possb="`+ res[i].possB +`"
+              data-possc="`+ res[i].possC +`"
+              data-possd="`+ res[i].possD +`">가입신청</button>
             </div>
          </div>`;
 
@@ -262,8 +308,7 @@ function possJoinTeam() {
     .then(response => response.json())
     .then(data => {
       let res = data.result;
-      str = strRes(res);   
-      console.log(res);   
+      str = strRes(res);     
       $('#dataBox').html(str);
       
       teamInfoShow();      
@@ -277,25 +322,46 @@ function joinBtnClick() {
   
 	$('#addApplyModal').on('show.bs.modal', function(event) {          
 		teamName = $(event.relatedTarget).data('name');
+		possA = $(event.relatedTarget).data('possa');
+		possB = $(event.relatedTarget).data('possb');
+		possC = $(event.relatedTarget).data('possc');
+		possD = $(event.relatedTarget).data('possd');
 		$('#teamModalTitle').text(teamName);
 		
 		var teamSeq = $(event.relatedTarget).data('teamno');
-		
+		var ok = false;
+		var tierData = {
+			"A" : possA,
+			"B" : possB,
+			"C" : possC,
+			"D" : possD
+		}		
+		for (var key in tierData) {
+		    if(key == tier){
+				ok = tierData[key];
+			}
+		}
 		$("#addTeamApply").on('click',function(){
-			$.ajax({
-		      url: "/team/applyTeam/"+teamSeq,
-		      type: "Post",
-		      dataType: "json",
-		      success: function(data) {
-		          res = data.result;
-		          location.reload(true);
-		      },
-		      error: function() {
-		          alert("error");
-		      }
-		    });
-		})
-		
+			
+			if(ok == true){
+				$.ajax({
+			      url: "/team/applyTeam/"+teamSeq,
+			      type: "Post",
+			      dataType: "json",
+			      success: function(data) {
+			          res = data.result;
+			          location.reload(true);
+			      },
+			      error: function() {
+			          alert("error");
+			      }
+			    });				
+			}
+			else{
+				tostOn("티어가 맞지 않습니다!");
+			}
+		    
+		})	
 	});
 }
 
@@ -481,7 +547,7 @@ function myTeamInfo() {
       const members = myTeamMember(res.teamSeq);
       const leader = getTeamLeader(res.teamSeq);
       let schedule = myTeamSchedule(res.teamSeq);
-      console.log(schedule)
+
 		if(schedule.matchingStatus === null)
 			schedule = null;
       let str = "";
@@ -694,3 +760,106 @@ function tostOn(str){
 }
 
 
+// ====================================== 필터
+$("input[name=location]").on("click", function () {
+            if ($(this).val() == "서울") {
+                $("#gu-list").html(
+                    `<div class="gu-line">
+                        <input type="checkbox" id="강남구" value="강남구" name="gu"><label for="강남구">강남구</label>
+                        <input type="checkbox" id="강동구" value="강동구" name="gu"><label for="강동구">강동구</label>
+                        <input type="checkbox" id="강북구" value="강북구" name="gu"><label for="강북구">강북구</label>
+                        <input type="checkbox" id="강서구" value="강서구" name="gu"><label for="강서구">강서구</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="checkbox" id="관악구" value="관악구" name="gu"><label for="관악구">관악구</label>
+                        <input type="checkbox" id="광진구" value="광진구" name="gu"><label for="광진구">광진구</label>
+                        <input type="checkbox" id="구로구" value="구로구" name="gu"><label for="구로구">구로구</label>
+                        <input type="checkbox" id="금천구" value="금천구" name="gu"><label for="금천구">금천구</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="checkbox" id="노원구" value="노원구" name="gu"><label for="노원구">노원구</label>
+                        <input type="checkbox" id="도봉구" value="도봉구" name="gu"><label for="도봉구">도봉구</label>
+                        <input type="checkbox" id="동대문구" value="동대문구" name="gu"><label for="동대문구">동대문구</label>
+                        <input type="checkbox" id="동작구" value="동작구" name="gu"><label for="동작구">동작구</label>
+                    </div>`
+                )
+            }
+            else if ($(this).val() == "인천") {
+                $("#gu-list").html(
+                    `<div class="gu-line">
+                        <input type="checkbox" id="계양구" value="계양구" name="gu"><label for="계양구">계양구</label>
+                        <input type="checkbox" id="남구" value="남구" name="gu"><label for="남구">남구</label>
+                        <input type="checkbox" id="남동구" value="남동구" name="gu"><label for="남동구">남동구</label>
+                        <input type="checkbox" id="동구" value="동구" name="gu"><label for="동구">동구</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="checkbox" id="부평구" value="부평구" name="gu"><label for="부평구">부평구</label>
+                        <input type="checkbox" id="서구" value="서구" name="gu"><label for="서구">서구</label>
+                        <input type="checkbox" id="연수구" value="연수구" name="gu"><label for="연수구">연수구</label>
+                        <input type="checkbox" id="중구" value="중구" name="gu"><label for="중구">중구</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="checkbox" id="강화군" value="강화군" name="gu"><label for="강화군">강화군</label>
+                        <input type="checkbox" id="미추홀구" value="미추홀구" name="gu"><label for="미추홀구">미추홀구</label>
+                    </div>`
+                )
+            }
+            else if ($(this).val() == "경기") {
+                $("#gu-list").html(
+                    `<div class="gu-line">
+                        <input type="checkbox" id="고양시" value="고양시" name="gu"><label for="고양시">고양시</label>
+                        <input type="checkbox" id="과천시" value="과천시" name="gu"><label for="과천시">과천시</label>
+                        <input type="checkbox" id="광명시" value="광명시" name="gu"><label for="광명시">광명시</label>
+                        <input type="checkbox" id="광주시" value="광주시" name="gu"><label for="광주시">광주시</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="checkbox" id="구리시" value="구리시" name="gu"><label for="구리시">구리시</label>
+                        <input type="checkbox" id="군포시" value="군포시" name="gu"><label for="군포시">군포시</label>
+                        <input type="checkbox" id="김포시" value="김포시" name="gu"><label for="김포시">김포시</label>
+                        <input type="checkbox" id="남양주시" value="남양주시" name="gu"><label for="남양주시">남양주시</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="checkbox" id="동두천시" value="동두천시" name="gu"><label for="동두천시">동두천시</label>
+                        <input type="checkbox" id="부천시" value="부천시" name="gu"><label for="부천시">부천시</label>
+                        <input type="checkbox" id="성남시" value="성남시" name="gu"><label for="성남시">성남시</label>
+                        <input type="checkbox" id="수원시" value="수원시" name="gu"><label for="수원시">수원시</label>
+                    </div>`
+                )
+            }
+            else {
+                $("#gu-list").html(
+                    ``
+                )
+            }
+        })
+
+
+$("#filterBtn").on("click", function () {
+      var location = $("input[name=location]:checked").val();
+      var gu_arr = [];
+      location += " ";
+      $("input[name=gu]:checked").each(function () {
+	         var gu = $(this).val();
+	         location += gu + ",";
+             gu_arr.push(gu);
+      });
+
+          
+      $.ajax({
+	    url: "/team/filter/"+location,
+	    type: "GET",
+	    dataType: "json",
+	    success: function(data) {
+			let res = data.result;
+			let str = strRes(res);
+		      $('#dataBox').html(str);
+		      
+		      teamInfoShow();      
+		      joinBtnClick();    
+	    },
+	    error: function() {
+	        alert("error");
+	    }
+	  });	
+	
+})
