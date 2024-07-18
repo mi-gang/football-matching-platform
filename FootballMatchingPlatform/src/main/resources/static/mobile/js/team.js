@@ -24,6 +24,7 @@ $('#possJoin').on('click', function () {
   $("#possJoin > button").addClass('btnClick');
   $("#createTeamBox").removeClass("d-none");	// 팀 생성하기 버튼
   $("#filter-container").show();
+  $("#searchBox").show();
   $("#createTeamBox").addClass("d-block");
   $("#btnValue").text(2);
   possJoinTeam();
@@ -34,6 +35,7 @@ $('#joinList').on('click', function(){
 	$(".selectBtn").removeClass('btnClick');
   	$("#joinList > button").addClass('btnClick');
   	$("#filter-container").hide();
+  	$("#searchBox").hide();
   	$("#createTeamBox").removeClass("d-block");
  	$("#createTeamBox").addClass("d-none");
   	joinList();
@@ -335,12 +337,19 @@ function joinBtnClick() {
 			"B" : possB,
 			"C" : possC,
 			"D" : possD
-		}		
+		}
+		console.log(tierData);
 		for (var key in tierData) {
 		    if(key == tier){
 				ok = tierData[key];
 			}
 		}
+		if(possA == true && possB == true && possC ==true && possD==true)
+			ok = true;
+		else if(possA == false && possB == false && possC ==false && possD==false)
+			ok = true;
+			
+		console.log(ok);
 		$("#addTeamApply").on('click',function(){
 			
 			if(ok == true){
@@ -411,6 +420,10 @@ function joinList(){
 
         if (res[i].possA == false && res[i].possB == false &&
           res[i].possC == false && res[i].possD == false) {
+          str += '<span class="badge rounded-5">남녀무관</span>';
+        }
+        else if (res[i].possA == true && res[i].possB == true &&
+          res[i].possC == true && res[i].possD == true) {
           str += '<span class="badge rounded-5">남녀무관</span>';
         }
         else {

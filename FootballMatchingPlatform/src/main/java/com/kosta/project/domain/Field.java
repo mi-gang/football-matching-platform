@@ -21,7 +21,7 @@ import lombok.ToString;
 
 @Entity
 @Getter
-@ToString
+@ToString(exclude="manager")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -76,4 +76,13 @@ public class Field {
 	    @ManyToOne
 	    @JoinColumn(name = "manager_id", nullable = false)
 	    private Manager manager; // 관리자 (다대일 관계)
+	    
+	    public void updateField(Field f) {
+	    	this.showerRoom = f.showerRoom;
+	    	this.rentBall = f.rentBall;
+	    	this.rentShoes = f.rentShoes;
+	    	this.parking = f.parking;
+	    	this.sellDrink = f.sellDrink;
+	    	this.fieldContent = f.getFieldContent();
+	    }
 }
