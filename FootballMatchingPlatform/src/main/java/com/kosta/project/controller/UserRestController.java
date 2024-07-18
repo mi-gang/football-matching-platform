@@ -59,10 +59,10 @@ public class UserRestController {
 	}
 	
 	//로그아웃
-	@PostMapping("/logout")
+	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "/user/login";
+		return "/login";
 	}
 	
 	// 아이디 중복 여부 확인하기
