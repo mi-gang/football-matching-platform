@@ -24,8 +24,10 @@
       user_status
     FROM users
     WHERE
-      user_id = #{userId}
+      NOW()-suspended_time >= 0
+      AND user_id = #{userId}
       AND password = #{password}
+      AND user_status = 'U'
   </select>
 
 

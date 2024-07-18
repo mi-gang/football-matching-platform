@@ -66,7 +66,7 @@ public class UserRestController {
 	}
 	
 	// 아이디 중복 여부 확인하기
-	@GetMapping("/getUserId")
+	@PostMapping("/getUserId")
 	public boolean getUserIdByUserId(String userId) {
 		return us.getUserIdByUserId(userId);
 	}
