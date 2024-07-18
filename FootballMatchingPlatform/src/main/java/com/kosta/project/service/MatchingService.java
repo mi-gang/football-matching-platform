@@ -86,8 +86,6 @@ public class MatchingService {
 				dto.setTeamSeq(0);
 				matchingListByTime = mm.selectMatchingsList(dto);
 				matchingListAllByTime = mm.selectMatchingsListAll(dto);
-				System.out.println(matchingListByTime);
-				System.out.println(matchingListAllByTime);
 			}
 			else if(dto.getAddType().equals("팀")) {
 				dto.setTeamSeq(tm.selectTeamSeq(userId));

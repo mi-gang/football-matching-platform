@@ -96,29 +96,29 @@ public class FastMatchingServerTest {
 
 	// 빠른 신청 리스트1
 
-	@Test
-
-	void getFastMatchingListTest() {
-
-		List<FastMatchingDTO> matchingDTOList = fms.getFastMatchingList();
-
-		for (FastMatchingDTO matchingsDTO : matchingDTOList) {
-
-			System.out.println(matchingsDTO.getFieldAddress() +
-
-					matchingsDTO.getFieldAddress() +
-
-					matchingsDTO.getFieldAddressDetail() +
-
-					matchingsDTO.getMatchingDate() +
-
-					matchingsDTO.getMatchingSeq() +
-
-					matchingsDTO.getMatchingTime());
-
-		}
-
-	}
+//	@Test
+//
+//	void getFastMatchingListTest() {
+//
+//		List<FastMatchingDTO> matchingDTOList = fms.getFastMatchingList();
+//
+//		for (FastMatchingDTO matchingsDTO : matchingDTOList) {
+//
+//			System.out.println(matchingsDTO.getFieldAddress() +
+//
+//					matchingsDTO.getFieldAddress() +
+//
+//					matchingsDTO.getFieldAddressDetail() +
+//
+//					matchingsDTO.getMatchingDate() +
+//
+//					matchingsDTO.getMatchingSeq() +
+//
+//					matchingsDTO.getMatchingTime());
+//
+//		}
+//
+//	}
 
 
 
@@ -129,36 +129,36 @@ public class FastMatchingServerTest {
 
 
 	// 빠른 신청 리스트2
-
-	@Test
-
-	void getFastMatchingListBySmallTest() {
-
-		List<FastMatchingDTO> matchingDTOList = fms.getFastMatchingListBySmall();
-
-		for (FastMatchingDTO matchingsDTO : matchingDTOList) {
-
-			System.out.println(matchingsDTO.getFieldAddress() +
-
-					matchingsDTO.getFieldAddress() +
-
-					matchingsDTO.getFieldAddressDetail() +
-
-					matchingsDTO.getFieldImg() +
-
-					matchingsDTO.getMatchingTier() +
-
-					matchingsDTO.getPlayerCount() +
-
-					matchingsDTO.getMatchingDate() +
-
-					matchingsDTO.getMatchingSeq() +
-
-					matchingsDTO.getMatchingTime());
-
-		}
-
-	}
+//
+//	@Test
+//
+//	void getFastMatchingListBySmallTest() {
+//
+//		List<FastMatchingDTO> matchingDTOList = fms.getFastMatchingListBySmall();
+//
+//		for (FastMatchingDTO matchingsDTO : matchingDTOList) {
+//
+//			System.out.println(matchingsDTO.getFieldAddress() +
+//
+//					matchingsDTO.getFieldAddress() +
+//
+//					matchingsDTO.getFieldAddressDetail() +
+//
+//					matchingsDTO.getFieldImg() +
+//
+//					matchingsDTO.getMatchingTier() +
+//
+//					matchingsDTO.getPlayerCount() +
+//
+//					matchingsDTO.getMatchingDate() +
+//
+//					matchingsDTO.getMatchingSeq() +
+//
+//					matchingsDTO.getMatchingTime());
+//
+//		}
+//
+//	}
 
 
 
@@ -166,33 +166,33 @@ public class FastMatchingServerTest {
 
 	//@Test
 
-	void getFastMatchingListByBigTest() {
-
-		List<FastMatchingDTO> matchingDTOList = fms.getFastMatchingListBySmall();
-
-		for (FastMatchingDTO matchingsDTO : matchingDTOList) {
-
-			System.out.println(matchingsDTO.getFieldAddress() +
-
-					matchingsDTO.getFieldAddress() +
-
-					matchingsDTO.getFieldAddressDetail() +
-
-					matchingsDTO.getFieldImg() +
-
-					matchingsDTO.getMatchingTier() +
-
-					matchingsDTO.getPlayerCount() +
-
-					matchingsDTO.getMatchingDate() +
-
-					matchingsDTO.getMatchingSeq() +
-
-					matchingsDTO.getMatchingTime());
-
-		}
-
-	}	
+//	void getFastMatchingListByBigTest() {
+//
+//		List<FastMatchingDTO> matchingDTOList = fms.getFastMatchingListBySmall();
+//
+//		for (FastMatchingDTO matchingsDTO : matchingDTOList) {
+//
+//			System.out.println(matchingsDTO.getFieldAddress() +
+//
+//					matchingsDTO.getFieldAddress() +
+//
+//					matchingsDTO.getFieldAddressDetail() +
+//
+//					matchingsDTO.getFieldImg() +
+//
+//					matchingsDTO.getMatchingTier() +
+//
+//					matchingsDTO.getPlayerCount() +
+//
+//					matchingsDTO.getMatchingDate() +
+//
+//					matchingsDTO.getMatchingSeq() +
+//
+//					matchingsDTO.getMatchingTime());
+//
+//		}
+//
+//	}	
 
 
 

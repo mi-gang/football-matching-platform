@@ -27,11 +27,11 @@ class TeamRepositoryTest{
 		System.out.println(teamMapper.selectSearchTeamRankList("풋"));
 	}
 	
-	//@Test
-	void selectPossibleJoinTeam() {		// 팀 가입 가능 순위
-		System.out.println(teamMapper.selectPossibleJoinTeam());
-		System.out.println(teamMapper.selectSearchPossibleTeam("풋"));
-	}
+//	//@Test
+//	void selectPossibleJoinTeam() {		// 팀 가입 가능 순위
+//		System.out.println(teamMapper.selectPossibleJoinTeam());
+//		System.out.println(teamMapper.selectSearchPossibleTeam("풋"));
+//	}
 	
 	//@Test
 	void insertTeam() {		// 팀 생성하기
@@ -78,15 +78,15 @@ class TeamRepositoryTest{
 		System.out.println(teamMapper.selectTeamName("풋킹왕"));
 	}
 	
-	//@Test
-	void selectTeamInfoByModal() {		// 팀 정보 확인
-		System.out.println(teamMapper.selectTeamInfoByModal(1));
-		//System.out.println(teamMapper.selectTeamMemberTierAndCount(3));
-		List<Map<String, Integer>> map = teamMapper.selectTeamMemberTierAndCount(1);
-		for(int i=0; i<map.size(); i++) {
-			System.out.println(map.get(i));
-		}
-	}
+//	//@Test
+//	void selectTeamInfoByModal() {		// 팀 정보 확인
+//		System.out.println(teamMapper.selectTeamInfoByModal(1));
+//		//System.out.println(teamMapper.selectTeamMemberTierAndCount(3));
+//		List<Map<String, Integer>> map = teamMapper.selectTeamMemberTierAndCount(1);
+//		for(int i=0; i<map.size(); i++) {
+//			System.out.println(map.get(i));
+//		}
+//	}
 	
 	//@Test
 	void insertTeamMember() {		// 팀 가입 완료

@@ -47,16 +47,16 @@ public class MatchingRestController {
 	}
 	
 	@GetMapping("/matchinglistByRegion")
-	public Map<String, List<MatchingsDTO>> getMatchingListByRegion(String matchingDate, String matchingTime, String region){
+	public Map<String, List<MatchingsDTO>> getMatchingListByRegion(String userId, String addType, String matchingDate, String matchingTime, String region){
 		List<MatchingsDTO> mDTOList = null;
 		MatchingConditionDTO mcDTO = MatchingConditionDTO.builder()
+				.userId(userId)
+				.addType(addType)
 				.matchingDate(matchingDate)
 				.matchingTime(matchingTime)
 				.fieldAddress(region)
 				.build();
-		System.out.println(mcDTO);
 		mDTOList = ms.getMatchingsListByRegion(mcDTO);
-		System.out.println(mDTOList);
 		return Map.of("result", mDTOList);
 	}
 	

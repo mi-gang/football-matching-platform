@@ -1,14 +1,8 @@
 package com.kosta.project.controller;
 
-import java.util.List;
-
-import com.kosta.project.dto.UserMatchingInfoDTO;
-import com.kosta.project.service.*;
+import com.kosta.project.dto.Manager.ManagerDTO;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -20,6 +14,7 @@ import com.kosta.project.dto.MatchingsDTO;
 import com.kosta.project.dto.TeamDTO;
 import com.kosta.project.service.FastMatchingService;
 import com.kosta.project.service.MainPageService;
+import com.kosta.project.service.ManagerService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -28,8 +23,20 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequiredArgsConstructor
 public class WebController {
-	@GetMapping("/mainManager")
-	String mainManager() {
+	private final ManagerService ms;
+	
+	@GetMapping("/loginPage")
+	String loginPage() {
+		return "managerLogin";
+	}
+	
+	@GetMapping("/joinPage")
+	String joinPage() {
+		return "managerJoin";
+	}
+	
+	@GetMapping("/main")
+	String mainPage() {
 		return "mainManager";
 	}
 }

@@ -112,20 +112,20 @@ public class MatchingsMapperTest {
 		System.out.println(mm.selectMatchingAddResult(19));
 	}
 	
-	//@Test
-	void selectFastMatchingListTest() {
-		System.out.println(mm.selectFastMatchingList());
-	}
-	
-	//@Test
-		void selectFastMatchingListBySmallTest() {
-			System.out.println(mm.selectFastMatchingListBySmall());
-		}
-		
-		//@Test
-		void selectFastMatchingListByBigTest() {
-			System.out.println(mm.selectFastMatchingListByBig());
-		}
+//	//@Test
+//	void selectFastMatchingListTest() {
+//		System.out.println(mm.selectFastMatchingList());
+//	}
+//	
+//	//@Test
+//		void selectFastMatchingListBySmallTest() {
+//			System.out.println(mm.selectFastMatchingListBySmall());
+//		}
+//		
+//		//@Test
+//		void selectFastMatchingListByBigTest() {
+//			System.out.println(mm.selectFastMatchingListByBig());
+//		}
 		
 		//@Test
 		void selectFastMatchingListBySmallDateAndRegionAndTierTest() {

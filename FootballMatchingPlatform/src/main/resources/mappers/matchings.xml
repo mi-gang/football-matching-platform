@@ -88,7 +88,7 @@
 	<select id="insertMatchingAddLists" parameterType="com.kosta.project.dto.MatchingAddListsDTO">
 		INSERT INTO matching_add_lists(matching_seq, matching_success_status, cancel_status, pay_status,
 		review_status, team_status, team, player_number, review_score, matching_add_seq)
-		VALUES (#{matchingSeq}, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, NULL, NULL, #{matchingAddSeq});
+		VALUES (#{matchingSeq}, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, NULL, 0, #{matchingAddSeq});
 	</select>
 	
 	<!-- 매칭 신청 등록(팀) -->
