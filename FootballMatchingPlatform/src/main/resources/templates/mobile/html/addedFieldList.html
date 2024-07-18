@@ -137,9 +137,8 @@
             	console.log(response.result[i].fieldName)	
             	$('#list-container').append("<div class='content-box'>" +
                   "<div class='content-text' onclick=\"location.href='/addedFieldInfo/" + response.result[i].fieldSeq +"' \"> " +
-                    "<span class = 'hihihi'></span> " +
-                     "<div class='content-title'>" + response.result[i].fieldName +"</div> " +
-                      "<div class='content-address'>" + response.result[i].fieldAddress +"</div> " +
+                     "<div class='content-title'>" + response.result[i].fieldName +"</div> " + 
+                      "<div class='content-address'>" + response.result[i].fieldAddress +"</div> " + 
                       "<div class='content-info'> " +
 						showerRoom 
 						 + parking
@@ -182,7 +181,7 @@
 
 
         $("#search").on("click", function () {
-            alert($("#search-keyword").val());
+           // alert($("#search-keyword").val());
             
             
             const data = $("#search-keyword").val();
@@ -224,7 +223,7 @@
             	console.log(response.result[i].fieldName)	
             	$('#list-container').append("<div class='content-box'>" +
                   "<div class='content-text' onclick=\"location.href='/addedFieldInfo/" + response.result[i].fieldSeq +"' \"> " +
-                    "<span class = 'hihihi'></span> " +
+                   
                      "<div class='content-title'>" + response.result[i].fieldName +"</div> " +
                       "<div class='content-address'>" + response.result[i].fieldAddress +"</div> " +
                       "<div class='content-info'> " +
@@ -395,9 +394,9 @@
             	console.log(response.result[i].fieldName)	
             	$('#list-container').append("<div class='content-box'>" +
                   "<div class='content-text' onclick=\"location.href='/addedFieldInfo/" + response.result[i].fieldSeq +"' \"> " +
-                    "<span class = 'hihihi'></span> " +
-                     "<div class='content-title'>" + response.result[i].fieldName +"</div> " +
-                      "<div class='content-address'>" + response.result[i].fieldAddress +"</div> " +
+                   
+                     "<div class='content-title'>" + response.result[i].fieldName +"</div> " + 
+                      "<div class='content-address'>" + response.result[i].fieldAddress +"</div> " + 
                       "<div class='content-info'> " +
 						showerRoom 
 						 + parking

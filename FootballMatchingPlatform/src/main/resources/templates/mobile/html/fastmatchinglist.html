@@ -69,11 +69,13 @@
 	border-radius:6rem;
 	background-color:#FFFFFF;
 	color:#626262;
-	width:4rem;
-	height:3rem;
+	width:3.5rem;
+	height:2.4rem;
 	font-size:1rem;
 	border-color:#626262;
-    text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 #locationCityBtns {
 	
@@ -256,7 +258,18 @@ input[type="checkbox"]{
 	white-space: nowrap;
 
 }
-
+.matchingDateBtn{
+	border-radius: 6rem;
+	background-color: #FFFFFF;
+	color: #626262;
+	width: 2rem;
+	height: 2rem;
+	font-size: 0.8rem;
+	border-color: #626262;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 .matchingDateBtn0 {
 	border-radius: 6rem;
 	background-color: #FFFFFF;
@@ -340,6 +353,7 @@ input[type="checkbox"]{
 
 .matchingDateBtn.active90 {
 	background: #73a772;
+	color:#FFFFFF;
 }
 
 
@@ -371,9 +385,7 @@ input[type="checkbox"]{
     border: #73A772;
 }
 
-#OKOKTierUl{
 
-}
 </style>
 <body>
 
@@ -505,6 +517,7 @@ input[type="checkbox"]{
               
               </ul>
           </div>
+          <hr>
           <div id="OKOKTier">
             <ul id = "OKOKTierUl" >
                 <li><button type = "button"  class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)" value="A">A등급</button></li>
@@ -578,7 +591,7 @@ window.onload = function() {
 		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
 		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
 		"</div>" +
-		"<img class='matchingLocationImage'  src=''/>" +
+		"<img class='matchingLocationImage'  src='/mobile/img/구장 사진.svg'/>" +
 	  "<hr>" +			
 	"</div>");
 				
@@ -623,7 +636,7 @@ for (let i = 0; i <= 4; i++) {
 dates.forEach((date, i) => {
 	console.log(i)
   $('#matchingDateBtnsLi').append(
-	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn11(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn btn m-1 p-3' onclick='change_btn11(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
 });
 
@@ -635,16 +648,28 @@ backBtn.addEventListener('click', () => {
   // 이전 5일 버튼 생성 및 이벤트 설정...
   backClickCount++;
 
-  plusOrMinusNumber = 5*(frontClickCount + backClickCount);
+  plusOrMinusNumber = 5*(frontClickCount - backClickCount);
 
   $('#matchingDateBtnsLi').empty();
 
   const backDates = [];
 
   const newStartDate = new Date(dates[0]); // 첫 번째 버튼의 날짜를 기준으로 -5일
-  newStartDate.setDate(newStartDate.getDate() - plusOrMinusNumber);
+  newStartDate.setDate(newStartDate.getDate() + plusOrMinusNumber);
   console.log(newStartDate)
   console.log(dates[0])
+  
+  
+  
+  
+  
+  const newStartDate1 = new Date(dates[0]);
+  newStartDate1.setDate(newStartDate1.getDate() + 13);
+  const newStartDate2 = new Date(dates[0]);
+  console.log(newStartDate1 > newStartDate2)
+  
+  
+  
   for (let i = 0; i <= 4; i++) {
 
   const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
@@ -654,9 +679,11 @@ backBtn.addEventListener('click', () => {
 // 버튼 생성 및 이벤트 설정
 backDates.forEach((date, i) => {
 	console.log(i)
+	if(newStartDate >= newStartDate2 && newStartDate <= newStartDate1){
   $('#matchingDateBtnsLi').append(
-	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn11(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn btn m-1 p-3' onclick='change_btn11(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
+  }
 });
 });
 
@@ -665,7 +692,7 @@ frontBtn.addEventListener('click', () => {
   // 이전 5일 버튼 생성 및 이벤트 설정...
   frontClickCount++;
 
-  plusOrMinusNumber = 5*(frontClickCount + backClickCount);
+  plusOrMinusNumber = 5*(frontClickCount - backClickCount);
 
   $('#matchingDateBtnsLi').empty();
 
@@ -675,6 +702,13 @@ frontBtn.addEventListener('click', () => {
   newStartDate.setDate(newStartDate.getDate() + plusOrMinusNumber);
   console.log(newStartDate)
   console.log(dates[0])
+  
+  
+  const newStartDate1 = new Date(dates[0]);
+  newStartDate1.setDate(newStartDate1.getDate() + 13);
+  const newStartDate2 = new Date(dates[0]);
+  console.log(newStartDate1 > newStartDate2)
+  
   for (let i = 0; i <= 4; i++) {
 
   const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
@@ -684,41 +718,14 @@ frontBtn.addEventListener('click', () => {
 // 버튼 생성 및 이벤트 설정
 frontDates.forEach((date, i) => {
 	console.log(i)
+	if(newStartDate >= newStartDate2 && newStartDate <= newStartDate1){
   $('#matchingDateBtnsLi').append(
-	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn11(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn btn m-1 p-3' onclick='change_btn11(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
+  } 
 });
 });
-	var checkNumber = 0;
-	var selectedDate = null;
-	function change_btn11(e11) {
-	var btns09 = document.querySelectorAll(".matchingDateBtn");
-	btns09.forEach(function(btn09, i) {
-		if(e11.currentTarget == btn09) {
-			btn09.classList.add("active90");
-		}
-		else {
-			btn09.classList.remove("active90");
-		}
-	});
-	console.log( e11.currentTarget.value );
-	selectedDate = e11.currentTarget.value;
-	}
-	
-	var teamOrSolo = null;
-	function change_btn2(e2) {
-	var btns1 = document.querySelectorAll("#applyTypeBtn");
-	btns1.forEach(function(btn1, i) {
-		if(e2.currentTarget == btn1) {
-		btn1.classList.add("active2");
-		}
-		else {
-			btn1.classList.remove("active2");
-		}
-	});
-	console.log( e2.currentTarget.value );
-	teamOrSolo = e2.currentTarget.value;
-	}
+
 	
 	function changeButtonColors(button) {
   const computedStyle = window.getComputedStyle(button);
@@ -733,9 +740,24 @@ frontDates.forEach((date, i) => {
 }  
 
 
-
-
-
+	var checkNumber = 0;
+	var selectedDate = null;
+	function change_btn11(e) {
+	var btns = document.querySelectorAll(".matchingDateBtn");
+	var buttonsText = $(this).val;
+    var buttonsTextTest = $(this).prop('value');
+    btns.forEach(function(btn, i) {
+		if(e.currentTarget == btn) {
+			btn.classList.add("active90");
+            
+		}
+		else {
+			btn.classList.remove("active90");
+		}
+	});
+	console.log( e.currentTarget.value );
+	selectedDate = e.currentTarget.value;
+	}
 
 
 
@@ -796,7 +818,7 @@ frontDates.forEach((date, i) => {
               "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>서구</button></li>"+ 
               "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>미추홀구</button></li>"+
               "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>중구</button></li>"+
-              
+              "<hr>" +
               "</ul>");
     } else if (e.currentTarget.textContent == '서울') {
         $("#locationInfoDiv")
@@ -808,7 +830,7 @@ frontDates.forEach((date, i) => {
               "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>관악구</button></li>"+ 
               "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>금천구</button></li>"+
               "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>양천구</button></li>"+
-              
+              "<hr>" +
               "</ul>");
     
     }
@@ -873,6 +895,12 @@ function changeButtonColors(button) {
 const filterSelectbox = document.querySelector('.filterSelectbox');
 
 
+const filterBtn = document.querySelector('.filterBtn');
+
+filterBtn.addEventListener('click', function() {
+$('.modal-backdrop').show();
+});
+
 
 
 
@@ -899,6 +927,7 @@ const searchButton = document.getElementById('searchButton');
 
 
 searchButton.addEventListener('click', function() {
+
     $('#matchingCheckList').empty();
     const selectedList = [];  
     const selectedValue12345 = $('.filterSelectbox').val();
@@ -957,6 +986,7 @@ searchButton.addEventListener('click', function() {
         }).fail(function(error){
             alert(JSON.stringify(error));
         })
+	
 	
 	
 		
@@ -1018,9 +1048,9 @@ searchButton.addEventListener('click', function() {
 });
 
 
+$('#exampleModal').hide();
 
-
-
+$('.modal-backdrop').hide();
 
 });
 

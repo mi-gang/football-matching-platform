@@ -9,6 +9,34 @@ hr{
 }
 
 
+#info-list button{
+	border-radius:3rem;
+    color:#FFFFFF;
+    font-size:0.8rem;
+    width: 5rem;
+    height: 1.7rem;
+	
+}
+
+
+
+.showerTF {
+    background: #828282;
+}
+.ballTF {
+    background: #828282;
+}
+.parkTF {
+    background: #828282;
+}
+.shoesTF {
+    background: #828282;
+}
+.drinkTF {
+    background: #828282;
+}
+
+
 
 #img-field{
     width: 100%;
@@ -49,15 +77,15 @@ hr{
     padding: 0.5rem 1rem;
 }
 
-#info-list :nth-child(1), #info-list :nth-child(3), #info-list :nth-child(4){
+/* #info-list :nth-child(1), #info-list :nth-child(3), #info-list :nth-child(4){
     color: #A5A5A5;
-}
+} */
 
-#info-list :nth-child(2), #info-list :nth-child(5){
+/* #info-list :nth-child(2), #info-list :nth-child(5){
     background: #73A772;
     color: #fff;
 }
-
+ */
 #content-container{
     display: flex;
     width: 100%;

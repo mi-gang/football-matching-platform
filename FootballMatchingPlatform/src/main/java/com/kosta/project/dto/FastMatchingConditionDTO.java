@@ -13,4 +13,5 @@ public class FastMatchingConditionDTO {
 	String matchingDate;
 	String fieldAddress;
 	String matchingTier;
+	String userId;
 }

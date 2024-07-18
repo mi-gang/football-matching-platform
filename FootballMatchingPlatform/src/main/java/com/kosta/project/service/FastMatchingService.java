@@ -49,6 +49,11 @@ public class FastMatchingService {
 	}
 	
 	
+
+
+	
+	
+	
 	// 구장 상세 정보 조회
 	public FieldDTO getField(int fieldSeq) {
 		return fm.selectField(fieldSeq);
@@ -69,20 +74,20 @@ public class FastMatchingService {
 	
 	
 	// 빠른 신청 리스트 
-	public List<FastMatchingDTO> getFastMatchingList() {
-		return mm.selectFastMatchingList();
+	public List<FastMatchingDTO> getFastMatchingList(String userId) {
+		return mm.selectFastMatchingList(userId);
 	}
 	
 	
 	// 빠른 신청 리스트 Small
-	public List<FastMatchingDTO> getFastMatchingListBySmall() {
-		return mm.selectFastMatchingListBySmall();
+	public List<FastMatchingDTO> getFastMatchingListBySmall(String userId) {
+		return mm.selectFastMatchingListBySmall(userId);
 	}
 	
 	
 	// 빠른 신청 리스트 Big
-	public List<FastMatchingDTO> getFastMatchingListByBig() {
-		return mm.selectFastMatchingListByBig();
+	public List<FastMatchingDTO> getFastMatchingListByBig(String userId) {
+		return mm.selectFastMatchingListByBig(userId);
 	}
 	
 	
@@ -97,7 +102,25 @@ public class FastMatchingService {
 		return mm.selectFastMatchingListBySmallAndDateAndRegionAndTier(dto);
 	}
 	
-	
+	// 결제하기
+	public boolean setTryPay(UserMatchingInfoDTO umiDTO) {
+		boolean result = false;
+		int playerCount = mm.selectFastMatchingCountForPay(umiDTO.getMatchingSeq());
+		
+		if(playerCount < 10) {
+		
+			if(mm.insertMatchingAddForFastMatching(umiDTO.getUserId()) && mm.insertFastMatchingAndPay(umiDTO)) {
+				result = true;
+			}
+		}
+		
+		if(mm.selectFastMatchingCountForPay(umiDTO.getMatchingSeq()) == 10) {
+			mm.updateFastMatchingStatusByFastMatchingSeq(umiDTO.getMatchingSeq());
+		}
+		
+		
+		return result;
+	}
 	
 	
 }

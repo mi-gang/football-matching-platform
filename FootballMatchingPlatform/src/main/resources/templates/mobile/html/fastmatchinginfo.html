@@ -21,31 +21,28 @@
 
 }
 
-.showerTF.active {
-    background: #FFFFFF;
+.showerTF {
+    background: #828282;
     color:#a5a5a5;
-    border:1px solid #a5a5a5;
 }
-.ballTF.active {
-    background: #FFFFFF;
+.ballTF {
+    background: #828282;
     color:#a5a5a5;
-    border:1px solid #a5a5a5;
 }
-.parkTF.active {
-    background: #FFFFFF;
+.parkTF {
+    background: #828282;
     color:#a5a5a5;
-    border:1px solid #a5a5a5;
 }
-.shoesTF.active {
-    background: #FFFFFF;
+.shoesTF {
+    background: #828282;
     color:#a5a5a5;
-    border:1px solid #a5a5a5;
 }
-.drinkTF.active {
-    background: #FFFFFF;
+.drinkTF {
+    background: #828282;
     color:#a5a5a5;
-    border:1px solid #a5a5a5;
 }
+
+
 
 
 
@@ -69,10 +66,8 @@
 
 .locationInfo button{
     border-radius:3rem;
-    background-color: #73A772;
     color:#FFFFFF;
     font-size:0.8rem;
-    border:2px solid #73A772;
     width: 5rem;
     height: 1.7rem;
 }
@@ -337,25 +332,40 @@ window.onload = function(){
   let ballYN = ballTF.value;
   let parkYN = parkTF.value;
   let drinkYN = drinkTF.value;
-  let showerYN = shoesTF.value;
-  let shoesYN = showerTF.value;
+  let showerYN = showerTF.value;
+  let shoesYN = shoesTF.value;
 
-  if (ballYN) {
-    ballTF.classList.add("active");
-  } 
-  if (drinkYN) {
-    drinkTF.classList.add("active");
-  } 
-  if (shoesYN) {
-    shoesTF.classList.add("active");
-  } 
-  if (showerYN) {
-    showerTF.classList.add("active");
-  }
-  if (parkYN) {
-    parkTF.classList.add("active");
-  }
 
+
+
+  if (ballYN == 'true') {
+  	console.log('ballYN' + ballYN)
+    $('.ballTF').css('background-color', '#73A772');
+    $('.ballTF').css('border-radius', '#73A772');
+  } 
+  if (drinkYN == 'true') {
+    console.log('drinkYN' + drinkYN)
+    $('.drinkTF').css('background-color', '#73A772');
+    $('.drinkTF').css('border-radius', '#73A772');
+  } 
+  if (shoesYN == 'true') {
+    console.log('shoesYN' + shoesYN)    
+    $('.shoesTF').css('background-color', '#73A772');
+    $('.shoesTF').css('border-radius', '#73A772');
+  } 
+  if (showerYN == 'true') {
+    console.log('showerYN' + showerYN)
+    $('.showerTF').css('background-color', '#73A772');
+    $('.showerTF').css('border-radius', '#73A772');  
+  } 
+  if (parkYN == 'true') {
+    console.log('parkYN' + parkYN)
+    $('.parkTF').css('background-color', '#73A772');
+    $('.parkTF').css('border-radius', '#73A772');
+  } 
+      setTimeout(function() {
+      	console.log('ㅎㅇㅎㅇ')  
+      }, 1000);	
 }
 
 
@@ -391,18 +401,13 @@ window.onload = function(){
 
 const getMatchTier = $('#getMatchTier').val();
 
-$(document).ready(function() {
-    $('.simpleBuy').on('click', function(event) {
-      //        // D는 delete의 약자임(혹시나 해서 넣음)
-      
-      
-      
-      
-      
-      
-      
-      
-       $.ajax({
+$(document).ready(function(){
+	$('.buyThis').on('click', function(event) {
+	
+
+	
+	//data-bs-toggle="modal" data-bs-target="#buyCheckModal"
+	       $.ajax({
             type: 'get',
             url: '/api/is/suspended/user',
             //contentType : 'application/json; charset=utf-8',
@@ -412,24 +417,24 @@ $(document).ready(function() {
 
            	console.log(response.result)	
    
-      
        if(response.result == "true"){
         event.preventDefault();
         $('#buyButton').prop('disabled', true);
         var toast1 = document.getElementById('toast1');
       toast1.classList.add('show1');
-
+		$('#buyCheckModal').hide();
+		$('.modal-backdrop').hide();
+		
       setTimeout(function() {
         toast1.classList.remove('show1');
-        $('#buyButton').prop('disabled', false);
       }, 1000);
-      return;
+      
      }  
        
             	
             
         }).fail(function(error){
-            alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
+            //alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
         })
       
       
@@ -450,38 +455,76 @@ $(document).ready(function() {
 
            	console.log(response.result)	
    
-      
+      YN2 = (getMatchTier == response.result);
     
     if(getMatchTier != response.result) {
             event.preventDefault();
         $('#buyButton').prop('disabled', true);
         var toast = document.getElementById('toast');
       toast.classList.add('show');
-
+	$('#buyCheckModal').hide();
+	$('.modal-backdrop').hide();
+	
       setTimeout(function() {
         toast.classList.remove('show');
-        $('#buyButton').prop('disabled', false);
       }, 1000);
-    } else {
-    $('#buyCheckModal').hide();
-     	$('#realBuyCheckModal').show();
-    }
-    
+      
+    } 
      
     });
-       
-            	
-            
-        }).fail(function(error){
-            alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
-        })
-      
  
-    
-   
+ 
+ 
+ 
+ 
+ 
+	
+	});
+
 });
 
 
+
+
+
+
+$(document).ready(function() {
+    $('.simpleBuy').on('click', function(event) {
+      //        // D는 delete의 약자임(혹시나 해서 넣음)
+      
+      
+      const url = window.location.href; // Get the current URL
+const match = url.match(/fastmatchinginfo\/(\d+)/); // Extract the matching part using regex
+const matchingSeq = parseInt(match[1]); // Parse the extracted value to a number
+console.log(matchingSeq); // Display the value in the console
+ 
+ 
+ console.log(matchingSeq);
+ const data = {'matchingSeq' : matchingSeq};
+        $.ajax({
+            type: 'post',
+            url: '/api/pay/if/low/ten',
+            data: JSON.stringify(data),
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            console.log('결제 상태')
+			console.log(response.result)
+			if(response.result == 'true'){
+			    $('#buyCheckModal').hide();
+     			$('#realBuyCheckModal').show();
+     			
+			}
+
+        }).fail(function(error){
+            //alert(JSON.stringify(error));
+        })
+  
+  
+  
+	});
+
+});
 
 
 

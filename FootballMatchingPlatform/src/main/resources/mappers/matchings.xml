@@ -175,20 +175,7 @@
  	</select>
  	
  	<!-- 빠른 신청 리스트 조회(가까운 일정 순) -->
- 	<select id="selectFastMatchingList" resultType="com.kosta.project.dto.FastMatchingDTO">
- 		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
- 		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
- 		COUNT(matching_add_list_seq) as playerCount
-		FROM matchings m, fields f, field_imgs fi, matching_add_lists ml
-		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
-		AND ml.matching_seq = m.matching_seq
-		AND fast_add_status = 1
-		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
-		ORDER BY matching_date;
- 	</select>
- 	
- 	<!-- 빠른 신청 리스트 조회(인원 적은 순, 가까운 일정 순) -->
-	<select id="selectFastMatchingListBySmall" resultType="com.kosta.project.dto.FastMatchingDTO">
+ 	<select id="selectFastMatchingList" resultType="com.kosta.project.dto.FastMatchingDTO" parameterType="String">
 		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
  		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
  		COUNT(matching_add_list_seq) as playerCount
@@ -196,13 +183,47 @@
 		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
+		AND matching_date >= CURDATE()
+		AND NOT EXISTS (SELECT m.matching_seq AS matchingSeq
+        								FROM matchings m
+         					        INNER JOIN fields f ON m.field_seq = f.field_seq
+               					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+            					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+       								WHERE ma.user_id = #{userId}
+       							   AND m.matching_status = '매칭성공'
+         							AND m.fast_add_status = 1)
 		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
 		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
+		HAVING 10 > COUNT(matching_add_list_seq)
+		ORDER BY matching_time, matching_date;
+ 	</select>
+ 	
+ 	<!-- 빠른 신청 리스트 조회(인원 적은 순, 가까운 일정 순) -->
+	<select id="selectFastMatchingListBySmall" resultType="com.kosta.project.dto.FastMatchingDTO" parameterType="String">
+		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
+ 		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
+ 		COUNT(matching_add_list_seq) as playerCount
+		FROM matchings m, fields f, field_imgs fi, matching_add_lists ml
+		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
+		AND ml.matching_seq = m.matching_seq
+		AND fast_add_status = 1
+		AND matching_date >= CURDATE()
+		AND NOT EXISTS (SELECT m.matching_seq AS matchingSeq
+        								FROM matchings m
+         					        INNER JOIN fields f ON m.field_seq = f.field_seq
+               					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+            					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+       								WHERE ma.user_id = #{userId}
+       							   AND m.matching_status = '매칭성공'
+         							AND m.fast_add_status = 1)
+		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
+		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
+		HAVING 10 > COUNT(matching_add_list_seq)
 		ORDER BY COUNT(matching_add_list_seq), matching_date;
 	</select>
 	
 	<!-- 빠른 신청 리스트 조회(인원 많은 순, 가까운 일정 순) -->
-	<select id="selectFastMatchingListByBig" resultType="com.kosta.project.dto.FastMatchingDTO">
+	<select id="selectFastMatchingListByBig" resultType="com.kosta.project.dto.FastMatchingDTO" parameterType="String">
 		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
  		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
  		COUNT(matching_add_list_seq) as playerCount
@@ -210,8 +231,18 @@
 		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
+		AND matching_date >= CURDATE()
+		AND NOT EXISTS (SELECT m.matching_seq AS matchingSeq
+        								FROM matchings m
+         					        INNER JOIN fields f ON m.field_seq = f.field_seq
+               					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+            					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+       								WHERE ma.user_id = #{userId}
+       							   AND m.matching_status = '매칭성공'
+         							AND m.fast_add_status = 1)
 		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
 		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
+		HAVING 10 > COUNT(matching_add_list_seq)
 		ORDER BY COUNT(matching_add_list_seq) DESC, matching_date;
 	</select>
 	
@@ -224,11 +255,21 @@
 		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
+		AND matching_date >= CURDATE()
+		AND NOT EXISTS (SELECT m.matching_seq AS matchingSeq
+        								FROM matchings m
+         					        INNER JOIN fields f ON m.field_seq = f.field_seq
+               					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+            					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+       								WHERE ma.user_id = #{userId}
+       							   AND m.matching_status = '매칭성공'
+         							AND m.fast_add_status = 1)
 		AND matching_date = #{matchingDate}
 		AND field_address REGEXP #{fieldAddress}
 		AND matching_tier = #{matchingTier}
 		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
 		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
+		HAVING 10 > COUNT(matching_add_list_seq)
 		ORDER BY COUNT(matching_add_list_seq), matching_date;
 	</select>
 	<!--     AND field_address IN (
@@ -268,12 +309,22 @@
           AND f.field_seq = fi.field_seq
           AND ml.matching_seq = m.matching_seq
           AND fast_add_status = 1
+          AND matching_date >= CURDATE()
+		  AND NOT EXISTS (SELECT m.matching_seq AS matchingSeq
+        								FROM matchings m
+         					        INNER JOIN fields f ON m.field_seq = f.field_seq
+               					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+            					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+       								WHERE ma.user_id = #{userId}
+       							   AND m.matching_status = '매칭성공'
+         							AND m.fast_add_status = 1)
           AND matching_date = #{matchingDate}
           AND field_address REGEXP #{fieldAddress}
           AND matching_tier = #{matchingTier}
           AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
         GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail,
                  field_img
+        HAVING 10 > COUNT(matching_add_list_seq)         
         ORDER BY COUNT(matching_add_list_seq) DESC, matching_date;
     </select>
 
@@ -497,7 +548,8 @@
           AND m.matching_seq = #{matchingSeq}
           AND t.team_dismantle_status = 0;
     </select>
-
+	
+	<!-- 다가오는 경기 일정 -->
     <select id="selectMatchingAlready" parameterType="java.lang.String" resultType="com.kosta.project.dto.MatchingDTO">
         SELECT m.matching_status      as matchingStatus,
                m.matching_date        as matchingDate,
@@ -517,5 +569,37 @@
                  m.matching_time DESC
         LIMIT 1
     </select>
+    
+    
+    
+
+    <!-- 빠른 매칭 결제하기 -->
+	<insert id="insertMatchingAddForFastMatching" parameterType="java.lang.String">
+		INSERT INTO matching_adds(matching_add_date, user_id, team_seq)
+		VALUES(NOW(), #{userId}, NULL);
+	</insert>
+	
+	<select id="selectFastMatchingCountForPay" parameterType="int" resultType="int">
+		SELECT count(matching_add_list_seq) FROM matching_add_lists WHERE matching_seq = #{matchingSeq}
+	</select>
+	
+<!-- 빠른 매칭 결제하기 -->
+<insert id="insertFastMatchingAndPay" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+INSERT INTO matching_add_lists(matching_seq, matching_success_status, cancel_status, pay_status, review_status,
+team_status, team, player_number, review_score, matching_add_seq)
+VALUES (#{matchingSeq}, 1, 0, 1, 0, 0, '0', 0, 0,
+(SELECT matching_add_seq FROM matching_adds WHERE user_id = #{userId}
+ORDER BY matching_add_seq DESC
+LIMIT 1));
+</insert>    
+
+
+<update id="updateFastMatchingStatusByFastMatchingSeq" parameterType="int">
+	UPDATE matchings
+	SET fast_add_status = 0
+	WHERE matching_seq = #{matchingSeq};
+</update>
+
+
 
 </mapper>
