@@ -1,7 +1,9 @@
 
 //팀 유무 판단
 const userId = $('#sessionId').text();
+const tier = $('#sessionTier').text();
 console.log(userId);
+
 isTeam();
 
 // 전체 팀 순위 클릭 시
@@ -105,7 +107,7 @@ $("#search").on("click", function () {
 	}
 	else{
 		if(!search){
-			allTeamRank();
+			possJoinTeam();
 			return;
 		}
 	  fetch("/team/possJoin/"+search)
@@ -287,7 +289,11 @@ function strRes(res){
               <button class="joinBtn rounded-5 p-2"
               data-bs-toggle="modal" data-bs-target="#addApplyModal"
               data-teamno = "`+ res[i].teamSeq+`" 
-              data-name="`+ res[i].teamName +`">가입신청</button>
+              data-name="`+ res[i].teamName +`"
+              data-possa="`+ res[i].possA +`"
+              data-possb="`+ res[i].possB +`"
+              data-possc="`+ res[i].possC +`"
+              data-possd="`+ res[i].possD +`">가입신청</button>
             </div>
          </div>`;
 
@@ -316,25 +322,46 @@ function joinBtnClick() {
   
 	$('#addApplyModal').on('show.bs.modal', function(event) {          
 		teamName = $(event.relatedTarget).data('name');
+		possA = $(event.relatedTarget).data('possa');
+		possB = $(event.relatedTarget).data('possb');
+		possC = $(event.relatedTarget).data('possc');
+		possD = $(event.relatedTarget).data('possd');
 		$('#teamModalTitle').text(teamName);
 		
 		var teamSeq = $(event.relatedTarget).data('teamno');
-		
+		var ok = false;
+		var tierData = {
+			"A" : possA,
+			"B" : possB,
+			"C" : possC,
+			"D" : possD
+		}		
+		for (var key in tierData) {
+		    if(key == tier){
+				ok = tierData[key];
+			}
+		}
 		$("#addTeamApply").on('click',function(){
-			$.ajax({
-		      url: "/team/applyTeam/"+teamSeq,
-		      type: "Post",
-		      dataType: "json",
-		      success: function(data) {
-		          res = data.result;
-		          location.reload(true);
-		      },
-		      error: function() {
-		          alert("error");
-		      }
-		    });
-		})
-		
+			
+			if(ok == true){
+				$.ajax({
+			      url: "/team/applyTeam/"+teamSeq,
+			      type: "Post",
+			      dataType: "json",
+			      success: function(data) {
+			          res = data.result;
+			          location.reload(true);
+			      },
+			      error: function() {
+			          alert("error");
+			      }
+			    });				
+			}
+			else{
+				tostOn("티어가 맞지 않습니다!");
+			}
+		    
+		})	
 	});
 }
 
