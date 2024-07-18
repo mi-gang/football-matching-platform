@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.kosta.project.domain.Field;
 import com.kosta.project.domain.Manager;
 import com.kosta.project.dto.FieldDTO;
+import com.kosta.project.dto.FieldInfoDTO;
 import com.kosta.project.repository.FieldMapper;
 
 import lombok.Builder;
@@ -28,11 +29,13 @@ public class FieldRepositoryTest {
 	
 	//@Test
 	void getTEst() {
-		System.out.println(fr.fieldsLeftJoin(5L));
+		
+		Manager m = fr.findById(5L).get().getManager();		
+		System.out.println(m.getName());
 	}
 	
 
-	@Test
+	//@Test
 	void getTest2() {	// 구장 등록
 		Manager m = new Manager();
 		m.updateId("m0000");
