@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
 import com.kosta.project.dto.TeamDTO;
+import com.kosta.project.dto.UserDTO;
 import com.kosta.project.service.FastMatchingService;
 import com.kosta.project.service.MainPageService;
 
@@ -249,8 +251,8 @@ public class MobileController {
 	}
 	
 	@GetMapping("/applyList")
-	public String getApplyList(Model model) {
-		model.addAttribute("applyList", ts.getApplyList("user00104"));
+	public String getApplyList(@SessionAttribute(name = "loginUser", required = false) UserDTO user, Model model) {
+		model.addAttribute("applyList", ts.getApplyList(user.getUserId()));
 		return "team_applyList";
 	}
 	

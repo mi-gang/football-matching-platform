@@ -1,6 +1,7 @@
 
 //팀 유무 판단
-const userId = "user001";
+const userId = $('#sessionId').text();
+console.log(userId);
 isTeam();
 
 // 전체 팀 순위 클릭 시
@@ -8,8 +9,10 @@ $('#allTeamRank').on('click', function () {
   $(".selectBtn").removeClass('btnClick');
   $("#allTeamRank > button").addClass('btnClick');
   $("#searchBox").show();
+  $("#filter-container").hide();
   $("#createTeamBox").removeClass("d-block");
   $("#createTeamBox").addClass("d-none");
+  $("#btnValue").text(1);
   allTeamRank();
 })
 
@@ -18,7 +21,9 @@ $('#possJoin').on('click', function () {
   $(".selectBtn").removeClass('btnClick');
   $("#possJoin > button").addClass('btnClick');
   $("#createTeamBox").removeClass("d-none");	// 팀 생성하기 버튼
+  $("#filter-container").show();
   $("#createTeamBox").addClass("d-block");
+  $("#btnValue").text(2);
   possJoinTeam();
 })
 
@@ -26,6 +31,7 @@ $('#possJoin').on('click', function () {
 $('#joinList').on('click', function(){
 	$(".selectBtn").removeClass('btnClick');
   	$("#joinList > button").addClass('btnClick');
+  	$("#filter-container").hide();
   	$("#createTeamBox").removeClass("d-block");
  	$("#createTeamBox").addClass("d-none");
   	joinList();
@@ -33,7 +39,26 @@ $('#joinList').on('click', function(){
 
 // 팀 생성하기 버튼 클릭 시
 $('#addTeam').on('click',function(){
-	location.replace('/teamCreate');
+	
+	// 가입신청리스트에 신청 있으면 안됨!!
+	$.ajax({
+		url: "/team/joinApply",
+		type: "GET",
+		dataType: "json",
+		success: function(data) {
+			res = data.result;
+			if(res.length === 0){
+				location.href="/teamCreate";
+			}
+			else{
+				tostOn("가입 신청된 팀이 있습니다.");
+			}
+		},
+		error: function() {
+			alert("error");
+		}
+	});
+
 })
 
 // 내 팀 정보 클릭 시
@@ -44,20 +69,89 @@ $("#myTeamInfo").on('click', function () {
   myTeamInfo();
 })
 
-$("#searchTeamButton").on("click", function () {
-  alert("팀 검색");
-});
+$("#search").on("click", function () {
+	var no = $('#btnValue').text();
+	var search = $("#search-keyword").val();
+
+	if(no === "1"){
+		if(!search){
+			allTeamRank();
+			return;
+		}
+	  fetch("/team/rank/"+search)
+	    .then(response => response.json())
+	    .then(data => {
+	      let res = data.result;
+	      let str = "";
+	      for (var i in res) {
+	        str += `<div class="content-container border border-2 rounded-4">
+	              <div class="first-content-container">
+	              <div class="ranking">`+ res[i].teamRank + `</div>
+	              <div class="name">
+	                 <span class="teamname">`+ res[i].teamName + `</span>
+	              </div>
+	             </div>
+	              <div class="second-content-container">
+	              <div class="gameCount">`+ res[i].gameCount + `판</div>
+	              <div class="odds">`+ res[i].odds + `%</div>
+	              <div class="tier">`+ res[i].teamTier + `</div>
+	              <div class="score">`+ res[i].teamScore + `점</div>
+	              </div>
+	            </div>`;
+	      }
+	      $('#dataBox').html(str);
+
+	    })		
+	}
+	else{
+		if(!search){
+			allTeamRank();
+			return;
+		}
+	  fetch("/team/possJoin/"+search)
+	    .then(response => response.json())
+	    .then(data => {
+	      let res = data.result;
+		  let str = strRes(res);
+		  
+	      $('#dataBox').html(str);
+	      joinBtnClick();
+	
+			$('#teamInfoModal').on('show.bs.modal', function (event) {
+				 teamSeq = $(event.relatedTarget).data('teamseq');
+				 teamName = $(event.relatedTarget).data('teamname');
+				 teamScore = $(event.relatedTarget).data('teamscore');
+				 teamTier = $(event.relatedTarget).data('teamtier');
+				 teamRank = $(event.relatedTarget).data('teamrank');
+				 gameCount = $(event.relatedTarget).data('gamecount');
+				 winCount = $(event.relatedTarget).data('wincount');
+				 
+				 console.log(winCount);
+				 odds = $(event.relatedTarget).data('odds');
+				 $("#teamTitleModal").text(teamName);
+				 $("#info-rank").text(teamRank);
+				 $("#info-tier").text(teamTier);
+				 $("#info-score").text(teamScore);
+				 $("#info-count").text(gameCount + "전 " +winCount + "승");
+				 $("#info-odds").text(odds+"%");
+				 				 
+			});  
+	    })			
+	}
+});	
+
 
 // 팀 유무 확인
 function isTeam() {
   fetch("/team/isTeam")
     .then(response => response.json())
     .then(data => {
-
+		console.log(data.result);
       if (data.result === " ") {
         $("#myTeamInfo").hide();
         $(".selectBtn").removeClass('btnClick');
         $("#allTeamRank > button").addClass('btnClick');
+          $("#filter-container").hide();
         $("#searchBox").show();
         allTeamRank();
       }
@@ -65,6 +159,7 @@ function isTeam() {
         $("#possJoin").hide();
         $("#joinList").hide();
         $(".selectBtn").removeClass('btnClick');
+        $("#filter-container").hide();
         $("#myTeamInfo > button").addClass('btnClick');
         $("#searchBox").hide();
         myTeamInfo();
@@ -103,56 +198,24 @@ function allTeamRank() {
     })
 }
 
-function teamInfo(){
-	$(".teamInfo").on('click', function(){
-		alert("팀정보");
-	})
-}
-
 
 /* =========== 가입 가능한 팀 목록 =========== */
 
-// 가입 신청 버튼
-function joinBtnClick() {
-  
-	$('#addApplyModal').on('show.bs.modal', function(event) {          
-		teamName = $(event.relatedTarget).data('name');
-		$('#teamModalTitle').text(teamName);
-		
-		var teamSeq = $(event.relatedTarget).data('teamno');
-		
-		$("#addTeamApply").on('click',function(){
-			$.ajax({
-		      url: "/team/applyTeam/"+teamSeq,
-		      type: "Post",
-		      dataType: "json",
-		      success: function(data) {
-		          res = data.result;
-		          location.reload(true);
-		      },
-		      error: function() {
-		          alert("error");
-		      }
-		    });
-		})
-		
-	});
-}
-
-
-
-//가입 가능팀 조회
-function possJoinTeam() {
-  fetch("/team/possJoin")
-    .then(response => response.json())
-    .then(data => {
-      let res = data.result;
-      let str = "";
-
-      for (var i in res) {
+function strRes(res){
+	let str = "";
+	for (var i in res) {
         str +=
           `<div class="content-container border border-2 rounded-4 p-3">
-                <div class="teamInfo col-9 d-flex align-items-center content-text p-0">
+                <div class="teamInfo col-9 d-flex align-items-center content-text p-0"
+                data-bs-toggle="modal" data-bs-target="#teamInfoModal"
+                data-teamseq="`+res[i].teamSeq +`"
+                data-teamname="`+ res[i].teamName+`"
+                data-teamrank="`+ res[i].teamRank +`"
+                data-teamscore="`+ res[i].teamScore +`"
+                data-teamtier="`+ res[i].teamTier +`"
+                data-gamecount="`+ res[i].gameCount +`"
+                data-wincount="`+ res[i].winCount +`"
+                data-odds="`+ res[i].odds +`">
                   <div class="d-flex">
                       <div class="content-title pe-2">`+ res[i].teamName + `</div>
                       <div class="content-tier ps-1">`;
@@ -186,13 +249,58 @@ function possJoinTeam() {
          </div>`;
 
       }
-      $('#dataBox').html(str);
+      
+      return str;
+}
 
-	  teamInfo();
-      joinBtnClick();
+//가입 가능팀 조회
+function possJoinTeam() {
+  fetch("/team/possJoin")
+    .then(response => response.json())
+    .then(data => {
+      let res = data.result;
+      str = strRes(res);      
+      $('#dataBox').html(str);
+ 		
+ 		$('#teamInfoModal').on('show.bs.modal', function (event) {
+			 teamSeq = $(event.relatedTarget).data('teamseq');
+			 teamName = $(event.relatedTarget).data('teamname');
+			 $("#teamTitleModal").text(teamName);
+			 
+		});  
+      
+      joinBtnClick();    
 
     })
 }
+
+// 가입 신청 버튼
+function joinBtnClick() {
+  
+	$('#addApplyModal').on('show.bs.modal', function(event) {          
+		teamName = $(event.relatedTarget).data('name');
+		$('#teamModalTitle').text(teamName);
+		
+		var teamSeq = $(event.relatedTarget).data('teamno');
+		
+		$("#addTeamApply").on('click',function(){
+			$.ajax({
+		      url: "/team/applyTeam/"+teamSeq,
+		      type: "Post",
+		      dataType: "json",
+		      success: function(data) {
+		          res = data.result;
+		          location.reload(true);
+		      },
+		      error: function() {
+		          alert("error");
+		      }
+		    });
+		})
+		
+	});
+}
+
 
 /* =========== 가입 신청 목록 =========== */
 
@@ -303,7 +411,7 @@ function getTeamLeader(teamSeq){
 function updateMemberStatus() {
 	$('#updateMemberStatus').on('click',function(){
 		  $.ajax({
-		    url: "/team/updateStatus/"+userId,
+		    url: "/team/updateStatus",
 		    type: "PUT",
 		    dataType: "json",
 		    success: function(data) {
@@ -338,6 +446,25 @@ function myTeamMember(teamSeq){
   return res;
 }
 
+// 다음 경기 일정
+function myTeamSchedule(teamSeq){
+  let res;
+  $.ajax({
+    url: "/team/teamSchedule/"+teamSeq,
+    type: "GET",
+    async: false,
+    dataType: "json",
+    success: function(data) {
+        res = data.result;
+    },
+    error: function() {
+        alert("error");
+    }
+  });
+
+  return res;
+}
+
 
 // [더보기] 팀원 정보
 function moreTeamMember(){
@@ -352,9 +479,13 @@ function myTeamInfo() {
     .then(data => {
       let res = data.result;
       $("#searchBox").hide();
-
+	 	
       const members = myTeamMember(res.teamSeq);
       const leader = getTeamLeader(res.teamSeq);
+      let schedule = myTeamSchedule(res.teamSeq);
+      console.log(schedule)
+		if(schedule.matchingStatus === null)
+			schedule = null;
       let str = "";
 
       str += `
@@ -382,26 +513,34 @@ function myTeamInfo() {
                 <div class="d-flex w-100 ps-2 mt-2">
                     <div>다음 일정</div>
                 </div>
-                <div class="d-flex justify-content-between w-100 border border-2 rounded-4 p-3">
-                    <div>
+                <div class="d-flex justify-content-between w-100 border border-2 rounded-4 p-3">`
+                    
+                    if(schedule === null){
+						str += `<div class="p-3 text-center">경기 일정이 없습니다.</div>`
+					}else{
+				str +=                     `<div>
                         <div class="d-flex">
-                            <div class="pe-1">풋살지존지존</div>
+                            <div class="pe-1">`+res.teamName+`</div>
                             <div>vs</div>
-                            <div class="ps-1">엄준식준식이</div>
+                            <div class="ps-1">`+schedule.rival+`</div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <div>`+ schedule.matchingDate +`</div>
+                            <div>`+ schedule.matchingTime+`:00~`+(schedule.matchingTime+2)+
+                            `:00` +`</div>
                         </div>
                         <div class="d-flex">
-                            <div>6/30(일)</div>
-                            <div>18:00~20:00</div>
-                        </div>
-                        <div class="d-flex">
-                            <div>서울 강서</div>
-                            <div>신정FC 우쩌구 구장</div>
+                            <div>`+schedule.fieldName+`</div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end team-img">
                         <img src="/mobile/img/구장 사진.svg">
-                    </div>
-                </div>
+                    </div>`
+						
+					}
+
+                
+             str += `</div>
 
                 <!-- 팀원 -->
                 <div class="d-flex justify-content-between w-100 ps-2 mt-2">
@@ -517,7 +656,7 @@ function myTeamInfo() {
 function getJoinApplyListAndDeleteTeam(memberCount, teamSeq){
 	// 신청목록
 	$('#joinApplyList').on('click', function(){
-		location.replace('/applyList?teamSeq='+teamSeq);
+		location.href="/applyList?teamSeq="+teamSeq;
 	})
 	
 	//추가모집하기
@@ -528,20 +667,32 @@ function getJoinApplyListAndDeleteTeam(memberCount, teamSeq){
 	//팀 해체하기
 	$('#deleteTeam').on('click', function(){
 		if(memberCount !== 1){	
-			console.log("팀원존재");
-			tostOn();
+			tostOn("팀원이 존재합니다.");
 		}else{
-			console.log("해체완료")
+			$("#tost_message").text("팀 해체 완료");		  
+		  $.ajax({
+		    url: "/team/dismantle/"+teamSeq,
+		    type: "PUT",
+		    dataType: "json",
+		    success: function(data) {
+		        res = data.result;
+		        location.reload(true);
+		    },
+		    error: function() {
+		        alert("error");
+		    }
+		  });			
 		}	
 	})
 	
 }
 
-function tostOn(){
+function tostOn(str){
 	$("#tost_message").addClass("active");
+	$("#tost_message").text(str);
     setTimeout(function(){
 		$("#tost_message").removeClass("active");
-    },1000);
+    },2000);
 }
 
 
