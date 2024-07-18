@@ -3,6 +3,8 @@ package com.kosta.project.controller;
 import com.kosta.project.dto.*;
 import com.kosta.project.repository.MatchingMapper;
 import com.kosta.project.service.ScheduleService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,64 +23,53 @@ public class ScheduleRestController {
     private final MatchingMapper matchingMapper;
 
     @GetMapping("/month/{month}")
-    public ResponseEntity<Collection<MatchingScheduleListDTO>> getMatchingListByMonth(@PathVariable int month) {
-        // 세션으로 유저 아이디 구하기
-        // @SessionAttribute("userId") String userId
-        String userId = "user001";
+    public ResponseEntity<Collection<MatchingScheduleListDTO>> getMatchingListByMonth(@PathVariable int month,
+                                                                                      @SessionAttribute("loginUser") UserDTO userDTO) {
+        System.out.println("세션 확인 : " + userDTO.getUserId());
+
         Collection<MatchingScheduleListDTO> matchingScheduleListDTOS = new ArrayList<>();
-        matchingScheduleListDTOS = scheduleService.getMatchingListByMonth(userId, month);
+        matchingScheduleListDTOS = scheduleService.getMatchingListByMonth(userDTO.getUserId(), month);
 
         return new ResponseEntity<>(matchingScheduleListDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/date/{date}")
-    public ResponseEntity<Collection<MatchingScheduleListDTO>> getMatchingListByDate(@PathVariable String date) {
+    public ResponseEntity<Collection<MatchingScheduleListDTO>> getMatchingListByDate(@PathVariable String date,
+                                                                                     @SessionAttribute("loginUser") UserDTO userDTO) {
         // 날짜 포맷 검증
         if (!isValidDateFormat(date)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        // 세션으로 유저 아이디, 티어 구하기
-        String userId = "user001";
-        String userTier = "D";
         Collection<MatchingScheduleListDTO> matchingScheduleListDTOS = new ArrayList<>();
-        matchingScheduleListDTOS = scheduleService.getMatchingListByDate(userId, userTier, date);
+        matchingScheduleListDTOS = scheduleService.getMatchingListByDate(userDTO.getUserId(), userDTO.getUserTier(), date);
 
         return new ResponseEntity<>(matchingScheduleListDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/matches/count")
-    public ResponseEntity<Integer> getMatchingListCount() {
+    public ResponseEntity<Integer> getMatchingListCount(@SessionAttribute("loginUser") UserDTO userDTO) {
 
-        // 세션으로 유저 아이디 구하기
-        // @SessionAttribute("userId") String userId
-        String userId = "user001";
-        int totalCount = scheduleService.getMatchingListCount(userId);
+        int totalCount = scheduleService.getMatchingListCount(userDTO.getUserId());
 
         return new ResponseEntity<>(totalCount, HttpStatus.OK);
     }
 
     @GetMapping("/matches")
-    public ResponseEntity<Collection<MatchingScheduleListDTO>> getMatchingList() {
+    public ResponseEntity<Collection<MatchingScheduleListDTO>> getMatchingList(@SessionAttribute("loginUser") UserDTO userDTO) {
 
-        // 세션으로 유저 아이디 구하기
-        // @SessionAttribute("userId") String userId
-        String userId = "user001";
         Collection<MatchingScheduleListDTO> matchingScheduleListDTOS = new ArrayList<>();
-        matchingScheduleListDTOS = scheduleService.getMatchingList(userId);
+        matchingScheduleListDTOS = scheduleService.getMatchingList(userDTO.getUserId());
 
         return new ResponseEntity<>(matchingScheduleListDTOS, HttpStatus.OK);
     }
 
     @PatchMapping("/{matchingAddListSeq}/payment")
-    public ResponseEntity<String> setPayStatus(
-            @PathVariable int matchingAddListSeq) {
-
-        //  @SessionAttribute("userId") String userId
-        String userId = "user001";
+    public ResponseEntity<String> setPayStatus(@PathVariable int matchingAddListSeq,
+                                               @SessionAttribute("loginUser") UserDTO userDTO) {
 
         try {
-            scheduleService.setPayStatus((UserMatchingInfoDTO.builder().matchingAddListSeq(matchingAddListSeq).userId(userId).build()));
+            scheduleService.setPayStatus((UserMatchingInfoDTO.builder().matchingAddListSeq(matchingAddListSeq).userId(userDTO.getUserId()).build()));
             return ResponseEntity.ok("Payment status updated successfully.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update payment status.");
@@ -118,19 +109,18 @@ public class ScheduleRestController {
     }
 
     @GetMapping("/{matchingSeq}/opposing-players")
-    public ResponseEntity<Collection<UserPlayInfoDTO>> getOpposingTeamPlayerList(@PathVariable int matchingSeq) {
-        // 세션으로 유저 아이디 구하기
-        // @SessionAttribute("userId") String userId
-        String userId = "user001";
+    public ResponseEntity<Collection<UserPlayInfoDTO>> getOpposingTeamPlayerList(@PathVariable int matchingSeq,
+                                                                                 @SessionAttribute("loginUser") UserDTO userDTO) {
 
         Collection<UserPlayInfoDTO> userPlayInfoDTOS = new ArrayList<>();
-        userPlayInfoDTOS = scheduleService.getOpposingTeamPlayerList(UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingSeq).build());
+        userPlayInfoDTOS = scheduleService.getOpposingTeamPlayerList(UserMatchingInfoDTO.builder().userId(userDTO.getUserId()).matchingSeq(matchingSeq).build());
 
         return new ResponseEntity<>(userPlayInfoDTOS, HttpStatus.OK);
     };
 
     @PostMapping("/review-scores")
-    public ResponseEntity<String> setReviewScores(@RequestBody UserScoreInfoDTO userMatchingInfoDTOs, @RequestParam int matchingAddListSeq) {
+    public ResponseEntity<String> setReviewScores(@RequestBody UserScoreInfoDTO userMatchingInfoDTOs,
+                                                  @RequestParam int matchingAddListSeq) {
 
         try {
             scheduleService.setReviewScore(userMatchingInfoDTOs.getInfoDTOS(), matchingAddListSeq);
@@ -142,25 +132,20 @@ public class ScheduleRestController {
     };
 
     @GetMapping("/{matchingSeq}/my-team-players")
-    public ResponseEntity<Collection<UserPlayInfoDTO>> getMyTeamPlayerList(@PathVariable int matchingSeq) {
-        // 세션으로 유저 아이디 구하기
-        // @SessionAttribute("userId") String userId
-        String userId = "user001";
+    public ResponseEntity<Collection<UserPlayInfoDTO>> getMyTeamPlayerList(@PathVariable int matchingSeq,
+                                                                           @SessionAttribute("loginUser") UserDTO userDTO) {
 
         Collection<UserPlayInfoDTO> userPlayInfoDTOS = new ArrayList<>();
-        userPlayInfoDTOS = scheduleService.getMyTeamPlayerList(UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingSeq).build());
+        userPlayInfoDTOS = scheduleService.getMyTeamPlayerList(UserMatchingInfoDTO.builder().userId(userDTO.getUserId()).matchingSeq(matchingSeq).build());
 
         return new ResponseEntity<>(userPlayInfoDTOS, HttpStatus.OK);
     };
 
     @PostMapping("report")
-    public ResponseEntity<String> addReport(@RequestBody ReportDTO reportDTO) {
+    public ResponseEntity<String> addReport(@RequestBody ReportDTO reportDTO,
+                                            @SessionAttribute("loginUser") UserDTO userDTO) {
 
-        // 세션으로 유저 아이디 구하기
-        // @SessionAttribute("userId") String userId
-        String userId = "user001";
-        reportDTO.setUserId(userId);
-
+        reportDTO.setUserId(userDTO.getUserId());
         try {
             scheduleService.addReport(reportDTO);
             return ResponseEntity.ok("add report successfully.");
@@ -171,13 +156,11 @@ public class ScheduleRestController {
     };
 
     @GetMapping("/{matchingSeq}/score")
-    public ResponseEntity<Map<String, Integer>> getScore(@PathVariable int matchingSeq) {
+    public ResponseEntity<Map<String, Integer>> getScore(@PathVariable int matchingSeq,
+                                                         @SessionAttribute("loginUser") UserDTO userDTO) {
 
-        // 세션으로 유저 아이디 구하기
-        // @SessionAttribute("userId") String userId
-        String userId = "user001";
         Map<String, Integer> map = new HashMap<>();
-        map = scheduleService.getReviewScoreAndTeamScore(UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingSeq).build());
+        map = scheduleService.getReviewScoreAndTeamScore(UserMatchingInfoDTO.builder().userId(userDTO.getUserId()).matchingSeq(matchingSeq).build());
 
         Integer teamScore = map.get("teamScore");
         if (teamScore != null && teamScore == 0) {

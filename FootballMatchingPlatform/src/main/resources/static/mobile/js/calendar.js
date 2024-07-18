@@ -144,12 +144,20 @@ nextBtn.addEventListener("click", () => {
 // 캘린더 끝
 
 
+
+
+
+
+
+
+
+
 // 날짜 클릭 시
 $(".calendar-dates").on("click", ".date-wrapper", function () {
 
     $("#matchings-wrapper").html('');
-
     $(".click-date").removeClass("click-date");
+
     $(this).find(".date").addClass("click-date"); // find -> 자식 요소 찾기
 
     // 클릭한 날짜 불러오기
@@ -191,9 +199,88 @@ $(".calendar-dates").on("click", ".date-wrapper", function () {
         location.href = '/myMatchingList';
     });
 
-// 매칭 취소 버튼 클릭 시
-    $("#matchings-wrapper").on("click", ".cancel-matching-btn", function () {
-    });
+
+
+// 매칭 취소 버튼 클릭 시 (매칭중)
+$("#matchings-wrapper").on("click", ".remove-matching-btn", function () {
+    const matchingAddListSeq = $(this)
+        .closest(".matching-wrapper")
+        .attr("data-matchingAddListSeq");
+    console.log(matchingAddListSeq)
+
+    $("#cancelModalBtn").attr("data-matchingAddListSeq", matchingAddListSeq);
+    $("#cancelModalBtn").addClass("remove-matching");
+});
+
+// 매칭 취소 버튼 클릭 시 (매칭 성공 이후)
+$("#matchings-wrapper").on("click", ".cancel-matching-btn", function () {
+    const matchingAddListSeq = $(this)
+        .closest(".matching-wrapper")
+        .attr("data-matchingAddListSeq");
+    console.log(matchingAddListSeq)
+
+    $("#cancelModalBtn").attr("data-matchingAddListSeq", matchingAddListSeq);
+    $("#cancelModalBtn").addClass("cancel-matching");
+});
+
+// 매칭 취소 모달 - 취소하기 버튼 클릭 시
+$("#cancelModalBtn").on("click", function (){
+    let matchingAddListSeq = $("#cancelModalBtn").attr("data-matchingAddListSeq");
+    console.log(matchingAddListSeq);
+
+    if ($("#cancelModalBtn").hasClass("cancel-matching")) {
+        fetch(`/schedule/matching-add-list-seq/${matchingAddListSeq}/cancel`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include" // 세션 정보를 포함
+        })
+            .then(response => {
+                if (response.ok) {
+                    getModal('cancelSuccessModal').show();
+                } else {
+                    return response.text().then(errorText => {
+                        throw new Error(errorText);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+                getModal('cancelSuccessModal').show();
+                $('#cancelModalText').text("취소 실패<br>다시 시도해주세요.");
+            });
+    } else if($("#cancelModalBtn").hasClass("remove-matching")) {
+        fetch(`/schedule/matching-add-list-seq/${matchingAddListSeq}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include" // 세션 정보를 포함
+        })
+            .then(response => {
+                if (response.ok) {
+                    getModal('cancelSuccessModal').show();
+                } else {
+                    return response.text().then(errorText => {
+                        throw new Error(errorText);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+                getModal('cancelSuccessModal').show();
+                $('#cancelModalText').text("취소 실패<br>다시 시도해주세요.");
+            });
+    }
+});
+
+//매칭 취소 완료, 닫기 버튼 클릭 시
+$("#cancelSuccessModalBtn").on("click", function () {
+    location.href = '/myMatchingList';
+});
+
+$(document).ready(function () {
 
 // 결제 모달 오픈 버튼 클릭 시
     $("#matchings-wrapper").on("click", ".pay-matching-btn ", function () {
@@ -217,16 +304,121 @@ $(".calendar-dates").on("click", ".date-wrapper", function () {
         $(".modal-matching-info").text(matchingDate + " " + matchingTime);
         $(".modal-matching-field").text(matchingField);
 
-        const matchingSeq = $(this)
+        const matchingAddListSeq = $(this)
             .closest(".matching-wrapper")
-            .attr("data-matchingSeq");
+            .attr("data-matchingAddListSeq");
         // const matchingSeq = $(this).closest('.matching-wrapper').data('matchingSeq');
 
-        $("#payMatchingBtn").data("matchingSeq", matchingSeq);
+        $("#payMatchingBtn").attr("data-matching-add-list-seq", matchingAddListSeq);
     });
+});
 
 
-// 매칭 리스트 생성
+// 결제 버튼 클릭 시
+$("#payMatchingBtn").on("click", function () {
+
+    let matchingAddListSeq = $("#payMatchingBtn").data("matching-add-list-seq");
+    fetch(`/schedule/${matchingAddListSeq}/payment`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include" // 세션 정보를 포함
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log(getModal('paymentSuccessModal'))
+                getModal('paymentSuccessModal').show();
+            } else {
+                return response.text().then(errorText => {
+                    throw new Error(errorText);
+                });
+
+            }
+        })
+        .catch(error => {
+            console.error("Fetch error:", error);
+            getModal('paymentSuccessModal').show();
+            $('#paymentModalText').text("결제 실패<br>다시 시도해주세요.");
+        });
+
+});
+
+// 결제 완료 후 닫기 버튼 클릭 시
+$("#paymentSuccessModalBtn").on("click", function () {
+    location.href = '/myMatchingList';
+});
+
+
+
+// 선수 평가 클릭 시
+$("#matchings-wrapper").on("click", ".review-matching-btn", function () {
+    const matchingSeq = $(this)
+        .closest(".matching-wrapper")
+        .attr("data-matchingSeq");
+    const matchingAddListSeq = $(this)
+        .closest(".matching-wrapper")
+        .attr("data-matchingAddListSeq");
+    location.href = '/addScore/'+ matchingSeq + '/' + matchingAddListSeq;
+});
+
+// 내 점수 확인 클릭 시
+$("#matchings-wrapper").on("click", ".matching-score-btn", function () {
+    const matchingSeq = $(this)
+        .closest(".matching-wrapper")
+        .attr("data-matchingSeq");
+    fetch(`/schedule/${matchingSeq}/score`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data)
+            console.log(data.reviewScore)
+            console.log(data.teamScore)
+            $("#resultScore").text(data.reviewScore);
+            $("#reviewScore").text(data.teamScore);
+            $("#totalScore").text(data.reviewScore+data.teamScore);
+            getModal('scoreModal').show();
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 모달 선택 함수
+function getModal(modalId){
+    let modalElement = document.getElementById(modalId)
+    var modal = new bootstrap.Modal(modalElement)
+    return modal;
+}
+
+// 매칭 리스트 생성 함수
 function getMatchigList(item) {
     // matching-wrapper div 생성
     const matchingWrapper = document.createElement('div');
@@ -362,7 +554,7 @@ function getMatchigList(item) {
     matchingContentWrapper.appendChild(matchingFieldInfo);
 
     // 결제 완료 시 결제 금액 표기
-    if (item.payStatus && item.matchingStatus != '매칭실패' && !item.cancelStatus) {
+    if (item.payStatus && item.matchingStatus != '매칭중' && item.matchingStatus != '매칭실패' && !item.cancelStatus) {
         const payInfo = document.createElement('span');
         payInfo.classList.add('pay-info');
         payInfo.textContent = '결제 금액 : 10,000원';
