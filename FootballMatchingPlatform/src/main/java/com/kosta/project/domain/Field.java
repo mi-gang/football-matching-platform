@@ -106,4 +106,12 @@ public class Field {
 	    public void updateManagerId(Manager m) {
 	    	this.manager = m;
 	    }
+	    
+	    
+	    public void approveField(Field f) {
+	    	this.fieldStatus = f.fieldStatus;
+	    	this.fieldSeq = f.fieldSeq;
+	    }
+	    
+	    
 }

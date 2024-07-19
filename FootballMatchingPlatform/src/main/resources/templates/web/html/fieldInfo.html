@@ -199,11 +199,48 @@
 
         $("#okBtn").on('click', function () {
             confirm("승인 하시겠습니까?")
+            
+            
         })
 
         $("#nopeBtn").on('click', function () {
-            confirm("거절 하시겠습니까?")
+            //confirm("거절 하시겠습니까?")
+            
+            const url = window.location.href; // Get the current URL
+			const match = url.match(/fieldInfo\/(\d+)/); // Extract the matching part using regex
+			const fieldSeq = parseInt(match[1]); // Parse the extracted value to a number
+			console.log(fieldSeq); // Display the value in the console
+ 
+            
+            
+        const data = {'fieldSeq' : fieldSeq};
+        $.ajax({
+            type: 'post',
+            url: '/api/update/approve/date',
+            data: JSON.stringify(data),
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            console.log('구장 상태')
+			console.log(response.result)
+			
+
+        }).fail(function(error){
+            //alert(JSON.stringify(error));
         })
+            
+      
+            
+        })
+
+
+
+
+
+
+
+
+
 
         $("#deleteBtn").on('click', function () {
             confirm("삭제 하시겠습니까?")
