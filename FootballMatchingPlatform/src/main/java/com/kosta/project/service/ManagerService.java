@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kosta.project.domain.Field;
 import com.kosta.project.domain.FieldImage;
 import com.kosta.project.domain.Manager;
+import com.kosta.project.dto.FieldInfoDTO;
 import com.kosta.project.dto.ImageUploadDTO;
 import com.kosta.project.dto.InquiryDTO;
 import com.kosta.project.dto.TeamDTO;
@@ -31,7 +32,7 @@ public class ManagerService {
 	private final FieldRepository fr;
 	private final FieldImgRepository fir;
 
-	
+	//매니저로그인
 	public boolean getLoginResult(String managerId, String password) {
 		boolean result = false;
 
@@ -42,17 +43,29 @@ public class ManagerService {
 		return result;
 	}
 	
+	//나의 구장 전체 리스트
 	public List<Field> getFieldList(String managerId) {
 		List<Field> fieldList = null;
 		fieldList = fr.findByManager_ManagerId(managerId);
 		return fieldList;
 	}
 	
-	public void updateFieldStatus(Long fieldSeq) {
+	//구장 상태 변경
+	public void updateFieldStatus(int fieldSeq) {
 		Field field = fr.findById(fieldSeq).get();
 		field.setFieldStatus(1);
 		fr.save(field);
 	}
+	
+	// 구장 상세 정보
+		public FieldInfoDTO getField(int fieldSeq) {
+			FieldInfoDTO dto = new FieldInfoDTO();
+			
+			dto.setF(fr.findById(fieldSeq).get());
+			dto.setM(fr.findById(fieldSeq).get().getManager());
+			
+			return dto;
+		}
 	
 //	public String setUserLastLoginDateByUserId(String userId) {
 //		um.setUserLastLoginDateByUserId(userId);
@@ -168,23 +181,23 @@ public class ManagerService {
 
 
 
-	public Long addField(Field dto, String managerId, List<MultipartFile> files) {
-		Field f = new Field();
-		Manager m = new Manager();
-		m.updateId(managerId);
-		dto.updateManagerId(m);
-		f = fr.save(dto);
-		
-		if(f.getFieldSeq() != null) {
-			
-			for(MultipartFile file : files) {
-				
-				
-			}
-			
-			
-		}
-		return f.getFieldSeq();
-	}
+//	public Long addField(Field dto, String managerId, List<MultipartFile> files) {
+//		Field f = new Field();
+//		Manager m = new Manager();
+//		m.updateId(managerId);
+//		dto.updateManagerId(m);
+//		f = fr.save(dto);
+//		
+//		if(f.getFieldSeq() != null) {
+//			
+//			for(MultipartFile file : files) {
+//				
+//				
+//			}
+//			
+//			
+//		}
+//		return f.getFieldSeq();
+//	}
 
 }

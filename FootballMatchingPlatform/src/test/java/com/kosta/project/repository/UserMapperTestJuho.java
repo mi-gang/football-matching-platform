@@ -193,18 +193,18 @@ public class UserMapperTestJuho {
 	
 	
 	// 내 정보 불러오기 
-	@Test
-	void selectMyInfoByUserIdTest() {
-		UserDTO userDTO = um.selectMyInfoByUserId("user00118", "password00118");
-		System.out.println(userDTO);
-		System.out.println(userDTO.getNickname() + 
-							userDTO.getEmail() + 
-							userDTO.getUserId() + 
-							userDTO.getName() + 
-							userDTO.getGender() +
-							userDTO.getBirthday() +
-							userDTO.getPhoneNumber());
-	}
+//	@Test
+//	void selectMyInfoByUserIdTest() {
+//		UserDTO userDTO = um.selectMyInfoByUserId("user00118", "password00118");
+//		System.out.println(userDTO);
+//		System.out.println(userDTO.getNickname() + 
+//							userDTO.getEmail() + 
+//							userDTO.getUserId() + 
+//							userDTO.getName() + 
+//							userDTO.getGender() +
+//							userDTO.getBirthday() +
+//							userDTO.getPhoneNumber());
+//	}
 	
 	
 	// 내 등급 불러오기

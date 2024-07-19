@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kosta.project.domain.Field;
+import com.kosta.project.dto.FieldInfoDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
 import com.kosta.project.dto.TeamDTO;
@@ -56,8 +57,10 @@ public class WebController {
 		return "scheduleManage";
 	}
 	
-	@GetMapping("/fieldInfo")
-	String fieldInfo() {
+	@GetMapping("/fieldInfo/{fieldSeq}")
+	String fieldInfo(Model model, @PathVariable int fieldSeq) {
+		FieldInfoDTO fiDTO = ms.getField(fieldSeq);
+		model.addAttribute("fieldInfo", fiDTO);
 		return "fieldInfo";
 	}
 	

@@ -52,7 +52,7 @@ public class ManagerRestController {
 	}
 	
 	@PutMapping("/fieldStatus/{fieldSeq}")
-	Map<String, String> updateFieldStatus(@PathVariable Long fieldSeq){
+	Map<String, String> updateFieldStatus(@PathVariable int fieldSeq){
 		ms.updateFieldStatus(fieldSeq);
 		return Map.of("result", "성공");
 	}

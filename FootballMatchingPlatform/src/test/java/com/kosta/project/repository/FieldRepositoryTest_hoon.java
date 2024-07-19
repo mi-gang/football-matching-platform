@@ -22,7 +22,7 @@ public class FieldRepositoryTest_hoon {
 	
 	@Test
 	void updateFieldStatusTest() {
-		Field field = fr.findById(1L).get();
+		Field field = fr.findById(1).get();
 		field.setFieldStatus(1);
 		fr.save(field);
 		System.out.println(field);
