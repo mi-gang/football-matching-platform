@@ -43,4 +43,8 @@ public class Manager {
 
     @OneToMany(mappedBy = "manager")
     private List<Field> fields;
+    
+    public void updateId(String id) {
+    	this.managerId = id;
+    }
 }
