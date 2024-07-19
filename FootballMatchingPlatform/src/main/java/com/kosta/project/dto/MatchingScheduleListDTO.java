@@ -36,11 +36,15 @@ public class MatchingScheduleListDTO {
 	private boolean cancelStatus;
 	private boolean payStatus;
 	private boolean reviewStatus;
-	private boolean opposingTeamReviewStatus;
 	private boolean teamStatus;
 	private char team;
 	private int playerNumber;
+
+	private boolean opposingTeamReviewStatus;
 	private boolean isleader;
 	private String fieldName;
+	private String myTeamName;
+	private String opposingTeamName;
+	private int totalUserCount;
 	
 }

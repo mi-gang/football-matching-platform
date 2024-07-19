@@ -352,6 +352,52 @@
         ORDER BY m.matching_date desc
     </select>
 
+    <!-- 해당 매칭에 대해 팀장 여부 확인하기 -->
+    <select id="isTeamLeader" parameterType="com.kosta.project.dto.UserMatchingInfoDTO" resultType="boolean">
+        SELECT COUNT(t.team_seq)
+        FROM teams t
+                 JOIN matching_adds ma ON t.team_seq = ma.team_seq
+                 JOIN matching_add_lists mal ON ma.matching_add_seq = mal.matching_add_seq
+                 JOIN matchings m ON m.matching_seq = mal.matching_seq
+        WHERE t.leader_id = #{userId}
+          AND m.matching_seq = #{matchingSeq}
+          AND t.team_dismantle_status = 0;
+    </select>
+
+    <!-- 상대팀 전부 평가 완료 여부 확인하기 -->
+    <select id="selectOpposingTeamReviewStatus" parameterType="com.kosta.project.dto.UserMatchingInfoDTO"
+            resultType="boolean">
+        SELECT min(review_status)
+        FROM matchings m
+                 JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
+                 JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
+                 JOIN users u ON ma.user_id = u.user_id
+        WHERE m.matching_seq = #{matchingSeq}
+          AND mal.matching_success_status = 1
+          AND mal.cancel_status = 0
+          AND mal.team !=
+              (SELECT mal.team
+               FROM matching_add_lists mal
+                        JOIN matching_adds ma
+                             ON mal.matching_add_seq = ma.matching_add_seq
+               WHERE ma.user_id = #{userId}
+                 AND mal.matching_seq = #{matchingSeq})
+    </select>
+
+    <!-- getTeamNames -->
+    <select id="getTeamNames" parameterType="com.kosta.project.dto.UserMatchingInfoDTO" resultType="string">
+        SELECT
+            t.team_name
+        FROM teams t
+        WHERE t.team_seq IN (
+            SELECT ma.team_seq
+            FROM matching_adds ma
+                     JOIN matching_add_lists mal ON mal.matching_add_seq = ma.matching_add_seq
+            WHERE mal.matching_seq = #{matchingSeq} AND mal.team_status = 1
+        )
+        ORDER BY CASE WHEN t.team_seq = (SELECT team_seq FROM users WHERE user_id = #{userId}) THEN 1 ELSE 2 END
+    </select>
+
     <!-- 특정 날짜에 맞는 매칭 리스트 불러오기 -->
     <select id="selectMatchingListByDate" resultType="com.kosta.project.dto.MatchingScheduleListDTO">
         SELECT m.matching_seq,
@@ -421,9 +467,30 @@
         UPDATE matching_add_lists mal
             JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
         SET mal.pay_status = TRUE
-        WHERE mal.matching_seq = #{matchingSeq}
+        WHERE mal.matching_add_list_seq = #{matchingAddListSeq}
           AND ma.user_id = #{userId}
     </update>
+
+    <!-- 매칭 신청 시퀀스 구하기 -->
+    <select id="selectMatchingAddSeqByMatchingAddListSeq" parameterType="int" resultType="int">
+        SELECT matching_add_seq
+        from matching_add_lists
+        where matching_add_list_seq = #{matchingAddListSeq};
+    </select>
+
+    <!-- 동일한 매칭 신청 시퀀스를 가진 매칭 신청목록 개수 구하기 -->
+    <select id="selectMatchingAddListSeqCount" parameterType="int" resultType="int">
+        select count(matching_add_list_seq)
+        from matching_add_lists
+        where matching_add_seq = #{matchingAddSeq};
+    </select>
+
+    <!-- 매칭 삭제하기 -->
+    <delete id="deleteMatchingAdd">
+        DELETE
+        FROM matching_adds
+        WHERE matching_add_seq = #{matchingAddSeq}
+    </delete>
 
     <!-- 매칭 삭제하기 -->
     <delete id="deleteMatching">
@@ -462,19 +529,19 @@
                  JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
                  JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
                  JOIN users u ON ma.user_id = u.user_id
-        WHERE m.matching_seq = 6
+        WHERE m.matching_seq = #{matchingSeq}
           AND matching_success_status = 1
           AND mal.team !=
               (SELECT mal.team
                FROM matching_add_lists mal
                         JOIN matching_adds ma
                              ON mal.matching_add_seq = ma.matching_add_seq
-               WHERE ma.user_id = 'user001'
-                 AND mal.matching_seq = 6)
+               WHERE ma.user_id = #{userId}
+                 AND mal.matching_seq = #{matchingSeq})
         ORDER BY player_number asc;
     </select>
 
-    <!-- 각 사용자 별 등수에 맞는 점수 추가하기 -->
+    <!-- 각 사용자 별 등수에 맞는 점수 추가하기 (matching_add_lists 테이블) -->
     <update id="updateReviewScore" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
         update matching_add_lists mal
             JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
@@ -483,15 +550,26 @@
           AND ma.user_id = #{userId}
     </update>
 
-    <!-- 매칭(개인) - 리뷰 작성 상태 등록하기 -->
-    <update id="updateReviewStatus" parameterType="int">
-        UPDATE matching_add_lists
-        SET review_status = 1
-        WHERE matching_add_list_seq = #{matchingAddListSeq}
+    <!-- 각 사용자 별 등수에 맞는 점수 추가하기 (users 테이블) -->
+    <update id="updateUserScore" parameterType="com.kosta.project.dto.UserMatchingInfoDTO">
+        update users u
+            join mydb.matching_adds ma on u.user_id = ma.user_id
+            join mydb.matching_add_lists mal on ma.matching_add_seq = mal.matching_add_seq
+        set user_score = user_score + #{score}
+        where mal.matching_seq = #{matchingSeq}
+          and u.user_id = #{userId}
     </update>
 
-    <!-- 매칭에 참여한 사용자 리스트 불러오기 -->
-    <select id="selectPlayerList" resultType="com.kosta.project.dto.UserPlayInfoDTO">
+    <!-- 매칭(개인) - 리뷰 작성 상태 등록하기 -->
+    <update id="updateReviewStatus" parameterType="int">
+        UPDATE matching_add_lists mal
+            JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
+        SET mal.review_status = 1
+        WHERE mal.matching_add_list_seq = #{matchingAddListSeq}
+    </update>
+
+    <!-- 내 팀 리스트 불러오기 -->
+    <select id="myTeamPlayerList" resultType="com.kosta.project.dto.UserPlayInfoDTO">
         SELECT u.user_id, u.nickname, mal.team, mal.player_number
         FROM matchings m
                  JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
@@ -499,24 +577,14 @@
                  JOIN users u ON ma.user_id = u.user_id
         WHERE m.matching_seq = #{matchingSeq}
           AND matching_success_status = 1
-    </select>
-
-    <!-- 상대팀 전부 평가 완료 여부 확인하기 -->
-    <select id="selectOpposingTeamReviewStatus" parameterType="com.kosta.project.dto.UserMatchingInfoDTO"
-            resultType="boolean">
-        SELECT min(review_status)
-        FROM matchings m
-                 JOIN matching_add_lists mal ON m.matching_seq = mal.matching_seq
-                 JOIN matching_adds ma ON mal.matching_add_seq = ma.matching_add_seq
-                 JOIN users u ON ma.user_id = u.user_id
-        WHERE m.matching_seq = #{matchingSeq}
-          AND mal.team !=
+          AND mal.team =
               (SELECT mal.team
                FROM matching_add_lists mal
                         JOIN matching_adds ma
                              ON mal.matching_add_seq = ma.matching_add_seq
                WHERE ma.user_id = #{userId}
                  AND mal.matching_seq = #{matchingSeq})
+          AND u.user_id != #{userId};
     </select>
 
     <!-- 경기 결과 점수 불러오기 -->

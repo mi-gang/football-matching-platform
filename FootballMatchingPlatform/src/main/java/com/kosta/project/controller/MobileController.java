@@ -80,13 +80,14 @@ public class MobileController {
 		return "addedFieldInfo";
 	}
 	
-	@GetMapping("/addScore/{matchingSeq}")
-	public String getAddScore(@PathVariable("matchingSeq") int matchingSeq, Model model) {
+	@GetMapping("/addScore/{matchingSeq}/{matchingAddListSeq}")
+	public String getAddScore(@PathVariable("matchingSeq") int matchingSeq, @PathVariable("matchingAddListSeq") int matchingAddListSeq, Model model) {
 
 		String userId = "user001";
 
 		model.addAttribute("playerList", ss.getOpposingTeamPlayerList(UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingSeq).build()));
 		model.addAttribute("matchingSeq", matchingSeq);
+		model.addAttribute("matchingAddListSeq", matchingAddListSeq);
 
 		return "addScore";
 	}	
