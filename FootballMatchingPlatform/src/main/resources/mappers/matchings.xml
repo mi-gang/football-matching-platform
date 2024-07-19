@@ -184,7 +184,8 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND matching_date >= CURDATE()
-		AND NOT EXISTS (SELECT m.matching_seq AS matchingSeq
+		AND m.matching_status = '매칭성공'
+		AND m.matching_seq NOT IN (SELECT m.matching_seq AS matchingSeq
         								FROM matchings m
          					        INNER JOIN fields f ON m.field_seq = f.field_seq
                					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
@@ -208,7 +209,8 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND matching_date >= CURDATE()
-		AND NOT EXISTS (SELECT m.matching_seq AS matchingSeq
+		AND m.matching_status = '매칭성공'
+		AND m.matching_seq NOT IN (SELECT m.matching_seq AS matchingSeq
         								FROM matchings m
          					        INNER JOIN fields f ON m.field_seq = f.field_seq
                					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
@@ -232,7 +234,8 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND matching_date >= CURDATE()
-		AND NOT EXISTS (SELECT m.matching_seq AS matchingSeq
+		AND m.matching_status = '매칭성공'
+		AND m.matching NOT IN (SELECT m.matching_seq AS matchingSeq
         								FROM matchings m
          					        INNER JOIN fields f ON m.field_seq = f.field_seq
                					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
@@ -256,7 +259,8 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND matching_date >= CURDATE()
-		AND NOT EXISTS (SELECT m.matching_seq AS matchingSeq
+		AND m.matching_status = '매칭성공'
+		AND m.matching_seq NOT IN (SELECT m.matching_seq AS matchingSeq
         								FROM matchings m
          					        INNER JOIN fields f ON m.field_seq = f.field_seq
                					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
@@ -310,7 +314,8 @@
           AND ml.matching_seq = m.matching_seq
           AND fast_add_status = 1
           AND matching_date >= CURDATE()
-		  AND NOT EXISTS (SELECT m.matching_seq AS matchingSeq
+          AND m.matching_status = '매칭성공'
+		  AND m.matching_seq NOT IN (SELECT m.matching_seq AS matchingSeq
         								FROM matchings m
          					        INNER JOIN fields f ON m.field_seq = f.field_seq
                					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq

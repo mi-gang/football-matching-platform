@@ -148,7 +148,7 @@ public class FastMatchingRestController {
 		
 		
 		umiDTO.setUserId(userId);
-		
+		System.out.println("결제된 아이디는? : "+userId);
 		
 		
 		String result = "false";
