@@ -111,14 +111,19 @@ backBtn.addEventListener('click', () => {
   // 이전 5일 버튼 생성 및 이벤트 설정...
   backClickCount++;
 
-  plusOrMinusNumber = 5*(frontClickCount + backClickCount);
+  plusOrMinusNumber = 5*(frontClickCount - backClickCount);
 
   $('#matchingDateBtnsLi').empty();
 
   const backDates = [];
 
   const newStartDate = new Date(dates[0]); // 첫 번째 버튼의 날짜를 기준으로 -5일
-  newStartDate.setDate(newStartDate.getDate() - plusOrMinusNumber);
+  newStartDate.setDate(newStartDate.getDate() + plusOrMinusNumber);
+
+  const newStartDate1 = new Date(dates[0]);
+  newStartDate1.setDate(newStartDate1.getDate() + 13);
+  const newStartDate2 = new Date(dates[0]);
+
   for (let i = 0; i <= 4; i++) {
 
   const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
@@ -127,9 +132,11 @@ backBtn.addEventListener('click', () => {
 
 // 버튼 생성 및 이벤트 설정
 backDates.forEach((date, i) => {
-  $('#matchingDateBtnsLi').append(
+	if(newStartDate >= newStartDate2 && newStartDate <= newStartDate1){
+		$('#matchingDateBtnsLi').append(
 	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
   )
+	}
 });
 });
 
@@ -138,7 +145,7 @@ frontBtn.addEventListener('click', () => {
   // 이전 5일 버튼 생성 및 이벤트 설정...
   frontClickCount++;
 
-  plusOrMinusNumber = 5*(frontClickCount + backClickCount);
+  plusOrMinusNumber = 5*(frontClickCount - backClickCount);
 
   $('#matchingDateBtnsLi').empty();
 
@@ -146,18 +153,25 @@ frontBtn.addEventListener('click', () => {
 
   const newStartDate = new Date(dates[0]); // 첫 번째 버튼의 날짜를 기준으로 -5일
   newStartDate.setDate(newStartDate.getDate() + plusOrMinusNumber);
+
+  const newStartDate1 = new Date(dates[0]);
+  newStartDate1.setDate(newStartDate1.getDate() + 13);
+  const newStartDate2 = new Date(dates[0]);
+  console.log(newStartDate1 > newStartDate2)
+
   for (let i = 0; i <= 4; i++) {
 
   const date = new Date(newStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
   frontDates.push(date.toISOString().slice(0, 10));
 }
-
-// 버튼 생성 및 이벤트 설정
-frontDates.forEach((date, i) => {
-  $('#matchingDateBtnsLi').append(
-	"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
-  )
-});
+	// 버튼 생성 및 이벤트 설정
+	frontDates.forEach((date, i) => {
+		if(newStartDate >= newStartDate2 && newStartDate <= newStartDate1){
+			$('#matchingDateBtnsLi').append(
+			"<li><button type = 'button' id='matchingDateBtn' class = 'matchingDateBtn" + i + " btn m-2 p-3' onclick='change_btn(event)' value='" + `${date}` + "'>" + `${date.slice(-2)}` + "</button></li>"
+		)
+		}
+	});
 });
 	var checkNumber = 0;
 	var selectedDate = null;

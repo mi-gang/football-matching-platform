@@ -13,14 +13,18 @@ import com.kosta.project.repository.ManagerRepository;
 @SpringBootTest
 public class ManagerServiceTest_hoon {
 	@Autowired
-	FieldRepository fr;
-	@Autowired
 	ManagerService ms;
 	
-	@Test
+	//@Test
 	void findByManagerIdTest() {
 		String managerId = "m0000";
 		String password = "m00001";
 		System.out.println(ms.getLoginResult(managerId, password));
+	}
+	
+	@Test
+	void findByManager_ManagerIdTest() {
+		String managerId = "m0000";
+		System.out.println(ms.getFieldList(managerId));
 	}
 }

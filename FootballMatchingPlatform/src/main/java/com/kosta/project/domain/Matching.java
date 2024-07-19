@@ -1,5 +1,6 @@
 package com.kosta.project.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,15 +31,15 @@ public class Matching {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long matchingSeq; // Matching sequence (auto-increment)
+    private int matchingSeq; // Matching sequence (auto-increment)
 
     @Column(name = "matching_date")
-    private Date matchingDate; // Date of the match
+    private LocalDate matchingDate; // Date of the match
 
     @Column(name = "matching_time", nullable = false)
     private int matchingTime; // Time of the match (might need adjustment)
 
-    @Column(name = "fast_add_status", nullable = false)
+    @Column(name = "fast_add_status", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean fastAddStatus; // Whether it was a fast add booking
 
     @Column(name = "matching_status", nullable = false)

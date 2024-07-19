@@ -1,5 +1,6 @@
 package com.kosta.project.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -35,7 +36,7 @@ public class User {
     private String name; // User's real name
 
     @Column(name = "birthday", nullable = false)
-    private Date birthday; // User's date of birth
+    private LocalDate birthday; // User's date of birth
 
     @Column(name = "gender", length = 1, nullable = false)
     private String gender; // User's gender (e.g., M, F)
@@ -62,10 +63,10 @@ public class User {
     private Float percentile; // User skill percentile (optional)
 
     @Column(name = "last_login_date")
-    private Date lastLoginDate; // Date of last login (optional)
+    private LocalDate lastLoginDate; // Date of last login (optional)
 
     @Column(name = "join_date", nullable = false)
-    private Date joinDate; // User registration date
+    private LocalDate joinDate; // User registration date
 
     @Column(name = "user_score", nullable = false)
     private int userScore; // User's overall score
@@ -77,7 +78,7 @@ public class User {
     private int reportCount; // Number of times reported
 
     @Column(name = "suspended_time")
-    private Date suspendedTime; // Suspension date (optional)
+    private LocalDate suspendedTime; // Suspension date (optional)
 
     @Column(name = "user_status", length = 1, nullable = false)
     private String userStatus; // User status (e.g., active, suspended)

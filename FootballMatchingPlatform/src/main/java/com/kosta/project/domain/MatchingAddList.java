@@ -31,26 +31,26 @@ public class MatchingAddList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long matchingAddListSeq; // Matching addition list sequence (auto-increment)
+    private int matchingAddListSeq; // Matching addition list sequence (auto-increment)
 
     @ManyToOne
     @JoinColumn(name = "matching_seq", nullable = false)
     private Matching matching; // Matching this entry belongs to
 
-    @Column(name = "matching_success_status", nullable = false)
+    @Column(name = "matching_success_status", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean matchingSuccessStatus; // Whether the user was successfully added to the match
 
-    @Column(name = "cancel_status", nullable = false)
+    @Column(name = "cancel_status", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean cancelStatus; // Whether the addition was cancelled
 
-    @Column(name = "pay_status", nullable = false)
+    @Column(name = "pay_status", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean payStatus; // Whether the user paid for the participation
 
-    @Column(name = "review_status", nullable = false)
+    @Column(name = "review_status", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean reviewStatus; // Whether a review has been written
 
-    @Column(name = "team_status", nullable = false)
-    private int teamStatus; // Team status of the user (e.g., 1: Team A, 2: Team B)
+    @Column(name = "team_status", nullable = false, columnDefinition = "TINYINT(1)")
+    private boolean teamStatus;
 
     @Column(name = "team", nullable = false)
     private String team; // Team name (might need adjustment)

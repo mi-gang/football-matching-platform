@@ -1,5 +1,6 @@
 package com.kosta.project.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,10 +30,10 @@ import lombok.ToString;
 public class FieldSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long fieldScheduleSeq; // Field schedule sequence (auto-increment)
+    private int fieldScheduleSeq; // Field schedule sequence (auto-increment)
 
     @Column(name = "closed_date", nullable = false)
-    private Date closedDate; // Date when the field is closed
+    private LocalDate closedDate; // Date when the field is closed
 
     @Column(name = "closed_time", nullable = false)
     private int closedTime; // Specific time of closure (might need adjustment)

@@ -268,3 +268,12 @@ textarea{
     /* border-top: 0.1rem; */
     box-sizing: border-box;
 }
+
+tr button{
+	border: none;
+  	outline: none;
+  	background-color: inherit ;
+  	padding-inline: 0;
+  	padding-block: 0;
+  	line-height: normal;
+}

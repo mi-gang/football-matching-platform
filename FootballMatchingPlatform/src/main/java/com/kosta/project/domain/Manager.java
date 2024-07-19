@@ -1,5 +1,6 @@
 package com.kosta.project.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class Manager {
     private String phoneNumber;
 
     @Column(name = "last_login_date")
-    private Date lastLoginDate;
+    private LocalDate lastLoginDate;
 
     @Column(name = "email", nullable = false)
     private String email;
