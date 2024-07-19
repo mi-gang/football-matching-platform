@@ -28,6 +28,7 @@ public class UserDTO {
 	private int gameCount;
 	private int winCount;
 	private int userRank;
+	private float percentile;
 	private Date lastLoginDate;
 	private Date joinDate;
 	private int userScore;
