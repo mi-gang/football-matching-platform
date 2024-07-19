@@ -48,11 +48,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>인천 더피치 인하점 B구장</td>
-                                <td>인천광역시 미추홀구 소성로 6</td>
-                                <td>83건</td>
-                                <td></td>
+                            <tr th:each="field : ${fieldList}">
+                                <td th:text="${field.fieldName}">구장이름</td>
+                                <td th:text="${field.fieldAddress} + ' ' + ${field.fieldAddressDetail}">구장주소</td>
+                                <td th:if="${field.reservationCountOfMonth != null}" th:text="${field.reservationCountOfMonth} + '건'">전월예약수</td>
+                                <td th:if="${field.reservationCountOfMonth == null}" th:text="${'-'}">전월예약수</td>
+                                <td class="text-success" th:if="${field.fieldApprovalDate == null}">승인 대기중</td>
+                                <div th:if="${field.fieldStatus == 1}">
+                                	<td></td>
+                                </div>
                             </tr>
                             <tr>
                                 <td>신정 FC 우쩌구 구장</td>
