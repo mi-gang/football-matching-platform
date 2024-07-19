@@ -42,7 +42,7 @@
                     <div id="location" th:text="${getMatchingAlready.fieldAddress} + ' ' + ${getMatchingAlready.fieldAddressDetail} + ' ' + ${getMatchingAlready.fieldName}">서울 강서 신정FC 우쩌구 구장</div>
                 </div>
                 <div id="info-schedule" th:if="${getMatchingAlready == null}">
-                    <h1>다가오는 경기 일정이 없습니다.</h1>
+                    <h1 class = "h1textClass">다가오는 경기 일정이 없습니다.</h1>
                 </div>
             </div>
             <div class="info-container">
@@ -72,8 +72,8 @@
                         <div>
                             <div>3</div><img src="/mobile/img/down.svg">
                         </div>
-                        <div th:text="${getTopTwoUser.nickname}">뿡칫치</div>
-                        <div th:text="${getTopTwoUser.userScore} + '점'"></div>
+                        <div th:text="${getTopThreeUser.nickname}">뿡칫치</div>
+                        <div th:text="${getTopThreeUser.userScore} + '점'"></div>
                     </div>
                 </div>
                 <div id="field-info-container">
