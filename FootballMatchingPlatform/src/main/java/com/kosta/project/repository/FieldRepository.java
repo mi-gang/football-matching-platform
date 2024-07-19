@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 import com.kosta.project.domain.Field;
 
-public interface FieldsRepository extends JpaRepository<Field, Long>{
-    List<Field> findByManager(String managerId);
+public interface FieldRepository extends JpaRepository<Field, Long>{
+    List<Field> findByManager_ManagerId(String managerId);
 }

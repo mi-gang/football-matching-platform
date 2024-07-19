@@ -216,6 +216,8 @@
 				</div>
 			</div>
 			<div class="toast" id="toast">구를 선택해주세요!</div>
+
+			
 		</div>
 		<!-- 하단 메뉴바 -->
 		<nav></nav>
@@ -399,8 +401,9 @@
 			const url = new URL(window.location.href);
 			const matchingDate = url.searchParams.get('matchingDate');
 			const matchingTime = url.searchParams.get('matchingTime');
+			const addType = url.searchParams.get('addType');
 
-			fetch(`/matchinglistByRegion?matchingDate=${matchingDate}&matchingTime=${matchingTime}&region=${region}`)
+			fetch(`/matchinglistByRegion?userId=${userId}&addType=${addType}&matchingDate=${matchingDate}&matchingTime=${matchingTime}&region=${region}`)
 				.then(response => response.json())
 				.then(data => {
 					var matchingListByRegion = data.result;
@@ -541,13 +544,13 @@
 						`
 					)
 				}
-				$("#myApplyListSuccess li[value=8]").text($("#myApplyListSuccess li[value=8]").text() + " 08:00~10:00");
-				$("#myApplyListSuccess li[value=10]").text($("#myApplyListSuccess li[value=10]").text() + " 10:00~12:00");
-				$("#myApplyListSuccess li[value=12]").text($("#myApplyListSuccess li[value=12]").text() + " 12:00~14:00");
-				$("#myApplyListSuccess li[value=14]").text($("#myApplyListSuccess li[value=14]").text() + " 14:00~16:00");
-				$("#myApplyListSuccess li[value=16]").text($("#myApplyListSuccess li[value=16]").text() + " 16:00~18:00");
-				$("#myApplyListSuccess li[value=18]").text($("#myApplyListSuccess li[value=18]").text() + " 18:00~20:00");
-				$("#myApplyListSuccess li[value=20]").text($("#myApplyListSuccess li[value=20]").text() + " 20:00~22:00");
+				$("#myApplyListSuccess li[value=8]").append(" 08:00~10:00");
+				$("#myApplyListSuccess li[value=10]").append(" 10:00~12:00");
+				$("#myApplyListSuccess li[value=12]").append(" 12:00~14:00");
+				$("#myApplyListSuccess li[value=14]").append(" 14:00~16:00");
+				$("#myApplyListSuccess li[value=16]").append(" 16:00~18:00");
+				$("#myApplyListSuccess li[value=18]").append(" 18:00~20:00");
+				$("#myApplyListSuccess li[value=20]").append(" 20:00~22:00");
 			})
 		});
 	</script>

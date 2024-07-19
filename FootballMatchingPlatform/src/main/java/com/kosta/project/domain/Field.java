@@ -21,7 +21,7 @@ import lombok.ToString;
 
 @Entity
 @Getter
-@ToString
+@ToString(exclude="manager")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

@@ -16,13 +16,12 @@ import lombok.ToString;
 
 @Entity
 @Getter
-@ToString
+@ToString(exclude="fields")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Table(name = "managers")
 public class Manager {
-
     @Id
     @Column(name = "manager_id", nullable = false)
     private String managerId;
