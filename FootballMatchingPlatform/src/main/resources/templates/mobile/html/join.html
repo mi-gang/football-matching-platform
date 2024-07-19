@@ -21,8 +21,8 @@
         <input id="name">
         <div class="text-container">
             <div class="text" id="text-id">아이디</div>
-            <div class="text-invalid" id="invalid-id-success">사용할 가능한 아이디입니다.</div>
-            <div class="text-invalid" id="invalid-id-fail">사용할 수 없는 아이디입니다.</div>
+            <div class="text-invalid" id="invalid-id-success">사용 가능한 아이디입니다.</div>
+            <div class="text-invalid" id="invalid-id-fail">아이디는 영문과 숫자만 가능합니다.</div>
             <div class="text-invalid" id="invalid-id-doub">중복된 아이디입니다.</div>
         </div>
         <input id="id">
@@ -53,34 +53,50 @@
             <button class="gender" id="f" value="0">여</button>
         </div>
         <div class="text" id="text-phone">전화번호</div>
-        <input type="text" class="form-control" oninput="hypenTel	(this)" maxlength="13">
+        <input id="phone" type="text" class="form-control" oninput="hypenTel(this)" maxlength="13">
         <div class="text-container">
             <div class="text" id="text-email">이메일</div>
             <div class="text-invalid" id="invalid-email">사용할 수 없는 이메일입니다.</div>
         </div>
         <input id="email">
         <div class="text" id="text-location">플레이 지역</div>
-        <input id="location" placeholder="지역 선택">
+        <input type="button" id="location" placeholder="지역 선택">
         <div id="modal-location">
             <div id="top-location">
                 <div id="text-modal-top">플레이 지역</div>
                 <img id="close" src="mobile/img/Close.svg">
             </div>
             <div id="location-list">
-                <div>
-                    <div class="city">서울</div>
-                    <hr>
-                </div>
-                <div>
-                    <div class="city">경기</div>
-                    <hr>
-                </div>
-                <div>
-                    <div class="city">인천</div>
-                    <hr>
-                </div>
+               	<div class="location-line">
+               		<input type="radio" id="서울" value="서울" name="city"><label for="서울">서울</label>
+              		<input type="radio" id="경기" value="경기" name="city"><label for="경기">경기</label>
+              		<input type="radio" id="인천" value="인천" name="city"><label for="인천">인천</label>
+               		<input type="radio" id="부산" value="부산" name="city"><label for="부산">부산</label>
+               		<input type="radio" id="대전" value="대전" name="city"><label for="대전">대전</label>
+               	</div>
+               	<div class="location-line">
+               		<input type="radio" id="대구" value="대구" name="city"><label for="대구">대구</label>
+               		<input type="radio" id="울산" value="울산" name="city"><label for="울산">울산</label>
+               		<input type="radio" id="세종" value="세종" name="city"><label for="세종">세종</label>
+               		<input type="radio" id="광주" value="광주" name="city"><label for="광주">광주</label>
+               		<input type="radio" id="강원" value="강원" name="city"><label for="강원">강원</label>
+               	</div>
+               	<div class="location-line">
+               		<input type="radio" id="충북" value="충북" name="city"><label for="충북">충북</label>
+               		<input type="radio" id="충남" value="충남" name="city"><label for="충남">충남</label>
+               		<input type="radio" id="경북" value="경북" name="city"><label for="경북">경북</label>
+               		<input type="radio" id="경남" value="경남" name="city"><label for="경남">경남</label>
+               		<input type="radio" id="제주" value="제주" name="city"><label for="제주">제주</label>
+               	</div>
+            </div>
+            <hr>
+            <div id="gu-list">
+            </div>
+            <div id="submit-container">
+             	<div id="submit">완료</div>
             </div>
         </div>
+        	
          <!--onclick="return check()"-->
         <button id="join" onclick="check">회원가입</button>
         <!-- 하단 메뉴바 -->
@@ -98,8 +114,8 @@
         // 유효성 검사
         
         const getNameCheck = RegExp(/^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/);
-        const getIdCheck = RegExp(/^[a-zA-Z0-9]{6,14}$/);
-        const getPwCheck = RegExp(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/);
+        const getIdCheck = RegExp(/^[a-zA-Z0-9]{0,}$/);
+        const getPwCheck = RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/);
         const specialCheck = RegExp(/[`~!@#$%^&*|\\\'\";:\/?]/);
                 
         //이름 유효성 검사
@@ -109,10 +125,6 @@
 					$("#text-name").css("margin-right","11.15rem");
 					$("#invalid-name-check-fail").css("display", "block");
 					}
-				else{
-					$("#text-name").css("margin-right","20.5rem");
-					$("#invalid-name-check-fail").css("display", "none");
-					}
 				}
 			else {
 				$("#text-name").css("margin-right","20.5rem");
@@ -121,35 +133,63 @@
 		})
 		//아이디 유효성 검사
 		$("#id").on("change",function(){
-        	if($("#id").val() !=""){
-				if(!getIdCheck.test($("#id").val())){
-					$("#text-id").css("margin-right","7.65rem");
-					$("#invalid-id").css("display", "block");
-					}
-				else{
-					$("#text-id").css("margin-right","19rem");
-					$("#invalid-id").css("display", "none");
-					}
+			const id = $("#id").val();
+        	if(id !=""){
+				if(!getIdCheck.test(id)){
+					$("#text-id").css("margin-right","5rem");
+					$("#invalid-id-success").css("display","none");
+					$("#invalid-id-fail").css("display", "block");
+					$("#invalid-id-doub").css("display", "none");
 				}
+				else{
+					$.ajax({
+						type: 'post',
+						url: "/user/getUserId",
+						data: {"id":id},
+						dataType: 'text',
+						success: function(response){					
+							if(id != ""){
+								console.log(response);
+								if(response === "true"){
+									$("#text-id").css("margin-right","8.75rem");
+									$("#invalid-id-success").css("display","block");
+									$("#invalid-id-fail").css("display", "none");
+									$("#invalid-id-doub").css("display", "none");
+								}
+								else{
+									$("#text-id").css("margin-right","10.75rem");
+									$("#invalid-id-success").css("display","none");
+									$("#invalid-id-fail").css("display", "none");
+									$("#invalid-id-doub").css("display", "block");
+								}
+							}
+						},
+						error: function(error){
+							alert("오류" + error);
+						} 
+					})
+				}
+			}	
 			else {
 				$("#text-id").css("margin-right","19rem");
-				$("#invalid-id").css("display","none");
+				$("#invalid-id-success").css("display","none");
+				$("#invalid-id-fail").css("display", "none");
+				$("#invalid-id-doub").css("display", "none");
 			}	
 		})
 		//닉네임 중복 검사
 		$("#nickname").on("change",function(){
 			const nickname = $("#nickname").val();
-			console.log(nickname);
 			$.ajax({
 				type: 'post',
 				url: "/user/getUserNickname",
 				data: {"nickname":nickname},
 				dataType: 'text',
 				success: function(response){					
-				if($("#nickname").val() != ""){
+				if(nickname != ""){
 					console.log(response);
-					if(response == true){
-						$("#text-nickname").css("margin-right","7rem");
+					if(response === "true"){
+						$("#text-nickname").css("margin-right","8.5rem");
 						$("#invalid-nickname").css("display", "block");
 						$("#invalid-nickname-doub").css("display", "none");
 					}
@@ -175,6 +215,24 @@
    			.replace(/[^0-9]/g, '')
    			.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 		}
+		//비밀번호 가능여부 검사
+		$("#pw").on("change", function(){
+			const pw = $("#pw").val();
+			if(pw != ""){
+				if(!getPwCheck.test(pw)){
+					$("#text-pw").css("margin-right","3rem");
+					$("#invalid-pw").css("display", "block");
+				}
+				else{
+				$("#text-pw").css("margin-right","18rem");
+				$("#invalid-pw").css("display", "none");
+				}
+			}
+			else{
+				$("#text-pw").css("margin-right","18rem");
+				$("#invalid-pw").css("display", "none");
+			}
+		})
 		//비밀번호 일치여부 검사
         $("#pw-check").on("keyup", function () {
             if ($("#pw").val() != "") {
@@ -220,9 +278,94 @@
         $("#close").on("click", function () {
             $("#modal-location").css("display", "none");
         })
+        //경기 지역 선택하기
+         $("input[name=city]").on("click", function () {
+            if ($(this).val() == "서울") {
+                $("#gu-list").html(
+                    `<div class="gu-line">
+                        <input type="radio" id="강남구" value="강남구" name="gu"><label for="강남구">강남구</label>
+                        <input type="radio" id="강동구" value="강동구" name="gu"><label for="강동구">강동구</label>
+                        <input type="radio" id="강북구" value="강북구" name="gu"><label for="강북구">강북구</label>
+                        <input type="radio" id="강서구" value="강서구" name="gu"><label for="강서구">강서구</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="radio" id="관악구" value="관악구" name="gu"><label for="관악구">관악구</label>
+                        <input type="radio" id="광진구" value="광진구" name="gu"><label for="광진구">광진구</label>
+                        <input type="radio" id="구로구" value="구로구" name="gu"><label for="구로구">구로구</label>
+                        <input type="radio" id="금천구" value="금천구" name="gu"><label for="금천구">금천구</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="radio" id="노원구" value="노원구" name="gu"><label for="노원구">노원구</label>
+                        <input type="radio" id="도봉구" value="도봉구" name="gu"><label for="도봉구">도봉구</label>
+                        <input type="radio" id="동대문구" value="동대문구" name="gu"><label for="동대문구">동대문구</label>
+                        <input type="radio" id="동작구" value="동작구" name="gu"><label for="동작구">동작구</label>
+                    </div>`
+                )
+            }
+            else if ($(this).val() == "인천") {
+                $("#gu-list").html(
+                    `<div class="gu-line">
+                        <input type="radio" id="계양구" value="계양구" name="gu"><label for="계양구">계양구</label>
+                        <input type="radio" id="남구" value="남구" name="gu"><label for="남구">남구</label>
+                        <input type="radio" id="남동구" value="남동구" name="gu"><label for="남동구">남동구</label>
+                        <input type="radio" id="동구" value="동구" name="gu"><label for="동구">동구</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="radio" id="부평구" value="부평구" name="gu"><label for="부평구">부평구</label>
+                        <input type="radio" id="서구" value="서구" name="gu"><label for="서구">서구</label>
+                        <input type="radio" id="연수구" value="연수구" name="gu"><label for="연수구">연수구</label>
+                        <input type="radio" id="중구" value="중구" name="gu"><label for="중구">중구</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="radio" id="강화군" value="강화군" name="gu"><label for="강화군">강화군</label>
+                        <input type="radio" id="미추홀구" value="미추홀구" name="gu"><label for="미추홀구">미추홀구</label>
+                    </div>`
+                )
+            }
+            else if ($(this).val() == "경기") {
+                $("#gu-list").html(
+                    `<div class="gu-line">
+                        <input type="radio" id="고양시" value="고양시" name="gu"><label for="고양시">고양시</label>
+                        <input type="radio" id="과천시" value="과천시" name="gu"><label for="과천시">과천시</label>
+                        <input type="radio" id="광명시" value="광명시" name="gu"><label for="광명시">광명시</label>
+                        <input type="radio" id="광주시" value="광주시" name="gu"><label for="광주시">광주시</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="radio" id="구리시" value="구리시" name="gu"><label for="구리시">구리시</label>
+                        <input type="radio" id="군포시" value="군포시" name="gu"><label for="군포시">군포시</label>
+                        <input type="radio" id="김포시" value="김포시" name="gu"><label for="김포시">김포시</label>
+                        <input type="radio" id="남양주시" value="남양주시" name="gu"><label for="남양주시">남양주시</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="radio" id="동두천시" value="동두천시" name="gu"><label for="동두천시">동두천시</label>
+                        <input type="radio" id="부천시" value="부천시" name="gu"><label for="부천시">부천시</label>
+                        <input type="radio" id="성남시" value="성남시" name="gu"><label for="성남시">성남시</label>
+                        <input type="radio" id="수원시" value="수원시" name="gu"><label for="수원시">수원시</label>
+                    </div>`
+                )
+            }
+            else {
+                $("#gu-list").html(
+                    ``
+                )
+            }
+        })
+        
 		// 경기지역 선택 시 창 닫기
-        $(".city").on("click", function () {
-            $("#location").val($(this).text());
+        $("#submit").on("click", function () {
+        	const city = $("input[name=city]:checked").val();
+        	const gu = $("input[name=gu]:checked").val();
+        	const address = city+" "+gu;
+        	if (city == null) {
+                alert("지역을 선택해주세요!");
+                return;
+            }
+
+            if (gu == undefined) {
+                alert("세부지역을 선택해주세요!");
+                return;
+            }
+            $("#location").val(address);
             $("#modal-location").css("display", "none");
         })
         

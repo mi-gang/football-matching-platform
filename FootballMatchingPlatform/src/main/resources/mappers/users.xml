@@ -17,15 +17,12 @@
 	
 	<!-- 유저 로그인 -->
   <select id="selectUserLogin" parameterType="java.lang.String" resultType="com.kosta.project.dto.UserDTO">
-    SELECT
-      user_id as userId,
-      address,
-      user_tier as userTier,
-      user_status
+    SELECT user_id as userId, address, user_tier as userTier, user_status
     FROM users
-    WHERE
-      user_id = #{userId}
-      AND password = #{password}
+    WHERE (suspended_time IS NULL OR NOW()-suspended_time >= 0)
+	  AND user_id = #{userId}
+	 AND PASSWORD = #{password}
+    AND user_status = 'U'
   </select>
 
 

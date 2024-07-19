@@ -1,7 +1,18 @@
 
 // 로그아웃
-$("header").on("click", "#logout", function () {
-     alert('로그아웃')
+$("header").on("click", "#submit", function () {
+	$.ajax({
+    	type:'get',
+    	url:'/user/logout',
+		success:function(response){
+			alert('로그아웃 완료');
+			location.href = response;
+		},
+		error: function(){
+			alert('오류');
+		}		
+    });
+
 });
 
 // 정보 수정 - 비밀번호 확인 페이지 이동
