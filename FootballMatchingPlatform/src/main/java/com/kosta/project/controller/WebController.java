@@ -68,4 +68,15 @@ public class WebController {
 	String addfield() {
 		return "addField";
 	}
+	
+	@GetMapping("/fieldApplyList")
+	public String getFieldList() {
+		return "fieldApplyList";
+	}
+	
+	@GetMapping("/fieldInfo/{fieldSeq}")
+	public String getFieldInfo(@PathVariable Long fieldSeq) {
+		return "fieldInfo";
+	}
+	
 }
