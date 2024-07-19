@@ -38,7 +38,7 @@
                 </div>
                 <div id="info-schedule" th:if="${getMatchingAlready != null}">
                     <div id="matching-state" th:text="${getMatchingAlready.matchingStatus}"></div>
-                    <div id="time" th:text="${#dates.format(getMatchingAlready.matchingDate, 'yyyy년MM월dd일')} + ' ' + ${getMatchingAlready.matchingTime} + ':00 ~ ' + ${getMatchingAlready.matchingTime + 2} + ':00'">2024년 7월 3일 18:00 - 20:00</div>
+                    <div id="time" th:text="${#dates.format(getMatchingAlready.matchingDate, 'yyyy년 MM월 dd일')} + ' ' + ${getMatchingAlready.matchingTime} + ':00 ~ ' + ${getMatchingAlready.matchingTime + 2} + ':00'">2024년 7월 3일 18:00 - 20:00</div>
                     <div id="location" th:text="${getMatchingAlready.fieldAddress} + ' ' + ${getMatchingAlready.fieldAddressDetail} + ' ' + ${getMatchingAlready.fieldName}">서울 강서 신정FC 우쩌구 구장</div>
                 </div>
                 <div id="info-schedule" th:if="${getMatchingAlready == null}">
