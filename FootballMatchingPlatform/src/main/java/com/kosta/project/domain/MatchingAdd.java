@@ -1,5 +1,6 @@
 package com.kosta.project.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,10 +31,10 @@ public class MatchingAdd {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long matchingAddSeq; // Matching addition sequence (auto-increment)
+    private int matchingAddSeq; // Matching addition sequence (auto-increment)
 
     @Column(name = "matching_add_date", nullable = false)
-    private Date matchingAddDate; // Date the user applied to join a match
+    private LocalDate matchingAddDate; // Date the user applied to join a match
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "user_id")

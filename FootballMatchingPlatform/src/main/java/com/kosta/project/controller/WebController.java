@@ -1,14 +1,21 @@
 package com.kosta.project.controller;
 
 import com.kosta.project.dto.Manager.ManagerDTO;
+
+import java.util.List;
+
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kosta.project.domain.Field;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
 import com.kosta.project.dto.TeamDTO;
@@ -36,7 +43,11 @@ public class WebController {
 	}
 	
 	@GetMapping("/main")
-	String mainPage() {
+	String mainPage(Model model, HttpServletRequest request) {
+		String managerId = (String) request.getSession().getAttribute("managerId");
+		List<Field> fieldList = ms.getFieldList(managerId);
+		model.addAttribute("fieldList", fieldList);
+		
 		return "mainManager";
 	}
 }

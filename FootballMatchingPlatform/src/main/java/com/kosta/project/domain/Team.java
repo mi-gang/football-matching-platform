@@ -25,7 +25,7 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long teamSeq; // Team sequence (auto-increment)
+    private int teamSeq; // Team sequence (auto-increment)
 
     @Column(name = "team_name", nullable = false)
     private String teamName; // Team name
@@ -60,22 +60,22 @@ public class Team {
     @Column(name = "team_rank")
     private Integer teamRank; // Team ranking (optional)
 
-    @Column(name = "possible_a", nullable = false)
+    @Column(name = "possible_a", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean possibleA; // Availability on option A (meaning unclear, needs clarification)
 
-    @Column(name = "possible_b", nullable = false)
+    @Column(name = "possible_b", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean possibleB; // Availability on option B (meaning unclear, needs clarification)
 
-    @Column(name = "possible_c", nullable = false)
+    @Column(name = "possible_c", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean possibleC; // Availability on option C (meaning unclear, needs clarification)
 
-    @Column(name = "possible_d", nullable = false)
+    @Column(name = "possible_d", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean possibleD; // Availability on option D (meaning unclear, needs clarification)
 
-    @Column(name = "recruitment", nullable = false)
+    @Column(name = "recruitment", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean recruitment; // Whether the team is recruiting new players
 
-    @Column(name = "team_dismantle_status", nullable = false)
+    @Column(name = "team_dismantle_status", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean teamDisbandStatus; // Whether the team is disbanded
 
     @ManyToOne

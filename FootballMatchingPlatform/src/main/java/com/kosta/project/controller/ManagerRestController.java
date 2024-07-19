@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kosta.project.domain.Field;
 import com.kosta.project.dto.AddMatchingDataDTO;
 import com.kosta.project.dto.FieldsDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -41,5 +43,11 @@ public class ManagerRestController {
 		}
 		
 		return Map.of("result", result);
+	}
+	
+	@PutMapping("/fieldStatus/{fieldSeq}")
+	Map<String, String> updateFieldStatus(@PathVariable Long fieldSeq){
+		ms.updateFieldStatus(fieldSeq);
+		return Map.of("result", "성공");
 	}
 }

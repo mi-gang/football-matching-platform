@@ -1,6 +1,8 @@
 package com.kosta.project.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,15 +14,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Getter
+@Setter
 @ToString(exclude="manager")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,7 +34,7 @@ import lombok.ToString;
 public class Field {
 	 	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long fieldSeq; // 필드 시퀀스 (자동 증가)
+	    private int fieldSeq; // 필드 시퀀스 (자동 증가)
 
 	    @Column(name = "field_name", nullable = false)
 	    private String fieldName; // 필드 이름
@@ -53,7 +58,7 @@ public class Field {
 	    private int fieldStatus; // 필드 상태 (0: 승인 대기, 1: 승인됨, 2: 거절됨)
 
 	    @Column(name = "field_approval_date")
-	    private Date fieldApprovalDate; // 승인 날짜
+	    private LocalDate fieldApprovalDate; // 승인 날짜
 
 	    @Column(name = "shower_room", nullable = false, columnDefinition = "TINYINT(1)")
 	    private boolean showerRoom; // 샤워룸 여부
@@ -72,7 +77,10 @@ public class Field {
 
 	    @Column(name = "reservation_count_of_month")
 	    private Integer reservationCountOfMonth; // 월 예약 건수
-
+	    
+	    @OneToMany(mappedBy = "field")
+	    private List<FieldImage> fieldImages;
+	    
 	    @ManyToOne
 	    @JoinColumn(name = "manager_id", nullable = false)
 	    private Manager manager; // 관리자 (다대일 관계)

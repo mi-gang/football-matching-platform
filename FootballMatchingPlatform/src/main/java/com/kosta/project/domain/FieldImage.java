@@ -29,12 +29,12 @@ import lombok.ToString;
 public class FieldImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long fieldImgSeq;
+    private int fieldImgSeq;
 
     @Column(name = "field_img", nullable = false)
     private String fieldImg;
 
     @ManyToOne
     @JoinColumn(name = "field_seq", nullable = false)
-    private Field fields;
+    private Field field;
 }

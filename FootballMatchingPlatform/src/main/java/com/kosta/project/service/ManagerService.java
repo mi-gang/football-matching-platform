@@ -5,10 +5,12 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.kosta.project.domain.Field;
 import com.kosta.project.domain.Manager;
 import com.kosta.project.dto.InquiryDTO;
 import com.kosta.project.dto.TeamDTO;
 import com.kosta.project.dto.UserDTO;
+import com.kosta.project.repository.FieldRepository;
 import com.kosta.project.repository.InquiryMapper;
 import com.kosta.project.repository.ManagerRepository;
 import com.kosta.project.repository.TeamMapper;
@@ -19,15 +21,28 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class ManagerService {
 	private final ManagerRepository mr;
+	private final FieldRepository fr;
 	
 	public boolean getLoginResult(String managerId, String password) {
 		boolean result = false;
-		System.out.println(mr.findByManagerIdAndPassword(managerId, password));
+
 		if(mr.findByManagerIdAndPassword(managerId, password) != null) {
 			result = true;
 		}
 		
 		return result;
+	}
+	
+	public List<Field> getFieldList(String managerId) {
+		List<Field> fieldList = null;
+		fieldList = fr.findByManager_ManagerId(managerId);
+		return fieldList;
+	}
+	
+	public void updateFieldStatus(Long fieldSeq) {
+		Field field = fr.findById(fieldSeq).get();
+		field.setFieldStatus(1);
+		fr.save(field);
 	}
 	
 //	public String setUserLastLoginDateByUserId(String userId) {
