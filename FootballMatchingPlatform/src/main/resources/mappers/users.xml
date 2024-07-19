@@ -112,7 +112,7 @@
 	
   <!-- 개인순위 top1 불러오기 -->
   <select id="selectTopOneUser" resultType="com.kosta.project.dto.UserDTO">
-    SELECT users.user_rank as userRank, users.nickname, users.user_score as userScore, 
+    SELECT users.user_rank as userRank, users.user_tier as userTier, users.nickname, users.user_score as userScore, 
     CASE WHEN teams.team_name IS NULL THEN '' ELSE teams.team_name END AS teamName
     FROM users
 	 LEFT JOIN team_members
