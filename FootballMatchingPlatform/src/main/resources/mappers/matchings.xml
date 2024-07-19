@@ -183,7 +183,10 @@
 		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
-		AND matching_date >= CURDATE()
+		AND cancel_status = 0
+		AND pay_status = 1
+		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
+	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
 		AND m.matching_seq NOT IN (SELECT m.matching_seq AS matchingSeq
         								FROM matchings m
@@ -192,7 +195,13 @@
             					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
        								WHERE ma.user_id = #{userId}
        							   AND m.matching_status = '매칭성공'
-         							AND m.fast_add_status = 1)
+         							AND m.fast_add_status = 1 GROUP BY m.matching_seq)
+      AND m.matching_seq NOT IN (SELECT matching_seq
+										FROM matching_add_lists 
+										WHERE cancel_status = 0
+										AND pay_status = 1
+										GROUP BY matching_seq
+										HAVING COUNT(matching_add_list_seq) >= 10)
 		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
 		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
 		HAVING 10 > COUNT(matching_add_list_seq)
@@ -208,7 +217,10 @@
 		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
-		AND matching_date >= CURDATE()
+		AND cancel_status = 0
+		AND pay_status = 1
+		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
+	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
 		AND m.matching_seq NOT IN (SELECT m.matching_seq AS matchingSeq
         								FROM matchings m
@@ -217,7 +229,7 @@
             					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
        								WHERE ma.user_id = #{userId}
        							   AND m.matching_status = '매칭성공'
-         							AND m.fast_add_status = 1)
+         							AND m.fast_add_status = 1
 		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
 		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
 		HAVING 10 > COUNT(matching_add_list_seq)
@@ -233,7 +245,10 @@
 		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
-		AND matching_date >= CURDATE()
+		AND cancel_status = 0
+		AND pay_status = 1
+		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
+	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
 		AND m.matching NOT IN (SELECT m.matching_seq AS matchingSeq
         								FROM matchings m
@@ -258,7 +273,10 @@
 		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
-		AND matching_date >= CURDATE()
+		AND cancel_status = 0
+		AND pay_status = 1
+		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
+	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
 		AND m.matching_seq NOT IN (SELECT m.matching_seq AS matchingSeq
         								FROM matchings m
@@ -267,7 +285,13 @@
             					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
        								WHERE ma.user_id = #{userId}
        							   AND m.matching_status = '매칭성공'
-         							AND m.fast_add_status = 1)
+         							AND m.fast_add_status = 1 GROUP BY m.matching_seq)
+      AND m.matching_seq NOT IN (SELECT matching_seq
+										FROM matching_add_lists 
+										WHERE cancel_status = 0
+										AND pay_status = 1
+										GROUP BY matching_seq
+										HAVING COUNT(matching_add_list_seq) >= 10)
 		AND matching_date = #{matchingDate}
 		AND field_address REGEXP #{fieldAddress}
 		AND matching_tier = #{matchingTier}
@@ -313,7 +337,10 @@
           AND f.field_seq = fi.field_seq
           AND ml.matching_seq = m.matching_seq
           AND fast_add_status = 1
-          AND matching_date >= CURDATE()
+		AND cancel_status = 0
+		AND pay_status = 1
+          AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
+	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
           AND m.matching_status = '매칭성공'
 		  AND m.matching_seq NOT IN (SELECT m.matching_seq AS matchingSeq
         								FROM matchings m
@@ -322,7 +349,13 @@
             					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
        								WHERE ma.user_id = #{userId}
        							   AND m.matching_status = '매칭성공'
-         							AND m.fast_add_status = 1)
+         							AND m.fast_add_status = 1 GROUP BY m.matching_seq)
+      AND m.matching_seq NOT IN (SELECT matching_seq
+										FROM matching_add_lists 
+										WHERE cancel_status = 0
+										AND pay_status = 1
+										GROUP BY matching_seq
+										HAVING COUNT(matching_add_list_seq) >= 10)
           AND matching_date = #{matchingDate}
           AND field_address REGEXP #{fieldAddress}
           AND matching_tier = #{matchingTier}
@@ -624,7 +657,8 @@
                  INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
         WHERE ma.user_id = #{userId}
           AND (m.matching_status = '경기확정' OR m.matching_status = '매칭성공')
-          AND m.matching_date - curdate() >= 0
+          AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time + 2 HOUR, '%Y-%m-%d %H') 
+	 	    > DATE_FORMAT(NOW(), '%Y-%m-%d %H')
           AND m.fast_add_status = 0
         ORDER BY m.matching_date DESC,
                  m.matching_time DESC
