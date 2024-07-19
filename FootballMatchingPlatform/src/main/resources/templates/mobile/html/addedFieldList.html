@@ -83,6 +83,12 @@
                     <div id="submit">완료</div>
                 </div>
             </div>
+            
+    <div class="toast" id="toast">지역을 선택해주세요</div>
+	<div class="toast1" id="toast1">구를 선택해주세요</div>
+            
+            
+            
         </div>
 
     </div>
@@ -153,7 +159,7 @@
             }
             
         }).fail(function(error){
-            alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
+            //alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
         })
         
 		
@@ -240,7 +246,7 @@
             }
             
         }).fail(function(error){
-            alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
+            //alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
         })
         
         
@@ -340,12 +346,25 @@
             });
 
             if (location == null) {
-                alert("지역을 선택해주세요!");
+                
+                
+                toast.classList.add('show');
+				setTimeout(function(){
+					toast.classList.remove('show');
+				}, 1000);
+                
                 return;
             }
 
             if (gu_arr.length == 0) {
-                alert("구를 선택해주세요!");
+                //alert("구를 선택해주세요!");
+                
+                toast1.classList.add('show1');
+				setTimeout(function(){
+					toast1.classList.remove('show1');
+				}, 1000);
+                
+                
                 return;
             }
 
