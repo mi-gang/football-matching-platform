@@ -13,7 +13,13 @@
 		SELECT suspended_time as suspendedTime FROM users
 		WHERE user_id = #{userId}
 	</select>
-	
+
+    <!-- 시큐리티용 로그인 -->
+    <select id="findByUserId" parameterType="java.lang.String" resultType="com.kosta.project.dto.UserDTO">
+        SELECT user_id, password
+        FROM users
+        WHERE user_id = #{userId}
+    </select>
 	
 	<!-- 유저 로그인 -->
   <select id="selectUserLogin" parameterType="java.lang.String" resultType="com.kosta.project.dto.UserDTO">
