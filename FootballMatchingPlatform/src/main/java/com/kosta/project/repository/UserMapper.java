@@ -72,7 +72,7 @@ public interface UserMapper {
 	void updateUserStatusByUserId(UserDTO userDTO);
 	
 	// 내 정보 불러오기
-	UserDTO selectMyInfoByUserId(String userId, String password);
+	UserDTO selectMyInfoByUserId(String userId);
 	
 	// 내 등급 불러오기
 	UserDTO selectMyTierAndScoreByUserId(String userId);

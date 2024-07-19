@@ -26,6 +26,7 @@
   </select>
 
 
+  
 	<!-- 유저 구글 로그인 -->
   <select id="selectUserSnsLogin" parameterType="java.lang.String" resultType="com.kosta.project.dto.UserDTO">
     SELECT
@@ -182,8 +183,7 @@
   <select id="selectMyInfoByUserId" parameterType="java.lang.String" resultType="com.kosta.project.dto.UserDTO">
     select NAME, user_id as userId, nickname, birthday, gender, email, phone_number as phoneNumber
 	FROM users
-	WHERE user_id = #{userId}
-	AND PASSWORD = #{password};
+	WHERE user_id = #{userId};
   </select>	
 	
 	

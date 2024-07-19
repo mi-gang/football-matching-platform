@@ -108,8 +108,8 @@ public class UserService {
 
 
 	// 내 정보 불러오기
-	public UserDTO getMyInfoByUserId(String userId, String password) {
-		return um.selectMyInfoByUserId(userId, password);
+	public UserDTO getMyInfoByUserId(String userId) {
+		return um.selectMyInfoByUserId(userId);
 	}
 
 	// 아이디, 이메일 일치하는 비밀번호 불러오기

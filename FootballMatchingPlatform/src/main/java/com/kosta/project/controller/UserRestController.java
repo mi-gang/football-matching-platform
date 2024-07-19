@@ -1,6 +1,7 @@
 package com.kosta.project.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.kosta.project.dto.InquiryDTO;
 import com.kosta.project.dto.TeamDTO;
@@ -96,22 +97,44 @@ public class UserRestController {
 		return Map.of("result", us.getIdByNameAndEmail(dto.getName(), dto.getEmail()));
 	}
 	
+	// 내 정보 불러오기
+		@GetMapping("/getMyInfo")
+		public Map<String, UserDTO> getMyInfoByUserId(@SessionAttribute(name ="loginUser", required = false) UserDTO user) {
+			if(user == null) {
+				return Map.of("result",null);
+			}
+			else
+			return Map.of("result", us.getMyInfoByUserId(user.getUserId()));
+		}
+	
 	// 내 팀 정보 불러오기(마이페이지)
 	@GetMapping("/getMyTeamInfo")
-	public Map<String, TeamDTO> getTeamInfoByUserId(String userId) {
-		return Map.of("result", us.getTeamInfoByUserId(userId));
+	public Map<String, TeamDTO> getTeamInfoByUserId(@SessionAttribute(name ="loginUser", required = false) UserDTO user) {
+		if(user == null) {
+			return Map.of("result",null);
+		}
+		else
+		return Map.of("result", us.getTeamInfoByUserId(user.getUserId()));
 	}
 	
 	// 내 등급 불러오기
 	@GetMapping("/getMyTierAndScore")
-	public Map<String, UserDTO> getMyTierAndScoreByUserId(String userId) {
-		return Map.of("result", us.getMyTierAndScoreByUserId(userId));
+	public Map<String, UserDTO> getMyTierAndScoreByUserId(@SessionAttribute(name ="loginUser", required = false) UserDTO user) {
+		if(user == null) {
+			return Map.of("result",null);
+		}
+		else
+		return Map.of("result", us.getMyTierAndScoreByUserId(user.getUserId()));
 	}
 	
 	// 내 전적 불러오기
 	@GetMapping("/getMyMatchedInfo")
-	public Map<String, UserDTO> getMyMatchedInfoByUserId(String userId) {
-		return Map.of("result", us.getMyMatchedInfoByUserId(userId));
+	public Map<String, UserDTO> getMyMatchedInfoByUserId(@SessionAttribute(name ="loginUser", required = false) UserDTO user) {
+		if(user == null) {
+			return Map.of("result",null);
+		}
+		else
+		return Map.of("result", us.getMyMatchedInfoByUserId(user.getUserId()));
 	}
 	
 	// 내 이메일, 닉네임 불러오기
@@ -122,15 +145,15 @@ public class UserRestController {
 	
 	// 내 문의내역 2개(최신 2개) 불러오기
 	@GetMapping("/pathTwoInquiry")
-	public Map<String, List<InquiryDTO>> getTwoInquiry(String userId) {
-		return Map.of("result", us.getTwoInquiry(userId));
+	public Map<String, List<InquiryDTO>> getTwoInquiry(@SessionAttribute(name ="loginUser", required = false)UserDTO user) {
+		if(user == null) {
+			return Map.of("result",null);
+		}
+		else
+		return Map.of("result", us.getTwoInquiry(user.getUserId()));
 	}
 	
-	// 내 정보 불러오기
-	@GetMapping("/getMyInfo")
-	public Map<String, UserDTO> getMyInfoByUserId(@RequestBody UserDTO dto) {
-		return Map.of("result", us.getMyInfoByUserId(dto.getUserId(), dto.getPassword()));
-	}
+	
 	
 	// 아이디, 이메일 일치하는 비밀번호 불러오기
 	@GetMapping("/getPassword")

@@ -107,8 +107,8 @@
                         </div>
                     </div>
                     <div id="my-inquiry-info" class="mypage-infos">
-                        <p>Q.경기를 취소했는데 환불이 안됐습니다.</p>
-                        <p>Q.등급을 결정하는 기준이 궁금합니다.</p>
+                        <p id="Q1">Q.경기를 취소했는데 환불이 안됐습니다.</p>
+                        <p id="Q2">Q.등급을 결정하는 기준이 궁금합니다.</p>
                     </div>
                     <div></div>
                 </div>
@@ -125,6 +125,86 @@
             $('#page-name').text('마이페이지');
         });
         $('nav').load('common/nav.html');
+    });
+    
+    $('document').ready(function(){
+    //내 정보 불러오기
+    	$.ajax({
+    		type:"get",
+    		url: "/user/getMyInfo",
+    		dataType:"json",
+    		success: function(data){
+				$('#nickname').empty().append(data.result.nickname);
+				$('#email').empty().append(data.result.email);
+    		},
+    		error: function(){
+    			alert('로그인 하십시오');
+    			location.href='/login';
+    		}
+    	})
+    //내 등급 불러오기
+    	$.ajax({
+    		type:"get",
+    		url:"/user/getMyTierAndScore",
+    		success: function(data){
+    			console.log(data.result.percentile)
+    			$('#my-tier').empty().append(data.result.userTier);
+    			$('#my-score').empty().append(data.result.userScore);
+    			$('#my-rank').empty().append(data.result.userRank);
+    			$('#my-percentile').empty().append(data.result.percentile.toFixed(2));
+    		},
+    		error: function(){
+    			$('#my-tier').empty().append("불러오기 오류");
+    			$('#my-score').empty().append("");
+    			$('#my-rank').empty().append("");
+    			$('#my-percentile').empty().append("");	
+    		}
+    	})
+    //내 전적 불러오기
+    	$.ajax({
+    		type:"get",
+    		url:"/user/getMyMatchedInfo",
+    		success: function(data){
+    			console.log(data)
+    			$('#game-count').empty().append(data.result.gameCount);
+    			$('#win-count').empty().append(data.result.winCount);
+    			$('#user-win-rate').empty().append(data.result.winRate.toFixed(2));
+    		},
+			error: function(){}    	
+    	})
+    //소속 팀 정보 불러오기
+    	$.ajax({
+    		type:"get",
+    		url:"/user/getMyTeamInfo",
+    		success: function(data){
+    			console.log(data);
+    			$('#team-name').empty().append(data.result.teamName);
+    			$('#team-rank').empty().append(data.result.teamRank);
+    			$('#team-win-rate').empty().append(data.result.winRate.toFixed(2));
+    			$('#team-tier').empty().append(data.result.teamTier);
+    			$('#team-score').empty().append(data.result.teamScore);
+    		},
+    		error: function(){
+    			$('#team-name').empty().append("  -  ");
+    			$('#team-rank').empty().append(" - ");
+    			$('#team-win-rate').empty().append(" - ");
+    			$('#team-tier').empty().append(" - ");
+    			$('#team-score').empty().append(" - ");
+    		}
+    	})	
+    //내 문의내역 최신 2개 불러오기
+		$.ajax({
+    		type:"get",
+    		url:"/user/pathTwoInquiry",
+    		success: function(data){
+    			$('#Q1').empty().append(data.result[0].title);
+    			$('#Q2').empty().append(data.result[1].title);
+    		},
+    		error: function(){
+    			$('#Q1').empty().append("-");
+    			$('#Q2').empty().append("	");
+    		}
+    	})	
     });
     </script>
     <script src="mobile/js/mypage.js"></script>
