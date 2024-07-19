@@ -9,8 +9,7 @@ import com.kosta.project.dto.FieldDTO;
 import com.kosta.project.dto.FieldInfoDTO;
 import com.kosta.project.dto.MatchingDTO;
 import com.kosta.project.dto.UserDTO;
-import com.kosta.project.repository.FieldMapper;
-import com.kosta.project.repository.FieldsRepository;
+import com.kosta.project.repository.FieldRepository;
 import com.kosta.project.repository.MatchingMapper;
 import com.kosta.project.repository.UserMapper;
 
@@ -21,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ManagerService_Yoo {
 	
-	private final FieldsRepository fr;
+	private final FieldRepository fr;
 	
 	// 구장 상세 정보
 	public FieldInfoDTO getField(Long fieldSeq) {

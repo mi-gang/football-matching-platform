@@ -19,7 +19,7 @@ import lombok.Builder;
 @SpringBootTest
 public class FieldRepositoryTest {
 	@Autowired
-	FieldsRepository fr;
+	FieldRepository fr;
 	
 	//@Test
 	void getFieldListTest() {
