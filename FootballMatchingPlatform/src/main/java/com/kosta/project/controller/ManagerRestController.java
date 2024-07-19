@@ -4,11 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.kosta.project.domain.Field;
 import com.kosta.project.dto.AddMatchingDataDTO;
 import com.kosta.project.dto.FieldsDTO;
+import com.kosta.project.dto.ImageUploadDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
+import com.kosta.project.dto.UserDTO;
 import com.kosta.project.dto.Manager.ManagerDTO;
 import com.kosta.project.service.ManagerService;
 import com.kosta.project.service.MatchingService;
@@ -22,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 
 
@@ -42,4 +48,11 @@ public class ManagerRestController {
 		
 		return Map.of("result", result);
 	}
+	
+	// 구장 등록
+	@PostMapping("/addfield")
+	public Map<String, Long> addField(@RequestBody Field dto, @SessionAttribute(name = "managerId", required = false) String managerId){		
+		return Map.of("result", 1L);
+	}
+	
 }

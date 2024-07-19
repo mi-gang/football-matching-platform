@@ -1,6 +1,7 @@
 package com.kosta.project.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -72,7 +74,10 @@ public class Field {
 
 	    @Column(name = "reservation_count_of_month")
 	    private Integer reservationCountOfMonth; // 월 예약 건수
-
+	    
+	    @OneToMany(mappedBy = "field")
+	    private List<FieldImage> fieldImages;
+	    
 	    @ManyToOne
 	    @JoinColumn(name = "manager_id", nullable = false)
 	    private Manager manager; // 관리자 (다대일 관계)
@@ -84,5 +89,18 @@ public class Field {
 	    	this.parking = f.parking;
 	    	this.sellDrink = f.sellDrink;
 	    	this.fieldContent = f.getFieldContent();
+	    }
+	    
+	    public void addImageString(String fileName) {
+	    	FieldImage img = FieldImage.builder()
+	    			.fieldImg(fileName)
+	    			.build();
+	    	fieldImages.add(img);
+	    	if(img.getField() != this)
+	    		img.setField(this);
+	    }
+	    
+	    public void updateManagerId(Manager m) {
+	    	this.manager = m;
 	    }
 }

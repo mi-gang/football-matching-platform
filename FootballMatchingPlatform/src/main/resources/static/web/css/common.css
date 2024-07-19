@@ -128,8 +128,34 @@ textarea{
     height: 1.8rem;
 }
 
+.timeList{
+	border: 0.1rem solid #a5a5a5;
+	border-color: #a5a5a5;;
+}
+
+.userImg{
+	width: 1.2rem;
+	height: 1.2rem;
+}
+
+.teamImg{
+	width: 1.4rem;
+	height: 1.4rem;
+}
+
+.complete{
+	background-color: #a5a5a5;
+	border-color: #a5a5a5;
+	color : white;
+}
+
+.matching{
+	border: 0.2rem solid #a5a5a5;
+	border-color: #73A772;
+}
 
 /* ********** 캘린더 ********* */
+
 .calendar-container {
     /* display: flex;
     flex-direction: column;
