@@ -58,14 +58,17 @@
         crossorigin="anonymous"
 ></script>
 
-
 <!-- 매칭 취소 모달 -->
 <div class="modal" id="cancelMatchingModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                ></button>
             </div>
 
             <!-- Modal body -->
@@ -80,12 +83,47 @@
                 <button
                         type="button"
                         class="btn-setting"
-                        id="withdrawModal-btn"
+                        id="cancelModalBtn"
                         data-bs-toggle="modal"
                         data-bs-dismiss="modal"
-                        data-bs-target="#withdrawModal-3"
                 >
                     취소하기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 취소 완료 모달 -->
+<div class="modal" id="cancelSuccessModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <!--                <button-->
+                <!--                        type="button"-->
+                <!--                        class="btn-close"-->
+                <!--                        data-bs-dismiss="modal"-->
+                <!--                ></button>-->
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="modal-body-wrapper">
+                    <h4 class="modal-title" id="cancelModalText">취소 완료되었습니다.</h4>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button
+                        type="button"
+                        class="btn-setting"
+                        id="cancelSuccessModalBtn"
+                        data-bs-toggle="modal"
+                        data-bs-dismiss="modal"
+                >
+                    닫기
                 </button>
             </div>
         </div>
@@ -130,6 +168,84 @@
         </div>
     </div>
 </div>
+
+<!-- 결제 완료 모달 -->
+<div class="modal" id="paymentSuccessModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <!--                <button-->
+                <!--                        type="button"-->
+                <!--                        class="btn-close"-->
+                <!--                        data-bs-dismiss="modal"-->
+                <!--                ></button>-->
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="modal-body-wrapper">
+                    <h4 class="modal-title" id="paymentModalText">결제 완료되었습니다.</h4>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button
+                        type="button"
+                        class="btn-setting"
+                        id="paymentSuccessModalBtn"
+                        data-bs-toggle="modal"
+                        data-bs-dismiss="modal"
+                >
+                    닫기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 내 점수 확인 모달 -->
+<div class="modal" id="scoreModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                ></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="modal-body-wrapper">
+                    <div>
+                        <div>
+                            <h4 class="modal-title modal-matching-info">경기 결과 점수</h4>
+                            <p class="modal-matching-field" id="resultScore"></p>
+                        </div>
+                        <div>
+                            <h4 class="modal-title modal-matching-info">상대팀 평가 점수</h4>
+                            <p class="modal-matching-field" id="reviewScore"></p>
+                        </div>
+                        <div>
+                            <h4 class="modal-title modal-matching-info">총점</h4>
+                            <p class="modal-matching-field" id="totalScore"></p>
+                        </div>
+                    </div>
+                    <span>경기 결과에 따른 점수는 익일 등급에 반영됩니다.</span>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
     // header, nav 내용 불러오기
