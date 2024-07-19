@@ -36,5 +36,14 @@ public class FieldImage {
 
     @ManyToOne
     @JoinColumn(name = "field_seq", nullable = false)
-    private Field fields;
+    private Field field;
+    
+    
+    
+    public void setField(Field field) {
+    	this.field = field;
+    	if(!field.getFieldImages().contains(this)) {
+    		field.getFieldImages().add(this);
+    	}
+    }
 }

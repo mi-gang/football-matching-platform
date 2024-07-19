@@ -39,4 +39,19 @@ public class WebController {
 	String mainPage() {
 		return "mainManager";
 	}
+	
+	@GetMapping("/schedule")
+	String schedule() {
+		return "scheduleManage";
+	}
+	
+	@GetMapping("/fieldInfo")
+	String fieldInfo() {
+		return "fieldInfo";
+	}
+	
+	@GetMapping("/addField")
+	String addfield() {
+		return "addField";
+	}
 }

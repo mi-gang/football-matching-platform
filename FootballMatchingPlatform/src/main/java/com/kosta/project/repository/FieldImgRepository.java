@@ -11,6 +11,5 @@ import com.kosta.project.domain.FieldImage;
 import com.kosta.project.dto.FieldDTO;
 import com.kosta.project.dto.FieldInfoDTO;
 
-public interface FieldRepository extends JpaRepository<Field, Long>{
-    List<Field> findByManager_ManagerId(String managerId);
+public interface FieldImgRepository extends JpaRepository<FieldImage, Long>{
 }
