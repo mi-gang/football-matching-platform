@@ -609,18 +609,6 @@
         WHERE ma.user_id = #{userId}
           AND m.matching_seq = #{matchingSeq}
     </select>
-
-    <!-- 해당 매칭에 대해 팀장 여부 확인하기 -->
-    <select id="isTeamLeader" parameterType="com.kosta.project.dto.UserMatchingInfoDTO" resultType="boolean">
-        SELECT COUNT(t.team_seq)
-        FROM teams t
-                 JOIN matching_adds ma ON t.team_seq = ma.team_seq
-                 JOIN matching_add_lists mal ON ma.matching_add_seq = mal.matching_add_seq
-                 JOIN matchings m ON m.matching_seq = mal.matching_seq
-        WHERE t.leader_id = #{userId}
-          AND m.matching_seq = #{matchingSeq}
-          AND t.team_dismantle_status = 0;
-    </select>
 	
 	<!-- 다가오는 경기 일정 -->
     <select id="selectMatchingAlready" parameterType="java.lang.String" resultType="com.kosta.project.dto.MatchingDTO">

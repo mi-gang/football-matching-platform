@@ -114,17 +114,17 @@ public class MatchingsMapperTest {
 	
 	//@Test
 	void selectFastMatchingListTest() {
-		System.out.println(mm.selectFastMatchingList());
+//		System.out.println(mm.selectFastMatchingList());
 	}
 	
 	//@Test
 		void selectFastMatchingListBySmallTest() {
-			System.out.println(mm.selectFastMatchingListBySmall());
+//			System.out.println(mm.selectFastMatchingListBySmall());
 		}
 		
 		//@Test
 		void selectFastMatchingListByBigTest() {
-			System.out.println(mm.selectFastMatchingListByBig());
+//			System.out.println(mm.selectFastMatchingListByBig());
 		}
 		
 		//@Test
