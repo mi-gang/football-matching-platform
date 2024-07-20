@@ -1,7 +1,9 @@
 package com.kosta.project.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -10,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kosta.project.domain.Field;
 import com.kosta.project.domain.Field;
 import com.kosta.project.dto.AddMatchingDataDTO;
+import com.kosta.project.dto.FieldBoxDTO;
+import com.kosta.project.dto.FieldDTO;
 import com.kosta.project.dto.FieldsDTO;
 import com.kosta.project.dto.ImageUploadDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
@@ -29,6 +33,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 
@@ -63,4 +68,14 @@ public class ManagerRestController {
 		return Map.of("result", 1L);
 	}
 	
+	// 이미지 등록
+	@PostMapping("/addField/image")
+	public Map<String, Boolean> addFieldByImage(@RequestPart("img") MultipartFile img, 
+	@RequestPart("field") Field field, 
+	@SessionAttribute(name = "managerId", required = false) String managerId){
+
+		boolean res = ms.addFieldImg(img, field, managerId);
+
+		return Map.of("result", res);
+	}
 }
