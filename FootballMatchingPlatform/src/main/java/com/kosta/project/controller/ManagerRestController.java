@@ -62,19 +62,15 @@ public class ManagerRestController {
 		return Map.of("result", "성공");
 	}
 	
-	// 구장 등록
-	@PostMapping("/addfield")
-	public Map<String, Long> addField(@RequestBody Field dto, @SessionAttribute(name = "managerId", required = false) String managerId){		
-		return Map.of("result", 1L);
-	}
 	
-	// 이미지 등록
+	// 구장 등록
 	@PostMapping("/addField/image")
 	public Map<String, Boolean> addFieldByImage(@RequestPart("img") MultipartFile img, 
 	@RequestPart("field") Field field, 
+	@RequestPart("business") MultipartFile business,
 	@SessionAttribute(name = "managerId", required = false) String managerId){
 
-		boolean res = ms.addFieldImg(img, field, managerId);
+		boolean res = ms.addFieldImg(img, business, field, managerId);
 
 		return Map.of("result", res);
 	}
