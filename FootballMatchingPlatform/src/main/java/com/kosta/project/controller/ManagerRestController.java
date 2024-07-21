@@ -78,6 +78,7 @@ public class ManagerRestController {
     public List<LocalDate> getConfirmedMatchingDates(@PathVariable int fieldSeq,
                                                      @RequestParam int month,
                                                      @RequestParam int year) {
+		System.out.println(ms.getConfirmedMatchingDates(fieldSeq, month, year));
         return ms.getConfirmedMatchingDates(fieldSeq, month, year);
     }
 

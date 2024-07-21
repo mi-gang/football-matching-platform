@@ -278,4 +278,10 @@ tr button{
   	line-height: normal;
 }
 
+.cal-matching-status-3 {
+    width: 0.4rem;
+    height: 0.4rem;
 
+    background: #80D87E;
+    border-radius: 100px;
+}
