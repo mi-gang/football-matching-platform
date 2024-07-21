@@ -126,6 +126,9 @@
     <script>
         $("#navbar").load("./common/navbarManager.html");
 
+        var managerId = "[[${session.managerId}]]";
+        console.log(managerId);
+
         // ======================== 우편번호, 주소 API
         function findAddr() {
             new daum.Postcode({
@@ -153,14 +156,84 @@
             }).open();
         }
 
-		// =============== 등록하기
+        // =============== 등록하기
         $('#addFieldBtn').on('click', function () {
-            let fieldName = $('#inputTitle').val();
-            if (fieldName == "") {
-                alert("구장 이름을 입력하세요").
-                    return;
+            // if (fieldName == "") {
+            //     alert("구장 이름을 입력하세요").
+            //         return;
+            // }
+
+            let file = $('#fieldImg').val();
+            console.log(file);
+
+            file = file.slice(file.indexOf('.') + 1).toLowerCase();
+            console.log(file);
+
+            if (file !== 'jpg' && file !== 'png' && file !== 'jpeg' && file !== 'bmp') {
+                alert("jpg, png, jpeg, bmp 확장자만 등록하실 수 있습니다.");
+                $('#file').val('');
+                // 사용자가 등록한 file의 value를 지움 
+                return;
             }
-            alert("등록");
+            else {
+                let fieldname = $('#inputTitle').val();
+                let fieldaddress = $('#address').val();
+                let fieldaddressdetail = $('#detailAddress').val();
+                let postcode = $('#postcode').val();
+                let showerroom = $('#inlineCheckbox1').is(":checked");
+                let parking = $('#inlineCheckbox2').is(":checked");
+                let rentshoes = $('#inlineCheckbox3').is(":checked");
+                let selldrink = $('#inlineCheckbox4').is(":checked");
+                let rentball = $('#inlineCheckbox5').is(":checked");
+                let content = $('#content').val();
+
+                const field = {
+                    fieldName: fieldname,
+                    fieldAddress: fieldaddress,
+                    fieldAddressDetail: fieldaddressdetail,
+                    postalCode: postcode,
+                    showeRroom: showerroom,
+                    parking: parking,
+                    rentShoes: rentshoes,
+                    sellDrink: selldrink,
+                    rentBall: rentball,
+                    fieldContent: content
+                }
+
+                const formData = new FormData();
+                const data = $('#fieldImg');
+                console.log(field);
+                formData.append('field', new Blob([JSON.stringify(field)] , {type: "application/json"}));
+                formData.append('img', data[0].files[0]);
+
+                // fetch('/addField/image', {
+                //     method: 'POST',
+                //     body: formData,
+                //     headers: {
+                //         'Content-Type': 'multipart/form-data'
+                //     }
+                // })
+                //     .then(response => response.json())
+                //     .then(data => {
+                //         console.log(data);
+                //     });
+
+                $.ajax({
+                    url: '/addField/image',
+                    // 서버에 요청 
+                    type: 'post',
+                    data: formData,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        console.log(result.result);
+                    },
+                    error: function () {
+                        alert("업로드에 실패했습니다. 관리자에게 문의해주세요.");
+                    }
+                });// end ajax
+            }
         })
     </script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
