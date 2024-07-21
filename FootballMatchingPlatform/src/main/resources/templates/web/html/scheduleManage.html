@@ -123,16 +123,32 @@
                         <div class="modal-header border-bottom-0 mt-3">
                             <p class="fs-3">승패 결과 입력</p>
                         </div>
-                        <div class="modal-body">
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex">
-                                    <div>흑팀</div>
+                        <div class="modal-body d-flex flex-wrap justify-content-center">
+                            <div class="row text-center">
+                                <p>2024년 7월 17일 수요일</p>
+                                <p>16:00-18:00</p>
+                            </div>
+                            <div class="row gap-5 flex-nowrap justify-content-center m-3">
+                                <div class="form-group text-center w-25">
+                                    <label for="loseCount" class="fs-5">A팀</label>
+                                    <div class="input-group  mt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">⚽</span>
+                                        </div>
+                                        <input type="number" class="form-control w-25" id="aCount" value="3" aria-label="A팀" aria-describedby="basic-addon1">
+                                    </div>
                                 </div>
-                                <div class="d-flex">
-                                    <div>백팀</div>
-
+                                <div class="form-group text-center w-25">
+                                    <label for="winCount" class="fs-5">B팀</label>
+                                    <div class="input-group mt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon2">⚽</span>
+                                        </div>
+                                        <input type="number" class="form-control" id="bCount" value="5" aria-label="B팀" aria-describedby="basic-addon2">
+                                    </div>
                                 </div>
                             </div>
+                            
                         </div>
                         <div class="modal-footer justify-content-center border-top-0">
                             <button type="button" class="btn btn-success" id="updateMemberStatus">완료</button>
