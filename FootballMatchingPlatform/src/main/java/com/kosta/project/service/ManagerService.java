@@ -89,10 +89,20 @@ public class ManagerService {
 	
 
 	// 구장 이미지 등록
-	public boolean addFieldImg(MultipartFile file, Field dto, String managerId) {
+	public boolean addFieldImg(MultipartFile img, MultipartFile business, Field dto, String managerId) {
 
-		System.out.println(dto);
-		System.out.println(managerId);
+		UUID uuid = UUID.randomUUID();
+		String uuids = uuid.toString().replaceAll("-", "");
+		// 확장자 추출 로직
+		String fileRealName = img.getOriginalFilename();
+		String businessRealfileName = business.getOriginalFilename();
+		// 원본 파일 명
+		String fileExtention = fileRealName.substring(fileRealName.indexOf("."), fileRealName.length());
+		String businessfiledExtention = businessRealfileName.substring(businessRealfileName.indexOf("."), businessRealfileName.length());
+		// 원본 파일의 확장자 추출
+		String fileName = uuids + fileExtention;
+		String businessfileName = uuids + businessfiledExtention;
+
 		Manager m = new Manager();
 		m.updateId(managerId);
 		Field f = Field.builder()
@@ -101,7 +111,7 @@ public class ManagerService {
 						.fieldAddressDetail(dto.getFieldAddressDetail())
 						.postalCode(dto.getPostalCode())
 						.fieldContent(dto.getFieldContent())
-						.businessRegistration("c:/temp/usiness_registration")
+						.businessRegistration(businessfileName)
 						.showerRoom(dto.isShowerRoom())
 						.rentBall(dto.isRentBall())
 						.rentShoes(dto.isRentShoes())
@@ -112,27 +122,19 @@ public class ManagerService {
 						.build();
 
 		Field upField = fr.save(f);
-		System.out.println(upField);
 
 		boolean res = false;
-		String uploadPath = "C:\\project\\FootballMatchingPlatform\\FootballMatchingPlatform\\src\\main\\resources\\static\\upload";
-
-		UUID uuid = UUID.randomUUID();
-		String uuids = uuid.toString().replaceAll("-", "");
-
-		// 확장자 추출 로직
-		String fileRealName = file.getOriginalFilename();
-		// 원본 파일 명
-		String fileExtention = fileRealName.substring(fileRealName.indexOf("."), fileRealName.length());
-		// 원본 파일의 확장자 추출
-
-		String fileName = uuids + fileExtention;
+		//String uploadPath = "C:\\project\\FootballMatchingPlatform\\FootballMatchingPlatform\\src\\main\\resources\\static\\upload";
+		String uploadPath = "C:\\Users\\gupury\\upload\\img";
+		String uploadPath2 = "C:\\Users\\gupury\\upload\\business";
 
 		// 업로드한 파일을 서버 컴퓨터 내에 지정한 경로에 실제 저장
 		File saveFile = new File(uploadPath + "\\" + fileName);
+		File saveFile2 = new File(uploadPath2 +  "\\" + businessfileName);
 
 		try {
-			file.transferTo(saveFile);
+			img.transferTo(saveFile);
+			business.transferTo(saveFile2);
 			FieldImage fi = FieldImage.builder()
 									.fieldImg(fileName)
 									.field(upField)

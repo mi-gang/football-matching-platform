@@ -109,7 +109,7 @@
                         <div class="mb-3 row">
                             <label for="inputTitle" class="col-sm-2 col-form-label fs-5">사업자 등록증</label>
                             <div class="col-sm-10">
-                                <input class="form-control" type="file" id="businessImg" disabled>
+                                <input class="form-control" type="file" id="businessFile">
                             </div>
                         </div>
                     </div>
@@ -163,17 +163,22 @@
             //         return;
             // }
 
-            let file = $('#fieldImg').val();
-            console.log(file);
+            let imgfile = $('#fieldImg').val();
 
-            file = file.slice(file.indexOf('.') + 1).toLowerCase();
-            console.log(file);
+            imgfile = imgfile.slice(imgfile.indexOf('.') + 1).toLowerCase();
 
-            if (file !== 'jpg' && file !== 'png' && file !== 'jpeg' && file !== 'bmp') {
+            bussfile = $('#businessFile').val();
+            console.log(bussfile);
+
+            if (imgfile !== 'jpg' && imgfile !== 'png' && imgfile !== 'jpeg' && imgfile !== 'bmp') {
                 alert("jpg, png, jpeg, bmp 확장자만 등록하실 수 있습니다.");
                 $('#file').val('');
                 // 사용자가 등록한 file의 value를 지움 
                 return;
+            }
+            else if(!bussfile){
+                 alert('사용자 등록증 파일을 첨부해주세요')
+                 return;
             }
             else {
                 let fieldname = $('#inputTitle').val();
@@ -201,22 +206,12 @@
                 }
 
                 const formData = new FormData();
-                const data = $('#fieldImg');
+                const data1 = $('#fieldImg');
+                const data2 = $('#businessFile');
                 console.log(field);
                 formData.append('field', new Blob([JSON.stringify(field)] , {type: "application/json"}));
-                formData.append('img', data[0].files[0]);
-
-                // fetch('/addField/image', {
-                //     method: 'POST',
-                //     body: formData,
-                //     headers: {
-                //         'Content-Type': 'multipart/form-data'
-                //     }
-                // })
-                //     .then(response => response.json())
-                //     .then(data => {
-                //         console.log(data);
-                //     });
+                formData.append('img', data1[0].files[0]);
+                formData.append('business', data2[0].files[0]);
 
                 $.ajax({
                     url: '/addField/image',
