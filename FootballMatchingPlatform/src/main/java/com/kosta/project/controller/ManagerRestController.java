@@ -1,6 +1,7 @@
 package com.kosta.project.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -88,11 +89,9 @@ public class ManagerRestController {
     public ResponseEntity<List<MatchingDTO>> getMatchingsByDateAndField(
             @PathVariable("date") String date,
             @PathVariable("fieldSeq") int fieldSeq) {
-        
-        LocalDate matchingDate = LocalDate.parse(date); // 날짜 형식 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
+        LocalDate matchingDate = LocalDate.parse(date, formatter); // 날짜 형식 변환
         List<MatchingDTO> matchings = ms.getMatchingsForDateAndField(matchingDate, fieldSeq);
-        
-		System.out.println(matchings);
 
         if (matchings.isEmpty()) {
             return ResponseEntity.noContent().build(); // 매칭 기록이 없는 경우 204 No Content 반환

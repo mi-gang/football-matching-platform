@@ -201,7 +201,6 @@
                         renderCalendar();
                     }
                     else {
-                        console.log(data);
                         matchingDateList = data;
                         renderCalendar();
                     }
@@ -325,6 +324,23 @@
 
             // 클릭한 날짜 불러오기
             console.log($(this).find('.date').attr("id"));
+            var date = $(this).find('.date').attr("id");
+            var fieldSeq = $("button[name=city1]").val();
+            fetch(`/date/${date}/field/${fieldSeq}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const dataSet = new Set(data);
+                console.log(dataSet);
+                for(const matching of dataSet){
+                    if(8 === matching.matchingTime){
+                        console.log("yes");
+                    }
+                    else if(8 != matching.matchingTime){
+                        console.log("no");
+                    }
+                }
+            })
         });
 
 
