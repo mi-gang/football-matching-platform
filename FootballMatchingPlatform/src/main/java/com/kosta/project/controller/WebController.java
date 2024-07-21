@@ -1,7 +1,9 @@
 package com.kosta.project.controller;
 
+import com.kosta.project.dto.Manager.FieldDTO;
 import com.kosta.project.dto.Manager.ManagerDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpRequest;
@@ -53,7 +55,19 @@ public class WebController {
 	}
 	
 	@GetMapping("/schedule")
-	String schedule() {
+	String schedule(Model model, HttpServletRequest request) {
+		String managerId = (String) request.getSession().getAttribute("managerId");
+		List<Field> fieldList = ms.getFieldList(managerId);
+		List<FieldDTO> fieldDTOList = new ArrayList<FieldDTO>();
+		for(int i=0; i<fieldList.size(); i++){
+			FieldDTO fieldDTO = FieldDTO.builder()
+			.fieldSeq(fieldList.get(i).getFieldSeq())
+			.fieldName(fieldList.get(i).getFieldName())
+			.build();
+			fieldDTOList.add(fieldDTO);
+		}
+
+		model.addAttribute("fieldList", fieldDTOList);
 		return "scheduleManage";
 	}
 	
@@ -74,9 +88,9 @@ public class WebController {
 		return "fieldApplyList";
 	}
 	
-	@GetMapping("/fieldInfo/{fieldSeq}")
-	public String getFieldInfo(@PathVariable Long fieldSeq) {
-		return "fieldInfo";
-	}
+	// @GetMapping("/fieldInfo/{fieldSeq}")
+	// public String getFieldInfo(@PathVariable Long fieldSeq) {
+	// 	return "fieldInfo";
+	// }
 	
 }

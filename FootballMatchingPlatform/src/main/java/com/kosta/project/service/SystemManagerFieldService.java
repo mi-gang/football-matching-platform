@@ -19,7 +19,7 @@ public class SystemManagerFieldService {
 	private final FieldRepository fr;
 	
 	// 구장 승인 (승인 날짜 업데이트)
-	public void updateApprove(Long fieldSeq) {
+	public void updateApprove(int fieldSeq) {
 		Field field = fr.findById(fieldSeq).get();
 		Date date = new Date();
 		Instant instant = date.toInstant();
@@ -32,7 +32,7 @@ public class SystemManagerFieldService {
 	
 	
 	// 구장 승인 거절(field_status를 2로 변경
-	public void updateFieldStatus2(Long fieldSeq) {
+	public void updateFieldStatus2(int fieldSeq) {
 		Field field = fr.findById(fieldSeq).get();
 		
 		int status = 2;

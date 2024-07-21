@@ -29,6 +29,9 @@
                                 구장 선택
                             </button>
                             <ul class="dropdown-menu" id='dropField'>
+                                <li th:each="field : ${fieldList}">
+                                    <button th:value="${field.fieldSeq}" th:text="${field.fieldName}" class='dropdown-item'></button>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -118,7 +121,7 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content align-items-center">
                         <div class="modal-header border-bottom-0 mt-3">
-                            <p class="fs-3">승패 입력</p>
+                            <p class="fs-3">승패 결과 입력</p>
                         </div>
                         <div class="modal-body">
                             <div class="d-flex justify-content-between">
@@ -161,19 +164,24 @@
     <script>
         $("#navbar").load("./common/navbarManager.html");
 
-        var fields = ["어쩌구 구장", "저쩌구 구장"];
+        let matchingDateList;
 
-        // 구장 선택
-        $("button[name^=city]").each(function () {
-            $ulcity = $(this);
-            $.each(eval(fields), function () {
-                $ulcity.next().append("<li><a class='dropdown-item' href='#'>" + this + "</a></li>");
-            });
-            $("#dropProv").append("<li><a class='dropdown-item' href='#'>구/군 선택</a></li>");
-        })
-
-        $("#dropField > li > a").on('click', function () {
+        $("#dropField > li > button").on('click', function () {
             $("button[name=city1]").text($(this).text());
+            $("button[name=city1]").val($(this).val());
+            const fieldSeq = $(this).val();
+            console.log(fieldSeq);
+            fetch(`/confirmed/dates/${fieldSeq}?month=${currentMonth}&year=${currentYear}`)
+            .then(response => response.json())
+            .then(data => {
+                if(data.length === 0){
+                    matchingDateList = [];
+                }
+                else{
+                    console.log(data);
+                    matchingDateList = data;
+                }
+            })
         })
 
 
@@ -187,11 +195,6 @@
         const calendarDates = document.querySelector("#calendarDates");
         const prevBtn = document.querySelector("#prevBtn");
         const nextBtn = document.querySelector("#nextBtn");
-
-        // const calendarDates =  $("#calendarDates");
-        // const prevBtn = $("#prevBtn");
-        // const nextBtn = $("#nextBtn");
-
 
         function renderCalendar() {
             $('.year-month').text(`${currentYear}년 ${currentMonth + 1}월`);
@@ -263,10 +266,10 @@
 
         // 날짜 클릭 시
         $(".calendar-dates").on("click", ".date-wrapper", function () {
-            if ($(this).children('div:eq(0)').hasClass('today')) {
-                $('.click-date').removeClass('click-date');
-                return;
-            }
+            // if ($(this).children('div:eq(0)').hasClass('today')) {
+            //     $('.click-date').removeClass('click-date');
+            //     return;
+            // }
             $('.click-date').removeClass('click-date');
             $(this).find('.date').addClass('click-date'); // find -> 자식 요소 찾기
 
