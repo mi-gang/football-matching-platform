@@ -20,6 +20,7 @@ import com.kosta.project.dto.FieldsDTO;
 import com.kosta.project.dto.ImageUploadDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
+import com.kosta.project.dto.ScoreDTO;
 import com.kosta.project.dto.UserDTO;
 import com.kosta.project.dto.Manager.ManagerDTO;
 import com.kosta.project.dto.Manager.MatchingDTO;
@@ -99,7 +100,8 @@ public class ManagerRestController {
         
         return ResponseEntity.ok(matchings); // 매칭 기록이 있는 경우 200 OK와 함께 반환
     }
-	// 이미지 등록
+
+	// 구장 등록
 	@PostMapping("/addField/image")
 	public Map<String, Boolean> addFieldByImage(@RequestPart("img") MultipartFile img, 
 	@RequestPart("field") Field field, 
@@ -108,6 +110,19 @@ public class ManagerRestController {
 
 		boolean res = ms.addFieldImg(img, business, field, managerId);
 
+		return Map.of("result", res);
+	}
+
+
+	@PutMapping("/score/{matchingSeq}")
+	public Map<String, Boolean> putMethodName(@PathVariable("matchingSeq") int matchingSeq, @RequestBody ScoreDTO score) {
+		System.out.println(score);
+		// System.out.println(score.getAScore() + " " + score.getBScore());
+		//Matching updatedMatching = ms.updateScores(matchingSeq, score.getAScore(), score.getBScore());
+		boolean res = false;
+		// if (updatedMatching != null) {
+		// 		res = true;
+		// }
 		return Map.of("result", res);
 	}
 }

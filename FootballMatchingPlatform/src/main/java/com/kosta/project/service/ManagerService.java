@@ -67,7 +67,6 @@ public class ManagerService {
 		fr.save(field);
 	}
 
-
 	// 구장 상세 정보
 	public FieldInfoDTO getField(int fieldSeq) {
 		FieldInfoDTO dto = new FieldInfoDTO();
@@ -78,9 +77,7 @@ public class ManagerService {
 		return dto;
 	}
 
-	
-
-	// 구장 이미지 등록
+	// 구장 등록
 	public boolean addFieldImg(MultipartFile img, MultipartFile business, Field dto, String managerId) {
 
 		UUID uuid = UUID.randomUUID();
@@ -90,7 +87,8 @@ public class ManagerService {
 		String businessRealfileName = business.getOriginalFilename();
 		// 원본 파일 명
 		String fileExtention = fileRealName.substring(fileRealName.indexOf("."), fileRealName.length());
-		String businessfiledExtention = businessRealfileName.substring(businessRealfileName.indexOf("."), businessRealfileName.length());
+		String businessfiledExtention = businessRealfileName.substring(businessRealfileName.indexOf("."),
+				businessRealfileName.length());
 		// 원본 파일의 확장자 추출
 		String fileName = uuids + fileExtention;
 		String businessfileName = uuids + businessfiledExtention;
@@ -98,39 +96,40 @@ public class ManagerService {
 		Manager m = new Manager();
 		m.updateId(managerId);
 		Field f = Field.builder()
-						.fieldName(dto.getFieldName())
-						.fieldAddress(dto.getFieldAddress())
-						.fieldAddressDetail(dto.getFieldAddressDetail())
-						.postalCode(dto.getPostalCode())
-						.fieldContent(dto.getFieldContent())
-						.businessRegistration(businessfileName)
-						.showerRoom(dto.isShowerRoom())
-						.rentBall(dto.isRentBall())
-						.rentShoes(dto.isRentShoes())
-						.parking(dto.isParking())
-						.fieldStatus(0)
-						.sellDrink(dto.isSellDrink())
-						.manager(m)
-						.build();
+				.fieldName(dto.getFieldName())
+				.fieldAddress(dto.getFieldAddress())
+				.fieldAddressDetail(dto.getFieldAddressDetail())
+				.postalCode(dto.getPostalCode())
+				.fieldContent(dto.getFieldContent())
+				.businessRegistration(businessfileName)
+				.showerRoom(dto.isShowerRoom())
+				.rentBall(dto.isRentBall())
+				.rentShoes(dto.isRentShoes())
+				.parking(dto.isParking())
+				.fieldStatus(0)
+				.sellDrink(dto.isSellDrink())
+				.manager(m)
+				.build();
 
 		Field upField = fr.save(f);
 
 		boolean res = false;
-		//String uploadPath = "C:\\project\\FootballMatchingPlatform\\FootballMatchingPlatform\\src\\main\\resources\\static\\upload";
+		// String uploadPath =
+		// "C:\\project\\FootballMatchingPlatform\\FootballMatchingPlatform\\src\\main\\resources\\static\\upload";
 		String uploadPath = "C:\\Users\\gupury\\upload\\img";
 		String uploadPath2 = "C:\\Users\\gupury\\upload\\business";
 
 		// 업로드한 파일을 서버 컴퓨터 내에 지정한 경로에 실제 저장
 		File saveFile = new File(uploadPath + "\\" + fileName);
-		File saveFile2 = new File(uploadPath2 +  "\\" + businessfileName);
+		File saveFile2 = new File(uploadPath2 + "\\" + businessfileName);
 
 		try {
 			img.transferTo(saveFile);
 			business.transferTo(saveFile2);
 			FieldImage fi = FieldImage.builder()
-									.fieldImg(fileName)
-									.field(upField)
-									.build();
+					.fieldImg(fileName)
+					.field(upField)
+					.build();
 			fir.save(fi);
 			res = true;
 
@@ -141,13 +140,26 @@ public class ManagerService {
 		return res;
 	}
 
-	//특정 구장 특정 달 매칭 중 경기확정인 매칭의 매칭날짜 가져오기
+	// 특정 구장 특정 달 매칭 중 경기확정인 매칭의 매칭날짜 가져오기
 	public List<LocalDate> getConfirmedMatchingDates(int fieldSeq, int month, int year) {
-        return mtr.findConfirmedMatchingDatesByFieldSeqAndMonth(fieldSeq, month, year);
-    }
+		return mtr.findConfirmedMatchingDatesByFieldSeqAndMonth(fieldSeq, month, year);
+	}
 
-	//특정 구장 특정 날짜 매칭 기록 가져오기
+	// 특정 구장 특정 날짜 매칭 기록 가져오기
 	public List<MatchingDTO> getMatchingsForDateAndField(LocalDate matchingDate, int fieldSeq) {
-        return mtr.findMatchingsByDateAndField(matchingDate, fieldSeq);
-    }
+		return mtr.findMatchingsByDateAndField(matchingDate, fieldSeq);
+	}
+
+	// 승패입력
+	public Matching updateScores(int matchingSeq, Integer aScroe, Integer bScore) {
+		Optional<Matching> optionalMatching = mtr.findById(matchingSeq);
+		if (optionalMatching.isPresent()) {
+			Matching m = optionalMatching.get();
+			System.out.println(m);
+			m.updateScore(aScroe, bScore);
+			System.out.println(m);
+			return mtr.save(m);
+		}
+		return null;
+	}
 }
