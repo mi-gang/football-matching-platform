@@ -17,8 +17,16 @@ import com.kosta.project.repository.ManagerRepository;
 public class ManagerServiceTest_ju {
 	@Autowired
 	ManagerService ms;
+
+	//@Test
+	void udpateScore(){
+		int mSeq = 2;
+		int aS = 3;
+		int bS = 5;
+		ms.updateScores(mSeq, aS, bS);
+	}
 	
-	@Test
+	//@Test
 	void addField() {
 		Manager m = new Manager();
 		Field f = Field.builder()

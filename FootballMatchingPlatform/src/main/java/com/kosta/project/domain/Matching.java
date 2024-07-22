@@ -54,4 +54,14 @@ public class Matching {
     @ManyToOne
     @JoinColumn(name = "field_seq", nullable = false)
     private Field fields; // Field where the match takes place
+
+
+    public void updateScore(Integer a, Integer b){
+        this.aScore = a;
+        this.bScore = b;
+    }
+    
+    public void updateStatus(String status) {
+    	this.matchingStatus = status;
+    }
 }
