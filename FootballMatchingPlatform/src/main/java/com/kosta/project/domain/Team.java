@@ -81,4 +81,13 @@ public class Team {
     @ManyToOne
     @JoinColumn(name = "leader_id", nullable = false)
     private User users; // Team leader (foreign key to users table)
+    
+    public void updateScore(int score) {
+    	this.teamScore += score;
+    	
+    	if(this.teamScore <= 0)
+    		this.teamScore = 0;
+    	else if(this.teamScore >= 1200)
+    		this.teamScore = 1200;
+    }
 }

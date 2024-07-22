@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,8 @@ import com.kosta.project.dto.FieldBoxDTO;
 import com.kosta.project.dto.FieldDTO;
 import com.kosta.project.domain.Matching;
 import com.kosta.project.domain.MatchingAddList;
+import com.kosta.project.domain.Team;
+import com.kosta.project.domain.User;
 import com.kosta.project.dto.FieldInfoDTO;
 import com.kosta.project.dto.ImageUploadDTO;
 import com.kosta.project.dto.InquiryDTO;
@@ -37,6 +40,7 @@ import com.kosta.project.repository.MatchingAddListRepository;
 import com.kosta.project.repository.MatchingAddRepository;
 import com.kosta.project.repository.MatchingRepository;
 import com.kosta.project.repository.TeamMapper;
+import com.kosta.project.repository.TeamRepository;
 import com.kosta.project.repository.UserMapper;
 import com.kosta.project.repository.UserRepository;
 
@@ -54,6 +58,7 @@ public class ManagerService {
 	private final MatchingAddListRepository malr;
 	private final MatchingAddRepository mar;
 	private final UserRepository ur;
+	private final TeamRepository tr;
 
 	// 매니저로그인
 	public boolean getLoginResult(String managerId, String password) {
@@ -163,20 +168,59 @@ public class ManagerService {
 	}
 
 	// 승패입력
-	public boolean updateScores(int matchingSeq, Integer aScroe, Integer bScore) {
+	public boolean updateScores(int matchingSeq, Integer aScore, Integer bScore) {
+		System.out.println("matching_seq = "+matchingSeq);
 		Optional<Matching> optionalMatching = mtr.findById(matchingSeq);
 		boolean res = false;
-		
-		// matchings table에 업데이트 
-		if (optionalMatching.isPresent()) {
-			Matching m = optionalMatching.get();
-			m.updateScore(aScroe, bScore);	 // score update
-			m.updateStatus("경기완료");		// status update
-			//mtr.save(m);
+
+		List<MatchingAddList> list= malr.findByMatching_MatchingSeqAndTeamNot(matchingSeq, "0");
+		if(list.size() == 2) {	// 팀 일경우
+			for(MatchingAddList a : list) {
+				Team t = a.getMatchingAdds().getTeams();
+				if(aScore > bScore) {
+					if(a.getTeam().equals("A"))
+						t.updateScore(10);
+					else
+						t.updateScore(-10);
+				}
+				else if(aScore < bScore) {
+					if(a.getTeam().equals("A"))
+						t.updateScore(-10);
+					else
+						t.updateScore(10);
+				}
+				tr.save(t);
+			}
+		}
+		else if(list.size()==10){	// 개인 매칭일 경우
+			for(MatchingAddList a : list) {
+				User u = a.getMatchingAdds().getUser();
+				System.out.println(a.getMatchingAddListSeq() + "["+u.getUserId()+"]");
+				System.out.println(" 변경전 : " + a.getMatchingAdds().getUser().getUserScore());
+				if(aScore > bScore) {
+					if(a.getTeam().equals("A"))
+						u.updateScore(10);
+					else 
+						u.updateScore(-10);
+				}
+				else if(aScore < bScore){
+					if(a.getTeam().equals("A"))
+						u.updateScore(-10);
+					else 
+						u.updateScore(10);
+				}
+				ur.save(u);	
+			}
 		}
 		
-		
-		
+		Matching m = optionalMatching.get();
+		// matchings table에 업데이트 
+		if (optionalMatching.isPresent()) {
+			m.updateScore(aScore, bScore);	 // score update
+			m.updateStatus("경기완료");		// status update
+			mtr.save(m);
+			res = true;
+		}
 		
 		return res;
 	}
@@ -186,17 +230,48 @@ public class ManagerService {
 		boolean res = false;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
 		LocalDate date = LocalDate.parse(selectedDay, formatter); 
-		
 		Optional<Field> op = fr.findById(fieldSeq);
+		
+		boolean ok = false;
+		// 만약, 7월 24일 8시, 10시
 		if(op.isPresent()) {
-			Field f = op.get();
+			Field f = op.get();	
+			List<FieldSchedule> list = fsr.findByClosedDateAndFields_FieldSeq(date, f.getFieldSeq()); 
+			
+			Boolean [] close = new Boolean[8];
+			Boolean [] select = new Boolean[8];
+			for(int i=0; i<8; i++) {
+				close[i] = false;
+				select[i] = false;
+			}
+			
+			for(FieldSchedule tmp : list) {
+				int time = tmp.getClosedTime(); // 8 ,12
+				close[(time-8)/2] = true;
+			}
+			
 			for(String s : selectedTimes) {
-				FieldSchedule fs = FieldSchedule.builder()
-						.closedTime(Integer.parseInt(s))
+				int time = Integer.parseInt(s);
+				select[(time-8)/2] = true;
+			}
+			
+			for(int i=0; i<8; i++) {
+				if(select[i] == close[i])
+					continue;
+				
+				FieldSchedule fs = null;
+				fs = FieldSchedule.builder()
 						.closedDate(date)
+						.closedTime(i*2+8)
 						.fields(f)
 						.build();
-				fsr.save(fs);
+				if(close[i] == false) { // insert
+					fsr.save(fs);
+				}else {				// delete
+					FieldSchedule savedFs = fsr.findByClosedDateAndClosedTimeAndFields_FieldSeq(date, i*2+8, fieldSeq);
+					fsr.delete(savedFs);
+				}
+				
 			}
 			res = true;
 		}
