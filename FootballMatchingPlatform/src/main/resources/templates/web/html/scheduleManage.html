@@ -163,13 +163,44 @@
 
             <!-- 일정 수정 모달 -->
             <div class="modal" id="modScheduleModal" tabindex="-1">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content align-items-center">
-                        <div class="modal-body mt-4">
-                            <p>일정수정</p>
+                        <div class="modal-header border-bottom-0 mt-3">
+                            <p class="fs-3">일정 수정</p>
                         </div>
-                        <div class="modal-footer justify-content-center border-top-0">
-                            <button type="button" class="btn btn-success" id="updateMemberStatus">완료</button>
+                        <div class="modal-body d-flex flex-wrap gap-3 justify-content-center">
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="8" id="time1">
+                                <label class="form-check-label" for="time1">08-10</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="10" id="time2">
+                                <label class="form-check-label" for="time2">10-12</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="12" id="time3">
+                                <label class="form-check-label" for="time3">12-14</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="14" id="time4">
+                                <label class="form-check-label" for="time4">14-16</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="16" id="time5">
+                                <label class="form-check-label" for="time5">16-18</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="18" id="time6">
+                                <label class="form-check-label" for="time6">18-20</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="20" id="time7">
+                                <label class="form-check-label" for="time7">20-22</label>
+                            </div>
+                            <p class="fs-5 text-secondary m-2">⊙ 체크한 시간대는 운영을 하지 않습니다.</p>
+                        </div>
+                        <div class="modal-footer justify-content-center border-top-0 mb-2">
+                            <button type="button" class="btn btn-success" id="addCloseTimeBtn">완료</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                         </div>
                     </div>
@@ -244,8 +275,10 @@
                 dateElement.classList.add("date");
                 dateElement.setAttribute('id', currentYear + "-" + parseInt(currentMonth + 1) + "-" + i);
                 dateElement.textContent = i;
-                if (i == currentDate && date.getMonth() == currentMonth)
+                if (i == currentDate && date.getMonth() == currentMonth) {
                     dateElement.classList.add("today");
+                    dateElement.classList.add("click-date");	// default 오늘 날짜 선택
+                }
 
                 // 매칭 여부
                 const matchingDateElement = document.createElement("div");
@@ -292,34 +325,58 @@
             console.log($(this).find('.date').attr("id"));
         });
 
+        // ===================== 승패입력 =====================
         $('#setScoreBtn').on('click', function () {
-            let matchingSeq = 2;
-            let aS = $('#aCount').val();
-            let bS = $('#bCount').val();
-            console.log("Seq:"+matchingSeq + ", "+aS + " " + bS);
-            console.log(typeof 1);
+            let matchingSeq = 2; // << 매칭 Seq 가져오기
+            var ascore = $('#aCount').val();
+            var bscore = $('#bCount').val();
 
-            fetch('/score/'+matchingSeq, {
-                method: 'PUT',
+            fetch('/setscore/' + matchingSeq, {
+                method: "put",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ aScore: 3, bScore: 5 })
+                body: JSON.stringify({
+                    scoreA: ascore,
+                    scoreB: bscore
+                })
             })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                    throw new Error('Network response was not ok.');
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log('Scores updated:', data);
+                    var matchingAddResult = data.result;
+                    console.log(matchingAddResult);
                 })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                });
         })
 
+        // ============ close time ============
+        $('#addCloseTimeBtn').on('click', function () {
+            const checkBox = $('input[type="checkbox"]:checked').map(function () {
+                return $(this).val(); // 체크박스와 연결된 레이블의 텍스트를 가져옵니다.
+            }).get();
+            
+            let selDay = $(".click-date").attr("id");
+            let fieldSeq = $('button[name=city1]').val();
+            console.log(fieldSeq);
+            
+            const dataToSend = {
+            	selectTime : checkBox,
+            	selectDay : selDay
+            }
+            
+            $.ajax({
+                url: '/closetime/' + fieldSeq, // 실제 API 엔드포인트로 변경
+                type: 'POST', // 또는 'PUT', 필요한 HTTP 메서드로 설정
+                contentType: 'application/json',
+                data: JSON.stringify(dataToSend), // JSON 문자열로 변환
+                success: function (response) {
+                    console.log('서버 응답:', response);
+                },
+                error: function (xhr, status, error) {
+                    console.error('요청 실패:', error);
+                }
+            })
+
+        })
     </script>
 </body>
 

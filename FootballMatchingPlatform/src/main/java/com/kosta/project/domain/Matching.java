@@ -60,4 +60,8 @@ public class Matching {
         this.aScore = a;
         this.bScore = b;
     }
+    
+    public void updateStatus(String status) {
+    	this.matchingStatus = status;
+    }
 }

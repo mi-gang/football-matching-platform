@@ -4,20 +4,24 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kosta.project.domain.Field;
 import com.kosta.project.domain.FieldImage;
+import com.kosta.project.domain.FieldSchedule;
 import com.kosta.project.domain.Manager;
 import com.kosta.project.dto.FieldBoxDTO;
 import com.kosta.project.dto.FieldDTO;
 import com.kosta.project.domain.Matching;
+import com.kosta.project.domain.MatchingAddList;
 import com.kosta.project.dto.FieldInfoDTO;
 import com.kosta.project.dto.ImageUploadDTO;
 import com.kosta.project.dto.InquiryDTO;
@@ -26,11 +30,15 @@ import com.kosta.project.dto.UserDTO;
 import com.kosta.project.dto.Manager.MatchingDTO;
 import com.kosta.project.repository.FieldImgRepository;
 import com.kosta.project.repository.FieldRepository;
+import com.kosta.project.repository.FieldScheduleRepository;
 import com.kosta.project.repository.InquiryMapper;
 import com.kosta.project.repository.ManagerRepository;
+import com.kosta.project.repository.MatchingAddListRepository;
+import com.kosta.project.repository.MatchingAddRepository;
 import com.kosta.project.repository.MatchingRepository;
 import com.kosta.project.repository.TeamMapper;
 import com.kosta.project.repository.UserMapper;
+import com.kosta.project.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +50,10 @@ public class ManagerService {
 	private final FieldRepository fr;
 	private final FieldImgRepository fir;
 	private final MatchingRepository mtr;
+	private final FieldScheduleRepository fsr;
+	private final MatchingAddListRepository malr;
+	private final MatchingAddRepository mar;
+	private final UserRepository ur;
 
 	// 매니저로그인
 	public boolean getLoginResult(String managerId, String password) {
@@ -151,15 +163,45 @@ public class ManagerService {
 	}
 
 	// 승패입력
-	public Matching updateScores(int matchingSeq, Integer aScroe, Integer bScore) {
+	public boolean updateScores(int matchingSeq, Integer aScroe, Integer bScore) {
 		Optional<Matching> optionalMatching = mtr.findById(matchingSeq);
+		boolean res = false;
+		
+		// matchings table에 업데이트 
 		if (optionalMatching.isPresent()) {
 			Matching m = optionalMatching.get();
-			System.out.println(m);
-			m.updateScore(aScroe, bScore);
-			System.out.println(m);
-			return mtr.save(m);
+			m.updateScore(aScroe, bScore);	 // score update
+			m.updateStatus("경기완료");		// status update
+			//mtr.save(m);
 		}
-		return null;
+		
+		
+		
+		
+		return res;
 	}
+	
+	// 경기 일정 등록 -- 닫는 시간대
+	public boolean addCloseTime(int fieldSeq, List<String> selectedTimes, String selectedDay) {
+		boolean res = false;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
+		LocalDate date = LocalDate.parse(selectedDay, formatter); 
+		
+		Optional<Field> op = fr.findById(fieldSeq);
+		if(op.isPresent()) {
+			Field f = op.get();
+			for(String s : selectedTimes) {
+				FieldSchedule fs = FieldSchedule.builder()
+						.closedTime(Integer.parseInt(s))
+						.closedDate(date)
+						.fields(f)
+						.build();
+				fsr.save(fs);
+			}
+			res = true;
+		}
+		
+		return res;
+	}
+	
 }

@@ -67,13 +67,6 @@ public class ManagerRestController {
 		return Map.of("result", "성공");
 	}
 	
-	
-	// 구장 등록
-	@PostMapping("/addfield")
-	public Map<String, Long> addField(@RequestBody Field dto, @SessionAttribute(name = "managerId", required = false) String managerId){		
-		return Map.of("result", 1L);
-	}
-	
 	//특정 구장 특정 달 경기확정인 매칭의 매칭날짜 가져오기
 	@GetMapping("/confirmed/dates/{fieldSeq}")
     public List<LocalDate> getConfirmedMatchingDates(@PathVariable int fieldSeq,
@@ -113,16 +106,23 @@ public class ManagerRestController {
 		return Map.of("result", res);
 	}
 
-
-	@PutMapping("/score/{matchingSeq}")
-	public Map<String, Boolean> putMethodName(@PathVariable("matchingSeq") int matchingSeq, @RequestBody ScoreDTO score) {
-		System.out.println(score);
-		// System.out.println(score.getAScore() + " " + score.getBScore());
-		//Matching updatedMatching = ms.updateScores(matchingSeq, score.getAScore(), score.getBScore());
-		boolean res = false;
-		// if (updatedMatching != null) {
-		// 		res = true;
-		// }
+	// 승패 입력
+	@PutMapping("/setscore/{matchingSeq}")
+	public Map<String, Boolean> setScore(@PathVariable("matchingSeq") int matchingSeq, @RequestBody ScoreDTO score) {
+		boolean res =  ms.updateScores(matchingSeq, score.getScoreA(), score.getScoreB());
+		
 		return Map.of("result", res);
+	}
+	
+	// 취소 일정 등록
+	@PostMapping("/closetime/{fieldSeq}")
+	public Map<String, Boolean> addCloseTime(@PathVariable("fieldSeq") int fieldSeq, @RequestBody Map<String, Object> requestBody){
+		
+		List<String> selectedTimes = (List<String>) requestBody.get("selectTime");
+        String selectedDay = (String) requestBody.get("selectDay");
+        
+        boolean res = ms.addCloseTime(fieldSeq, selectedTimes, selectedDay);
+        
+		return Map.of("result", true);
 	}
 }
