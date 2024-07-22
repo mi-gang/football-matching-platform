@@ -204,11 +204,8 @@ public class ManagerService {
 		return res;
 	}
 	
-        return mtr.findMatchingsByDateAndField(matchingDate, fieldSeq);
-    }
-	
 	//매칭 상세 정보 가져오기
 	public MatchingDTO getMatchingInfoByMatchingSeq(int matchingSeq){
-		return mtr.findById(matchingSeq);
+		return mtr.findMatchingDTOById(matchingSeq);
 	}
 }
