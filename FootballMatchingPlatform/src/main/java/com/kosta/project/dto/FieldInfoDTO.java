@@ -3,6 +3,7 @@ package com.kosta.project.dto;
 import java.sql.Date;
 
 import com.kosta.project.domain.Field;
+import com.kosta.project.domain.FieldImage;
 import com.kosta.project.domain.Manager;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +23,6 @@ public class FieldInfoDTO {
 
 	private Field f;
 	private Manager m;
-
+	private FieldImage fi;
 
 }
