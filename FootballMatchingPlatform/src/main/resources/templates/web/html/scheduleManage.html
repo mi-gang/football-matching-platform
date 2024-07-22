@@ -32,8 +32,6 @@
                                 <li th:each="field : ${fieldList}">
                                     <button th:value="${field.fieldSeq}" th:text="${field.fieldName}"
                                         class='dropdown-item'></button>
-                                    <button th:value="${field.fieldSeq}" th:text="${field.fieldName}"
-                                        class='dropdown-item'></button>
                                 </li>
                             </ul>
                         </div>
@@ -183,7 +181,6 @@
 
     <script>
         $("#navbar").load("./common/navbarManager.html");
-
         let matchingDateList;
         const date = new Date();
         let currentYear = date.getFullYear();
@@ -268,6 +265,7 @@
                     }
 
                 }
+                
                 dateWrapperElement.appendChild(matchingDateElement);
                 dateWrapperElement.appendChild(dateElement);
                 calendarDates.appendChild(dateWrapperElement);
@@ -330,14 +328,42 @@
             console.log($(this).find('.date').attr("id"));
             var date = $(this).find('.date').attr("id");
             var fieldSeq = $("button[name=city1]").val();
-            fetch(`/date/${date}/field/${fieldSeq}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                const sortByTime = data.sort((a, b) => a.matchingTime - b.matchingTime);
+
+            let closedDate = [];
+            //닫힌날짜 시간 가져오기
+            fetch(`/closedDate/${date}/fieldSeq/${fieldSeq}`)
+            .then(response => response.text())
+            .then(text => {
+                if(text){
+                    closedDate = JSON.parse(text);
+                    console.log(closedDate);
+                }
+                //날짜별 매칭기록 가져오기
+                return fetch(`/date/${date}/field/${fieldSeq}`);
+            })
+            .then(response => response.text())
+            .then(text => {
+                if(text){
+                    var data = JSON.parse(text);
+                    console.log(data);
+                }
+                else{
+                    let time = 8;
+                    for(var i=0; i<7; i++){
+                        $("#scheduleBox").append(`
+                            <div class="row rounded-3 m-1 timeList default">
+                                <p class="m-0 p-3">
+                                    ${time}:00-${parseInt(time) + 2}:00
+                                </p>
+                            </div>
+                        `);
+                    time = time + 2;
+                    }
+                    return;
+                }
                 const now = new Date();
                 const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                const currentHour = currentDate.getHours();
+                const currentHour = now.getHours();
                 const scheduleStats = {
                     8: false,
                     10: false,
@@ -347,7 +373,6 @@
                     18: false,
                     20: false
                 };
-                
                 for (const timeKey in scheduleStats) {
                     const hasMatchingTime = data.some(matching => matching.matchingTime === parseInt(timeKey))
                     if(hasMatchingTime) {
@@ -356,8 +381,10 @@
                             if (matching.matchingTime === parseInt(timeKey)) {
                                 const matchingDateObj = new Date(matching.matchingDate);
                                 if (matching.matchingStatus === "경기확정") {
-                                    if (matchingDateObj < currentDate || 
-                                        (matchingDateObj.getTime() === currentDate.getTime() && (matching.matchingTime + 2) <= currentHour)) {
+                                    if ((matchingDateObj.getFullYear() == currentDate.getFullYear() && matchingDateObj.getMonth() == currentDate.getMonth() &&
+                                            matchingDateObj.getDate() < currentDate.getDate()) || 
+                                        ((matchingDateObj.getFullYear() == currentDate.getFullYear() && matchingDateObj.getMonth() == currentDate.getMonth() &&
+                                            matchingDateObj.getDate() == currentDate.getDate()) && (matching.matchingTime + 2) <= currentHour)) {
                                         $("#scheduleBox").append(`
                                             <div id="${matching.matchingSeq}" class="row rounded-3 m-1 timeList matching notScore" data-bs-toggle="modal" data-bs-target="#timeModal">
                                                 <p class="m-0 p-3">
@@ -386,7 +413,7 @@
                             }
                         }
                     } else {
-                        // 해당 시간대에 경기가 없는 경우 기본 스타일로 어펜드
+                        // 기본 스타일로 어펜드
                         $("#scheduleBox").append(`
                             <div class="row rounded-3 m-1 timeList default">
                                 <p class="m-0 p-3">
@@ -401,7 +428,6 @@
 
         $("#scheduleBox").on("click", ".notScore", function(){
             var matchingSeq = $(this).attr("id");
-            console.log(matchingSeq);
             fetch(`/matchingInfo/${matchingSeq}`)
             .then(response => response.json())
             .then(data => {
@@ -412,7 +438,7 @@
                 var formattedDate = date.toLocaleDateString('ko-KR', options);
                 $("#matchingDate").text(formattedDate);
                 $("#matchingTime").text(startTime + ":00-" + endTime + ":00");
-                $("#updateMemberStatus").val(matchingSeq);
+                $("#setScoreBtn").val(matchingSeq);
             })
         })
 

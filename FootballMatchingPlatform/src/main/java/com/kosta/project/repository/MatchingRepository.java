@@ -22,7 +22,8 @@ public interface MatchingRepository extends JpaRepository<Matching, Integer> {
 
     @Query("SELECT new com.kosta.project.dto.Manager.MatchingDTO(m.matchingSeq, m.matchingDate, m.matchingTime, " +
            "m.fastAddStatus, m.matchingStatus, m.matchingTier, m.aScore, m.bScore, m.fields.fieldSeq) " +
-           "FROM Matching m WHERE m.matchingDate = :matchingDate AND m.fields.fieldSeq = :fieldSeq")
+           "FROM Matching m WHERE m.matchingDate = :matchingDate AND m.fields.fieldSeq = :fieldSeq " +
+    		 "AND m.matchingStatus IN ('경기확정', '경기완료')")
     List<MatchingDTO> findMatchingsByDateAndField(@Param("matchingDate") LocalDate matchingDate, 
                                                    @Param("fieldSeq") int fieldSeq);
     @Query("SELECT new com.kosta.project.dto.Manager.MatchingDTO(m.matchingSeq, m.matchingDate, m.matchingTime, " +
