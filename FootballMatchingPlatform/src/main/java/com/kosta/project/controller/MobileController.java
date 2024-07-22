@@ -4,6 +4,15 @@ import java.util.List;
 
 import com.kosta.project.dto.UserMatchingInfoDTO;
 import com.kosta.project.service.*;
+import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.Logger;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +35,7 @@ import com.kosta.project.service.MainPageService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-
+@Log4j2
 @Controller
 @RequiredArgsConstructor
 public class MobileController {
@@ -36,7 +45,10 @@ public class MobileController {
 	private final TeamService ts;
 	private final MatchingService ms;
 	private final ScheduleService ss;
-	
+	private final UserService us;
+	private final AuthenticationManager authenticationManager;
+	private final UserDetailService userDetailService;
+
 	@GetMapping("/fastmatchinglist")
 	public String getFastMatchingList(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -121,15 +133,87 @@ public class MobileController {
 	}
 	
 	@GetMapping("/join")
-	public String getJoin() {
+	public String join() {
 		return "join";
 	}
 	
 	@GetMapping("/login")
-	public String getLogin() {
+	public String loginForm(@RequestParam(required = false) boolean error, Model model) {
+		model.addAttribute("loginFailed", error);
 		return "login";
 	}
-	
+
+//	@PostMapping("/user/login")
+//	public String processLogin(@RequestParam String userId, @RequestParam String password, HttpServletRequest request) {
+//		try {
+//			// 1. 인증 처리
+//			Authentication authentication = authenticate(request, userId, password);
+//
+//			// 2. 인증 성공 시 처리
+//			SecurityContextHolder.getContext().setAuthentication(authentication);
+//			HttpSession session = request.getSession();
+//			session.setAttribute("loginUser", authentication.getPrincipal()); // Principal 객체 저장
+//
+//			// 메인 페이지로 리다이렉트
+//			return "redirect:/mainPage";
+//		} catch (AuthenticationException e) {
+//			// 3. 인증 실패 시 처리
+//			// 예외 메시지를 로그에 기록하거나 사용자에게 오류 메시지 표시
+//			log.error("Login failed: " + e.getMessage());
+//			return "redirect:/login?error=true";
+//		}
+//	}
+
+	@PostMapping("/user/login")
+	public String processLogin(@RequestParam String userId, @RequestParam String password, HttpServletRequest request) {
+		try {
+			// 1. 인증 토큰 생성
+			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userId, password);
+			authToken.setDetails(new WebAuthenticationDetails(request));
+
+			// 2. 인증 수행 // 인증 실패 시 에러
+			Authentication authentication = authenticationManager.authenticate(authToken);
+
+			// 3. SecurityContextHolder에 인증 정보 설정
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+
+			System.out.println("인증여부"+authentication.isAuthenticated());
+
+			// 4. 세션에 사용자 정보 저장
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			HttpSession session = request.getSession();
+			session.setAttribute("userDetails", userDetails);
+			UserDTO user = us.getUserLogin(userId, password);
+			session.setAttribute("loginUser", user);
+			log.info("Saving user details to session: {}", userDetails);
+			log.info("Saving login user to session: {}", user);
+
+			UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+			System.out.println("Login User: " + loginUser);
+			UserDetails storedUserDetails = (UserDetails) session.getAttribute("userDetails");
+			System.out.println("Stored User Details: " + storedUserDetails);
+
+			return "redirect:/mainPage";
+		} catch (AuthenticationException e) {
+			// 인증 실패 시 처리
+			return "redirect:/login?error=true";
+		}
+	}
+
+
+
+	//	@PostMapping("/user/login")
+//	public String processLogin(@RequestParam String userId, @RequestParam String password, HttpServletRequest request) {
+//		UserDTO user = us.getUserLogin(userId, password);
+//		if (user != null) {
+//			HttpSession session = request.getSession();
+//			session.setAttribute("loginUser", user);
+//			return "redirect:/mainPage";
+//		} else {
+//			return "redirect:/login?error=true";
+//		}
+//	}
+//
 	@GetMapping("/mainPage")
 	public String getMainPage(HttpServletRequest request, Model model) {
 		

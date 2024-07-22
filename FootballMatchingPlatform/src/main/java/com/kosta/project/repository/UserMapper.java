@@ -16,7 +16,7 @@ public interface UserMapper {
 
 	/* 메인 */
 	// 유저 로그인
-	UserDTO selectUserLogin(String userId, String password);
+	UserDTO selectUserLogin(String userId);
 	
 	// 유저 구글 로그인
 	UserDTO selectUserSnsLogin(String userId, String password);

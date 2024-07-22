@@ -1,73 +1,130 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
-  <head>
+<head>
     <script
-      src="https://code.jquery.com/jquery-3.7.1.js"
-      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-      crossorigin="anonymous"
+            src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="mobile/css/login.css" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous"
+  />
+    <link rel="stylesheet" href="mobile/css/login.css"/>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>로그인</title>
-  </head>
+</head>
 
-  <body>
-    <div class="flex-column-center" id="container">
-       <form id="loginForm">
+<body>
+<div class="flex-column-center" id="container">
+    <form id="loginForm" action="/user/login" method="post">
         <div class="text" id="text-id">아이디</div>
-        <input id="id" />
+        <input id="userId" name="userId">
         <div class="text" id="text-pw">비밀번호</div>
-        <input type="password" id="pw" />
-        <button>로그인</button>
-      </form>
-      <div class="flex-center" id="or-container">
-        <hr />
+        <input type="password" id="password" name="password"/>
+        <button type="submit">로그인</button>
+    </form>
+    <div class="flex-center" id="or-container">
+        <hr/>
         <span id="or">or</span>
-        <hr />
-      </div>
-      <div class="flex-center" id="logo-container">
+        <hr/>
+    </div>
+    <div class="flex-center" id="logo-container">
         <div class="flex-center" id="logo">
-          <img src="mobile/img/google.png" />
+            <img src="mobile/img/google.png"/>
         </div>
-      </div>
-      <div class="flex-column-center">
+    </div>
+    <div class="flex-column-center">
         <div id="join"><a href="/join">회원가입</a></div>
         <div id="find"><a href="/findIDPW">아이디/비밀번호 찾기</a></div>
-      </div>
     </div>
-  </body>
-  <script>
-    $("form").submit(function(e) {
-    e.preventDefault();
-      const form = document.getElementById('loginForm');
+</div>
 
-      if(!form.id.value||!form.pw.value){
-        alert('아이디와 비밀번호 모두 입력해 주세요');
-        form.text-id.focus();
-        return false;
-      }
-      
-      $.ajax({
-        url : '/user/login',
-        type: 'POST',
-        dataType : 'json',
-        data: {
-                userId: form.id.value,
-                password: form.pw.value
-        },
-        async: false,
-        success: function(response){
-            location.href = '/mainPage'
-        },
-        error: function(request, status, error){
-            alert('아이디와 비밀번호를 확인해주세요');
+<!-- 부트스트랩 -->
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"
+></script>
+
+<!-- 결제 완료 모달 -->
+<div class="modal" id="loginFailModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="modal-body-wrapper">
+                    <h4 class="modal-title" id="paymentModalText">아이디/비밀번호를 확인해주세요.</h4>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button
+                        type="button"
+                        class="btn-setting"
+                        data-bs-toggle="modal"
+                        data-bs-dismiss="modal"
+                >
+                    닫기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    window.addEventListener('DOMContentLoaded', function() {
+        // URL 쿼리 파라미터 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorParam = urlParams.get('error');
+
+        // error 파라미터가 있다면 모달 창 열기
+        if (errorParam === 'true') {
+            $('#loginFailModal').modal('show');
         }
-      })
     });
-    
+
+    // $("form").submit(function (e) {
+    //     e.preventDefault();
+    //     const form = document.getElementById('loginForm');
+    //
+    //     if (!form.userId.value || !form.password.value) {
+    //         alert('아이디와 비밀번호 모두 입력해 주세요');
+    //         form.text - id.focus();
+    //         return false;
+    //     }
+
+        // $.ajax({
+        //   url : '/user/login',
+        //   type: 'POST',
+        //   dataType : 'json',
+        //   data: {
+        //           userId: form.id.value,
+        //           password: form.pw.value
+        //   },
+        //   async: false,
+        //   success: function(response){
+        //       location.href = '/mainPage'
+        //   },
+        //   error: function(request, status, error){
+        //       alert('아이디와 비밀번호를 확인해주세요');
+        //   }
+        // })
+
+    // });
+
     $("img").on("click", function () {
-      alert("소셜 로그인");
+        alert("소셜 로그인");
     });
 
     $("#join").on("click", function () {
@@ -75,5 +132,7 @@
 
     $("#find").on("click", function () {
     });
-  </script>
+</script>
+
+</body>
 </html>
