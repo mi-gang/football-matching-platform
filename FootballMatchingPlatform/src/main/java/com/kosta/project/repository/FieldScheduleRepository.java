@@ -1,5 +1,6 @@
 package com.kosta.project.repository;
 
+import com.kosta.project.domain.Field;
 import com.kosta.project.domain.FieldSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,4 +13,7 @@ public interface FieldScheduleRepository extends JpaRepository<FieldSchedule, In
 
     @Query("SELECT fs.closedDate FROM FieldSchedule fs WHERE fs.fields.fieldSeq = :fieldSeq")
     List<LocalDate> findClosedDatesByFieldSeq(@Param("fieldSeq") int fieldSeq);
+    
+    List<FieldSchedule> findByClosedDateAndFields_FieldSeq(LocalDate date, int field);
+    FieldSchedule findByClosedDateAndClosedTimeAndFields_FieldSeq(LocalDate date, int closedTime, int field);
 }

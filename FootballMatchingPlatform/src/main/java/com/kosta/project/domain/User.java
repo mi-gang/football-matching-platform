@@ -85,5 +85,10 @@ public class User {
     
     public void updateScore(int score) {
     	this.userScore += score;
+    	
+    	if(this.userScore < 0)
+    		this.userScore = 0;
+    	else if(this.userScore > 1200)
+    		this.userScore = 1200;
     }
 }

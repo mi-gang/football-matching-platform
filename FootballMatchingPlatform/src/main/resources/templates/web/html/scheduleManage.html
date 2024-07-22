@@ -32,8 +32,6 @@
                                 <li th:each="field : ${fieldList}">
                                     <button th:value="${field.fieldSeq}" th:text="${field.fieldName}"
                                         class='dropdown-item'></button>
-                                    <button th:value="${field.fieldSeq}" th:text="${field.fieldName}"
-                                        class='dropdown-item'></button>
                                 </li>
                             </ul>
                         </div>
@@ -124,7 +122,7 @@
 
                         </div>
                         <div class="modal-footer justify-content-center border-top-0">
-                            <button type="button" class="btn btn-success" id="setScoreBtn">완료</button>
+                            <button type="button" class="btn btn-success" id="setScoreBtn"  data-bs-dismiss="modal">완료</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                         </div>
                     </div>
@@ -412,16 +410,21 @@
                 var formattedDate = date.toLocaleDateString('ko-KR', options);
                 $("#matchingDate").text(formattedDate);
                 $("#matchingTime").text(startTime + ":00-" + endTime + ":00");
-                $("#updateMemberStatus").val(matchingSeq);
+                $("#setScoreBtn").val(matchingSeq);
             })
         })
 
         // ===================== 승패입력 =====================
         $('#setScoreBtn').on('click', function () {
-            let matchingSeq = 2; // << 매칭 Seq 가져오기
+            let matchingSeq = $(this).val(); // << 매칭 Seq 가져오기
             var ascore = $('#aCount').val();
             var bscore = $('#bCount').val();
-
+            
+            if(ascore === "" || bscore === ""){
+            	alert("점수를 입력하세요");
+            	return;
+            }
+			console.log(matchingSeq);
             fetch('/setscore/' + matchingSeq, {
                 method: "put",
                 headers: {
