@@ -168,7 +168,7 @@
                             <p class="fs-5 text-secondary m-2">⊙ 체크한 시간대는 운영을 하지 않습니다.</p>
                         </div>
                         <div class="modal-footer justify-content-center border-top-0 mb-2">
-                            <button type="button" class="btn btn-success" id="addCloseTimeBtn">완료</button>
+                            <button type="button" class="btn btn-success" id="addCloseTimeBtn" data-bs-dismiss="modal">완료</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                         </div>
                     </div>
@@ -186,11 +186,20 @@
         let currentYear = date.getFullYear();
         let currentMonth = date.getMonth();
         let currentDate = date.getDate();
+        $("button[name=city1]").text($("#dropField > li > button:eq(0)").text());
+        $("button[name=city1]").val($("#dropField > li > button:eq(0)").val());
+        
+        getMatchingInfoOfMonth($("#dropField > li > button:eq(0)").val());
+        
 
         $("#dropField > li > button").on('click', function () {
             $("button[name=city1]").text($(this).text());
             $("button[name=city1]").val($(this).val());
             const fieldSeq = $(this).val();
+            getMatchingInfoOfMonth(fieldSeq);
+        })
+
+        function getMatchingInfoOfMonth(fieldSeq){
             fetch(`/confirmed/dates/${fieldSeq}?month=${parseInt(currentMonth + 1)}&year=${currentYear}`)
                 .then(response => response.json())
                 .then(data => {
@@ -203,8 +212,7 @@
                         renderCalendar();
                     }
                 })
-        })
-
+        }
 
         // ==========================================캘린더 부분
         // 캘린더 생성
@@ -320,7 +328,6 @@
 
         // 날짜 클릭 시
         $(".calendar-dates").on("click", ".date-wrapper", function () {
-            $("#scheduleBox").html("");
             $('.click-date').removeClass('click-date');
             $(this).find('.date').addClass('click-date'); // find -> 자식 요소 찾기
 
@@ -328,7 +335,24 @@
             console.log($(this).find('.date').attr("id"));
             var date = $(this).find('.date').attr("id");
             var fieldSeq = $("button[name=city1]").val();
+            
+            getMatchingInfo(fieldSeq, date);
+        });
 
+        function getMatchingInfo(fieldSeq, date){
+            $("#scheduleBox").html("");
+            const now = new Date();
+            const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const currentHour = now.getHours();
+            const scheduleStats = {
+                8: false,
+                10: false,
+                12: false,
+                14: false,
+                16: false,
+                18: false,
+                20: false
+            };
             let closedDate = [];
             //닫힌날짜 시간 가져오기
             fetch(`/closedDate/${date}/fieldSeq/${fieldSeq}`)
@@ -349,32 +373,34 @@
                 }
                 else{
                     let time = 8;
-                    for(var i=0; i<7; i++){
-                        $("#scheduleBox").append(`
-                            <div class="row rounded-3 m-1 timeList default">
-                                <p class="m-0 p-3">
-                                    ${time}:00-${parseInt(time) + 2}:00
-                                </p>
-                            </div>
-                        `);
-                    time = time + 2;
+                    for (const timeKey in scheduleStats){
+                        const isClosedTime = closedDate.some(closed => closed.closedTime === parseInt(timeKey))
+                        if(isClosedTime){
+                            $("#scheduleBox").append(`
+                                <div class="row rounded-3 m-1 timeList closed">
+                                    <p class="m-0 p-3">
+                                        ${time}:00-${parseInt(time) + 2}:00
+                                    </p>
+                                </div>
+                            `);
+                        }
+                        else{
+                            $("#scheduleBox").append(`
+                                <div class="row rounded-3 m-1 timeList default">
+                                    <p class="m-0 p-3">
+                                        ${time}:00-${parseInt(time) + 2}:00
+                                    </p>
+                                </div>
+                            `);
+                        }
+                        time = time + 2;
                     }
                     return;
                 }
-                const now = new Date();
-                const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                const currentHour = now.getHours();
-                const scheduleStats = {
-                    8: false,
-                    10: false,
-                    12: false,
-                    14: false,
-                    16: false,
-                    18: false,
-                    20: false
-                };
+
                 for (const timeKey in scheduleStats) {
                     const hasMatchingTime = data.some(matching => matching.matchingTime === parseInt(timeKey))
+                    const isClosedTime = closedDate.some(closed => closed.closedTime === parseInt(timeKey))
                     if(hasMatchingTime) {
                         // 해당 시간대에 경기가 있는 경우 처리
                         for (const matching of data) {
@@ -413,19 +439,29 @@
                             }
                         }
                     } else {
-                        // 기본 스타일로 어펜드
-                        $("#scheduleBox").append(`
-                            <div class="row rounded-3 m-1 timeList default">
+                        if(isClosedTime){
+                            $("#scheduleBox").append(`
+                            <div class="row rounded-3 m-1 timeList closed">
                                 <p class="m-0 p-3">
                                     ${timeKey}:00-${parseInt(timeKey) + 2}:00
                                 </p>
                             </div>
                         `);
+                        }
+                        else{
+                            // 기본 스타일로 어펜드
+                            $("#scheduleBox").append(`
+                                <div class="row rounded-3 m-1 timeList default">
+                                    <p class="m-0 p-3">
+                                        ${timeKey}:00-${parseInt(timeKey) + 2}:00
+                                    </p>
+                                </div>
+                            `);
+                        }
                     }
                 }
             })
-        });
-
+        }
         $("#scheduleBox").on("click", ".notScore", function(){
             var matchingSeq = $(this).attr("id");
             fetch(`/matchingInfo/${matchingSeq}`)
@@ -448,6 +484,9 @@
             var ascore = $('#aCount').val();
             var bscore = $('#bCount').val();
             
+            let selDay = $(".click-date").attr("id");
+            let fieldSeq = $('button[name=city1]').val();
+
             if(ascore === "" || bscore === ""){
             	alert("점수를 입력하세요");
             	return;
@@ -467,6 +506,7 @@
                 .then(data => {
                     var matchingAddResult = data.result;
                     console.log(matchingAddResult);
+                    getMatchingInfo(fieldSeq, selDay);
                 })
         })
 
@@ -492,6 +532,7 @@
                 data: JSON.stringify(dataToSend), // JSON 문자열로 변환
                 success: function (response) {
                     console.log('서버 응답:', response);
+                    getMatchingInfo(fieldSeq, selDay);
                 },
                 error: function (xhr, status, error) {
                     console.error('요청 실패:', error);
