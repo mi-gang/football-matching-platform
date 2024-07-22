@@ -118,14 +118,26 @@ public class UserService {
 	}
 
 	// 비밀번호 업데이트하기
-	public void setPasswordByUserId(String password, String userId) {
-		um.updatePasswordByUserId(password, userId);
-	}
+		public void setPasswordByUserId(String userId, String pw) {
+			um.updatePasswordByUserId(userId, pw);
+		}
 
-	// 내 정보 수정하기
-	public void setMyInfoByUserId(UserDTO userDTO) {
-		um.updateMyInfoByUserId(userDTO);
-	}
+		//비밀번호 확인하기
+		public boolean findMyPw(String userId, String pwInput) {
+			String pw = um.selectMyPw(userId);
+			if (pwInput.equals(pw)) {
+				return true;
+			}
+			else { 
+				return false;
+			}
+		}		
+		
+		
+		// 내 정보 수정하기
+		public void setMyInfoByUserId(UserDTO dto) {
+			um.updateMyInfoByUserId(dto.getUserId(),dto.getName(),dto.getNickname(),dto.getPhoneNumber(),dto.getEmail());
+		}
 
 	// 회원 탈퇴하기
 	public void setUserStatusByUserId(UserDTO userDTO) {

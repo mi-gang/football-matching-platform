@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.kosta.project.dto.InquiryDTO;
 import com.kosta.project.dto.MatchingConditionDTO;
 import com.kosta.project.dto.MatchingsDTO;
 import com.kosta.project.dto.TeamDTO;
@@ -36,6 +37,7 @@ public class MobileController {
 	private final TeamService ts;
 	private final MatchingService ms;
 	private final ScheduleService ss;
+	private final UserService us;
 	
 	@GetMapping("/fastmatchinglist")
 	public String getFastMatchingList(Model model, HttpServletRequest request) {
@@ -212,14 +214,37 @@ public class MobileController {
 		return "mypage_editInfo";
 	}
 	
-	@GetMapping("/myPageInquiryDetail")
-	public String getMyPageInquiryDetail() {
-		return "mypage_inquiry-detail";
-	}
 	
 	@GetMapping("/myPageInquiry")
-	public String getMyPageInquiry() {
+	public String getMyPageInquiry(HttpServletRequest request, Model model) {
+		
+		HttpSession session = request.getSession();
+		
+		UserDTO user = (UserDTO) session.getAttribute("loginUser");
+		
+		String userId = user.getUserId();
+		
+		model.addAttribute("getAllInquiry",us.getAllInquiry(userId));		
+		
 		return "mypage_inquiry";
+	}
+	
+	@GetMapping("/myPageInquiryDetail")
+	public String getMyPageInquiryDetail(HttpServletRequest request, Model model) {
+		
+		HttpSession session = request.getSession();
+		
+		InquiryDTO inquiry = (InquiryDTO) session.getAttribute("inquiry");
+		
+		String title = inquiry.getTitle();
+		String content = inquiry.getInquiryContent();
+		String answer = inquiry.getAnswerContent();
+		
+		model.addAttribute("title", title);
+		model.addAttribute("content", content);
+		model.addAttribute("answer", answer);
+		
+		return "mypage_inquiry-detail";
 	}
 	
 	@GetMapping("/myPage")

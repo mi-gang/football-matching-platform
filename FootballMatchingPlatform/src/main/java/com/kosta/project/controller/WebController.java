@@ -32,51 +32,31 @@ import jakarta.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class WebController {
 	private final ManagerService ms;
-	
-	@GetMapping("/loginPage")
-	String loginPage() {
-		return "managerLogin";
-	}
-	
-	@GetMapping("/joinPage")
-	String joinPage() {
-		return "managerJoin";
-	}
-	
-	@GetMapping("/main")
-	String mainPage(Model model, HttpServletRequest request) {
-		String managerId = (String) request.getSession().getAttribute("managerId");
-		List<Field> fieldList = ms.getFieldList(managerId);
-		model.addAttribute("fieldList", fieldList);
-		
-		return "mainManager";
-	}
-	
-	@GetMapping("/schedule")
-	String schedule() {
-		return "scheduleManage";
-	}
-	
-	@GetMapping("/fieldInfo/{fieldSeq}")
-	String fieldInfo(Model model, @PathVariable int fieldSeq) {
-		FieldInfoDTO fiDTO = ms.getField(fieldSeq);
-		model.addAttribute("fieldInfo", fiDTO);
-		return "fieldInfo";
-	}
-	
-	@GetMapping("/addField")
-	String addfield() {
-		return "addField";
-	}
-	
-	@GetMapping("/fieldApplyList")
-	public String getFieldList() {
-		return "fieldApplyList";
-	}
-	
-	@GetMapping("/fieldInfo/{fieldSeq}")
-	public String getFieldInfo(@PathVariable Long fieldSeq) {
-		return "fieldInfo";
-	}
-	
+	/*
+	 * @GetMapping("/loginPage") String loginPage() { return "managerLogin"; }
+	 * 
+	 * @GetMapping("/joinPage") String joinPage() { return "managerJoin"; }
+	 * 
+	 * @GetMapping("/main") String mainPage(Model model, HttpServletRequest request)
+	 * { String managerId = (String) request.getSession().getAttribute("managerId");
+	 * List<Field> fieldList = ms.getFieldList(managerId);
+	 * model.addAttribute("fieldList", fieldList);
+	 * 
+	 * return "mainManager"; }
+	 * 
+	 * @GetMapping("/schedule") String schedule() { return "scheduleManage"; }
+	 * 
+	 * @GetMapping("/fieldInfo/{fieldSeq}") String fieldInfo(Model
+	 * model, @PathVariable int fieldSeq) { FieldInfoDTO fiDTO =
+	 * ms.getField(fieldSeq); model.addAttribute("fieldInfo", fiDTO); return
+	 * "fieldInfo"; }
+	 * 
+	 * @GetMapping("/addField") String addfield() { return "addField"; }
+	 * 
+	 * @GetMapping("/fieldApplyList") public String getFieldList() { return
+	 * "fieldApplyList"; }
+	 * 
+	 * @GetMapping("/fieldInfo/{fieldSeq}") public String getFieldInfo(@PathVariable
+	 * Long fieldSeq) { return "fieldInfo"; }
+	 */
 }

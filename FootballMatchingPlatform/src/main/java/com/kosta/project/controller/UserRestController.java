@@ -17,7 +17,9 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,7 +81,7 @@ public class UserRestController {
 	}
 	
 	// 이메일 중복 여부 확인하기
-	@GetMapping("/getEmail")
+	@PostMapping("/getEmail")
 	public boolean getEmailByEmail(String email) {
 		return us.getEmailByEmail(email);
 	}
@@ -163,10 +165,16 @@ public class UserRestController {
 	
 	// 비밀번호 업데이트하기
 	@PostMapping("/setPassword")
-	public Map<String,String> setPasswordByUserId(@RequestBody UserDTO dto) {
-		us.setPasswordByUserId(dto.getPassword(), dto.getUserId());
+	public Map<String,String> setPasswordByUserId(@SessionAttribute(name ="loginUser", required = false) UserDTO user, @RequestParam String pw) {
+		us.setPasswordByUserId(user.getUserId(), pw);
 		return Map.of("result", "ok");
 	}
+	
+	// 비밀번호 확인하기
+		@GetMapping("/findMyPw")
+		public boolean findMyPw(@SessionAttribute(name ="loginUser", required = false) UserDTO user, @RequestParam String pwInput){		
+			return us.findMyPw(user.getUserId(), pwInput);
+		}
 	
 	// 내 정보 수정하기
 	@PostMapping("/setMyInfo")
@@ -175,7 +183,7 @@ public class UserRestController {
 		return Map.of("result", "ok");
 	}
 	// 회원 탈퇴하기
-	@PostMapping("/setUserStatusWidhdraw")
+	@PostMapping("/setUserStatusWidthdraw")
 	public Map<String, String> setUserStatusByUserId(@RequestBody UserDTO dto){
 		us.setUserStatusByUserId(dto);
 		return Map.of("result", "ok");
@@ -188,9 +196,12 @@ public class UserRestController {
 	}
 	
 	// 선택한 문의 내역 상세 보기
-	@GetMapping("/pathDetailInfo/{}")
-	public Map<String, InquiryDTO> getDetailInfoByInquirySeq(int inquirySeq) {
-		return Map.of("result", us.getDetailInfoByInquirySeq(inquirySeq));
+	@GetMapping("/pathDetailInfo/{inquirySeq}")
+	public Map<String, String> getDetailInfoByInquirySeq(@PathVariable("inquirySeq") int inquirySeq, HttpServletRequest request) {
+		InquiryDTO inquiry = us.getDetailInfoByInquirySeq(inquirySeq);
+		HttpSession session = request.getSession();
+		session.setAttribute("inquiry", inquiry);
+		return Map.of("result", "ok");
 	}
 	
 	// 문의 내역 추가하기

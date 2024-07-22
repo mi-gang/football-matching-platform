@@ -25,7 +25,7 @@
 
 
 	<!-- 선택한 문의 내역 상세 보기 -->
-  <select id="selectDetailInfoByInquirySeq" resultType="com.kosta.project.dto.InquiryDTO" parameterType="int">
+  <select id="selectDetailInfoByInquirySeq" resultType="com.kosta.project.dto.InquiryDTO" parameterType="Integer">
     SELECT title, inquiry_content as inquiryContent, answer_content as answerContent
     FROM inquirys
     WHERE inquiry_seq = #{inquirySeq};

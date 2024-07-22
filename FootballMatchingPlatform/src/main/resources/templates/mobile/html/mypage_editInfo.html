@@ -10,8 +10,8 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
     crossorigin="anonymous"
   />
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/mypage/edit-info.css">
+    <link rel="stylesheet" href="mobile/css/common.css">
+    <link rel="stylesheet" href="mobile/css/mypage/edit-info.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -24,27 +24,27 @@
             <div id="editinfo-wrapper">
                 <div class="edit-content-wrapper">
                     <span>이름</span>
-                    <input class="edit-input" value="김박박"/>
+                    <input class="edit-input" id="edit-name" value="김박박"/>
                 </div>
                 <div class="edit-content-wrapper">
                     <span>아이디</span>
-                    <span class="non-edit">bakbakkim</span>
+                    <span class="non-edit" id="id">bakbakkim</span>
                 </div>
                 <div class="edit-content-wrapper">
                     <span>닉네임</span>
-                    <input class="edit-input" value="bakxoon"/>
+                    <input class="edit-input" id="edit-nickname" value="bakxoon"/>
                 </div>
                 <div class="edit-content-wrapper">
                     <span>생년월일</span>
-                    <span class="non-edit">2001.06.30</span>
+                    <span class="non-edit" id="birth">2001.06.30</span>
                 </div>
                 <div class="edit-content-wrapper">
                     <span>이메일</span>
-                    <input class="edit-input" value="bakxoon@gmail.com"/>
+                    <input class="edit-input" id="edit-email" value="bakxoon@gmail.com"/>
                 </div>
                 <div class="edit-content-wrapper">
                     <span>전화번호</span>
-                    <input class="edit-input" value="010-9452-8484"/>
+                    <input class="edit-input" id="edit-phone" value="010-9452-8484"/>
                 </div>
                 <div id="btn-wrapper">
                     <div>
@@ -169,7 +169,13 @@
         });
         $('nav').load('common/nav.html');
     });
+	
+	//이름 유효성 검사
+	
+
+	//닉네임 중복 검사
+
     </script>
-    <script src="../js/mypage.js"></script>
+    <script src="mobile/js/mypage.js"></script>
 </body>
 </html>

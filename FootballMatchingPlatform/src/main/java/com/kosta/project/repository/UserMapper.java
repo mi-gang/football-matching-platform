@@ -44,7 +44,10 @@ public interface UserMapper {
 	String selectPasswordByUserIdAndEmail(String userId, String email);
 	
 	// 비밀번호 업데이트하기
-	void updatePasswordByUserId(String password, String userId);
+	void updatePasswordByUserId(String userId, String pw);
+
+	//비밀번호 확인하기
+	String selectMyPw(String userId);	
 	
 	// 개인 순위 top1 불러오기
 	UserDTO selectTopOneUser();
@@ -66,7 +69,7 @@ public interface UserMapper {
 	
 	/* 마이 페이지 */	
 	// 내 정보 수정하기
-	void updateMyInfoByUserId(UserDTO userDTO);
+	void updateMyInfoByUserId(String userId, String name, String nickname, String phoneNumber, String email);
 	
 	// 회원 상태 수정하기(회원 탈퇴 시)
 	void updateUserStatusByUserId(UserDTO userDTO);
