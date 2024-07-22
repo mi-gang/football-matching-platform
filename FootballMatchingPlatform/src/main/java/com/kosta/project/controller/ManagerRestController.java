@@ -15,6 +15,7 @@ import com.kosta.project.domain.Field;
 import com.kosta.project.domain.Matching;
 import com.kosta.project.domain.Field;
 import com.kosta.project.dto.AddMatchingDataDTO;
+import com.kosta.project.dto.Manager.CloseTimeDTO;
 import com.kosta.project.dto.FieldBoxDTO;
 import com.kosta.project.dto.FieldDTO;
 import com.kosta.project.dto.FieldsDTO;
@@ -93,12 +94,21 @@ public class ManagerRestController {
         
         return ResponseEntity.ok(matchings); // 매칭 기록이 있는 경우 200 OK와 함께 반환
     }
+	
 	//매칭 상세 정보 가져오기
 	@GetMapping("/matchingInfo/{matchingSeq}")
 	public ResponseEntity<MatchingDTO> getMatchingInfoByMatchingSeq(@PathVariable int matchingSeq){
 		MatchingDTO matchingInfo = ms.getMatchingInfoByMatchingSeq(matchingSeq);
 		
 		return ResponseEntity.ok(matchingInfo);
+	}
+	
+	//구장 닫힌 날짜 가져오기
+	@GetMapping("/closedDate/{date}/fieldSeq/{fieldSeq}")
+	public ResponseEntity<List<CloseTimeDTO>> getClosedDate(@PathVariable String date, @PathVariable int fieldSeq){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
+        LocalDate formatterDate = LocalDate.parse(date, formatter); // 날짜 형식 변환
+		return ResponseEntity.ok(ms.getClosedDate(formatterDate, fieldSeq));
 	}
 	
 	// 이미지 등록

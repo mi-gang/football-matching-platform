@@ -30,6 +30,7 @@ import com.kosta.project.dto.ImageUploadDTO;
 import com.kosta.project.dto.InquiryDTO;
 import com.kosta.project.dto.TeamDTO;
 import com.kosta.project.dto.UserDTO;
+import com.kosta.project.dto.Manager.CloseTimeDTO;
 import com.kosta.project.dto.Manager.MatchingDTO;
 import com.kosta.project.repository.FieldImgRepository;
 import com.kosta.project.repository.FieldRepository;
@@ -282,5 +283,10 @@ public class ManagerService {
 	//매칭 상세 정보 가져오기
 	public MatchingDTO getMatchingInfoByMatchingSeq(int matchingSeq){
 		return mtr.findMatchingDTOById(matchingSeq);
+	}
+	
+	//구장 닫힌 시간 가져오기
+	public List<CloseTimeDTO> getClosedDate(LocalDate date, int fieldSeq) {
+		return fsr.findClosedDatesAndClosedTimeByFieldSeq(date, fieldSeq);
 	}
 }

@@ -80,8 +80,10 @@ $(document).ready(function(){
 		}
 	})
 });
-			
-const today = new Date(); // 오늘 날짜
+const today2 = new Date();
+const today = new Date(today2); // 오늘 날짜
+today.setDate(today.getDate() + 2);
+
 const TODAY_BUTTON_VALUE = today.toISOString().slice(0, 10); // '오늘' 버튼의 value 값 (YYYY-MM-DD)
 
 const matchingDateBtns = document.getElementById('matchingDateBtns'); // 버튼 목록 요소
