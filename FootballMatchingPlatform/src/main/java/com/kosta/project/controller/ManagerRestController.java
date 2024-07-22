@@ -99,6 +99,14 @@ public class ManagerRestController {
         
         return ResponseEntity.ok(matchings); // 매칭 기록이 있는 경우 200 OK와 함께 반환
     }
+	//매칭 상세 정보 가져오기
+	@GetMapping("/matchingInfo/{matchingSeq}")
+	public ResponseEntity<MatchingDTO> getMatchingInfoByMatchingSeq(@PathVariable int matchingSeq){
+		MatchingDTO matchingInfo = ms.getMatchingInfoByMatchingSeq(matchingSeq);
+		
+		return ResponseEntity.ok(matchingInfo);
+	}
+	
 	// 이미지 등록
 	@PostMapping("/addField/image")
 	public Map<String, Boolean> addFieldByImage(@RequestPart("img") MultipartFile img, 
