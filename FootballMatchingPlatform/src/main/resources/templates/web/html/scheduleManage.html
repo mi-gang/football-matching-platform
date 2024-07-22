@@ -30,7 +30,8 @@
                             </button>
                             <ul class="dropdown-menu" id='dropField'>
                                 <li th:each="field : ${fieldList}">
-                                    <button th:value="${field.fieldSeq}" th:text="${field.fieldName}" class='dropdown-item'></button>
+                                    <button th:value="${field.fieldSeq}" th:text="${field.fieldName}"
+                                        class='dropdown-item'></button>
                                 </li>
                             </ul>
                         </div>
@@ -70,34 +71,7 @@
 
                             <!-- 일정  -->
                             <div class="row">
-                                <div class="col d-flex flex-column text-center ms-2">
-                                    <div class="row rounded-3 m-1 timeList matching"
-                                        data-bs-toggle="modal" data-bs-target="#timeModal">
-                                        <p class="m-0 p-3">
-                                            <img class="me-2 userImg" src="mobile/img/user.svg">
-                                            08:00-10:00
-                                        </p>
-                                    </div>
-                                    <div class="row rounded-3 m-1 timeList matching">
-                                        <p class="m-0 p-3">
-                                            <img class="me-2 teamImg" src="mobile/img/team.svg">10:00-12:00
-                                        </p>
-                                    </div>
-                                    <div class="row rounded-3 m-1 timeList">
-                                        <p class="m-0 p-3">12:00-14:00</p>
-                                    </div>
-                                    <div class="row rounded-3 m-1 timeList">
-                                        <p class="m-0 p-3">14:00-16:00</p>
-                                    </div>
-                                    <div class="row rounded-3 m-1 timeList complete">
-                                        <p class="m-0 p-3">16:00-18:00</p>
-                                    </div>
-                                    <div class="row rounded-3 m-1 timeList complete">
-                                        <p class="m-0 p-3">18:00-20:00</p>
-                                    </div>
-                                    <div class="row rounded-3 m-1 timeList">
-                                        <p class="m-0 p-3">20:00-22:00</p>
-                                    </div>
+                                <div id = "scheduleBox" class="col d-flex flex-column text-center ms-2">
 
                                 </div>
                                 <div class="d-flex flex-column align-items-end mt-2 mb-2">
@@ -105,14 +79,9 @@
                                         data-bs-target="#modScheduleModal">일정수정</p>
                                 </div>
                             </div>
-
-
-
                         </div>
-
                     </div>
                 </div>
-
             </div>
 
 
@@ -125,8 +94,8 @@
                         </div>
                         <div class="modal-body d-flex flex-wrap justify-content-center">
                             <div class="row text-center">
-                                <p>2024년 7월 17일 수요일</p>
-                                <p>16:00-18:00</p>
+                                <p id="matchingDate">매칭 날짜</p>
+                                <p id="matchingTime">매칭 시간</p>
                             </div>
                             <div class="row gap-5 flex-nowrap justify-content-center m-3">
                                 <div class="form-group text-center w-25">
@@ -135,7 +104,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">⚽</span>
                                         </div>
-                                        <input type="number" class="form-control w-25" id="aCount" value="3" aria-label="A팀" aria-describedby="basic-addon1">
+                                        <input type="number" class="form-control w-25" id="aCount"
+                                            aria-label="A팀" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
                                 <div class="form-group text-center w-25">
@@ -144,11 +114,12 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon2">⚽</span>
                                         </div>
-                                        <input type="number" class="form-control" id="bCount" value="5" aria-label="B팀" aria-describedby="basic-addon2">
+                                        <input type="number" class="form-control" id="bCount" aria-label="B팀"
+                                            aria-describedby="basic-addon2">
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="modal-footer justify-content-center border-top-0">
                             <button type="button" class="btn btn-success" id="updateMemberStatus">완료</button>
@@ -181,33 +152,32 @@
         $("#navbar").load("./common/navbarManager.html");
 
         let matchingDateList;
-
-        $("#dropField > li > button").on('click', function () {
-            $("button[name=city1]").text($(this).text());
-            $("button[name=city1]").val($(this).val());
-            const fieldSeq = $(this).val();
-            console.log(fieldSeq);
-            fetch(`/confirmed/dates/${fieldSeq}?month=${currentMonth}&year=${currentYear}`)
-            .then(response => response.json())
-            .then(data => {
-                if(data.length === 0){
-                    matchingDateList = [];
-                }
-                else{
-                    console.log(data);
-                    matchingDateList = data;
-                }
-            })
-        })
-
-
-        // ==========================================캘린더 부분
-        // 캘린더 생성
         const date = new Date();
         let currentYear = date.getFullYear();
         let currentMonth = date.getMonth();
         let currentDate = date.getDate();
 
+        $("#dropField > li > button").on('click', function () {
+            $("button[name=city1]").text($(this).text());
+            $("button[name=city1]").val($(this).val());
+            const fieldSeq = $(this).val();
+            fetch(`/confirmed/dates/${fieldSeq}?month=${parseInt(currentMonth + 1)}&year=${currentYear}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        matchingDateList = [];
+                        renderCalendar();
+                    }
+                    else {
+                        matchingDateList = data;
+                        renderCalendar();
+                    }
+                })
+        })
+
+
+        // ==========================================캘린더 부분
+        // 캘린더 생성
         const calendarDates = document.querySelector("#calendarDates");
         const prevBtn = document.querySelector("#prevBtn");
         const nextBtn = document.querySelector("#nextBtn");
@@ -248,17 +218,26 @@
                 const matchingDateElement = document.createElement("div");
                 matchingDateElement.classList.add("isMatching");
 
-                // 매칭 정보 있는 날이면 등록, 매칭 상태 불러와서 매칭 상태에 따라 다른 클래스 지정
-                if (i == 5)
-                    matchingDateElement.dataset.matchingStatus = "2";
+                // 매칭 정보에 따라 다른 클래스 지정
+                if(matchingDateList.length == 0){
+                    matchingDateElement.classList.remove("cal-matching-status-3");
+                }
 
-                dateWrapperElement.appendChild(dateElement);
+                for (let dateNum = 0; dateNum < matchingDateList.length; dateNum++) {
+                    const tmpMatchingYear = new Date(matchingDateList[dateNum]).getFullYear();
+                    const tmpMatchingMonth = new Date(matchingDateList[dateNum]).getMonth() + 1;
+                    const tmpMatchingDate = new Date(matchingDateList[dateNum]).getDate();
+
+                    if (currentYear == tmpMatchingYear && tmpMatchingMonth == parseInt(currentMonth + 1) && tmpMatchingDate == i) {
+                        matchingDateElement.classList.add("cal-matching-status-3")
+                    }
+
+                }
                 dateWrapperElement.appendChild(matchingDateElement);
+                dateWrapperElement.appendChild(dateElement);
                 calendarDates.appendChild(dateWrapperElement);
             }
         }
-
-        renderCalendar();
 
         // 이전 달 버튼 클릭 시
         prevBtn.addEventListener("click", () => {
@@ -267,7 +246,20 @@
                 currentMonth = 11;
                 currentYear--;
             }
-            renderCalendar();
+            const fieldSeq = $("button[name=city1]").val();
+            fetch(`/confirmed/dates/${fieldSeq}?month=${parseInt(currentMonth + 1)}&year=${currentYear}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        matchingDateList = [];
+                        renderCalendar();
+                    }
+                    else {
+                        console.log(data);
+                        matchingDateList = data;
+                        renderCalendar();
+                    }
+                })
         });
 
         // 다음 달 버튼 클릭 시
@@ -277,21 +269,117 @@
                 currentMonth = 0;
                 currentYear++;
             }
-            renderCalendar();
+            const fieldSeq = $("button[name=city1]").val();
+            fetch(`/confirmed/dates/${fieldSeq}?month=${parseInt(currentMonth + 1)}&year=${currentYear}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        matchingDateList = [];
+                        renderCalendar();
+                    }
+                    else {
+                        console.log(data);
+                        matchingDateList = data;
+                        renderCalendar();
+                    }
+                })
         });
 
         // 날짜 클릭 시
         $(".calendar-dates").on("click", ".date-wrapper", function () {
-            // if ($(this).children('div:eq(0)').hasClass('today')) {
-            //     $('.click-date').removeClass('click-date');
-            //     return;
-            // }
+            $("#scheduleBox").html("");
             $('.click-date').removeClass('click-date');
             $(this).find('.date').addClass('click-date'); // find -> 자식 요소 찾기
 
             // 클릭한 날짜 불러오기
             console.log($(this).find('.date').attr("id"));
+            var date = $(this).find('.date').attr("id");
+            var fieldSeq = $("button[name=city1]").val();
+            fetch(`/date/${date}/field/${fieldSeq}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const sortByTime = data.sort((a, b) => a.matchingTime - b.matchingTime);
+                const now = new Date();
+                const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const currentHour = currentDate.getHours();
+                const scheduleStats = {
+                    8: false,
+                    10: false,
+                    12: false,
+                    14: false,
+                    16: false,
+                    18: false,
+                    20: false
+                };
+                
+                for (const timeKey in scheduleStats) {
+                    const hasMatchingTime = data.some(matching => matching.matchingTime === parseInt(timeKey))
+                    if(hasMatchingTime) {
+                        // 해당 시간대에 경기가 있는 경우 처리
+                        for (const matching of data) {
+                            if (matching.matchingTime === parseInt(timeKey)) {
+                                const matchingDateObj = new Date(matching.matchingDate);
+                                if (matching.matchingStatus === "경기확정") {
+                                    if (matchingDateObj < currentDate || 
+                                        (matchingDateObj.getTime() === currentDate.getTime() && (matching.matchingTime + 2) <= currentHour)) {
+                                        $("#scheduleBox").append(`
+                                            <div id="${matching.matchingSeq}" class="row rounded-3 m-1 timeList matching notScore" data-bs-toggle="modal" data-bs-target="#timeModal">
+                                                <p class="m-0 p-3">
+                                                    ${matching.matchingTime}:00-${matching.matchingTime + 2}:00
+                                                </p>
+                                            </div>
+                                        `);
+                                    } else {
+                                        $("#scheduleBox").append(`
+                                            <div class="row rounded-3 m-1 timeList matching">
+                                                <p class="m-0 p-3">
+                                                    ${matching.matchingTime}:00-${matching.matchingTime + 2}:00
+                                                </p>
+                                            </div>
+                                        `);
+                                    }
+                                } else if (matching.matchingStatus === "경기완료") {
+                                    $("#scheduleBox").append(`
+                                        <div class="row rounded-3 m-1 timeList matching scoreOK">
+                                            <p class="m-0 p-3">
+                                                ${matching.matchingTime}:00-${matching.matchingTime + 2}:00
+                                            </p>
+                                        </div>
+                                    `);
+                                }
+                            }
+                        }
+                    } else {
+                        // 해당 시간대에 경기가 없는 경우 기본 스타일로 어펜드
+                        $("#scheduleBox").append(`
+                            <div class="row rounded-3 m-1 timeList default">
+                                <p class="m-0 p-3">
+                                    ${timeKey}:00-${parseInt(timeKey) + 2}:00
+                                </p>
+                            </div>
+                        `);
+                    }
+                }
+            })
         });
+
+        $("#scheduleBox").on("click", ".notScore", function(){
+            var matchingSeq = $(this).attr("id");
+            console.log(matchingSeq);
+            fetch(`/matchingInfo/${matchingSeq}`)
+            .then(response => response.json())
+            .then(data => {
+                var date = new Date(data.matchingDate);
+                var startTime = data.matchingTime;
+                var endTime = startTime + 2;
+                var options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+                var formattedDate = date.toLocaleDateString('ko-KR', options);
+                $("#matchingDate").text(formattedDate);
+                $("#matchingTime").text(startTime + ":00-" + endTime + ":00");
+                $("#updateMemberStatus").val(matchingSeq);
+            })
+        })
 
 
 

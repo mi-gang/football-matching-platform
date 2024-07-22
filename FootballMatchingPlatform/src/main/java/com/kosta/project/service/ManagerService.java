@@ -150,4 +150,9 @@ public class ManagerService {
 	public List<MatchingDTO> getMatchingsForDateAndField(LocalDate matchingDate, int fieldSeq) {
         return mtr.findMatchingsByDateAndField(matchingDate, fieldSeq);
     }
+	
+	//매칭 상세 정보 가져오기
+	public MatchingDTO getMatchingInfoByMatchingSeq(int matchingSeq){
+		return mtr.findById(matchingSeq);
+	}
 }

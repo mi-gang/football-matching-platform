@@ -1,6 +1,7 @@
 package com.kosta.project.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +79,7 @@ public class ManagerRestController {
     public List<LocalDate> getConfirmedMatchingDates(@PathVariable int fieldSeq,
                                                      @RequestParam int month,
                                                      @RequestParam int year) {
+		System.out.println(ms.getConfirmedMatchingDates(fieldSeq, month, year));
         return ms.getConfirmedMatchingDates(fieldSeq, month, year);
     }
 
@@ -87,11 +89,9 @@ public class ManagerRestController {
     public ResponseEntity<List<MatchingDTO>> getMatchingsByDateAndField(
             @PathVariable("date") String date,
             @PathVariable("fieldSeq") int fieldSeq) {
-        
-        LocalDate matchingDate = LocalDate.parse(date); // 날짜 형식 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
+        LocalDate matchingDate = LocalDate.parse(date, formatter); // 날짜 형식 변환
         List<MatchingDTO> matchings = ms.getMatchingsForDateAndField(matchingDate, fieldSeq);
-        
-		System.out.println(matchings);
 
         if (matchings.isEmpty()) {
             return ResponseEntity.noContent().build(); // 매칭 기록이 없는 경우 204 No Content 반환
@@ -99,6 +99,14 @@ public class ManagerRestController {
         
         return ResponseEntity.ok(matchings); // 매칭 기록이 있는 경우 200 OK와 함께 반환
     }
+	//매칭 상세 정보 가져오기
+	@GetMapping("/matchingInfo/{matchingSeq}")
+	public ResponseEntity<MatchingDTO> getMatchingInfoByMatchingSeq(@PathVariable int matchingSeq){
+		MatchingDTO matchingInfo = ms.getMatchingInfoByMatchingSeq(matchingSeq);
+		
+		return ResponseEntity.ok(matchingInfo);
+	}
+	
 	// 이미지 등록
 	@PostMapping("/addField/image")
 	public Map<String, Boolean> addFieldByImage(@RequestPart("img") MultipartFile img, 
