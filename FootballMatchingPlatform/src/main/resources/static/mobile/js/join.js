@@ -325,6 +325,7 @@ $('#join').click(function(){
     }
 
     else{
+        console.log($('.gender').val())
         const id = $('#id').val();
         const pw = $('#pw').val();
         const nickname = $('#nickname').val();
