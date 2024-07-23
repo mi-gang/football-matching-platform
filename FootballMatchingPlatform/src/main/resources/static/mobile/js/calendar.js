@@ -96,7 +96,8 @@ function renderCalendar() {
             // console.log(typeof (tmpDate))
 
             if (currentYear == tmpMatchingYear && tmpMatchingMonth == parseInt(currentMonth + 1) && tmpMatchingDate == tmpDate) {
-                if (matchingDateList[dateNum].cancelStatus || matchingDateList[dateNum].matchingStatus == '매칭실패') {
+                if (matchingDateList[dateNum].cancelStatus || !matchingDateList[dateNum].matchingSuccessStatus 
+                    || matchingDateList[dateNum].matchingStatus == '매칭실패' || matchingDateList[dateNum].matchingStatus == '경기취소') {
                     matchingDateElement.classList.add("cal-matching-status-1");
                 } else if (matchingDateList[dateNum].matchingStatus == '매칭중') {
                     matchingDateElement.classList.add("cal-matching-status-2");
@@ -383,8 +384,8 @@ $("#matchings-wrapper").on("click", ".matching-score-btn", function () {
             console.log(data)
             console.log(data.reviewScore)
             console.log(data.teamScore)
-            $("#resultScore").text(data.reviewScore);
-            $("#reviewScore").text(data.teamScore);
+            $("#resultScore").text(data.teamScore);
+            $("#reviewScore").text(data.reviewScore);
             $("#totalScore").text(data.reviewScore+data.teamScore);
             getModal('scoreModal').show();
         })
@@ -437,10 +438,11 @@ function getMatchigList(item) {
     if (item.fastAddStatus)
         matchingStatus.textContent = '빠른매칭 진행중';
 
+    const matchingDate = new Date(item.matchingDate);
+
     if (item.matchingStatus == '매칭중'){
         // date sysdate = new Date();
 
-        const matchingDate = new Date(item.matchingDate);
         console.log(date.getHours())
 
         if (matchingDate.getFullYear() == date.getFullYear() && matchingDate.getMonth() == date.getMonth()
@@ -453,12 +455,16 @@ function getMatchigList(item) {
     }
     if (item.cancelStatus)
         matchingStatus.textContent = '매칭취소';
-    
+
+    //  && matchingDate.setDate(matchingDate.getDate + 1) > date
+    if(!item.matchingSuccessStatus)
+        matchingStatus.textContent = '매칭실패';
 
     matchingStatus.className = 'matching-status status-2';
     if (item.matchingStatus == '매칭중')
         matchingStatus.className = 'matching-status status-1';
-    else if (item.matchingStatus == '매칭실패' || item.matchingStatus == '경기취소' || item.cancelStatus)
+    if (item.matchingStatus == '매칭실패' || item.matchingStatus == '경기취소'
+            || item.cancelStatus || !item.matchingSuccessStatus)
         matchingStatus.className = 'matching-status status-3';
 
 
@@ -468,76 +474,87 @@ function getMatchigList(item) {
     // fast-matching-wrapper에 status 추가
     fastMatchingWrapper.appendChild(matchingStatus);
 
-    // 빠른 매칭일 경우
-    if (item.fastAddStatus && !item.cancelStatus){
-        // // 빠른 매칭만 - matching-user-count span 생성
-        // const matchingUserCount = document.createElement('span');
-        // matchingUserCount.className = 'matching-user-count';
-        // matchingUserCount.textContent = item.userCount;
-        //
-        // // 빠른 매칭만 - user count와 total count를 담는 div 생성
-        // const userCountWrapper = document.createElement('div');
-        // userCountWrapper.appendChild(matchingUserCount);
-        // userCountWrapper.appendChild(document.createTextNode('/10명'));
+    // matching-btn-wrapper div 생성
+    const matchingBtnWrapper = document.createElement('div');
+    matchingBtnWrapper.className = 'matching-btn-wrapper';
 
-        // 빠른 매칭만 - fast-matching-wrapper에 status와 user count 추가
-        // fastMatchingWrapper.appendChild(userCountWrapper);
 
-        const matchingUserCountWrapper = document.createElement('div');
-        fastMatchingWrapper.appendChild(matchingUserCountWrapper);
+    /////////////////////////////////
 
-        const matchingUserCount = document.createElement('span');
-        matchingUserCount.classList.add('matching-user-count');
-        matchingUserCount.textContent = item.totalUserCount;
-        matchingUserCountWrapper.appendChild(matchingUserCount);
+    if (item.matchingSuccessStatus && !item.cancelStatus) {
 
-        const matchingUserCountText = document.createElement('span');
-        matchingUserCountText.textContent = '/10명';
-        matchingUserCountWrapper.appendChild(matchingUserCountText);
+        // 빠른 매칭일 경우
+        if (item.fastAddStatus) {
+            // // 빠른 매칭만 - matching-user-count span 생성
+            // const matchingUserCount = document.createElement('span');
+            // matchingUserCount.className = 'matching-user-count';
+            // matchingUserCount.textContent = item.userCount;
+            //
+            // // 빠른 매칭만 - user count와 total count를 담는 div 생성
+            // const userCountWrapper = document.createElement('div');
+            // userCountWrapper.appendChild(matchingUserCount);
+            // userCountWrapper.appendChild(document.createTextNode('/10명'));
+
+            // 빠른 매칭만 - fast-matching-wrapper에 status와 user count 추가
+            // fastMatchingWrapper.appendChild(userCountWrapper);
+
+            const matchingUserCountWrapper = document.createElement('div');
+            fastMatchingWrapper.appendChild(matchingUserCountWrapper);
+
+            const matchingUserCount = document.createElement('span');
+            matchingUserCount.classList.add('matching-user-count');
+            matchingUserCount.textContent = item.totalUserCount;
+            matchingUserCountWrapper.appendChild(matchingUserCount);
+
+            const matchingUserCountText = document.createElement('span');
+            matchingUserCountText.textContent = '/10명';
+            matchingUserCountWrapper.appendChild(matchingUserCountText);
+        }
+
+        // 경기 확정 시 등번호 생성
+        if (item.matchingStatus == '경기확정' || item.matchingStatus == '경기완료') {
+            const playerNumber = document.createElement('span');
+            playerNumber.textContent = item.playerNumber;
+
+            if (item.team == 'a')
+                playerNumber.className = 'my-player-number a-team';
+            else
+                playerNumber.className = 'my-player-number b-team';
+
+            fastMatchingWrapper.appendChild(playerNumber);
+        }
+
+        // 경기 확정 시 등번호 생성
+        if (item.teamStatus) {
+            const teamElement = document.createElement('span');
+            teamElement.textContent = '팀';
+            teamElement.className = 'team';
+
+            fastMatchingWrapper.appendChild(teamElement);
+        }
+
+        // 경기 완료 시 점수 표기
+        if (item.matchingStatus == '경기완료') {
+            const matchingScoreWrapper = document.createElement('div');
+            matchingScoreWrapper.className = 'matching-score-wrapper';
+
+            const aScore = document.createElement('span');
+            // matchingScoreWrapper.className = 'matching-score-wrapper';
+            aScore.textContent = item.ascore;
+
+            const span = document.createElement('span');
+            span.textContent = ' : ';
+
+            const bScore = document.createElement('span');
+            bScore.textContent = item.bscore;
+
+            matchingScoreWrapper.appendChild(aScore);
+            matchingScoreWrapper.appendChild(span);
+            matchingScoreWrapper.appendChild(bScore);
+            fastMatchingWrapper.appendChild(matchingScoreWrapper);
+        }
     }
 
-    // 경기 확정 시 등번호 생성
-    if (item.matchingStatus == '경기확정' || item.matchingStatus == '경기완료'){
-        const playerNumber = document.createElement('span');
-        playerNumber.textContent = item.playerNumber;
-
-        if (item.team == 'a')
-            playerNumber.className = 'my-player-number a-team';
-        else
-            playerNumber.className = 'my-player-number b-team';
-
-        fastMatchingWrapper.appendChild(playerNumber);
-    }
-
-    // 경기 확정 시 등번호 생성
-    if (item.teamStatus){
-        const teamElement = document.createElement('span');
-        teamElement.textContent = '팀';
-        teamElement.className = 'team';
-
-        fastMatchingWrapper.appendChild(teamElement);
-    }
-
-    // 경기 완료 시 점수 표기
-    if (item.matchingStatus == '경기완료'){
-        const matchingScoreWrapper = document.createElement('div');
-        matchingScoreWrapper.className = 'matching-score-wrapper';
-
-        const aScore = document.createElement('span');
-        // matchingScoreWrapper.className = 'matching-score-wrapper';
-        aScore.textContent = item.ascore;
-
-        const span = document.createElement('span');
-        span.textContent = ' : ';
-
-        const bScore = document.createElement('span');
-        bScore.textContent = item.bscore;
-
-        matchingScoreWrapper.appendChild(aScore);
-        matchingScoreWrapper.appendChild(span);
-        matchingScoreWrapper.appendChild(bScore);
-        fastMatchingWrapper.appendChild(matchingScoreWrapper);
-    }
 
     // matching-info div 생성
     const matchingInfo = document.createElement('div');
@@ -569,109 +586,112 @@ function getMatchigList(item) {
     matchingContentWrapper.appendChild(matchingInfo);
     matchingContentWrapper.appendChild(matchingFieldInfo);
 
-    // 결제 완료 시 결제 금액 표기
-    if (item.payStatus && item.matchingStatus != '매칭중' && item.matchingStatus != '매칭실패' && !item.cancelStatus) {
-        const payInfo = document.createElement('span');
-        payInfo.classList.add('pay-info');
-        payInfo.textContent = '결제 금액 : 10,000원';
-        matchingContentWrapper.appendChild(payInfo);
-    }
 
-    // 팀 매칭 시 매칭 성공부터 팀 이름 표기
-    if (item.teamStatus && item.matchingStatus != '매칭실패' && !item.cancelStatus
-            && (item.matchingStatus == '매칭성공' || item.matchingStatus == '경기확정' || item.matchingStatus == '경기완료')) {
 
-        const teamInfoWrapper = document.createElement('div');
-        teamInfoWrapper.className = 'team-info';
+    if (item.matchingSuccessStatus && !item.cancelStatus) {
 
-        const myTeamName = document.createElement('span');
-        // matchingScoreWrapper.className = 'matching-score-wrapper';
-        myTeamName.textContent = item.myTeamName;
+        // 결제 완료 시 결제 금액 표기
+        if (item.payStatus && item.matchingStatus != '매칭중' && item.matchingStatus != '매칭실패') {
+            const payInfo = document.createElement('span');
+            payInfo.classList.add('pay-info');
+            payInfo.textContent = '결제 금액 : 10,000원';
+            matchingContentWrapper.appendChild(payInfo);
+        }
 
-        const span = document.createElement('span');
-        span.textContent = ' VS ';
+        // 팀 매칭 시 매칭 성공부터 팀 이름 표기
+        if (item.teamStatus && item.matchingStatus != '매칭실패' && (item.matchingStatus == '매칭성공'
+            || item.matchingStatus == '경기확정' || item.matchingStatus == '경기완료')) {
 
-        const opposingTeamName = document.createElement('span');
-        opposingTeamName.textContent = item.opposingTeamName;
+            const teamInfoWrapper = document.createElement('div');
+            teamInfoWrapper.className = 'team-info';
 
-        teamInfoWrapper.appendChild(myTeamName);
-        teamInfoWrapper.appendChild(span);
-        teamInfoWrapper.appendChild(opposingTeamName);
-        matchingContentWrapper.appendChild(teamInfoWrapper);
-    }
+            const myTeamName = document.createElement('span');
+            // matchingScoreWrapper.className = 'matching-score-wrapper';
+            myTeamName.textContent = item.myTeamName;
 
-    // matching-btn-wrapper div 생성
-    const matchingBtnWrapper = document.createElement('div');
-    matchingBtnWrapper.className = 'matching-btn-wrapper';
+            const span = document.createElement('span');
+            span.textContent = ' VS ';
 
-    console.log(!item.matchingStatus === '경기확정')
+            const opposingTeamName = document.createElement('span');
+            opposingTeamName.textContent = item.opposingTeamName;
 
-    // 경기 확정 상태 아닐 때만 버튼 표기
-    if (item.matchingStatus != '경기확정' && item.matchingStatus != '매칭실패'
-        && item.matchingStatus != '경기취소' && item.matchingStatus != '경기완료'
-        && !item.cancelStatus) {
+            teamInfoWrapper.appendChild(myTeamName);
+            teamInfoWrapper.appendChild(span);
+            teamInfoWrapper.appendChild(opposingTeamName);
+            matchingContentWrapper.appendChild(teamInfoWrapper);
+        }
 
-        if (item.matchingStatus != '매칭중') {
-            // pay-matching-btn 버튼 생성
-            const payMatchingBtn = document.createElement('button');
-            payMatchingBtn.className = 'pay-matching-btn btn-setting';
-            payMatchingBtn.setAttribute('data-bs-toggle', 'modal');
-            payMatchingBtn.setAttribute('data-bs-target', '#payMatchingModal');
-            // payMatchingBtn.setAttribute('data-matching-seq', item.matchingSeq);
-            if (item.payStatus) {
-                payMatchingBtn.textContent = '결제 완료';
-                payMatchingBtn.disabled = true;
-            } else {
-                payMatchingBtn.textContent = '결제하기';
+        // 경기 확정 상태 아닐 때만 버튼 표기
+        if (item.matchingStatus != '경기확정' && item.matchingStatus != '매칭실패'
+            && item.matchingStatus != '경기취소' && item.matchingStatus != '경기완료') {
+
+            if (item.matchingStatus != '매칭중') {
+                // pay-matching-btn 버튼 생성
+                const payMatchingBtn = document.createElement('button');
+                payMatchingBtn.className = 'pay-matching-btn btn-setting';
+                payMatchingBtn.setAttribute('data-bs-toggle', 'modal');
+                payMatchingBtn.setAttribute('data-bs-target', '#payMatchingModal');
+                // payMatchingBtn.setAttribute('data-matching-seq', item.matchingSeq);
+                if (item.payStatus) {
+                    payMatchingBtn.textContent = '결제 완료';
+                    payMatchingBtn.disabled = true;
+                } else {
+                    payMatchingBtn.textContent = '결제하기';
+                }
+                matchingBtnWrapper.appendChild(payMatchingBtn);
             }
-            matchingBtnWrapper.appendChild(payMatchingBtn);
-        }else{
-            const payMatchingBtn = document.createElement('button');
-            payMatchingBtn.className = 'matching-list-btn btn-setting';
-            payMatchingBtn.setAttribute('data-bs-toggle', 'modal');
-            payMatchingBtn.setAttribute('data-bs-target', '#matchingListModal');
-            payMatchingBtn.textContent = '매칭 정보';
+            // else {
+            //     const payMatchingBtn = document.createElement('button');
+            //     payMatchingBtn.className = 'matching-list-btn btn-setting';
+            //     payMatchingBtn.setAttribute('data-bs-toggle', 'modal');
+            //     payMatchingBtn.setAttribute('data-bs-target', '#matchingListModal');
+            //     payMatchingBtn.textContent = '매칭 정보';
+            //
+            //     matchingBtnWrapper.appendChild(payMatchingBtn);
+            // }
 
-            matchingBtnWrapper.appendChild(payMatchingBtn);
+            // cancel-matching-btn 버튼 생성
+            const cancelMatchingBtn = document.createElement('button');
+            cancelMatchingBtn.setAttribute('data-bs-toggle', 'modal');
+            cancelMatchingBtn.setAttribute('data-bs-target', '#cancelMatchingModal');
+
+            if (item.matchingStatus == '매칭중')
+                cancelMatchingBtn.className = 'remove-matching-btn btn-setting';
+            else
+                cancelMatchingBtn.className = 'cancel-matching-btn btn-setting';
+
+            cancelMatchingBtn.textContent = '매칭 취소';
+
+            // matching-btn-wrapper에 버튼 추가
+            matchingBtnWrapper.appendChild(cancelMatchingBtn);
+
+        } else if (item.matchingStatus == '경기완료') {
+            // review-matching-btn 버튼 생성
+            const reviewMatchingBtn = document.createElement('button');
+            reviewMatchingBtn.className = 'review-matching-btn btn-setting';
+            reviewMatchingBtn.textContent = '선수 평가';
+
+            console.log(item.reviewStatus)
+            if (item.reviewStatus) {
+                reviewMatchingBtn.textContent = '평가 완료';
+                reviewMatchingBtn.disabled = true;
+            }
+
+            // matching-score-btn 버튼 생성
+            const matchingScoreBtn = document.createElement('button');
+            matchingScoreBtn.className = 'matching-score-btn btn-setting';
+            matchingScoreBtn.textContent = '내 점수 확인';
+            if (!item.opposingTeamReviewStatus)
+                matchingScoreBtn.disabled = true;
+
+            matchingBtnWrapper.appendChild(reviewMatchingBtn);
+            matchingBtnWrapper.appendChild(matchingScoreBtn);
         }
 
-        // cancel-matching-btn 버튼 생성
-        const cancelMatchingBtn = document.createElement('button');
-        cancelMatchingBtn.setAttribute('data-bs-toggle', 'modal');
-        cancelMatchingBtn.setAttribute('data-bs-target', '#cancelMatchingModal');
-
-        if (item.matchingStatus == '매칭중')
-            cancelMatchingBtn.className = 'remove-matching-btn btn-setting';
-        else
-            cancelMatchingBtn.className = 'cancel-matching-btn btn-setting';
-
-        cancelMatchingBtn.textContent = '매칭 취소';
-
-        // matching-btn-wrapper에 버튼 추가
-        matchingBtnWrapper.appendChild(cancelMatchingBtn);
-
-    } else if (item.matchingStatus == '경기완료') {
-        // review-matching-btn 버튼 생성
-        const reviewMatchingBtn = document.createElement('button');
-        reviewMatchingBtn.className = 'review-matching-btn btn-setting';
-        reviewMatchingBtn.textContent = '선수 평가';
-
-        console.log(item.reviewStatus)
-        if (item.reviewStatus) {
-            reviewMatchingBtn.textContent = '평가 완료';
-            reviewMatchingBtn.disabled = true;
-        }
-
-        // matching-score-btn 버튼 생성
-        const matchingScoreBtn = document.createElement('button');
-        matchingScoreBtn.className = 'matching-score-btn btn-setting';
-        matchingScoreBtn.textContent = '내 점수 확인';
-        if (!item.opposingTeamReviewStatus)
-            matchingScoreBtn.disabled = true;
-
-        matchingBtnWrapper.appendChild(reviewMatchingBtn);
-        matchingBtnWrapper.appendChild(matchingScoreBtn);
     }
+
+
+
 
     // matching-wrapper에 content wrapper와 button wrapper 추가
     matchingWrapper.appendChild(matchingContentWrapper);

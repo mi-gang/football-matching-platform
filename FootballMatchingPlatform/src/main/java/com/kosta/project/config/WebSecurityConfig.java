@@ -3,6 +3,7 @@ package com.kosta.project.config;
 import com.kosta.project.dto.UserDTO;
 import com.kosta.project.service.UserDetailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +35,9 @@ import java.util.List;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+    @Value("${security.level}")
+    private String SECURITY_LEVEL;
+
 //    private final UserDetailService userService;
 
     // 2. 리소스 접근 빈 설정, 일부 파일 시큐리티 기능 비활성화
@@ -43,6 +47,14 @@ public class WebSecurityConfig {
 //        return (web) -> web.ignoring()
 //                .requestMatchers("/static/**", "/mobile/**", "/css/**", "/js/**", "/static/common/**");
 //    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        if (SECURITY_LEVEL.equals("OFF")) {
+            return (web) -> web.ignoring().requestMatchers("/**");
+        }
+        return (web) -> web.ignoring().requestMatchers("/css/**");
+    }
 
     // 3. 특정 HTTP 요청에 대한 웹 기반 보안 구성
     @Bean

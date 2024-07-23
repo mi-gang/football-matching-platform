@@ -1,8 +1,10 @@
 package com.kosta.project.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import com.kosta.project.dto.UserMatchingInfoDTO;
+import com.kosta.project.dto.*;
 import com.kosta.project.service.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Logger;
@@ -25,11 +27,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.kosta.project.dto.InquiryDTO;
-import com.kosta.project.dto.MatchingConditionDTO;
-import com.kosta.project.dto.MatchingsDTO;
-import com.kosta.project.dto.TeamDTO;
-import com.kosta.project.dto.UserDTO;
 import com.kosta.project.service.FastMatchingService;
 import com.kosta.project.service.MainPageService;
 
@@ -94,11 +91,12 @@ public class MobileController {
 	}
 	
 	@GetMapping("/addScore/{matchingSeq}/{matchingAddListSeq}")
-	public String getAddScore(@PathVariable("matchingSeq") int matchingSeq, @PathVariable("matchingAddListSeq") int matchingAddListSeq, Model model) {
+	public String getAddScore(@PathVariable("matchingSeq") int matchingSeq,
+							  @PathVariable("matchingAddListSeq") int matchingAddListSeq,
+							  Model model,
+							  @SessionAttribute("loginUser") UserDTO userDTO) {
 
-		String userId = "user001";
-
-		model.addAttribute("playerList", ss.getOpposingTeamPlayerList(UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingSeq).build()));
+		model.addAttribute("playerList", ss.getOpposingTeamPlayerList(UserMatchingInfoDTO.builder().userId(userDTO.getUserId()).matchingSeq(matchingSeq).build()));
 		model.addAttribute("matchingSeq", matchingSeq);
 		model.addAttribute("matchingAddListSeq", matchingAddListSeq);
 
