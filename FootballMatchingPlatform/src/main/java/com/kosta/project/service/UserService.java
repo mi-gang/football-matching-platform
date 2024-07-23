@@ -130,11 +130,11 @@ public class UserService {
 
 		//비밀번호 확인하기
 		public boolean findMyPw(String userId, String pwInput) {
-			String pw = um.selectMyPw(userId);
-			if (pwInput.equals(pw)) {
+			String password = um.selectMyPw(userId);
+			
+			if (passwordEncoder.matches(pwInput, password)) {
 				return true;
-			}
-			else { 
+			} else {
 				return false;
 			}
 		}		
