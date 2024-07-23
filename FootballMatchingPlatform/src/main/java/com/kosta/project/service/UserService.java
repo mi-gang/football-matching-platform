@@ -2,6 +2,7 @@ package com.kosta.project.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kosta.project.dto.InquiryDTO;
@@ -16,12 +17,10 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class UserService {
 
-
 	private final UserMapper um;
-
 	private final TeamMapper tm;
-	
 	private final InquiryMapper im;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	//로그인하기 (세션에 본인 등급 넣기-상단 네비에 넣을 용도, 시/도)
 	public UserDTO getUserLogin(String userId, String password) {
@@ -71,7 +70,8 @@ public class UserService {
 	
 	//회원가입하기
 	public void addUserJoin(UserDTO dto) {
-		um.insertUserJoin(dto.getUserId(),dto.getPassword(),dto.getNickname(),dto.getName(),dto.getBirthday(),dto.getGender(),dto.getPhoneNumber(),dto.getEmail(),dto.getAddress());
+		um.insertUserJoin(dto.getUserId(),bCryptPasswordEncoder.encode(dto.getPassword()),dto.getNickname(),dto.getName(),dto.getBirthday(),dto.getGender(),dto.getPhoneNumber(),dto.getEmail(),dto.getAddress());
+
 	}
 	
 	//이름, 이메일이 일치하는 아이디 불러오기

@@ -21,6 +21,9 @@ public interface UserMapper {
 	// 유저 구글 로그인
 	UserDTO selectUserSnsLogin(String userId, String password);
 	
+	// 시큐리티용 로그인
+	UserDTO findByUserId(String UserId);
+	
 	// 유저 마지막 로그인 날짜
 	void setUserLastLoginDateByUserId(String userId);
 	
