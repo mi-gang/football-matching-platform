@@ -565,8 +565,9 @@ function myTeamInfo() {
       const leader = getTeamLeader(res.teamSeq);
       let schedule = myTeamSchedule(res.teamSeq);
 
-		if(schedule.matchingStatus === null)
+	  if(schedule.matchingStatus === null)
 			schedule = null;
+			
       let str = "";
 
       str += `
