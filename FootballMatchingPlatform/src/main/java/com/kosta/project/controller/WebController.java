@@ -57,7 +57,7 @@ public class WebController {
 	@GetMapping("/schedule")
 	String schedule(Model model, HttpServletRequest request) {
 		String managerId = (String) request.getSession().getAttribute("managerId");
-		List<Field> fieldList = ms.getFieldList(managerId);
+		List<Field> fieldList = ms.getApprovedFieldList(managerId);
 		List<FieldDTO> fieldDTOList = new ArrayList<FieldDTO>();
 		for(int i=0; i<fieldList.size(); i++){
 			FieldDTO fieldDTO = FieldDTO.builder()
