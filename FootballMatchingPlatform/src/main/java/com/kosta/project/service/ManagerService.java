@@ -91,6 +91,7 @@ public class ManagerService {
 
 		dto.setF(fr.findById(fieldSeq).get());
 		dto.setM(fr.findById(fieldSeq).get().getManager());
+		dto.setFi(fr.findById(fieldSeq).get().getFieldImages().get(0));
 
 		return dto;
 	}
@@ -132,10 +133,8 @@ public class ManagerService {
 		Field upField = fr.save(f);
 
 		boolean res = false;
-		// String uploadPath =
-		// "C:\\project\\FootballMatchingPlatform\\FootballMatchingPlatform\\src\\main\\resources\\static\\upload";
-		String uploadPath = "C:\\Users\\gupury\\upload\\img";
-		String uploadPath2 = "C:\\Users\\gupury\\upload\\business";
+	    String uploadPath = "C:\\Users\\KOSTA\\git\\FootballMatchingPlatform\\FootballMatchingPlatform\\src\\main\\resources\\static\\upload\\img";
+		String uploadPath2 = "C:\\Users\\KOSTA\\git\\FootballMatchingPlatform\\FootballMatchingPlatform\\src\\main\\resources\\static\\upload\\file";
 
 		// 업로드한 파일을 서버 컴퓨터 내에 지정한 경로에 실제 저장
 		File saveFile = new File(uploadPath + "\\" + fileName);
