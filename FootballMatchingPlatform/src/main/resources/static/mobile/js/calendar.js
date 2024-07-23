@@ -437,6 +437,20 @@ function getMatchigList(item) {
     
     if (item.fastAddStatus)
         matchingStatus.textContent = '빠른매칭 진행중';
+
+    if (item.matchingStatus == '매칭중'){
+        // date sysdate = new Date();
+
+        const matchingDate = new Date(item.matchingDate);
+        console.log(date.getHours())
+
+        if (matchingDate.getFullYear() == date.getFullYear() && matchingDate.getMonth() == date.getMonth()){
+            if (date.getHours() > item.matchingTime)
+                matchingStatus.textContent = '경기중';
+            if (date.getHours() > item.matchingTime + 2)
+                matchingStatus.textContent = '경기완료';
+        }
+    }
     if (item.cancelStatus)
         matchingStatus.textContent = '매칭취소';
     
@@ -454,6 +468,7 @@ function getMatchigList(item) {
     // fast-matching-wrapper에 status 추가
     fastMatchingWrapper.appendChild(matchingStatus);
 
+    // 빠른 매칭일 경우
     if (item.fastAddStatus && !item.cancelStatus){
         // // 빠른 매칭만 - matching-user-count span 생성
         // const matchingUserCount = document.createElement('span');
@@ -610,6 +625,14 @@ function getMatchigList(item) {
                 payMatchingBtn.textContent = '결제하기';
             }
             matchingBtnWrapper.appendChild(payMatchingBtn);
+        }else{
+            const payMatchingBtn = document.createElement('button');
+            payMatchingBtn.className = 'matching-list-btn btn-setting';
+            payMatchingBtn.setAttribute('data-bs-toggle', 'modal');
+            payMatchingBtn.setAttribute('data-bs-target', '#matchingListModal');
+            payMatchingBtn.textContent = '매칭 정보';
+
+            matchingBtnWrapper.appendChild(payMatchingBtn);
         }
 
         // cancel-matching-btn 버튼 생성
@@ -621,7 +644,6 @@ function getMatchigList(item) {
             cancelMatchingBtn.className = 'remove-matching-btn btn-setting';
         else
             cancelMatchingBtn.className = 'cancel-matching-btn btn-setting';
-
 
         cancelMatchingBtn.textContent = '매칭 취소';
 
