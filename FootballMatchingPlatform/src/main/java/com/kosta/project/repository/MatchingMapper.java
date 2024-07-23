@@ -92,4 +92,8 @@ public interface MatchingMapper {
 	boolean insertFastMatchingAndPay(UserMatchingInfoDTO umiDTO);
 	int selectFastMatchingCountForPay(int matchingSeq);
 	boolean updateFastMatchingStatusByFastMatchingSeq(int matchingSeq);
+	
+	// 예정된 매칭 시퀀스 리스트 확인
+	List<MatchingScheduleListDTO> selectFutureMatchingList(String userId);
+
 }

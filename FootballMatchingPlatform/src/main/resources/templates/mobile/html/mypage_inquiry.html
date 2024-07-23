@@ -50,22 +50,7 @@
                         <span class="inquiry-title" th:text="${i.title}">경기를 취소했는데 환불이 안됐습니다.</span>
                     </div>
                 </div>
-                <div class="inquiry-wrapper">
-                    <div class="inquiry-top-wrapper">
-                        <div class="a-wrapper status-1">
-                            <span>A.</span>
-                            <span class="inquiry-status">답변완료</span>
-                        </div>
-                        <div class="inquiry-detail">
-                            <span class="info-normal-text">자세히 보기</span>
-                            <img class="right-arrow" src="mobile/img/right arrow.svg" />
-                        </div>
-                    </div>
-                    <div class="q-wrapper">
-                        <span>Q.</span>
-                        <span class="inquiry-title">등급을 결정하는 기준이 궁금합니다. </span>
-                    </div>
-                </div>
+               
                 <button id="add-inquiry-btn">문의하기</button>
         </div>
         <!-- 하단 메뉴바 -->
@@ -79,6 +64,25 @@
             $('#page-name').text('문의 내역');
         });
         $('nav').load('common/nav.html');
+    
+    	$.ajax({
+			type:'get',
+			url:"/user/getAllInquiry",
+			dataType:"json",
+			success:function(data){
+				let count = 0;
+				for(let i=0; i < data.result.length; i++) {
+					if(data.result[i] != null)  {
+    				count++;
+  					}
+				}
+				console.log(data);
+				console.log(count);
+				$('#total-inquiry').empty().append(count);
+			},
+			error:function(){}
+		})
+    
     });
     
       $(".inquiry-wrapper").on("click", ".inquiry-detail", function() {

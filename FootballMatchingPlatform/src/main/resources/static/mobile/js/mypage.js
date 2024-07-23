@@ -1,10 +1,10 @@
 
 // 로그아웃
-$("header").on("click", "#submit", function () {
+$("header").on("click", "#submit", function(){
 	$.ajax({
     	type:'get',
     	url:'/user/logout',
-		success:function(response){
+		success: function(response){
 			alert('로그아웃 완료');
 			location.href = response;
 		},
@@ -67,18 +67,34 @@ $('document').ready(function(){
 		url: "/user/getMyInfo",
 		dataType:"json",
 		success: function(data){
-			$('#edit-name').val(data.result.name);
+			$('#name').val(data.result.name);
 			$('#id').empty().append(data.result.userId);
-			$('#edit-nickname').val(data.result.nickname);
+			$('#nickname').val(data.result.nickname);
 			$('#birth').empty().append(data.result.birthday);
-			$('#edit-email').val(data.result.email);
-			$('#edit-phone').val(data.result.phoneNumber);
+			$('#email').val(data.result.email);
+			$('#phone').val(data.result.phoneNumber);
 		},
 		error: function(){
 			alert('회원 정보 에러');
 			location.href='/login';
 		}		
 	})
+	
+	// 회원 탈퇴 조건 만족 시
+$("#withdrawConfirm-btn").on("click", function () {
+    $.ajax({
+		type:'POST',
+		url:'/user/setUserStatusWidthdraw',
+		success:function(response){
+			console.log(response);
+			
+			location.href='/login';
+		},
+		fail:function(){
+			alert('회원탈퇴오류');
+		}
+	})
+});
 })
 
 // 비밀번호 수정 버튼 클릭 시
@@ -86,51 +102,98 @@ $("#edit-pw-btn").on("click", function () {
     location.href='myPageEditPW';
 });
 
-// 회원 탈퇴 버튼 클릭 시
-$("#withdrawModal-btn").on("click", function () {
-    alert('회원 탈퇴 메소드 실행')
+//회원 탈퇴 버튼 클릭 시
+$("#withdraw-btn").on("click", function(){
+	//매칭 잡혀있는 경우(내 매칭 불러오기)
+	$.ajax({
+		type:'get',
+		url:'/user/getFutureMatchingSeq',
+		success: function(response){
+			let count = 0;
+			for(let i=0; i < response.result.length; i++) {
+				if(data.result[i] != null)  {
+    			count++;
+  				}
+			}
+			
+			if(count != 0){
+				$(".modal-footer").html(
+						`<button
+        	       			type="button"
+        	       			class="btn"
+        	        		id="withdrawModal-btn"
+        	        		data-bs-toggle="modal"
+        	        		data-bs-dismiss="modal"
+        	        		data-bs-target="#withdrawModal-2">취소</button>`
+				);
+			}
+		},
+		fail: function(){
+			alert('매칭리스트에러');
+		}
+	});
+	//팀 소속되어 있는 경우(내팀정보 불러오기)
+	$.ajax({
+		type:'get',
+		url:'/user/getMyTeamInfo',
+		success:function(response){
+			let count = 0;
+			for(let i=0; i < response.result.length; i++) {
+				if(data.result[i] != null)  {
+    			count++;
+  				}
+			}
+			if(count != 0){
+				$(".modal-footer").html(
+					`<button
+       	       			type="button"
+       	       			class="btn"
+       	        		id="withdrawModal-btn"
+       	        		data-bs-toggle="modal"
+       	        		data-bs-dismiss="modal"
+       	        		data-bs-target="#withdrawModal-2">탈퇴하기</button>`
+				);
+			}
+		},
+		fail:function(){
+			alert('오류');
+		}	
+	})
 });
+	//탈퇴불가모달 진행
+	//둘다 response null 일때 탈퇴
 
-// 수정하기 버튼 클릭 시
-$("#edit-pw-btn").on("click", function () {
-    location.href='myPageEditPW';
-});
 
-// 회원 탈퇴 버튼 클릭 시
-$("#withdrawModal-btn").on("click", function () {
-    alert('회원 탈퇴 메소드 실행')
-});
 
 // 수정하기 버튼 클릭 시
 $("#my-info-edit-btn").on("click", function () {
-	if ($("#edit-name").val().length == 0) {
+	if ($("#name").val().length == 0) {
 		alert("이름을 입력하세요.");
 		return false;
 	}
 		            
-	if ($("#edit-nickname").val().length == 0) {
+	if ($("#nickname").val().length == 0) {
 		alert("닉네임을 입력하세요.");
 		return false;
 	}
 
-	if ($("#edit-phone").val().length == 0) {
+	if ($("#phone").val().length == 0) {
 		alert("전화번호를 입력하세요.");
 		return false;
 	}
 
-	if ($("#edit-email").val().length == 0) {
+	if ($("#email").val().length == 0) {
 		alert("이메일을 입력하세요");
 		return false;
 	}
 
 	else{
-		const id = $('#id').val();
-		const nickname = $('#edit-nickname').val();
-		const name = $('#edit-name').val();
-		const phoneNumber = $('#edit-phone').val();
-		const email = $('#edit-email').val();
+		const nickname = $('#nickname').val();
+		const name = $('#name').val();
+		const phoneNumber = $('#phone').val();
+		const email = $('#email').val();
 		        	
-		const user = {'userId' : id,
+		const user = {
 			'nickname' : nickname,
 		    'name' : name,
 		    'phoneNumber' : phoneNumber,
@@ -171,12 +234,12 @@ $('#check-id-email-btn').on('click', function () {
 // 비밀번호 수정 버튼 클릭 시
 $("#edit-pw-edit-btn").on("click", function () {
 	//비밀번호 공백
-	if($("#new-pw").val().length == 0){
+	if($("#pw").val().length == 0){
 		alert("비밀번호를 입력하세요");
 		return false;
 	}
 	
-	const pw = $("#new-pw").val();
+	const pw = $("#pw").val();
 	//비밀번호 수정
 	$.ajax({
 		type:'post',
@@ -201,7 +264,7 @@ $("#edit-pw-edit-btn").on("click", function () {
 
 // 문의하기 버튼 클릭 시 (새로 만들어야함)
 $('#add-inquiry-btn').on('click', function () {
-    location.href='';
+    location.href='myPageAddinquiry';
 });
 
 // 문의 상세 페이지 이동
@@ -211,7 +274,7 @@ $('#add-inquiry-btn').on('click', function () {
     	type:'get',
     	url:'/user/pathDetailInfo/'+$(this).data("inquirySeq"),
 		success:function(response){
-			location.href='myPageInquiryDetail';
+			location.href='/myPageInquiryDetail';
 		},
 		error: function(){
 			alert('오류');
@@ -219,9 +282,6 @@ $('#add-inquiry-btn').on('click', function () {
     });
 });
 
-// 문의 상세 페이지
-
-// 문의 작성 페이지
 // 등록하기 버튼 클릭 시
 $('#addinquiry-btn').on('click', function () {
     const inquiryTitle = $("#addinquiry-title-input").val();

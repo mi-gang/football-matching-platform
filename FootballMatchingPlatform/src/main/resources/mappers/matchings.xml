@@ -728,6 +728,17 @@ LIMIT 1));
 	WHERE matching_seq = #{matchingSeq};
 </update>
 
-
+<!-- 예정된 매칭 시퀀스 리스트 확인 -->
+<select id="selectFutureMatchingList" parameterType="java.lang.String" resultType="com.kosta.project.dto.UserMatchingInfoDTO">
+  SELECT m.matching_seq, m.matching_date, m.matching_time, m.fast_add_status, m.matching_status,
+                m.a_score, m.b_score, ma.matching_add_seq,
+                mal.matching_add_list_seq, mal.matching_success_status, mal.cancel_status, mal.pay_status,
+                mal.review_status, mal.team_status, mal.team, mal.player_number
+FROM matching_adds ma
+JOIN matching_add_lists mal ON ma.matching_add_seq = mal.matching_add_seq
+JOIN matchings m ON mal.matching_seq = m.matching_seq
+WHERE ma.user_id = 'user001' AND m.matching_date-NOW()>=0
+ORDER BY m.matching_date, m.matching_time desc
+</select>
 
 </mapper>

@@ -1,5 +1,8 @@
 
 #container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
     justify-content: center;
 }
 
@@ -46,7 +49,31 @@
     background: #73A772;
 }
 
+#text-pw{
+	margin-right:13rem;
+}
 
+#text-pw-check{
+	margin-right:11rem;
+}
+
+.text-invalid{
+    display: none;
+    font-size: 0.7rem;
+}
+
+#invalid-pw{
+	color: #FF7D7D;	
+	width: 15rem;
+}
+
+#invalid-pw-check-success{
+    color: #73A772;
+}
+
+#invalid-pw-check-fail{
+    color: #FF7D7D;
+}
 
 
 /* 수정 폼 */
@@ -54,13 +81,78 @@
 #editinfo-wrapper{
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
+    align-items: center;
     justify-content: center;
+    margin-top: 1rem;
 }
+
+.text{
+    margin-bottom: 0.9rem;
+}
+
+.text-container{
+    display: flex;
+    font-size: 1.3rem;
+    align-items: baseline;
+}
+
+#text-name{
+	margin-right: 14rem;
+}
+#text-id{
+    margin-right: 13.5rem;
+}
+
+#text-nickname{
+    margin-right: 13.5rem;
+}
+
+#text-birth{
+	margin-right: 13rem;
+}
+
+#text-email{
+    margin-right: 13.5rem;
+}
+
+#text-phone{
+    margin-right: 12.5rem;
+}
+
+.text-invalid{
+    display: none;
+    font-size: 1rem;
+}
+
+
+
+#invalid-name-check-fail{
+    color: #FF7D7D;	
+}
+
+#invalid-nickname{
+	color: #73A772;
+}
+
+#invalid-nickname-doub{
+	color: #FF7D7D;
+}
+
+input{
+    width: 17rem;
+    height: 2.4rem;
+    margin-bottom: 1rem;
+    background-color: #F8FAFB;
+    border-radius: 0.5rem;
+    border-color: #FFFFFF;
+    border-style: solid;
+    text-align: center;
+}
+
 
 .edit-content-wrapper{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     column-gap: 1rem;
@@ -81,10 +173,10 @@
 }
 
 .non-edit{
-    width: 10rem;
+    width: 100%;
     height: 2rem;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -112,6 +204,7 @@
     color: #FFFFFF;
     background: #73A772;
 }
+
 
 
 /* 비밀번호 수정 */
@@ -212,4 +305,7 @@
   }
   #withdrawModal-btn{
     background: #EBEBEB;
+  }
+  #withdrawConfirm-btn{
+ 	background: #EBEBEB;
   }
