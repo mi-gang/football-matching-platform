@@ -23,7 +23,7 @@ public class ManagerService_Yoo {
 	private final FieldRepository fr;
 	
 	// 구장 상세 정보
-	public FieldInfoDTO getField(Long fieldSeq) {
+	public FieldInfoDTO getField(int fieldSeq) {
 		FieldInfoDTO dto = new FieldInfoDTO();
 		
 		dto.setF(fr.findById(fieldSeq).get());

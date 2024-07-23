@@ -30,7 +30,7 @@ public class FieldRepositoryTest {
 	//@Test
 	void getTEst() {
 		
-		Manager m = fr.findById(5L).get().getManager();		
+		Manager m = fr.findById(5).get().getManager();		
 		System.out.println(m.getName());
 	}
 	

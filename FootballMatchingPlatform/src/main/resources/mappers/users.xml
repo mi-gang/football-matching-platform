@@ -106,10 +106,16 @@
 	<!-- 비밀번호 업데이트하기 -->
   <update id="updatePasswordByUserId" parameterType="java.lang.String"> 
     UPDATE users
-    SET PASSWORD = #{password}
+    SET PASSWORD = #{pw}
     WHERE user_id = #{userId}
   </update>
 
+	<!-- 비밀번호 확인하기 -->
+	<select id="selectMyPw" parameterType="java.lang.String">
+	Select password
+	From users
+	WHERE user_id = #{userId}
+	</select>
 	
   <!-- 개인순위 top1 불러오기 -->
   <select id="selectTopOneUser" resultType="com.kosta.project.dto.UserDTO">

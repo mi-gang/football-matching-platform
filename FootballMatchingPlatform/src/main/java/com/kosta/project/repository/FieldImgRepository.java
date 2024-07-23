@@ -11,5 +11,5 @@ import com.kosta.project.domain.FieldImage;
 import com.kosta.project.dto.FieldDTO;
 import com.kosta.project.dto.FieldInfoDTO;
 
-public interface FieldImgRepository extends JpaRepository<FieldImage, Long>{
+public interface FieldImgRepository extends JpaRepository<FieldImage, Integer>{
 }

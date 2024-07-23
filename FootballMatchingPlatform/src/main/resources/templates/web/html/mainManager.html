@@ -13,7 +13,6 @@
 </head>
 
 <body>
-
     <header id="navbar"></header>
     <section class="container-fluid d-flex justify-content-center" id="sectionView">
 
@@ -49,7 +48,10 @@
                         </thead>
                         <tbody>
                             <tr th:each="field : ${fieldList}">
-                                <td th:text="${field.fieldName}">구장이름</td>
+                                <td th:text="${field.fieldName}"
+                                	th:onclick="|location.href='@{/fieldInfo/{fieldSeq}(fieldSeq=${field.fieldSeq})}'|">
+                                구장이름
+                                </td>
                                 <td th:text="${field.fieldAddress} + ' ' + ${field.fieldAddressDetail}">구장주소</td>
                                 <td th:if="${field.reservationCountOfMonth != null}" th:text="${field.reservationCountOfMonth} + '건'">전월예약수</td>
                                 <td th:if="${field.reservationCountOfMonth == null}" th:text="${'-'}">전월예약수</td>
@@ -60,7 +62,7 @@
                                     </button>
                                 </td>
                                 <td th:if="${field.fieldStatus == 1} and ${field.fieldApprovalDate != null}">
-                                	<a class="bg-secondary rounded-3 text-decoration-none text-light p-1 ps-3 pe-3"
+                                	<a th:value="${field.fieldSeq}"class="bg-secondary rounded-3 text-decoration-none text-light p-1 ps-3 pe-3"
                                         href="#">
                                         정보수정
                                     </a>
@@ -123,14 +125,6 @@
                 $("button[name=city1]").text($(this).text());
             })
         })
-
-        $("tbody > tr").each(function () {
-            $(this).children().last().prevAll().on('click', function () {
-                alert("구장 상세 페이지 이동");
-            })
-        })
-
-
     </script>
 </body>
 

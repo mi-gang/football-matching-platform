@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mypage</title>
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/mypage/inquiry.css">
+    <link rel="stylesheet" href="mobile/css/common.css">
+    <link rel="stylesheet" href="mobile/css/mypage/inquiry.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -22,20 +22,32 @@
                     <span>건</span>
                 </div>
             </div>
-                <div class="inquiry-wrapper">
-                    <div class="inquiry-top-wrapper">
-                        <div class="a-wrapper status-0">
-                            <span>A.</span>
-                            <span class="inquiry-status">문의중</span>
-                        </div>
-                        <div class="inquiry-detail">
-                            <span class="info-normal-text">자세히 보기</span>
-                            <img class="right-arrow" src="../img/right arrow.svg" />
-                        </div>
+                <div class="inquiry-wrapper" th:each="i:${getAllInquiry}">
+                    <div class="inquiry-top-wrapper" th:switch="${i.answerContentFlag}">
+                        <span class="answer-flag" th:case="0">		
+                        	<div class="a-wrapper status-0">
+                        	    <span>A.</span>
+                        	    <span class="inquiry-status">문의중</span>
+                        	</div>
+                        	<div class="inquiry-detail" th:data-inquiry-seq="${i.inquirySeq}">
+                        	    <span class="info-normal-text">자세히 보기</span>
+                        	    <img class="right-arrow" src="mobile/img/right arrow.svg" />
+                        	</div>
+                        </span>
+                    	<span class="answer-flag" th:case="1">
+                        	<div class="a-wrapper status-1">
+                        	    <span>A.</span>
+                        	    <span class="inquiry-status" >답변완료</span>
+                        	</div>
+                        	<div class="inquiry-detail" th:data-inquiry-seq="${i.inquirySeq}">
+                        	    <span class="info-normal-text">자세히 보기</span>
+                        	    <img class="right-arrow" src="mobile/img/right arrow.svg" />
+                        	</div>
+                        </span>
                     </div>
                     <div class="q-wrapper">
                         <span>Q.</span>
-                        <span class="inquiry-title">경기를 취소했는데 환불이 안됐습니다.</span>
+                        <span class="inquiry-title" th:text="${i.title}">경기를 취소했는데 환불이 안됐습니다.</span>
                     </div>
                 </div>
                 <div class="inquiry-wrapper">
@@ -46,7 +58,7 @@
                         </div>
                         <div class="inquiry-detail">
                             <span class="info-normal-text">자세히 보기</span>
-                            <img class="right-arrow" src="../img/right arrow.svg" />
+                            <img class="right-arrow" src="mobile/img/right arrow.svg" />
                         </div>
                     </div>
                     <div class="q-wrapper">
@@ -68,7 +80,11 @@
         });
         $('nav').load('common/nav.html');
     });
+    
+      $(".inquiry-wrapper").on("click", ".inquiry-detail", function() {
+    	console.log($(this).data("inquirySeq"));
+    });
     </script>
-    <script src="../js/mypage.js"></script>
+    <script src="mobile/js/mypage.js"></script>
 </body>
 </html>

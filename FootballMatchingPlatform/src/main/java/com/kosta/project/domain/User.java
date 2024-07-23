@@ -82,4 +82,13 @@ public class User {
 
     @Column(name = "user_status", length = 1, nullable = false)
     private String userStatus; // User status (e.g., active, suspended)
+    
+    public void updateScore(int score) {
+    	this.userScore += score;
+    	
+    	if(this.userScore < 0)
+    		this.userScore = 0;
+    	else if(this.userScore > 1200)
+    		this.userScore = 1200;
+    }
 }

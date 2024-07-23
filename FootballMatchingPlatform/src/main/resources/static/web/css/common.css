@@ -143,7 +143,7 @@ textarea{
 	height: 1.4rem;
 }
 
-.complete{
+.closed{
 	background-color: #a5a5a5;
 	border-color: #a5a5a5;
 	color : white;
@@ -152,6 +152,10 @@ textarea{
 .matching{
 	border: 0.2rem solid #a5a5a5;
 	border-color: #73A772;
+}
+
+.noMatching{
+	border: 0.2rem solid #a5a5a5;
 }
 
 /* ********** 캘린더 ********* */
@@ -276,4 +280,17 @@ tr button{
   	padding-inline: 0;
   	padding-block: 0;
   	line-height: normal;
+}
+
+.cal-matching-status-3 {
+    width: 0.4rem;
+    height: 0.4rem;
+
+    background: #80D87E;
+    border-radius: 100px;
+}
+
+.scoreOK{
+    background-color: #73A772;
+    color: white;
 }

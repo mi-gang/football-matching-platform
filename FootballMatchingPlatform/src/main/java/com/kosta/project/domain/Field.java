@@ -26,7 +26,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString(exclude="manager")
+@ToString(exclude={"manager", "fieldImages"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -106,4 +106,12 @@ public class Field {
 	    public void updateManagerId(Manager m) {
 	    	this.manager = m;
 	    }
+	    
+	    
+	    public void approveField(Field f) {
+	    	this.fieldStatus = f.fieldStatus;
+	    	this.fieldSeq = f.fieldSeq;
+	    }
+	    
+	    
 }
