@@ -63,6 +63,7 @@ public class WebController {
 			FieldDTO fieldDTO = FieldDTO.builder()
 			.fieldSeq(fieldList.get(i).getFieldSeq())
 			.fieldName(fieldList.get(i).getFieldName())
+			.fieldStatus(fieldList.get(i).getFieldStatus())
 			.build();
 			fieldDTOList.add(fieldDTO);
 		}

@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class FieldDTO {
 	private int fieldSeq;
 	private String fieldName;
+	private int fieldStatus;
 }
