@@ -77,6 +77,13 @@ public class ManagerService {
 		fieldList = fr.findByManager_ManagerId(managerId);
 		return fieldList;
 	}
+	
+	//나의 구장 중 승인 완료 리스트
+	public List<Field> getApprovedFieldList(String managerId){
+		List<Field> fieldList = null;
+		fieldList = fr.findApprovedFieldsByManagerId(managerId);
+		return fieldList;
+	}
 
 	// 구장 상태 변경
 	public void updateFieldStatus(int fieldSeq) {

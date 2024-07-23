@@ -15,6 +15,9 @@ import com.kosta.project.dto.FieldListForSystemManagerDTO;
 public interface FieldRepository extends JpaRepository<Field, Integer>{
     List<Field> findByManager_ManagerId(String managerId);
     
+    @Query("SELECT f FROM Field f WHERE f.manager.id = :managerId AND f.fieldApprovalDate IS NOT NULL")
+    List<Field> findApprovedFieldsByManagerId(@Param("managerId") String managerId);
+    
     
     
     

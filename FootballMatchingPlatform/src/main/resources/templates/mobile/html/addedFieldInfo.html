@@ -15,7 +15,7 @@
         <header></header>
          <!-- 컨텐츠 컨테이너 -->
         <div id="container">
-            <img id="img-field" src="/mobile/img/구장 사진.svg">
+            <img id="img-field" th:src="@{'../upload/img/' + ${addedFieldInfo.fieldImg}}">
             <div id="title-container">
                 <div th:text="${addedFieldInfo.fieldName}"></div>
                 <div th:text="${addedFieldInfo.fieldAddress} + ' ' + ${addedFieldInfo.fieldAddressDetail}">서울 강서구 화곡동 산 199</div>

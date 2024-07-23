@@ -43,7 +43,7 @@
 						  <p th:if="${i.rentBall}">축구공 대여 </p>
 						</div>
                     </div>
-                    <img class='fieldImg' src="/mobile/img/구장 사진.svg">
+                    <img class='fieldImg' th:src="@{'../upload/img/' + ${i.fieldImg}}">
                 </div>
             	<div class="line-bottom"></div>
             </ul>
@@ -153,11 +153,8 @@
 					 + rentShoes +
 					"</div>" +
                   "</div>" +
-                  "<img class='fieldImg' src='/mobile/img/구장 사진.svg'>" +
-             "</div>" +
-           "<div class='line-bottom'></div>");
+                  "<img class='fieldImg' src='../upload/img/" + response.result[i].fieldImg + "></div><div class='line-bottom'></div>");
             }
-            
         }).fail(function(error){
             //alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
         })
@@ -240,9 +237,7 @@
 					 + rentShoes +
 					"</div>" +
                   "</div>" +
-                  "<img class='fieldImg' src='/mobile/img/구장 사진.svg'>" +
-             "</div>" +
-           "<div class='line-bottom'></div>");
+                  "<img class='fieldImg' src='../upload/img/" + response.result[i].fieldImg + "></div><div class='line-bottom'></div>");
             }
             
         }).fail(function(error){
@@ -424,9 +419,7 @@
 					 + rentShoes +
 					"</div>" +
                   "</div>" +
-                  "<img class='fieldImg' src='/mobile/img/구장 사진.svg'>" +
-             "</div>" +
-           "<div class='line-bottom'></div>");
+                  "<img class='fieldImg' src='../upload/img/" + response.result[i].fieldImg + "></div><div class='line-bottom'></div>");
 				
 				
 			}
