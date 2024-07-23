@@ -27,21 +27,21 @@
         <div class="d-flex align-items-center" id="sidebar">
             <ul class="nav nav-pills nav-stacked justify-content-center m-2" id="side1">
                 <li class="nav-item m-2">
-                    <a class="nav-link rounded-5 active bg-dark" href="#">등록된 구장 정보</a>
+                    <a class="nav-link rounded-5 active bg-dark" id='navLinkVal1' value=1>등록된 구장 정보</a>
                 </li>
-                <li class="nav-item m-2">
-                    <a class="nav-link rounded-5 link-dark" href="#">신청 목록</a>
+                <li class="nav-item m-2" id='navLinkVal0'>
+                    <a class="nav-link rounded-5 link-dark"  id='navLinkVal0' value=0>신청 목록</a>
                 </li>
             </ul>
             <ul class="nav nav-pills nav-stacked justify-content-center m-2" id="side2">
                 <li class="nav-item m-2">
-                    <a class="nav-link rounded-5 active bg-dark" href="#">전체 회원 목록</a>
+                    <a class="nav-link rounded-5 active bg-dark" id='uUser'>전체 회원 목록</a>
                 </li>
                 <li class="nav-item m-2">
-                    <a class="nav-link rounded-5 link-dark" href="#">정지 회원 목록</a>
+                    <a class="nav-link rounded-5 link-dark" id='sUser'>정지 회원 목록</a>
                 </li>
                 <li class="nav-item m-2">
-                    <a class="nav-link rounded-5 link-dark" href="#">문의 게시판</a>
+                    <a class="nav-link rounded-5 link-dark" id='inquiry'>문의 게시판</a>
                 </li>
             </ul>
         </div>
@@ -60,11 +60,13 @@
                 $("#side1").hide();
                 $("#side2").show();
                 initSide2();
+                //window.location.href = '/userList';
             }
             else {
                 $("#side2").hide();
                 $("#side1").show();
                 initSide1();
+                //window.location.href = '/fieldApplyList';
             }
         })
 

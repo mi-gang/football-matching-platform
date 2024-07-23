@@ -88,9 +88,9 @@ public class WebController {
 		return "fieldApplyList";
 	}
 	
-	// @GetMapping("/fieldInfo/{fieldSeq}")
-	// public String getFieldInfo(@PathVariable Long fieldSeq) {
-	// 	return "fieldInfo";
-	// }
+	@GetMapping("/userList")
+	public String getUserList() {
+		return "userList";
+	}
 	
 }
