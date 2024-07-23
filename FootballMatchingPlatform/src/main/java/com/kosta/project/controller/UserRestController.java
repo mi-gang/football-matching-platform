@@ -1,6 +1,11 @@
 package com.kosta.project.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.InvalidCsrfTokenException;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.kosta.project.dto.InquiryDTO;
@@ -11,20 +16,21 @@ import com.kosta.project.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+@Log4j2
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -39,22 +45,25 @@ public class UserRestController {
 		return us.getUserLogin(userId, password);
 	}
 	
-	@PostMapping("/login")
-	public UserDTO login(@RequestParam String userId,String password, HttpServletRequest request) {
-		
-		//1. 회원 정보 조회
-		
-		UserDTO user = us.getUserLogin(userId,password);
-		
-		//2. 세션에 회원정보 저장
-		if(user != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("loginUser", user);
-		}
-		
-		return user;
-	}
-	
+//	@PostMapping("/login")
+//	public UserDTO login(@RequestParam String userId, @RequestParam String password, HttpServletRequest request) {
+//
+//		System.out.println("뭔데");
+//		System.out.println(userId);
+//		System.out.println(password);
+//
+//		//1. 회원 정보 조회
+//		UserDTO user = us.getUserLogin(userId, password);
+//
+//		//2. 세션에 회원정보 저장
+//		if(user != null) {
+//			HttpSession session = request.getSession();
+//			session.setAttribute("loginUser", user);
+//		}
+//		System.out.println("user: "+user);
+//		return user;
+//	}
+//
 	//소셜 로그인하기
 	@GetMapping("/snslogin")
 	public UserDTO getUserSnsLogin(String userId, String password) {
@@ -67,12 +76,17 @@ public class UserRestController {
 		session.invalidate();
 		return "/login";
 	}
-	
+
 	// 아이디 중복 여부 확인하기
 	@PostMapping("/getUserId")
+	@ResponseBody
 	public boolean getUserIdByUserId(String userId) {
+		System.out.println("getUserIdByUserId 들어옴");
 		return us.getUserIdByUserId(userId);
 	}
+
+	/////////////////////////////////////
+
 	
 	// 닉네임 중복 여부 확인하기
 	@PostMapping("/getUserNickname")
