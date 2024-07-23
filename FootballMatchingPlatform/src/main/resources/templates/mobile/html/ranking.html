@@ -19,27 +19,38 @@
                 <div>TOP 100</div>
             </div>
             <div class="content-container" id="first-rank-content-container">
-                <div class="first-content-container">
+                <div class="first-content-container" th:if="${getTopOneUser != null}">
                     <div class="ranking" th:text="${getTopOneUser.userRank} + '위'">1위</div>
                     <div class="name">
                         <div class="nickname" th:text="${getTopOneUser.nickname}">풋살킹</div>
                         <div class="teamname" th:text="${getTopOneUser.teamName}">슛돌이</div>
                     </div>
                 </div>
-                <div class="second-content-container">
+                <div class="first-content-container" th:if="${getTopOneUser == null}">
+                    <div class="ranking" >-</div>
+                    <div class="name">
+                        <div class="nickname">-</div>
+                        <div class="teamname" >-</div>
+                    </div>
+                </div>
+                <div class="second-content-container" th:if="${getTopOneUser != null}">
                     <div class="tier first-rank" th:text="${getTopOneUser.userTier}">A</div>
                     <div class="score first-rank" th:text="${getTopOneUser.userScore} + '점'">1205점</div>
                 </div>
+                <div class="second-content-container" th:if="${getTopOneUser == null}">
+                    <div class="tier first-rank" >-</div>
+                    <div class="score first-rank" >-</div>
+                </div>
             </div>
              <div class="content-container" th:each="i : ${getTopHundredUsersList}">
-                <div class="first-content-container">
+                <div class="first-content-container" th:if="${getTopHundredUsersList != null}">
                     <div class="ranking" th:text="${i.userRank} + '위'">1위</div>
                     <div class="name">
                         <div class="nickname" th:text="${i.nickname}">풋살킹</div>
                         <div class="teamname" th:text="${i.teamName}">슛돌이</div>
                     </div>
                 </div>
-                <div class="second-content-container">
+                <div class="second-content-container" th:if="${getTopHundredUsersList != null}">
                     <div class="tier" th:text="${i.userTier}">A</div>
                     <div class="score" th:text="${i.userScore} + '점'">1205점</div>
                 </div>
