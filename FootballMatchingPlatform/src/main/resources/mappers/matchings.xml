@@ -196,6 +196,7 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND cancel_status = 0
+		AND pay_status = 1
 		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
@@ -210,6 +211,7 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
+										AND pay_status = 1
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
 		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
@@ -228,6 +230,7 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND cancel_status = 0
+		AND pay_status = 1
 		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
@@ -242,6 +245,7 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
+										AND pay_status = 1
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
 		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
@@ -260,6 +264,7 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND cancel_status = 0
+		AND pay_status = 1
 		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
@@ -274,6 +279,7 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
+										AND pay_status = 1
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
 		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
@@ -292,6 +298,7 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND cancel_status = 0
+		AND pay_status = 1
 		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
@@ -306,6 +313,7 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
+										AND pay_status = 1
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
 		AND matching_date = #{matchingDate}
@@ -354,6 +362,7 @@
           AND ml.matching_seq = m.matching_seq
           AND fast_add_status = 1
 		AND cancel_status = 0
+		AND pay_status = 1
           AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
           AND m.matching_status = '매칭성공'
@@ -368,6 +377,7 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
+										AND pay_status = 1
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
           AND matching_date = #{matchingDate}
@@ -659,7 +669,7 @@
 	
 	<!-- 다가오는 경기 일정 -->
     <select id="selectMatchingAlready" parameterType="java.lang.String" resultType="com.kosta.project.dto.MatchingDTO">
-        SELECT m.matching_status      as matchingStatus,
+		SELECT m.matching_status      as matchingStatus,
                m.matching_date        as matchingDate,
                m.matching_time        as matchingTime,
                f.field_address        as fieldAddress,
@@ -674,6 +684,15 @@
           AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time + 2 HOUR, '%Y-%m-%d %H') 
 	 	    > DATE_FORMAT(NOW(), '%Y-%m-%d %H')
           AND m.fast_add_status = 0
+          AND m.matching_seq NOT IN (SELECT m.matching_seq AS matchingSeq
+        								FROM matchings m
+         					        INNER JOIN fields f ON m.field_seq = f.field_seq
+               					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+            					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+       								WHERE ma.user_id = #{userId}
+       							   AND (m.matching_status = '경기확정' OR m.matching_status = '매칭성공')
+       							   AND mal.matching_success_status = 0
+         							GROUP BY m.matching_seq)
         ORDER BY m.matching_date DESC,
                  m.matching_time DESC
         LIMIT 1

@@ -151,15 +151,36 @@
 	
 	<!-- 가입 신청된 목록 조회 -->
 	<select id="selectApplyTeamList" resultType="com.kosta.project.dto.TeamDTO">
-		SELECT t.team_seq, team_name, possible_a AS possA, possible_b AS possB, possible_c AS possC,
-		possible_d AS possD, week_type, week_time, hope_time, hometown,
-		COUNT(case when tm.team_member_status=FALSE AND tm.team_member_delete=FALSE then 1 END)
-		AS memberCount
-		FROM applys a
-		JOIN teams t ON a.team_seq = t.team_seq
-		LEFT JOIN team_members tm ON t.team_seq = tm.team_seq
-		WHERE a.user_id = #{userId} AND apply_status = FALSE AND close_status = FALSE
-		GROUP BY t.team_seq; 
+		SELECT 
+		    t.team_seq AS teamSeq, 
+		    team_name AS teamName, 
+		    possible_a AS possA, 
+		    possible_b AS possB, 
+		    possible_c AS possC, 
+		    possible_d AS possD, 
+		    week_type AS weekType, 
+		    week_time AS weekTime, 
+		    content, 
+		    team_tier, 
+		    hope_time AS hopeTime, 
+		    hometown, 
+		    (SELECT COUNT(*) 
+		     FROM team_members tm 
+		     WHERE tm.team_seq = t.team_seq 
+		       AND team_member_status = FALSE 
+		       AND team_member_delete = FALSE) AS memberCount
+		FROM 
+		    teams t
+		JOIN 
+		    applys a ON a.team_seq = t.team_seq
+		WHERE 
+		    a.user_id = #{userId} 
+		    AND a.apply_status = FALSE 
+		    AND a.close_status = FALSE 
+		    AND t.recruitment = TRUE 
+		    AND t.team_dismantle_status = FALSE
+		GROUP BY 
+		    t.team_seq, team_name, possible_a, possible_b, possible_c, possible_d, week_type, week_time, content, team_tier, hope_time, hometown; 
 	</select>
 
 	
@@ -208,6 +229,7 @@
 		       INNER JOIN teams t ON ma.team_seq = t.team_seq
 		WHERE t.team_seq = #{teamSeq}
 			   AND (m.matching_status = '경기확정' OR m.matching_status = '매칭성공')
+			   AND mal.matching_success_status = 1
 		      AND m.matching_date - curdate() >= 0
 		      AND m.fast_add_status = 0
 		      ORDER BY m.matching_date DESC,
@@ -221,7 +243,8 @@
 			INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
 		   INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
 		   INNER JOIN teams t ON ma.team_seq = t.team_seq
-		WHERE t.team_seq != (SELECT team_seq FROM teams WHERE team_seq = #{teamSeq}) AND m.matching_seq= #{matchingSeq};	
+		WHERE t.team_seq != (SELECT team_seq FROM teams WHERE team_seq = #{teamSeq}) AND m.matching_seq= #{matchingSeq}
+		AND mal.matching_success_status = 1;	
 	</select>
 	
 	
