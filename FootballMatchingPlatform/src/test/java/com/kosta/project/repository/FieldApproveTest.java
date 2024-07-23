@@ -30,7 +30,7 @@ public class FieldApproveTest {
 		
 	// 	fr.save(field);
 		
-	// }
+	}
 	
 	
 	// 구장 승인 거절(field_status를 2로 변경)
@@ -43,7 +43,7 @@ public class FieldApproveTest {
 	// 	field.setFieldStatus(status);
 		
 	// 	fr.save(field);
-	// }
+	}
 	
 	
 	
