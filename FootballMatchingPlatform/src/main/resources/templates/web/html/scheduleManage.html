@@ -71,7 +71,7 @@
 
                             <!-- 일정  -->
                             <div class="row">
-                                <div id = "scheduleBox" class="col d-flex flex-column text-center ms-2">
+                                <div id="scheduleBox" class="col d-flex flex-column text-center ms-2">
 
                                 </div>
                                 <div class="d-flex flex-column align-items-end mt-2 mb-2">
@@ -104,8 +104,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">⚽</span>
                                         </div>
-                                        <input type="number" class="form-control w-25" id="aCount"
-                                            aria-label="A팀" aria-describedby="basic-addon1">
+                                        <input type="number" class="form-control w-25" id="aCount" aria-label="A팀"
+                                            aria-describedby="basic-addon1">
                                     </div>
                                 </div>
                                 <div class="form-group text-center w-25">
@@ -122,7 +122,8 @@
 
                         </div>
                         <div class="modal-footer justify-content-center border-top-0">
-                            <button type="button" class="btn btn-success" id="setScoreBtn"  data-bs-dismiss="modal">완료</button>
+                            <button type="button" class="btn btn-success" id="setScoreBtn"
+                                data-bs-dismiss="modal">완료</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                         </div>
                     </div>
@@ -168,7 +169,8 @@
                             <p class="fs-5 text-secondary m-2">⊙ 체크한 시간대는 운영을 하지 않습니다.</p>
                         </div>
                         <div class="modal-footer justify-content-center border-top-0 mb-2">
-                            <button type="button" class="btn btn-success" id="addCloseTimeBtn" data-bs-dismiss="modal">완료</button>
+                            <button type="button" class="btn btn-success" id="addCloseTimeBtn"
+                                data-bs-dismiss="modal">완료</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                         </div>
                     </div>
@@ -186,9 +188,13 @@
         let currentYear = date.getFullYear();
         let currentMonth = date.getMonth();
         let currentDate = date.getDate();
+
+        const twoWeeksLater = new Date(date);
+        twoWeeksLater.setDate(date.getDate() + 16); // 2주 후 날짜 계산
+
         $("button[name=city1]").text($("#dropField > li > button:eq(0)").text());
         $("button[name=city1]").val($("#dropField > li > button:eq(0)").val());
-        
+
         getMatchingInfoOfMonth($("#dropField > li > button:eq(0)").val());
         getMatchingInfo($("#dropField > li > button:eq(0)").val(), currentYear + "-" + (parseInt(currentMonth) + 1) + "-" + currentDate);
 
@@ -200,7 +206,7 @@
             getMatchingInfo($("#dropField > li > button:eq(0)").val(), currentYear + "-" + (parseInt(currentMonth) + 1) + "-" + currentDate);
         })
 
-        function getMatchingInfoOfMonth(fieldSeq){
+        function getMatchingInfoOfMonth(fieldSeq) {
             fetch(`/confirmed/dates/${fieldSeq}?month=${parseInt(currentMonth + 1)}&year=${currentYear}`)
                 .then(response => response.json())
                 .then(data => {
@@ -250,9 +256,19 @@
                 dateElement.classList.add("date");
                 dateElement.setAttribute('id', currentYear + "-" + parseInt(currentMonth + 1) + "-" + i);
                 dateElement.textContent = i;
+
                 if (i == currentDate && date.getMonth() == currentMonth) {
                     dateElement.classList.add("today");
                     dateElement.classList.add("click-date");	// default 오늘 날짜 선택
+                }
+
+                // 현재 날짜와 2주 후 날짜 계산
+                const currentDate2 = new Date(currentYear, currentMonth, i);
+
+                // 오늘부터 2주 이내의 날짜 확인
+                if (currentDate2 >= date && currentDate2 <= twoWeeksLater) {
+                    dateElement.classList.add("blocked"); // 차단된 날짜에 'blocked' 클래스 추가
+                    console.log(currentDate2);
                 }
 
                 // 매칭 여부
@@ -260,7 +276,7 @@
                 matchingDateElement.classList.add("isMatching");
 
                 // 매칭 정보에 따라 다른 클래스 지정
-                if(matchingDateList.length == 0){
+                if (matchingDateList.length == 0) {
                     matchingDateElement.classList.remove("cal-matching-status-3");
                 }
 
@@ -274,7 +290,7 @@
                     }
 
                 }
-                
+
                 dateWrapperElement.appendChild(matchingDateElement);
                 dateWrapperElement.appendChild(dateElement);
                 calendarDates.appendChild(dateWrapperElement);
@@ -330,16 +346,17 @@
         // 날짜 클릭 시
         $(".calendar-dates").on("click", ".date-wrapper", function () {
             $('.click-date').removeClass('click-date');
+            $('.click-date').removeClass('blocked');
             $(this).find('.date').addClass('click-date'); // find -> 자식 요소 찾기
 
             // 클릭한 날짜 불러오기
             var date = $(this).find('.date').attr("id");
             var fieldSeq = $("button[name=city1]").val();
-            
+
             getMatchingInfo(fieldSeq, date);
         });
 
-        function getMatchingInfo(fieldSeq, date){
+        function getMatchingInfo(fieldSeq, date) {
             $("#scheduleBox").html("");
             const now = new Date();
             const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -356,141 +373,142 @@
             let closedDate = [];
             //닫힌날짜 시간 가져오기
             fetch(`/closedDate/${date}/fieldSeq/${fieldSeq}`)
-            .then(response => response.text())
-            .then(text => {
-                if(text){
-                    closedDate = JSON.parse(text);
-                }
-                //날짜별 매칭기록 가져오기
-                return fetch(`/date/${date}/field/${fieldSeq}`);
-            })
-            .then(response => response.text())
-            .then(text => {
-                if(text){
-                    var data = JSON.parse(text);
-                    console.log(data);
-                }
-                else{
-                    let time = 8;
-                    for (const timeKey in scheduleStats){
-                        const isClosedTime = closedDate.some(closed => closed.closedTime === parseInt(timeKey))
-                        if(isClosedTime){
-                            $("#scheduleBox").append(`
+                .then(response => response.text())
+                .then(text => {
+                    if (text) {
+                        closedDate = JSON.parse(text);
+                    }
+                    //날짜별 매칭기록 가져오기
+                    return fetch(`/date/${date}/field/${fieldSeq}`);
+                })
+                .then(response => response.text())
+                .then(text => {
+                    if (text) {
+                        var data = JSON.parse(text);
+                        console.log(data);
+                    }
+                    else {
+                        let time = 8;
+                        for (const timeKey in scheduleStats) {
+                            const isClosedTime = closedDate.some(closed => closed.closedTime === parseInt(timeKey))
+                            if (isClosedTime) {
+                                $("#scheduleBox").append(`
                                 <div class="row rounded-3 m-1 timeList closed">
                                     <p class="m-0 p-3">
                                         ${time}:00-${parseInt(time) + 2}:00
                                     </p>
                                 </div>
                             `);
-                        }
-                        else{
-                            $("#scheduleBox").append(`
+                            }
+                            else {
+                                $("#scheduleBox").append(`
                                 <div class="row rounded-3 m-1 timeList default">
                                     <p class="m-0 p-3">
                                         ${time}:00-${parseInt(time) + 2}:00
                                     </p>
                                 </div>
                             `);
+                            }
+                            time = time + 2;
                         }
-                        time = time + 2;
+                        return;
                     }
-                    return;
-                }
 
-                for (const timeKey in scheduleStats) {
-                    const hasMatchingTime = data.some(matching => matching.matchingTime === parseInt(timeKey))
-                    const isClosedTime = closedDate.some(closed => closed.closedTime === parseInt(timeKey))
-                    if(hasMatchingTime) {
-                        // 해당 시간대에 경기가 있는 경우 처리
-                        for (const matching of data) {
-                            if (matching.matchingTime === parseInt(timeKey)) {
-                                const matchingDateObj = new Date(matching.matchingDate);
-                                if (matching.matchingStatus === "경기확정") {
-                                    if ((matchingDateObj.getFullYear() == currentDate.getFullYear() && matchingDateObj.getMonth() == currentDate.getMonth() &&
-                                            matchingDateObj.getDate() < currentDate.getDate()) || 
-                                        ((matchingDateObj.getFullYear() == currentDate.getFullYear() && matchingDateObj.getMonth() == currentDate.getMonth() &&
-                                            matchingDateObj.getDate() == currentDate.getDate()) && (matching.matchingTime + 2) <= currentHour)) {
-                                        $("#scheduleBox").append(`
+                    for (const timeKey in scheduleStats) {
+                        const hasMatchingTime = data.some(matching => matching.matchingTime === parseInt(timeKey))
+                        const isClosedTime = closedDate.some(closed => closed.closedTime === parseInt(timeKey))
+                        if (hasMatchingTime) {
+                            // 해당 시간대에 경기가 있는 경우 처리
+                            for (const matching of data) {
+                                if (matching.matchingTime === parseInt(timeKey)) {
+                                    const matchingDateObj = new Date(matching.matchingDate);
+                                    if (matching.matchingStatus === "경기확정") {
+                                        if ((matchingDateObj.getFullYear() == currentDate.getFullYear() && matchingDateObj.getMonth() == currentDate.getMonth() &&
+                                            matchingDateObj.getDate() < currentDate.getDate()) ||
+                                            ((matchingDateObj.getFullYear() == currentDate.getFullYear() && matchingDateObj.getMonth() == currentDate.getMonth() &&
+                                                matchingDateObj.getDate() == currentDate.getDate()) && (matching.matchingTime + 2) <= currentHour)) {
+                                            $("#scheduleBox").append(`
                                             <div id="${matching.matchingSeq}" class="row rounded-3 m-1 timeList matching notScore" data-bs-toggle="modal" data-bs-target="#timeModal">
                                                 <p class="m-0 p-3">
                                                     ${matching.matchingTime}:00-${matching.matchingTime + 2}:00
                                                 </p>
                                             </div>
                                         `);
-                                    } else {
-                                        $("#scheduleBox").append(`
+                                        } else {
+                                            $("#scheduleBox").append(`
                                             <div class="row rounded-3 m-1 timeList matching">
                                                 <p class="m-0 p-3">
                                                     ${matching.matchingTime}:00-${matching.matchingTime + 2}:00
                                                 </p>
                                             </div>
                                         `);
-                                    }
-                                } else if (matching.matchingStatus === "경기완료") {
-                                    $("#scheduleBox").append(`
+                                        }
+                                    } else if (matching.matchingStatus === "경기완료") {
+                                        $("#scheduleBox").append(`
                                         <div class="row rounded-3 m-1 timeList matching scoreOK">
                                             <p class="m-0 p-3">
                                                 ${matching.matchingTime}:00-${matching.matchingTime + 2}:00
                                             </p>
                                         </div>
                                     `);
+                                    }
                                 }
                             }
-                        }
-                    } else {
-                        if(isClosedTime){
-                            $("#scheduleBox").append(`
+                        } else {
+                            if (isClosedTime) {
+                                $("#scheduleBox").append(`
                             <div class="row rounded-3 m-1 timeList closed">
                                 <p class="m-0 p-3">
                                     ${timeKey}:00-${parseInt(timeKey) + 2}:00
                                 </p>
                             </div>
                         `);
-                        }
-                        else{
-                            // 기본 스타일로 어펜드
-                            $("#scheduleBox").append(`
+                            }
+                            else {
+                                // 기본 스타일로 어펜드
+                                $("#scheduleBox").append(`
                                 <div class="row rounded-3 m-1 timeList default">
                                     <p class="m-0 p-3">
                                         ${timeKey}:00-${parseInt(timeKey) + 2}:00
                                     </p>
                                 </div>
                             `);
+                            }
                         }
                     }
-                }
-            })
+                })
         }
-        $("#scheduleBox").on("click", ".notScore", function(){
+        $("#scheduleBox").on("click", ".notScore", function () {
             var matchingSeq = $(this).attr("id");
             fetch(`/matchingInfo/${matchingSeq}`)
-            .then(response => response.json())
-            .then(data => {
-                var date = new Date(data.matchingDate);
-                var startTime = data.matchingTime;
-                var endTime = startTime + 2;
-                var options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-                var formattedDate = date.toLocaleDateString('ko-KR', options);
-                $("#matchingDate").text(formattedDate);
-                $("#matchingTime").text(startTime + ":00-" + endTime + ":00");
-                $("#setScoreBtn").val(matchingSeq);
-            })
+                .then(response => response.json())
+                .then(data => {
+                    var date = new Date(data.matchingDate);
+                    var startTime = data.matchingTime;
+                    var endTime = startTime + 2;
+                    var options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+                    var formattedDate = date.toLocaleDateString('ko-KR', options);
+                    $("#matchingDate").text(formattedDate);
+                    $("#matchingTime").text(startTime + ":00-" + endTime + ":00");
+                    $("#setScoreBtn").val(matchingSeq);
+                })
         })
 
         // ===================== 승패입력 =====================
+
         $('#setScoreBtn').on('click', function () {
             let matchingSeq = $(this).val(); // << 매칭 Seq 가져오기
             var ascore = $('#aCount').val();
             var bscore = $('#bCount').val();
-            
+
             let selDay = $(".click-date").attr("id");
             let fieldSeq = $('button[name=city1]').val();
 
-            if(ascore === "" || bscore === ""){
-            	alert("점수를 입력하세요");
-            	return;
+            if (ascore === "" || bscore === "") {
+                alert("점수를 입력하세요");
+                return;
             }
-			console.log(matchingSeq);
+            console.log(matchingSeq);
             fetch('/setscore/' + matchingSeq, {
                 method: "put",
                 headers: {
@@ -514,16 +532,23 @@
             const checkBox = $('input[type="checkbox"]:checked').map(function () {
                 return $(this).val(); // 체크박스와 연결된 레이블의 텍스트를 가져옵니다.
             }).get();
-            
+
             let selDay = $(".click-date").attr("id");
+
+            if ($(".click-date").hasClass("blocked")) {
+                alert("구장이 등록된 상태에서는 2주간 일정수정 할 수 없습니다!");
+                return;
+            }
+
+
             let fieldSeq = $('button[name=city1]').val();
             console.log(fieldSeq);
-            
+
             const dataToSend = {
-            	selectTime : checkBox,
-            	selectDay : selDay
+                selectTime: checkBox,
+                selectDay: selDay
             }
-            
+
             $.ajax({
                 url: '/closetime/' + fieldSeq, // 실제 API 엔드포인트로 변경
                 type: 'POST', // 또는 'PUT', 필요한 HTTP 메서드로 설정
