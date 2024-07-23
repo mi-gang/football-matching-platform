@@ -37,7 +37,10 @@ public class FieldApplyRestController {
 		//System.out.println("과연2~~" + fieldSeq);
 		
 	 	smfs.updateFieldStatus2(fieldSeq);
+	 	smfs.updateFieldStatus2(fieldSeq);
 		
+	 	return Map.of("result", "성공");
+	 }
 	 	return Map.of("result", "성공");
 	 }
 	
@@ -74,8 +77,6 @@ public class FieldApplyRestController {
 	//	System.out.println("테스트 확인 주소---------" + newAddressStr2);
 		return Map.of("result", smfs.getFieldListByAddressAndFieldName(newAddressStr2, fssm.getFieldName()));
 	}
-	
-	
 	
 	
 	
