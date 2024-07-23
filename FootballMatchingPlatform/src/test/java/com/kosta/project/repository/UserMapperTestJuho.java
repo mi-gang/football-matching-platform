@@ -177,7 +177,7 @@ public class UserMapperTestJuho {
 		userDTO.setName("노묵훈");
 		userDTO.setNickname("zl존묵훈");
 		userDTO.setPhoneNumber("010-2009-0523");
-		um.updateMyInfoByUserId(userDTO);
+//		um.updateMyInfoByUserId(userDTO);
 	}
 	
 	
