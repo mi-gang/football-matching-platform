@@ -43,6 +43,11 @@ public class UserDTO implements UserDetails {
 	private float winRate;
 	private String teamName;
 
+	public UserDTO(String userId, String password) {
+		this.userId = userId;
+		this.password = password;
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return List.of();
@@ -50,12 +55,12 @@ public class UserDTO implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return userId;
+		return this.userId;
 	}
 
 	@Override
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	@Override
