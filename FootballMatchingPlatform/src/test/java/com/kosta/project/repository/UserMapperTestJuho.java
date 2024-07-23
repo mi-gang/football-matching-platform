@@ -24,7 +24,7 @@ public class UserMapperTestJuho {
 	void selectUserLoginTest() {
 		String userId = "user00200";
 		String password = "password00200";
-		System.out.println(um.selectUserLogin(userId, password));
+		System.out.println(um.selectUserLogin(userId));
 	}
 	
 	

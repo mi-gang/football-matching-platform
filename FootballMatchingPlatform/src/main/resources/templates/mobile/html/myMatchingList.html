@@ -20,7 +20,7 @@
     <!-- 헤더 -->
     <header></header>
     <!-- 컨텐츠 컨테이너 -->
-    <div id="container">
+    <div id="container" th:data-session="${session.loginUser.userTier}">
         <div id="matchingTotalNumInfo">
             <p>총</p>&nbsp;
             <p id="totalNum"></p>
@@ -235,12 +235,12 @@
     $(document).ready(function () {
         $('header').load('/common/header_back.html', function () {
             $('#page-name').text('일정 전체보기');
-            $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+            $('#user-tier').text($("#container").data("session")); // 나중에 세션에서 usertier 구해서 넣기
         });
         $('nav').load('/common/nav.html');
     });
 </script>
-<script src="/mobile/js/calendar.js"></script>
 <script src="/mobile/js/myMatchingList.js"></script>
+<script src="/mobile/js/calendar.js"></script>
 </body>
 </html>

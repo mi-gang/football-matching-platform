@@ -20,7 +20,7 @@
     <!-- 헤더 -->
     <header></header>
     <!-- 컨텐츠 컨테이너 -->
-    <div id="container">
+    <div id="container" th:data-session="${session.loginUser.userTier}">
         <div class="calendar-container">
             <div class="calendar-header">
                 <div class="calendar-nav">
@@ -235,7 +235,7 @@
                             <p class="modal-matching-field" id="totalScore"></p>
                         </div>
                     </div>
-                    <span>경기 결과에 따른 점수는 익일 등급에 반영됩니다.</span>
+                    <span>경기 결과에 따른 점수가 반영된 등급은 익일 업데이트 됩니다.</span>
                 </div>
             </div>
 
@@ -246,13 +246,64 @@
     </div>
 </div>
 
+<!-- 매칭중 - 매칭 리스트 확인 모달 -->
+<div class="modal" id="matchingListModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                ></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="modal-body-wrapper">
+                    <div class="matching-lists-wrapper">
+                        <div class="matching-lists">
+                            <h4 class="modal-title modal-matching-info"></h4>
+                            <div class="matching-list-info-wrapper">
+                                <div class="matching-list-info">
+                                    <span class="matching-list-date-info">2024-07-22</span>
+                                    <span class="matching-list-time-info">&nbsp;10:00 - 12:00</span>
+                                </div>
+                                <span class="matching-list-field-info">더피치 영등포점</span>
+                            </div>
+                            <button class="modal-matching-field btn-setting matching-cancel">매칭 취소</button>
+                        </div>
+                        <div class="matching-lists">
+                            <h4 class="modal-title modal-matching-info"></h4>
+                            <div class="matching-list-info-wrapper">
+                                <div class="matching-list-info">
+                                    <span class="matching-list-date-info">2024-07-22</span>
+                                    <span class="matching-list-time-info">&nbsp;10:00 - 12:00</span>
+                                </div>
+                                <span class="matching-list-field-info">더피치 영등포점</span>
+                            </div>
+                            <button class="modal-matching-field btn-setting matching-cancel">매칭 취소</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     // header, nav 내용 불러오기
     $(document).ready(function () {
+        console.log($("#container").data("session"))
         $('header').load('/common/header.html', function () {
             $('#page-name').text('일정표');
-            $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+            $('#user-tier').text($("#container").data("session")); // 나중에 세션에서 usertier 구해서 넣기
         });
         $('nav').load('/common/nav.html');
     });

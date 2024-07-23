@@ -237,10 +237,41 @@
 
 .matching-info,
 .matching-field-info,
+.matching-list-field-info,
 .pay-info,
 .team-info{
     padding-left: 0.5rem;
     text-align: center;
+}
+
+.matching-lists-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.matching-list-info{
+    padding-left: 0.5rem;
+    text-align: center;
+}
+
+.matching-lists{
+    display: flex;
+    flex-direction: column;
+}
+
+.matching-cancel{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.matching-list-info-wrapper{
+    padding-left: 0.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .matching-btn-wrapper {
