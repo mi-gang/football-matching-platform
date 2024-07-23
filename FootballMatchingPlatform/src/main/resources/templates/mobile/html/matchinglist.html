@@ -110,11 +110,10 @@
 										<ul id="locationBtns">
 											<hr class="lineUp">
 											<div class="locationInfo">
-												<div id="field-name" class="mx-4"></div>
-												<img id="fieldImg" class="matchingLocationImage mx-4 mb-4"
-													src="/mobile/img/image6.svg" />
+												<div id="field-name"></div>
+												<img id="fieldImg" class="matchingLocationImage mx-4 mb-4"/>
 												<div ID="fieldLocation">
-													<p>구장 주소</p>
+													<p>구장주소</p>
 													<div class="fieldLocationDetail">
 														<p class="mx-3" id="field-address"></p>
 													</div>
@@ -228,9 +227,9 @@
 					.then(response => response.json())
 					.then(data => {
 						fieldInfo = data.result;
-						$("#field-name").text(fieldInfo.fieldName);
+						$("#field-name").text("구장명 " + fieldInfo.fieldName);
 						$("#fieldImg").attr("src", "../upload/img/" + fieldInfo.fieldImg);
-						$("#field-address").text(fieldInfo.fieldAddress + " " + fieldInfo.fieldAddressDetail);
+						$("#field-address").text(fieldInfo.fieldAddress);
 						var ballTF = document.querySelector('.ballTF');
 						var parkTF = document.querySelector('.parkTF');
 						var drinkTF = document.querySelector('.drinkTF');

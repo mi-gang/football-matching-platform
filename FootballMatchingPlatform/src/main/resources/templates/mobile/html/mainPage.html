@@ -56,42 +56,42 @@
                 <div id="info-rank">
                     <div id="first-rank" th:if="${getTopOneUser != null}">
                         <div>
-                            <div>1</div><img src="/mobile/img/-.svg">
+                            <div>1</div>
                         </div>
                         <div th:text="${getTopOneUser.nickname}"></div>
                         <div th:text="${getTopOneUser.userScore} + '점'">1205점</div>
                     </div>
                     <div id="first-rank" th:if="${getTopOneUser == null}">
                         <div>
-                            <div>1</div><img src="/mobile/img/-.svg">
+                            <div>1</div>
                         </div>
                         <div>-</div>
                         <div></div>
                     </div>
                     <div id="middle-rank" th:if="${getTopTwoUser != null}">
                         <div>
-                            <div>2</div><img src="/mobile/img/up.svg">
+                            <div>2</div>
                         </div>
                         <div th:text="${getTopTwoUser.nickname}"></div>
                         <div th:text="${getTopTwoUser.userScore} + '점'"></div>
                     </div>
                     <div id="middle-rank" th:if="${getTopTwoUser == null}">
                         <div>
-                            <div>2</div><img src="/mobile/img/up.svg">
+                            <div>2</div>
                         </div>
                         <div>-</div>
                         <div></div>
                     </div>
                     <div id="last-rank" th:if="${getTopThreeUser != null}">
                         <div>
-                            <div>3</div><img src="/mobile/img/down.svg">
+                            <div>3</div>
                         </div>
                         <div th:text="${getTopThreeUser.nickname}">뿡칫치</div>
                         <div th:text="${getTopThreeUser.userScore} + '점'"></div>
                     </div>
                     <div id="last-rank" th:if="${getTopThreeUser == null}">
                         <div>
-                            <div>3</div><img src="/mobile/img/down.svg">
+                            <div>3</div>
                         </div>
                         <div>-</div>
                         <div></div>

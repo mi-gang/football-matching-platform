@@ -51,8 +51,9 @@ p {
 
 
 .matchingDate {
+	display: flex;
+    justify-content: center;
 	white-space: nowrap;
-
 }
 
 .matchingDateBtn0 {
@@ -125,6 +126,7 @@ p {
 #matchingDateBtns {
 	white-space: nowrap;
 	font-size: 0;
+	padding-left: 0;
 }
 
 #matchingDateBtns li {
@@ -283,8 +285,4 @@ body {
 
 #matchingDateBtnsLi {
 	width: 15rem;
-}
-
-#matchingDateBtns {
-	width: 18rem;
 }

@@ -268,7 +268,7 @@ input[type="checkbox"]{
 
 #fieldInfomation{
 	display: flex;
-	justify-content: space-between;
+	gap: 1rem;
 }
 #fieldLocation{
 	display: flex;
@@ -407,4 +407,8 @@ ul{
 }
 .matchDateH3{
 	text-align: center;
+}
+
+#fieldImg{
+	width: 16.4rem;
 }
