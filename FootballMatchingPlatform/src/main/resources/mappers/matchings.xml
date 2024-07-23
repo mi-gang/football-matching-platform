@@ -184,6 +184,7 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND cancel_status = 0
+		AND pay_status = 1
 		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
@@ -198,6 +199,7 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
+										AND pay_status = 1
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
 		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
@@ -216,6 +218,7 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND cancel_status = 0
+		AND pay_status = 1
 		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
@@ -230,6 +233,7 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
+										AND pay_status = 1
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
 		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
@@ -248,6 +252,7 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND cancel_status = 0
+		AND pay_status = 1
 		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
@@ -262,6 +267,7 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
+										AND pay_status = 1
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
 		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
@@ -280,6 +286,7 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND cancel_status = 0
+		AND pay_status = 1
 		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
@@ -294,6 +301,7 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
+										AND pay_status = 1
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
 		AND matching_date = #{matchingDate}
@@ -342,6 +350,7 @@
           AND ml.matching_seq = m.matching_seq
           AND fast_add_status = 1
 		AND cancel_status = 0
+		AND pay_status = 1
           AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
           AND m.matching_status = '매칭성공'
@@ -356,6 +365,7 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
+										AND pay_status = 1
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
           AND matching_date = #{matchingDate}
