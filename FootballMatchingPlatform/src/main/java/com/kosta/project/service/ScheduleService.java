@@ -86,6 +86,15 @@ public class ScheduleService {
 				matchingScheduleListDTO.setOpposingTeamReviewStatus(matchingMapper.selectOpposingTeamReviewStatus(userMatchingInfoDTO));
 			}
 
+			// 팀 매칭중일때 팀 명 추가하기
+			if(matchingScheduleListDTO.isTeamStatus()) {
+				List<String> list = matchingMapper.getTeamNames(userMatchingInfoDTO);
+				if (list.size() > 0) {
+					matchingScheduleListDTO.setMyTeamName(list.get(0));
+					matchingScheduleListDTO.setOpposingTeamName(list.get(1));
+				}
+			}
+
 			// 빠른 매칭 시 명 수 추가하기
 			if (matchingScheduleListDTO.isFastAddStatus()){
 				matchingScheduleListDTO.setTotalUserCount(matchingMapper.selectMatchingMemberCount

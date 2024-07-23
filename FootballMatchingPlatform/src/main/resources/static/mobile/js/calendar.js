@@ -630,68 +630,37 @@ function getMatchigList(item) {
         if (item.matchingStatus != '경기확정' && item.matchingStatus != '매칭실패'
             && item.matchingStatus != '경기취소' && item.matchingStatus != '경기완료') {
 
-            if (item.matchingStatus != '매칭중') {
-                // pay-matching-btn 버튼 생성
-                const payMatchingBtn = document.createElement('button');
-                payMatchingBtn.className = 'pay-matching-btn btn-setting';
-                payMatchingBtn.setAttribute('data-bs-toggle', 'modal');
-                payMatchingBtn.setAttribute('data-bs-target', '#payMatchingModal');
-                // payMatchingBtn.setAttribute('data-matching-seq', item.matchingSeq);
-                if (item.payStatus) {
-                    payMatchingBtn.textContent = '결제 완료';
-                    payMatchingBtn.disabled = true;
-                } else {
-                    payMatchingBtn.textContent = '결제하기';
+            if (item.teamStatus){
+                if (item.isLeader){
+                    setButton(item, matchingBtnWrapper)
                 }
-                matchingBtnWrapper.appendChild(payMatchingBtn);
+            }else{
+                setButton(item, matchingBtnWrapper)
             }
-            // else {
-            //     const payMatchingBtn = document.createElement('button');
-            //     payMatchingBtn.className = 'matching-list-btn btn-setting';
-            //     payMatchingBtn.setAttribute('data-bs-toggle', 'modal');
-            //     payMatchingBtn.setAttribute('data-bs-target', '#matchingListModal');
-            //     payMatchingBtn.textContent = '매칭 정보';
-            //
-            //     matchingBtnWrapper.appendChild(payMatchingBtn);
-            // }
-
-            // cancel-matching-btn 버튼 생성
-            const cancelMatchingBtn = document.createElement('button');
-            cancelMatchingBtn.setAttribute('data-bs-toggle', 'modal');
-            cancelMatchingBtn.setAttribute('data-bs-target', '#cancelMatchingModal');
-
-            if (item.matchingStatus == '매칭중')
-                cancelMatchingBtn.className = 'remove-matching-btn btn-setting';
-            else
-                cancelMatchingBtn.className = 'cancel-matching-btn btn-setting';
-
-            cancelMatchingBtn.textContent = '매칭 취소';
-
-            // matching-btn-wrapper에 버튼 추가
-            matchingBtnWrapper.appendChild(cancelMatchingBtn);
 
         } else if (item.matchingStatus == '경기완료') {
-            // review-matching-btn 버튼 생성
-            const reviewMatchingBtn = document.createElement('button');
-            reviewMatchingBtn.className = 'review-matching-btn btn-setting';
-            reviewMatchingBtn.textContent = '선수 평가';
+                // review-matching-btn 버튼 생성
+                const reviewMatchingBtn = document.createElement('button');
+                reviewMatchingBtn.className = 'review-matching-btn btn-setting';
+                reviewMatchingBtn.textContent = '선수 평가';
 
-            console.log(item.reviewStatus)
-            if (item.reviewStatus) {
-                reviewMatchingBtn.textContent = '평가 완료';
-                reviewMatchingBtn.disabled = true;
+                console.log(item.reviewStatus)
+                if (item.reviewStatus) {
+                    reviewMatchingBtn.textContent = '평가 완료';
+                    reviewMatchingBtn.disabled = true;
+                }
+
+                // matching-score-btn 버튼 생성
+                const matchingScoreBtn = document.createElement('button');
+                matchingScoreBtn.className = 'matching-score-btn btn-setting';
+                matchingScoreBtn.textContent = '내 점수 확인';
+                if (!item.opposingTeamReviewStatus)
+                    matchingScoreBtn.disabled = true;
+
+                matchingBtnWrapper.appendChild(reviewMatchingBtn);
+                matchingBtnWrapper.appendChild(matchingScoreBtn);
             }
-
-            // matching-score-btn 버튼 생성
-            const matchingScoreBtn = document.createElement('button');
-            matchingScoreBtn.className = 'matching-score-btn btn-setting';
-            matchingScoreBtn.textContent = '내 점수 확인';
-            if (!item.opposingTeamReviewStatus)
-                matchingScoreBtn.disabled = true;
-
-            matchingBtnWrapper.appendChild(reviewMatchingBtn);
-            matchingBtnWrapper.appendChild(matchingScoreBtn);
-        }
+        // }
 
     }
 
@@ -704,4 +673,40 @@ function getMatchigList(item) {
 
     // 'matchings-wrapper' 요소에 matching-wrapper 추가
     document.getElementById('matchings-wrapper').appendChild(matchingWrapper);
+}
+
+function setButton(item, matchingBtnWrapper) {
+
+
+    if (item.matchingStatus != '매칭중') {
+        // pay-matching-btn 버튼 생성
+        const payMatchingBtn = document.createElement('button');
+        payMatchingBtn.className = 'pay-matching-btn btn-setting';
+        payMatchingBtn.setAttribute('data-bs-toggle', 'modal');
+        payMatchingBtn.setAttribute('data-bs-target', '#payMatchingModal');
+        // payMatchingBtn.setAttribute('data-matching-seq', item.matchingSeq);
+        if (item.payStatus) {
+            payMatchingBtn.textContent = '결제 완료';
+            payMatchingBtn.disabled = true;
+        } else {
+            payMatchingBtn.textContent = '결제하기';
+        }
+        matchingBtnWrapper.appendChild(payMatchingBtn);
+    }
+
+    // cancel-matching-btn 버튼 생성
+    const cancelMatchingBtn = document.createElement('button');
+    cancelMatchingBtn.setAttribute('data-bs-toggle', 'modal');
+    cancelMatchingBtn.setAttribute('data-bs-target', '#cancelMatchingModal');
+
+    if (item.matchingStatus == '매칭중')
+        cancelMatchingBtn.className = 'remove-matching-btn btn-setting';
+    else
+        cancelMatchingBtn.className = 'cancel-matching-btn btn-setting';
+
+    cancelMatchingBtn.textContent = '매칭 취소';
+
+    // matching-btn-wrapper에 버튼 추가
+    matchingBtnWrapper.appendChild(cancelMatchingBtn);
+
 }

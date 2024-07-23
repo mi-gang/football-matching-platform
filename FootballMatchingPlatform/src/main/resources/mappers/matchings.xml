@@ -441,7 +441,7 @@
                  AND mal.matching_seq = #{matchingSeq})
     </select>
 
-    <!-- getTeamNames -->
+    <!-- getTeamNames 매칭 참여 팀 이름 불러오기 -->
     <select id="getTeamNames" parameterType="com.kosta.project.dto.UserMatchingInfoDTO" resultType="string">
         SELECT
             t.team_name
