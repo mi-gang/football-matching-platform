@@ -44,6 +44,10 @@ input {
     
 }
 
+.fieldImg{
+	width:25%;
+}
+
 .content-box {
     display: flex;
     align-items: center;
