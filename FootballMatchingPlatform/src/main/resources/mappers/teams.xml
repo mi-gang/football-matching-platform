@@ -22,7 +22,7 @@
 	<!-- 팀 전체 순위 -->
  	<select id="selectTeamRankList" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT team_name AS teamName, team_rank AS teamRank, game_count AS gameCount, 
-		win_count AS winCount, if(game_count = 0, 0, 100*(win_count/game_count)) AS odds,
+		win_count AS winCount, if(game_count = 0, 0, ROUND(100*(win_count/game_count))) AS odds,
 		team_tier AS teamTier, team_score AS teamScore 
 		FROM teams
 		ORDER BY team_score DESC
@@ -31,7 +31,7 @@
 	<!-- 팀 전체순위 [검색] -->
 	<select id="selectSearchTeamRankList" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT team_name AS teamName, team_rank AS teamRank, game_count AS gameCount, 
-		win_count AS winCount, if(game_count = 0, 0, 100*(win_count/game_count)) AS odds,
+		win_count AS winCount, if(game_count = 0, 0, ROUND(100*(win_count/game_count))) AS odds,
 		team_tier AS teamTier, team_score AS teamScore 
 		FROM teams
 		WHERE team_name REGEXP #{search}
@@ -123,7 +123,7 @@
 	<!-- 팀 정보 불러오기 by 모달 -->
 	<select id="selectTeamInfoByModal" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT team_seq AS teamSeq, team_name AS teamName, game_count AS gameCount, win_count AS winCount, 
-		if(game_count = 0, 0, 100*(win_count/game_count)) AS odds, NVL(team_rank, 0) AS teamRank, 
+		if(game_count = 0, 0, ROUND(100*(win_count/game_count))) AS odds, NVL(team_rank, 0) AS teamRank, 
 		team_tier AS teamTier, team_score AS teamScore, possible_a AS possA, possible_b AS possB, 
 		possible_c AS possC, possible_d AS possD, week_type AS weekType, week_time AS weekTime, 
 		hope_time AS hopeTime, hometown, content
@@ -179,7 +179,7 @@
 	<!-- 내 팀 정보 조회 (내 팀 정보 Btn) -->
 	<select id="selectTeamInfo" resultType="com.kosta.project.dto.TeamDTO">
 		SELECT t.team_seq AS teamSeq, team_name AS teamName, game_count AS gameCount, win_count AS winCount, 
-		if(game_count = 0, 0, 100*(win_count/game_count)) AS odds, NVL(team_rank, 0) AS teamRank, team_tier AS teamTier,
+		if(game_count = 0, 0, ROUND(100*(win_count/game_count))) AS odds, NVL(team_rank, 0) AS teamRank, team_tier AS teamTier,
 		team_score AS teamScore, possible_a AS possA, possible_b AS possB, possible_c AS possC, recruitment,
 		possible_d AS possD, week_type AS weekType, week_time AS weekTime, hope_time AS hopeTime, hometown, content, 
 		COUNT(case when team_member_status=FALSE AND team_member_delete=FALSE

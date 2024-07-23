@@ -271,6 +271,10 @@ function strRes(res){
           res[i].possC == false && res[i].possD == false) {
           str += '<span class="badge rounded-5">등급무관</span>';
         }
+        else if (res[i].possA == true && res[i].possB == true &&
+			 res[i].possC == true && res[i].possD == true) {
+			 str += '<span class="badge rounded-5">등급무관</span>';
+        }
         else {
           if (res[i].possA == true)
             str += '<span class="badge rounded-5">A</span>';
@@ -420,11 +424,11 @@ function joinList(){
 
         if (res[i].possA == false && res[i].possB == false &&
           res[i].possC == false && res[i].possD == false) {
-          str += '<span class="badge rounded-5">남녀무관</span>';
+          str += '<span class="badge rounded-5">등급무관</span>';
         }
         else if (res[i].possA == true && res[i].possB == true &&
           res[i].possC == true && res[i].possD == true) {
-          str += '<span class="badge rounded-5">남녀무관</span>';
+          str += '<span class="badge rounded-5">등급무관</span>';
         }
         else {
           if (res[i].possA == true)
@@ -662,8 +666,12 @@ function myTeamInfo() {
                         <div>신청 가능 등급 : </div>`
                         if (res.possA == false && res.possB == false &&
                           res.possC == false && res.possD == false) {
-                          str += '<span class="badge rounded-5">남녀무관</span>';
+                          str += '<span class="badge rounded-5">등급무관</span>';
                         }
+                        else if (res.possA == true && res.possB == true &&
+				          res.possC == true && res.possD == true) {
+				          str += '<span class="badge rounded-5">등급무관</span>';
+        				}
                         else {
                           if (res.possA == true)
                             str += '<span class="badge rounded-5">A</span>';
