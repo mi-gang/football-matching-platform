@@ -184,6 +184,11 @@
     </section>
 
     <script>
+    	$('#modScheduleModal').on('shown.bs.modal', function () {
+            // 모든 체크박스 선택 해제
+            $(this).find('.form-check-input').prop('checked', false);
+        });
+        
         $("#navbar").load("./common/navbarManager2.html");
         let matchingDateList;
         const date = new Date();
@@ -268,13 +273,17 @@
                 }
 
                 // 현재 날짜와 2주 후 날짜 계산
-                const currentDate2 = new Date(currentYear, currentMonth, i);
-
-                // 오늘부터 2주 이내의 날짜 확인
-                if (currentDate2 >= date && currentDate2 <= twoWeeksLater) {
-                    dateElement.classList.add("blocked"); // 차단된 날짜에 'blocked' 클래스 추가
-                    console.log(currentDate2);
+                var fieldStatus = $("button[name=city1]").attr("data-fieldstatus");
+                
+                if(fieldStatus == 1){
+                	const currentDate2 = new Date(currentYear, currentMonth, i);
+	                var date2 = date.setHours(0, 0, 0, 0);
+	                // 오늘부터 2주 이내의 날짜 확인
+	                if (currentDate2 >= date2 && currentDate2 <= twoWeeksLater) {
+	                    dateElement.classList.add("blocked"); // 차단된 날짜에 'blocked' 클래스 추가
+	                }
                 }
+                
 
                 // 매칭 여부
                 const matchingDateElement = document.createElement("div");
