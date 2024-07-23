@@ -22,30 +22,32 @@
          <!-- 컨텐츠 컨테이너 -->
         <div id="container">
             <div id="editinfo-wrapper">
+      			<div class="text-container">
+	        		<div class="text" id="text-name">이름</div>
+					<div class="text-invalid" id="invalid-name-check-fail">한글만 작성 가능합니다.</div>
+				</div> 
+				<input id="name">
                 <div class="edit-content-wrapper">
-                    <span>이름</span>
-                    <input class="edit-input" id="edit-name" value="김박박"/>
-                </div>
-                <div class="edit-content-wrapper">
-                    <span>아이디</span>
+                    <span id="text-id">아이디</span>
                     <span class="non-edit" id="id">bakbakkim</span>
                 </div>
+       			<div class="text-container">
+        		<div class="text" id="text-nickname">닉네임</div>
+            	<div class="text-invalid" id="invalid-nickname">사용 가능한 닉네임 입니다.</div>
+				<div class="text-invalid" id="invalid-nickname-doub">중복된 닉네임 입니다.</div>
+        		</div>
+        		<input id="nickname">
                 <div class="edit-content-wrapper">
-                    <span>닉네임</span>
-                    <input class="edit-input" id="edit-nickname" value="bakxoon"/>
-                </div>
-                <div class="edit-content-wrapper">
-                    <span>생년월일</span>
+                    <span id="text-birth">생년월일</span>
                     <span class="non-edit" id="birth">2001.06.30</span>
                 </div>
-                <div class="edit-content-wrapper">
-                    <span>이메일</span>
-                    <input class="edit-input" id="edit-email" value="bakxoon@gmail.com"/>
-                </div>
-                <div class="edit-content-wrapper">
-                    <span>전화번호</span>
-                    <input class="edit-input" id="edit-phone" value="010-9452-8484"/>
-                </div>
+				<div class="text-container">
+					<div class="text" id="text-email">이메일</div>
+					<div class="text-invalid" id="invalid-email">사용할 수 없는 이메일입니다.</div>
+				</div>
+				<input id="email">
+		        <div class="text" id="text-phone">전화번호</div>
+				<input id="phone" type="text" oninput="hypenTel(this)" maxlength="13">
                 <div id="btn-wrapper">
                     <div>
                         <button id="edit-pw-btn" class="btn">비밀번호 수정</button>
@@ -139,11 +141,6 @@
           <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
             </div>
   
             <!-- Modal body -->
@@ -152,7 +149,14 @@
                 <span>탈퇴 완료되었습니다. </span>
               </div>
             </div>
-
+            <div class="modal-footer">
+				<button
+    	            type="button"
+					class="btn"
+					id="withdrawConfirm-btn">
+					확인
+				</button>
+			</div>
             <div class="modal-footer">
               </div>
           </div>
@@ -169,12 +173,63 @@
         });
         $('nav').load('common/nav.html');
     });
-	
+	const getNameCheck = RegExp(/^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/);
+	const getIdCheck = RegExp(/^[a-zA-Z0-9]{0,}$/);
+    const specialCheck = RegExp(/[`~!@#$%^&*|\\\'\";:\/?]/);
 	//이름 유효성 검사
-	
+	$("#name").keyup(function(){
+		if($("#name").val() !=""){
+			if(!getNameCheck.test($("#name").val())){
+				$("#text-name").css("margin-right","4.5rem");
+				$("#invalid-name-check-fail").css("display", "block");
+				}
+			}
+		else {
+			$("#text-name").css("margin-right","14rem");
+			$("#invalid-name-check-fail").css("display","none");
+		}	
+	})
 
 	//닉네임 중복 검사
-
+	$("#nickname").on("change",function(){
+			const nickname = $("#nickname").val();
+			$.ajax({
+				type: 'post',
+				url: "/user/getUserNickname",
+				data: {"nickname":nickname},
+				dataType: 'text',
+				success: function(response){					
+				if(nickname != ""){
+					console.log(response);
+					if(response === "true"){
+						$("#text-nickname").css("margin-right","3rem");
+						$("#invalid-nickname").css("display", "block");
+						$("#invalid-nickname-doub").css("display", "none");
+					}
+					else{
+						$("#text-nickname").css("margin-right","5rem");
+						$("#invalid-nickname").css("display", "none");
+						$("#invalid-nickname-doub").css("display", "block");
+					}
+				}
+				else{
+					$("#text-nickname").css("margin-right","13.5rem");
+					$("#invalid-nickname").css("display", "none");
+					$("#invalid-nickname-doub").css("display", "none");
+				}},
+				error: function(error){
+					alert("오류" + error);
+			}
+		})
+	})
+	
+	//전화번호 자동 형식
+        const hypenTel = (target) => {
+			target.value = target.value
+   			.replace(/[^0-9]/g, '')
+   			.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+		}
+	
     </script>
     <script src="mobile/js/mypage.js"></script>
 </body>

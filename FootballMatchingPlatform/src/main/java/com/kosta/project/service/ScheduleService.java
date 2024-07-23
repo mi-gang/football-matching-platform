@@ -195,5 +195,8 @@ public class ScheduleService {
 
 		return map;
 	}
-
+	
+	public List<MatchingScheduleListDTO> getFutureMatchingSeq(String userId) {
+		return matchingMapper.selectFutureMatchingList(userId);
+	}
 }

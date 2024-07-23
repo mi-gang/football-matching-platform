@@ -4,14 +4,18 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.kosta.project.dto.InquiryDTO;
+import com.kosta.project.dto.MatchingScheduleListDTO;
 import com.kosta.project.dto.TeamDTO;
 import com.kosta.project.dto.UserDTO;
+import com.kosta.project.service.ScheduleService;
 import com.kosta.project.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserRestController {
 	
 	private final UserService us;
+	private final ScheduleService ss;
 	
 	//로그인하기 (세션에 본인 등급 넣기-상단 네비에 넣을 용도, 시/도)
 	@GetMapping("/login")
@@ -106,14 +111,15 @@ public class UserRestController {
 				return Map.of("result",null);
 			}
 			else
-			return Map.of("result", us.getMyInfoByUserId(user.getUserId()));
+				return Map.of("result", us.getMyInfoByUserId(user.getUserId()));
 		}
-	
+		
 	// 내 팀 정보 불러오기(마이페이지)
 	@GetMapping("/getMyTeamInfo")
 	public Map<String, TeamDTO> getTeamInfoByUserId(@SessionAttribute(name ="loginUser", required = false) UserDTO user) {
-		if(user == null) {
-			return Map.of("result",null);
+		TeamDTO team = us.getTeamInfoByUserId(user.getUserId());
+		if(team == null) {
+			return Map.of("result", TeamDTO.builder().teamSeq(0).build());
 		}
 		else
 		return Map.of("result", us.getTeamInfoByUserId(user.getUserId()));
@@ -148,11 +154,15 @@ public class UserRestController {
 	// 내 문의내역 2개(최신 2개) 불러오기
 	@GetMapping("/pathTwoInquiry")
 	public Map<String, List<InquiryDTO>> getTwoInquiry(@SessionAttribute(name ="loginUser", required = false)UserDTO user) {
-		if(user == null) {
-			return Map.of("result",null);
+		
+		List<InquiryDTO> inq = us.getTwoInquiry(user.getUserId());
+		
+		if(inq == null) {
+			inq.add(InquiryDTO.builder().inquirySeq(0).build());
+			return Map.of("result",inq);
 		}
 		else
-		return Map.of("result", us.getTwoInquiry(user.getUserId()));
+		return Map.of("result", inq);
 	}
 	
 	
@@ -178,21 +188,41 @@ public class UserRestController {
 	
 	// 내 정보 수정하기
 	@PostMapping("/setMyInfo")
-	public Map<String, String> setMyInfoByUserId(@RequestBody UserDTO dto){
-		us.setMyInfoByUserId(dto);
+	public Map<String, String> setMyInfoByUserId(@SessionAttribute(name ="loginUser", required = false) UserDTO user, @RequestBody UserDTO dto){
+		us.setMyInfoByUserId(user,dto);
 		return Map.of("result", "ok");
 	}
+	
+	// 예정된 매칭 시퀀스 불러오기(회원탈퇴 검사)
+	@GetMapping("/getFutureMatchingSeq")
+	public Map<String, List<MatchingScheduleListDTO>> getFutureMatchingSeq(@SessionAttribute(name ="loginUser", required = false) UserDTO user){
+		List<MatchingScheduleListDTO> match = ss.getFutureMatchingSeq(user.getUserId());
+		if(match == null) {
+			match.add(MatchingScheduleListDTO.builder().matchingSeq(0).build());
+			return Map.of("result", match);
+		}
+		else 
+			return Map.of("result", ss.getFutureMatchingSeq(user.getUserId()));
+	}
+	
 	// 회원 탈퇴하기
 	@PostMapping("/setUserStatusWidthdraw")
-	public Map<String, String> setUserStatusByUserId(@RequestBody UserDTO dto){
-		us.setUserStatusByUserId(dto);
+	public Map<String, String> setUserStatusByUserId(@SessionAttribute(name ="loginUser", required = false) UserDTO user){
+		us.setUserStatusByUserId(user);
 		return Map.of("result", "ok");
 	}
 	
 	// 내 문의 내역 불러오기(전체)
 	@GetMapping("/getAllInquiry")
-	public Map<String, List<InquiryDTO>> getAllInquiry(String userId) {
-		return Map.of("result", us.getAllInquiry(userId));
+	public Map<String, List<InquiryDTO>> getAllInquiry(@SessionAttribute(name ="loginUser", required = false) UserDTO user) {
+		List<InquiryDTO> inq = us.getTwoInquiry(user.getUserId());
+		
+		if(inq == null) {
+			inq.add(InquiryDTO.builder().inquirySeq(0).build());
+			return Map.of("result", inq);
+		}
+		else
+			return Map.of("result", inq);
 	}
 	
 	// 선택한 문의 내역 상세 보기
@@ -212,3 +242,4 @@ public class UserRestController {
 	}
 	
 }
+

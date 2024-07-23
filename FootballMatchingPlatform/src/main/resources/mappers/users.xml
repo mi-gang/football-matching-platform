@@ -179,9 +179,8 @@
   <update id="updateUserStatusByUserId" parameterType="com.kosta.project.dto.UserDTO">
     UPDATE users
     SET
-      user_status = #{userStatus}
-    WHERE user_id = #{userId}
-    AND password = #{password};
+      user_status = 'D'
+    WHERE user_id = #{userId};
   </update>	
 	
 	

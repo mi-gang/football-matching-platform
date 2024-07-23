@@ -135,8 +135,8 @@ public class UserService {
 		
 		
 		// 내 정보 수정하기
-		public void setMyInfoByUserId(UserDTO dto) {
-			um.updateMyInfoByUserId(dto.getUserId(),dto.getName(),dto.getNickname(),dto.getPhoneNumber(),dto.getEmail());
+		public void setMyInfoByUserId(UserDTO user, UserDTO dto) {
+			um.updateMyInfoByUserId(user.getUserId(),dto.getName(),dto.getNickname(),dto.getPhoneNumber(),dto.getEmail());
 		}
 
 	// 회원 탈퇴하기
