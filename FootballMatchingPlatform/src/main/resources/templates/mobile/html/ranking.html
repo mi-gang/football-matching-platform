@@ -60,11 +60,13 @@
     </div>
     
     <script>
+    	var userTier = "[[${session.loginUser.getUserTier}]]";
+    
     // header, nav 내용 불러오기
     $(document).ready(function(){
         $('header').load('./common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
             $('#page-name').text('개인 순위'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
-            $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+            $('#user-tier').text(userTier); // 나중에 세션에서 usertier 구해서 넣기
         });
     });
     </script>

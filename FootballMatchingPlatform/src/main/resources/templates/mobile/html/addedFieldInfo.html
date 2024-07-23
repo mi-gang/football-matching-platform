@@ -15,7 +15,7 @@
         <header></header>
          <!-- 컨텐츠 컨테이너 -->
         <div id="container">
-            <img id="img-field" src="/mobile/img/구장 사진.svg">
+            <img id="img-field" th:src="@{'../upload/img/' + ${addedFieldInfo.fieldImg}}">
             <div id="title-container">
                 <div th:text="${addedFieldInfo.fieldName}"></div>
                 <div th:text="${addedFieldInfo.fieldAddress} + ' ' + ${addedFieldInfo.fieldAddressDetail}">서울 강서구 화곡동 산 199</div>
@@ -44,10 +44,11 @@
     
     <script>
     // header, nav 내용 불러오기
+    var userTier = "[[${session.loginUser.getUserTier}]]";
     $(document).ready(function(){
         $('header').load('/common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
             $('#page-name').text('상세 정보'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
-            $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+            $('#user-tier').text(userTier); // 나중에 세션에서 usertier 구해서 넣기
         });
 
         var text = `찾아가는 길: 수인분당선 인하대역 7번출구 홈플러스 인하점 4층(E/V이용 가능)
