@@ -264,11 +264,20 @@ textarea{
     background-color: #f5f5f5;
   } */
 
-
+/*
 .click-date{
     background: #DEDEDE;
     border-radius: 50%;
     border-width: 0.1rem;
+    color : black;
+    box-sizing: border-box;
+} */
+
+.click-date{
+    background: #73A772;
+    border-radius: 50%;
+    border-width: 0.1rem;
+    color : white;
     /* border-top: 0.1rem; */
     box-sizing: border-box;
 }
@@ -293,4 +302,11 @@ tr button{
 .scoreOK{
     background-color: #73A772;
     color: white;
+}
+
+
+.blocked {
+    background: #d3d3d3; /* 회색 표시 */
+    pointer-events: none; /* 클릭 방지 */
+    cursor: not-allowed; /* 마우스 커서 변경 */
 }
