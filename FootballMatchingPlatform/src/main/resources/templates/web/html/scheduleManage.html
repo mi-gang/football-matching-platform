@@ -190,13 +190,14 @@
         $("button[name=city1]").val($("#dropField > li > button:eq(0)").val());
         
         getMatchingInfoOfMonth($("#dropField > li > button:eq(0)").val());
-        
+        getMatchingInfo($("#dropField > li > button:eq(0)").val(), currentYear + "-" + (parseInt(currentMonth) + 1) + "-" + currentDate);
 
         $("#dropField > li > button").on('click', function () {
             $("button[name=city1]").text($(this).text());
             $("button[name=city1]").val($(this).val());
             const fieldSeq = $(this).val();
             getMatchingInfoOfMonth(fieldSeq);
+            getMatchingInfo($("#dropField > li > button:eq(0)").val(), currentYear + "-" + (parseInt(currentMonth) + 1) + "-" + currentDate);
         })
 
         function getMatchingInfoOfMonth(fieldSeq){
@@ -332,7 +333,6 @@
             $(this).find('.date').addClass('click-date'); // find -> 자식 요소 찾기
 
             // 클릭한 날짜 불러오기
-            console.log($(this).find('.date').attr("id"));
             var date = $(this).find('.date').attr("id");
             var fieldSeq = $("button[name=city1]").val();
             
@@ -360,7 +360,6 @@
             .then(text => {
                 if(text){
                     closedDate = JSON.parse(text);
-                    console.log(closedDate);
                 }
                 //날짜별 매칭기록 가져오기
                 return fetch(`/date/${date}/field/${fieldSeq}`);
