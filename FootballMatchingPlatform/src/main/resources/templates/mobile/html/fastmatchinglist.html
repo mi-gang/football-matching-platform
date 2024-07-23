@@ -451,7 +451,7 @@ input[type="checkbox"]{
 
 	<div class = "w-auto h-auto timeZone mt-5">
 		<ul id = "locationBtns">
-		<li><button type = "button" id="locationBtn" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">중구</button></li>
+		<li><button type = "button" id="locationBtn" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">영등포구</button></li>
 		<li><button type = "button" id="locationBtn1" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">서구</button></li>
 		<li><button type = "button" id="locationBtn2" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">동구</button></li>
 		<li><button type = "button" id="locationBtn3" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">남동구</button></li> <br>
@@ -509,13 +509,7 @@ input[type="checkbox"]{
           
           <div id = "locationInfoDiv" class = "overflow-y-auto overflow-x-auto w-auto h-auto timeZone mt-5">
               <ul id = "locationBtns" >
-              <li><button type = "button" id="locationBtn" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">중구</button></li>
-              <li><button type = "button" id="locationBtn1" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">서구</button></li>
-              <li><button type = "button" id="locationBtn2" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">동구</button></li>
-              <li><button type = "button" id="locationBtn3" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">남동구</button></li> 
-              <li><button type = "button" id="locationBtn4" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">영등포구</button></li>
-              <li><button type = "button" id="locationBtn5" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">강남구</button></li>
-              <li><button type = "button" id="locationBtn6" class = "w-3 h-2 btn m-1 p-2" onclick="changeButtonColors(this)">금천구</button></li>
+              
               
               </ul>
           </div>
@@ -562,11 +556,11 @@ input[type="checkbox"]{
         
         
         // const locationModalXBtn = document.querySelectoi('.locationModalXBtn');        
-
+	var userTier = "[[${session.loginUser.getUserTier}]]";
 	$(document).ready(function(){
         $('header').load('./common/header_back.html', function(){ // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
             $('#page-name').text('빠른 신청'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
-            $('#user-tier').text('A'); // 나중에 세션에서 usertier 구해서 넣기
+            $('#user-tier').text(userTier); // 나중에 세션에서 usertier 구해서 넣기
         });
         $('nav').load('./common/nav.html');
     });
@@ -593,7 +587,7 @@ window.onload = function() {
 		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
 		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
 		"</div>" +
-		"<div class='matchingLocationImgDiv'>" + "<img class='matchingLocationImage'  src='/mobile/img/구장 사진.svg'/>" + "</div>" +
+		"<div class='matchingLocationImgDiv'>" + "<img class='matchingLocationImage'  src='../upload/img/" + response.result[i].fieldImg + "'/>" +"</div>" +
 	  "<hr>" +			
 	"</div>");
 				
@@ -819,19 +813,18 @@ frontDates.forEach((date, i) => {
               "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>남동구</button></li>"+ 
               "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>서구</button></li>"+ 
               "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>미추홀구</button></li>"+
-              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>중구</button></li>"+
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>영등포구</button></li>"+
               "<hr>" +
               "</ul>");
     } else if (e.currentTarget.textContent == '서울') {
         $("#locationInfoDiv")
     .append("<ul id = 'locationBtns'>"+
-              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>중구</button></li>"+
-              "<li><button type = 'button' id='locationBtn1' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동작구</button></li>"+
-              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동대문구</button></li>"+
-              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>서대문구</button></li>"+ 
-              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>관악구</button></li>"+ 
-              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>금천구</button></li>"+
-              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>양천구</button></li>"+
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>강서구</button></li>"+
+              "<li><button type = 'button' id='locationBtn1' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>금천구</button></li>"+
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>도봉구</button></li>"+
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동대문구</button></li>"+ 
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>송파구</button></li>"+ 
+              "<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>영등포구</button></li>"+
               "<hr>" +
               "</ul>");
     
@@ -979,7 +972,7 @@ searchButton.addEventListener('click', function() {
 		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
 		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
 		"</div>" +
-		"<div class='matchingLocationImgDiv'>" + "<img class='matchingLocationImage'  src=''/>" +"</div>" +
+		"<div class='matchingLocationImgDiv'>" + "<img class='matchingLocationImage'  src='../upload/img/" + response.result[i].fieldImg + "'/>" +"</div>" +
 	  "<hr>" +			
 	"</div>" 
   );
@@ -1022,7 +1015,7 @@ searchButton.addEventListener('click', function() {
 		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
 		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
 		"</div>" +
-		"<div class='matchingLocationImgDiv'>" + "<img class='matchingLocationImage'  src=''/>" +"</div>" +
+		"<div class='matchingLocationImgDiv'>" + "<img class='matchingLocationImage'  src='../upload/img/" + response.result[i].fieldImg + "'/>" +"</div>" +
 	  "<hr>" +			
 	"</div>");
 				
@@ -1088,7 +1081,7 @@ $('.modal-backdrop').hide();
 		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
 		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
 		"</div>" +
-		"<div class='matchingLocationImgDiv'>" + "<img class='matchingLocationImage'  src=''/>" + "</div>" +
+		"<div class='matchingLocationImgDiv'>" + "<img class='matchingLocationImage'  src='../upload/img/" + response.result[i].fieldImg + "'/>" +"</div>" +
 	  "<hr>" +			
 	"</div>");
 				
@@ -1121,7 +1114,7 @@ $('.modal-backdrop').hide();
 		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
 		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
 		"</div>" +
-		"<div class='matchingLocationImgDiv'>" + "<img class='matchingLocationImage'  src=''/>" +"</div>" +
+		"<div class='matchingLocationImgDiv'>" + "<img class='matchingLocationImage'  src='../upload/img/" + response.result[i].fieldImg + "'/>" +"</div>" +
 	  "<hr>" +			
 	"</div>");
 				
@@ -1153,7 +1146,7 @@ $('.modal-backdrop').hide();
 		 "<p class = 'matchTime mb-0'> " + response.result[i].matchingDate + " " + response.result[i].matchingTime +  ":00 ~ "  + (response.result[i].matchingTime+2) +  ":00" + " </p><br>" +				
 		 "<p class = 'matchLocation'>  "  + response.result[i].fieldAddress +  " " + response.result[i].fieldAddressDetail + " </p>" +
 		"</div>" +
-		"<div class='matchingLocationImgDiv'>" + "<img class='matchingLocationImage'  src=''/>" +"</div>" +
+		"<div class='matchingLocationImgDiv'>" + "<img class='matchingLocationImage'  src='../upload/img/" + response.result[i].fieldImg + "'/>" +"</div>" +
 	  "<hr>" +			
 	"</div>");
 				

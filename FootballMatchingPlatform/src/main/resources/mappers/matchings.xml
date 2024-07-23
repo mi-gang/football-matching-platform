@@ -184,7 +184,6 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND cancel_status = 0
-		AND pay_status = 1
 		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
@@ -199,7 +198,6 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
-										AND pay_status = 1
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
 		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
@@ -218,63 +216,6 @@
 		AND ml.matching_seq = m.matching_seq
 		AND fast_add_status = 1
 		AND cancel_status = 0
-		AND pay_status = 1
-		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
-	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
-		AND m.matching_status = '매칭성공'
-		AND m.matching_seq NOT IN (SELECT m.matching_seq AS matchingSeq
-        								FROM matchings m
-         					        INNER JOIN fields f ON m.field_seq = f.field_seq
-               					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
-            					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
-       								WHERE ma.user_id = #{userId}
-       							   AND m.matching_status = '매칭성공'
-         							AND m.fast_add_status = 1
-		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
-		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
-		HAVING 10 > COUNT(matching_add_list_seq)
-		ORDER BY COUNT(matching_add_list_seq), matching_date;
-	</select>
-	
-	<!-- 빠른 신청 리스트 조회(인원 많은 순, 가까운 일정 순) -->
-	<select id="selectFastMatchingListByBig" resultType="com.kosta.project.dto.FastMatchingDTO" parameterType="String">
-		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
- 		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
- 		COUNT(matching_add_list_seq) as playerCount
-		FROM matchings m, fields f, field_imgs fi, matching_add_lists ml
-		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
-		AND ml.matching_seq = m.matching_seq
-		AND fast_add_status = 1
-		AND cancel_status = 0
-		AND pay_status = 1
-		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
-	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
-		AND m.matching_status = '매칭성공'
-		AND m.matching NOT IN (SELECT m.matching_seq AS matchingSeq
-        								FROM matchings m
-         					        INNER JOIN fields f ON m.field_seq = f.field_seq
-               					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
-            					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
-       								WHERE ma.user_id = #{userId}
-       							   AND m.matching_status = '매칭성공'
-         							AND m.fast_add_status = 1)
-		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
-		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
-		HAVING 10 > COUNT(matching_add_list_seq)
-		ORDER BY COUNT(matching_add_list_seq) DESC, matching_date;
-	</select>
-	
-	<!-- 빠른 신청 리스트 조회(인원 적은 순, 가까운 일정 순, 날짜 지역 등급 필터) -->
- 	<select id="selectFastMatchingListBySmallAndDateAndRegionAndTier" resultType="com.kosta.project.dto.FastMatchingDTO" parameterType="com.kosta.project.dto.FastMatchingConditionDTO">
- 		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
- 		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
- 		COUNT(matching_add_list_seq) as playerCount
-		FROM matchings m, fields f, field_imgs fi, matching_add_lists ml
-		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
-		AND ml.matching_seq = m.matching_seq
-		AND fast_add_status = 1
-		AND cancel_status = 0
-		AND pay_status = 1
 		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
 		AND m.matching_status = '매칭성공'
@@ -289,7 +230,70 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
-										AND pay_status = 1
+										GROUP BY matching_seq
+										HAVING COUNT(matching_add_list_seq) >= 10)
+		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
+		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
+		HAVING 10 > COUNT(matching_add_list_seq)
+		ORDER BY COUNT(matching_add_list_seq), matching_time, matching_date;
+	</select>
+	
+	<!-- 빠른 신청 리스트 조회(인원 많은 순, 가까운 일정 순) -->
+	<select id="selectFastMatchingListByBig" resultType="com.kosta.project.dto.FastMatchingDTO" parameterType="String">
+		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
+ 		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
+ 		COUNT(matching_add_list_seq) as playerCount
+		FROM matchings m, fields f, field_imgs fi, matching_add_lists ml
+		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
+		AND ml.matching_seq = m.matching_seq
+		AND fast_add_status = 1
+		AND cancel_status = 0
+		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
+	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
+		AND m.matching_status = '매칭성공'
+		AND m.matching_seq NOT IN (SELECT m.matching_seq AS matchingSeq
+        								FROM matchings m
+         					        INNER JOIN fields f ON m.field_seq = f.field_seq
+               					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+            					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+       								WHERE ma.user_id = #{userId}
+       							   AND m.matching_status = '매칭성공'
+         							AND m.fast_add_status = 1 GROUP BY m.matching_seq)
+      AND m.matching_seq NOT IN (SELECT matching_seq
+										FROM matching_add_lists 
+										WHERE cancel_status = 0
+										GROUP BY matching_seq
+										HAVING COUNT(matching_add_list_seq) >= 10)
+		AND fi.field_img_seq = (SELECT min(field_img_seq) FROM field_imgs WHERE field_seq = f.field_seq)
+		GROUP BY m.matching_seq, matching_tier, matching_date, matching_time, field_address, field_address_detail, field_img
+		HAVING 10 > COUNT(matching_add_list_seq)
+		ORDER BY COUNT(matching_add_list_seq) DESC, matching_time, matching_date;
+	</select>
+	
+	<!-- 빠른 신청 리스트 조회(인원 적은 순, 가까운 일정 순, 날짜 지역 등급 필터) -->
+ 	<select id="selectFastMatchingListBySmallAndDateAndRegionAndTier" resultType="com.kosta.project.dto.FastMatchingDTO" parameterType="com.kosta.project.dto.FastMatchingConditionDTO">
+ 		SELECT m.matching_seq as matchingSeq, matching_tier as matchingTier, matching_date as matchingDate, matching_time as matchingTime,
+ 		field_address as fieldAddress, field_address_detail as fieldAddressDetail, field_img as fieldImg, 
+ 		COUNT(matching_add_list_seq) as playerCount
+		FROM matchings m, fields f, field_imgs fi, matching_add_lists ml
+		WHERE m.field_seq = f.field_seq AND f.field_seq = fi.field_seq
+		AND ml.matching_seq = m.matching_seq
+		AND fast_add_status = 1
+		AND cancel_status = 0
+		AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
+	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
+		AND m.matching_status = '매칭성공'
+		AND m.matching_seq NOT IN (SELECT m.matching_seq AS matchingSeq
+        								FROM matchings m
+         					        INNER JOIN fields f ON m.field_seq = f.field_seq
+               					  INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+            					     INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+       								WHERE ma.user_id = #{userId}
+       							   AND m.matching_status = '매칭성공'
+         							AND m.fast_add_status = 1 GROUP BY m.matching_seq)
+      AND m.matching_seq NOT IN (SELECT matching_seq
+										FROM matching_add_lists 
+										WHERE cancel_status = 0
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
 		AND matching_date = #{matchingDate}
@@ -338,7 +342,6 @@
           AND ml.matching_seq = m.matching_seq
           AND fast_add_status = 1
 		AND cancel_status = 0
-		AND pay_status = 1
           AND DATE_FORMAT(m.matching_date + INTERVAL m.matching_time HOUR, '%Y-%m-%d %H') 
 	 	> DATE_FORMAT(NOW(), '%Y-%m-%d %H')
           AND m.matching_status = '매칭성공'
@@ -353,7 +356,6 @@
       AND m.matching_seq NOT IN (SELECT matching_seq
 										FROM matching_add_lists 
 										WHERE cancel_status = 0
-										AND pay_status = 1
 										GROUP BY matching_seq
 										HAVING COUNT(matching_add_list_seq) >= 10)
           AND matching_date = #{matchingDate}
