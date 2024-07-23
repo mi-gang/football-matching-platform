@@ -165,6 +165,7 @@ public class MobileController {
 //		}
 //	}
 
+	/** 로그인처리 */
 	@PostMapping("/user/login")
 	public String processLogin(@RequestParam String userId, @RequestParam String password, HttpServletRequest request) {
 		try {

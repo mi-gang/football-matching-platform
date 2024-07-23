@@ -444,11 +444,12 @@ function getMatchigList(item) {
         const matchingDate = new Date(item.matchingDate);
         console.log(date.getHours())
 
-        if (matchingDate.getFullYear() == date.getFullYear() && matchingDate.getMonth() == date.getMonth()){
+        if (matchingDate.getFullYear() == date.getFullYear() && matchingDate.getMonth() == date.getMonth()
+                && matchingDate.getDate() == date.getDate() && item.matchingStatus != '경기완료'){
             if (date.getHours() > item.matchingTime)
                 matchingStatus.textContent = '경기중';
             if (date.getHours() > item.matchingTime + 2)
-                matchingStatus.textContent = '경기완료';
+                matchingStatus.textContent = '결과입력대기중';
         }
     }
     if (item.cancelStatus)

@@ -454,7 +454,7 @@
                  JOIN matching_add_lists mal ON ma.matching_add_seq = mal.matching_add_seq
                  JOIN matchings m ON mal.matching_seq = m.matching_seq
                  JOIN fields f on m.field_seq = f.field_seq
-        WHERE m.matching_date = #{matchingDate}
+        WHERE m.matching_date = #{date}
             AND ma.user_id = #{userId}
            OR ma.team_seq IN (SELECT t.team_seq
                               FROM teams t
