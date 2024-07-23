@@ -32,22 +32,22 @@ public class SystemManagerFieldService {
 		Instant instant = date.toInstant();
 		LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
 		
-	// 	field.setFieldApprovalDate(localDate);
+	 	field.setFieldApprovalDate(localDate);
 		
-	// 	fr.save(field);
-	// }
+	 	fr.save(field);
+	 }
 	
 	
 	// 구장 승인 거절(field_status를 2로 변경
 	public void updateFieldStatus2(int fieldSeq) {
 		Field field = fr.findById(fieldSeq).get();
 		
-	// 	int status = 2;
+	 	int status = 2;
 		
-	// 	field.setFieldStatus(status);
+	 	field.setFieldStatus(status);
 		
-	// 	fr.save(field);
-	// }
+	 	fr.save(field);
+	 }
 	
 	
 	// 구장 신청 리스트 불러오기
@@ -144,98 +144,6 @@ public class SystemManagerFieldService {
 		return listFLSM;
 	}
 	
-	// 구장 신청 리스트 불러오기
-	public List<FieldListForSystemManagerDTO> getFieldList() {
-		
-		//List<Field> field = fr.findAll(where(Field::getFieldStatus).is(0));
-		//List<FieldListForSystemManagerDTO> field = fr.findAllByFieldStatus(0);
-		List<Field> field = fr.findAll();
-		
-		//List<Manager> manager = null;
-		
 
-		List<FieldListForSystemManagerDTO> listFLSM = new ArrayList<>();
-		for (Field field2 : field) {
-			Manager man = field2.getManager();
-			
-			Manager managerOp = mr.findById(man.getManagerId()).get();
-			
-			FieldListForSystemManagerDTO getDTO = new FieldListForSystemManagerDTO();
-			
-			getDTO.setFieldAddress(field2.getFieldAddress());
-			getDTO.setFieldName(field2.getFieldName());
-			getDTO.setFieldSeq(field2.getFieldSeq());
-			getDTO.setFieldStatus(field2.getFieldStatus());
-			getDTO.setManagerName(managerOp.getName());
-			getDTO.setPhoneNumber(managerOp.getPhoneNumber());
-			
-			listFLSM.add(getDTO);
-		}
-		
-		
-		return listFLSM;
-	}
-	
-	
-	
-	// 지역 필터 구장 신청 리스트 불러오기
-	public List<FieldListForSystemManagerDTO> getFieldListByAddress(String fieldAddress) {
-		
-		List<Field> field = fr.findByFieldAddressLike(fieldAddress);
-		//List<Manager> manager = null;
-		
-
-		List<FieldListForSystemManagerDTO> listFLSM = new ArrayList<>();
-		for (Field field2 : field) {
-			Manager man = field2.getManager();
-			
-			Manager managerOp = mr.findById(man.getManagerId()).get();
-			
-			FieldListForSystemManagerDTO getDTO = new FieldListForSystemManagerDTO();
-			
-			getDTO.setFieldAddress(field2.getFieldAddress());
-			getDTO.setFieldName(field2.getFieldName());
-			getDTO.setFieldSeq(field2.getFieldSeq());
-			getDTO.setFieldStatus(field2.getFieldStatus());
-			getDTO.setManagerName(managerOp.getName());
-			getDTO.setPhoneNumber(managerOp.getPhoneNumber());
-			
-			listFLSM.add(getDTO);
-		}
-		
-		
-		return listFLSM;
-	}
-	
-	
-	// 지역 필터와 검색 구장 신청 리스트 불러오기
-	public List<FieldListForSystemManagerDTO> getFieldListByAddressAndFieldName(String fieldAddress, String fieldName) {
-		
-		List<Field> field = fr.findByFieldNameLikeAndFieldAddressLike(fieldName, fieldAddress);
-		
-		//List<Manager> manager = null;
-		
-
-		List<FieldListForSystemManagerDTO> listFLSM = new ArrayList<>();
-		for (Field field2 : field) {
-			Manager man = field2.getManager();
-			
-			Manager managerOp = mr.findById(man.getManagerId()).get();
-			
-			FieldListForSystemManagerDTO getDTO = new FieldListForSystemManagerDTO();
-			
-			getDTO.setFieldAddress(field2.getFieldAddress());
-			getDTO.setFieldName(field2.getFieldName());
-			getDTO.setFieldSeq(field2.getFieldSeq());
-			getDTO.setFieldStatus(field2.getFieldStatus());
-			getDTO.setManagerName(managerOp.getName());
-			getDTO.setPhoneNumber(managerOp.getPhoneNumber());
-			
-			listFLSM.add(getDTO);
-		}
-		
-		
-		return listFLSM;
-	}
 	
 }
