@@ -119,13 +119,13 @@
 		AND team_tier = #{teamTier};
 	</select>
 	
-	<!-- 매칭 성공 시 매칭 상태 매칭중 -> 매칭성공으로 변경 -->
-	<update id="updateMatchings" parameterType="java.lang.Integer">
-		UPDATE matchings SET matching_status = '매칭성공'
+	<!-- 매칭 성공 시 매칭 상태 매칭중 -> 매칭성공으로 변경 and 매칭 티어 설정 -->
+	<update id="updateMatchings">
+		UPDATE matchings SET matching_status = '매칭성공', matching_tier = #{tier}
 		WHERE matching_seq = #{matchingSeq};
 	</update>
 	
-	<!-- 매칭 성공 시 신청 인원 매칭 성공 상태 FALSE -> TRUE로 변경 -->
+	<!-- 매칭 성공 시 신청 인원 매칭 성공 상태 FALSE -> TRUE로 변경(개인)-->
 	<update id="updateMatchingAddLists" parameterType="com.kosta.project.dto.MatchingCountDTO">
 		UPDATE matching_add_lists ml
 		INNER JOIN matching_adds ma
@@ -135,6 +135,18 @@
 		SET matching_success_status = TRUE
 		WHERE matching_seq = #{matchingSeq}
 		AND u.user_tier = #{userTier};
+	</update>
+	
+	<!-- 매칭 성공 시 신청 인원 매칭 성공 상태 FALSE -> TRUE로 변경(팀)-->
+	<update id="updateMatchingAddListsOfTeam" parameterType="com.kosta.project.dto.MatchingCountDTO">
+		UPDATE matching_add_lists ml
+		INNER JOIN matching_adds ma
+		ON ml.matching_add_seq = ma.matching_add_seq
+		INNER JOIN teams t
+		ON t.team_seq = ma.team_seq
+		SET matching_success_status = TRUE
+		WHERE matching_seq = #{matchingSeq}
+		AND t.team_tier = #{teamTier};
 	</update>
 	
 	<!-- 매칭 성공 시 팀과 등번호 배정 -->

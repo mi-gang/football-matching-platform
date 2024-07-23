@@ -5,9 +5,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -148,6 +150,11 @@ public class MatchingService {
 				matchingList.add(addDTO);
 			}
 		}
+		
+		matchingList = matchingList.stream()
+		        .sorted(Comparator.comparingInt(MatchingsDTO::getMatchingTime))
+		        .collect(Collectors.toList());
+		
 		return matchingList;
 	}
 
@@ -225,8 +232,8 @@ public class MatchingService {
 				int teamCount = mm.selectMatchingMemberCountByTeam(mcDTO);
 				
 				if(teamCount == 2) {
-					mm.updateMatchings(addListDTO.getMatchingSeq());
-					mm.updateMatchingAddLists(mcDTO);
+					mm.updateMatchings(addListDTO.getMatchingSeq(), mcDTO.getTeamTier());
+					mm.updateMatchingAddListsOfTeam(mcDTO);
 				}
 			}
 			else if(dto.getType().equals("개인")) {
@@ -246,7 +253,7 @@ public class MatchingService {
 				int playerCount = mm.selectMatchingMemberCount(mcDTO);
 				
 				if(playerCount == 10) {
-					mm.updateMatchings(addListDTO.getMatchingSeq());
+					mm.updateMatchings(addListDTO.getMatchingSeq(), mcDTO.getUserTier());
 					mm.updateMatchingAddLists(mcDTO);
 //					List<Integer> matchingAddListSeq = mm.selectMatchingMember(mcDTO);
 //					System.out.println(matchingAddListSeq);

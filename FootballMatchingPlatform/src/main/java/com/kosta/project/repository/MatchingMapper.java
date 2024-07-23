@@ -35,8 +35,9 @@ public interface MatchingMapper {
 	void insertMatchingAddListsByTeam(MatchingAddListsDTO dto);
 	int selectMatchingMemberCount(MatchingCountDTO dto);
 	int selectMatchingMemberCountByTeam(MatchingCountDTO dto);
-	void updateMatchings(int matchingSeq);
+	void updateMatchings(int matchingSeq, String tier);
 	void updateMatchingAddLists(MatchingCountDTO dto);
+	void updateMatchingAddListsOfTeam(MatchingCountDTO dto);
 	List<Integer> selectMatchingMember(MatchingCountDTO dto);
 	void updateTeamToA(int matchingAddListSeq);
 	void updateTeamToB(int matchingAddListSeq);
