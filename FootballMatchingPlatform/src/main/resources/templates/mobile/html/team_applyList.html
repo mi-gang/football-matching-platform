@@ -30,12 +30,10 @@
 					<div th:text="${a.age}+ '세/'+${a.gender =='M' ? '남':'여'}"></div>
 					<div th:text="${a.userTier}">A</div>
 					<div class="img-container">
-						<img class="approval" src="mobile/img/Checked.svg" data-bs-toggle="modal"
-							data-bs-target="#applyMember" th:data-membername="${a.nickname}"
-							th:data-memberid="${a.userId}">
-						<img class="refuse" src="mobile/img/Close_red.svg" data-bs-toggle="modal"
-							data-bs-target="#cancelMember" th:data-membername="${a.nickname}"
-							th:data-memberid="${a.userId}">
+						<img class="approval" src="mobile/img/Checked.svg" data-bs-toggle="modal" data-bs-target="#applyMember"
+							th:data-membername="${a.nickname}" th:data-memberid="${a.userId}">
+						<img class="refuse" src="mobile/img/Close_red.svg" data-bs-toggle="modal" data-bs-target="#cancelMember"
+							th:data-membername="${a.nickname}" th:data-memberid="${a.userId}">
 					</div>
 				</div>
 			</div>
@@ -80,7 +78,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!-- 모집 마감 모달-->
 			<div class="modal" id="recruitmentModal" tabindex="-1">
 				<div class="modal-dialog modal-dialog-centered">
@@ -101,9 +99,8 @@
 
 			<div id="createTeamBox">
 				<div id="createTeam" class="d-flex justify-content-center">
-					<button class="btn rounded-5 p-2 ps-4 pe-4" id="addTeam"
-					data-bs-toggle="modal"
-							data-bs-target="#recruitmentModal">모집 마감하기</button>
+					<button class="btn rounded-5 p-2 ps-4 pe-4" id="addTeam" data-bs-toggle="modal"
+						data-bs-target="#recruitmentModal">모집 마감하기</button>
 				</div>
 			</div>
 		</div>
@@ -132,52 +129,56 @@
 				memberName = $(event.relatedTarget).data('membername');
 				memberId = $(event.relatedTarget).data('memberid');
 				$('#teamModalTitle').text(memberName);
-				btnClick(memberId);
+				okBtnClick(memberId);
 			});
 
 			$('#cancelMember').on('show.bs.modal', function (event) {
 				memberName = $(event.relatedTarget).data('membername');
 				memberId = $(event.relatedTarget).data('memberid');
 				$('#teamModalTitle2').text(memberName);
-				btnClick(memberId);
+				cancelBtnClick(memberId);
 			});
-			
-			$("#recruitmentBtn").on('click',function(){
+
+			$("#recruitmentBtn").on('click', function () {
 				$.ajax({
 					url: "/team/recruitment",
 					type: "PUT",
 					dataType: "json",
 					success: function (data) {
-						location.href="/teamRank";
+						location.href = "/teamRank";
 					},
 					error: function () {
 						alert("error");
 					}
-				});		
-			
-			})			
+				});
+
+			})
 		}
-		
 
-
-		function btnClick(memberId) {
+		function okBtnClick(memberId) {
 			$("#okBtn").on('click', function () {
+				var btn = $(this);
+				if (btn.prop('disabled')) return false;
+				btn.prop('disabled', true);
 				$.ajax({
 					url: "/team/addMember/" + memberId + "/" + teamSeq,
 					type: "POST",
 					dataType: "json",
 					success: function (data) {
 						res = data.result;
-						console.log(res);
-						location.href="/teamRank";
+						btn.prop('disabled', false);
+						location.reload(true);
 					},
 					error: function () {
 						alert("error");
 					}
 				});
 			})
+		}
 
-			$("#cancelBtn").on('click', function () {
+
+		function cancelBtnClick(memberId) {
+			$("#cancelBtn").off().on('click', function () {
 				console.log(memberId);
 				$.ajax({
 					url: "/team/cancelmember/" + memberId + "/" + teamSeq,
@@ -186,7 +187,7 @@
 					success: function (data) {
 						res = data.result;
 						console.log(res);
-						location.reload(true);
+						location.href = "/teamRank";
 					},
 					error: function () {
 						alert("error");

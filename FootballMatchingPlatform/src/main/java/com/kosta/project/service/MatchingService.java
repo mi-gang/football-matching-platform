@@ -224,6 +224,10 @@ public class MatchingService {
 						.matchingAddSeq(matchingAddSeq)
 						.team(teamName)
 						.build();
+				if(addListDTO.getMatchingSeq() == 0) {
+					addListDTO.setMatchingSeq(matchingSeqList.get(j));
+					j++;
+				}
 				mm.insertMatchingAddListsByTeam(addListDTO);
 				MatchingCountDTO mcDTO = MatchingCountDTO.builder()
 						.matchingSeq(dto.getMdto().get(i).getMatchingSeq())

@@ -67,8 +67,7 @@
                                 <p>추방 하시겠습니까?</p>
                             </div>
                             <div class="modal-footer justify-content-center border-top-0">
-                                <button type="button" class="btn btn-success"
-                                    id="updateMemberDelete">추방하기</button>
+                                <button type="button" class="btn btn-success" id="updateMemberDelete">추방하기</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                             </div>
                         </div>
@@ -83,9 +82,9 @@
     </div>
 
     <script>
-    	const url = new URL(window.location.href);
-		const urlParams = url.searchParams;
-		var teamSeq = urlParams.get('teamSeq');
+        const url = new URL(window.location.href);
+        const urlParams = url.searchParams;
+        var teamSeq = urlParams.get('teamSeq');
         // header, nav 내용 불러오기
         $(document).ready(function () {
             $("header").load("./common/header_back.html", function () {
@@ -98,30 +97,46 @@
         });
 
         window.onload = function () {
-            $('#deleteMemberModal').on('show.bs.modal', function (event) {
-                membername = $(event.relatedTarget).data('membername');
-                $('#teamModalTitle').text("[ " + membername + " ]");
-				memberId = $(event.relatedTarget).data('memberid')
+            // $('#deleteMemberModal').on('show.bs.modal', function (event) {
+            //     membername = $(event.relatedTarget).data('membername');
+            //     $('#teamModalTitle').text("[ " + membername + " ]");
+            //     memberId = $(event.relatedTarget).data('memberid')
 
-				deleteMemberClick(memberId);
-            });
+            //     //deleteMemberClick(memberId);
+            // });
         }
-	
-		function deleteMemberClick(memberId){
-	        $("#updateMemberDelete").on('click', function () {
-	            $.ajax({
-	                url: "/team/updateDelete/" + memberId,
-					type: "Put",
-	                dataType: "json",
-	                success: function (data) {
-						location.href="/teamMember?teamSeq="+teamSeq;
-	                },
-	                error: function () {
-	                    alert("error");
-	                }
-	            });
-	        });	
-		}
+        
+        $(".deleteImg").on("click", function(){
+            var memberId = $(this).attr("data-memberid");
+            var membername = $(this).attr("data-membername");
+            $('#teamModalTitle').text("[ " + membername + " ]");
+            $("#updateMemberDelete").attr("data-memberid", memberId);
+            $("#updateMemberDelete").attr("data-membername", membername);
+        })
+
+
+            $("#updateMemberDelete").on('click', function () {
+                var memberId = $(this).attr("data-memberid");
+                var membername = $(this).attr("data-membername");
+                var btn = $(this);
+                if (btn.prop('disabled')) return false;
+                btn.prop('disabled', true);
+
+                $.ajax({
+                    url: "/team/updateDelete/" + memberId,
+                    type: "Put",
+                    dataType: "json",
+                    success: function (data) {
+                        btn.prop('disabled', false);
+                        console.log(teamSeq);
+                        location.href = "/teamMember?teamSeq=" + teamSeq;
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            });
+        
 
 
     </script>
