@@ -203,7 +203,6 @@ $(".calendar-dates").on("click", ".date-wrapper", function () {
 
 // 매칭 취소 버튼 클릭 시 (매칭중)
 $("#matchings-wrapper").on("click", ".remove-matching-btn", function () {
-    alert("들어옴")
     const matchingAddListSeq = $(this)
         .closest(".matching-wrapper")
         .attr("data-matchingAddListSeq");
