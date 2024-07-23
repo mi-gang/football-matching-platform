@@ -98,7 +98,7 @@
 		VALUES (#{matchingSeq}, FALSE, FALSE, FALSE, FALSE, TRUE, #{team}, NULL, NULL, #{matchingAddSeq});
 	</select>
 	
-	<!-- 등록한 매칭에 대한 인원 확인 -->
+	<!-- 등록한 매칭에 대한 인원수 확인 -->
 	<select id="selectMatchingMemberCount" resultType="java.lang.Integer" parameterType="com.kosta.project.dto.MatchingCountDTO">
 		SELECT COUNT(matching_add_list_seq)
 		FROM matching_add_lists ml, matching_adds ma, users u
@@ -649,7 +649,8 @@
                              ON mal.matching_add_seq = ma.matching_add_seq
                WHERE ma.user_id = #{userId}
                  AND mal.matching_seq = #{matchingSeq})
-          AND u.user_id != #{userId};
+          AND u.user_id != #{userId}
+		order by  mal.player_number asc ;
     </select>
 
     <!-- 경기 결과 점수 불러오기 -->

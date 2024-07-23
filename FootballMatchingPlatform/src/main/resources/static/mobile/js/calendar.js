@@ -511,20 +511,25 @@ function getMatchigList(item) {
             matchingUserCountWrapper.appendChild(matchingUserCountText);
         }
 
-        // 경기 확정 시 등번호 생성
+        // 경기 확정 시 팀, 등번호 생성
         if (item.matchingStatus == '경기확정' || item.matchingStatus == '경기완료') {
+            const teamInfo = document.createElement('span');
+            teamInfo.textContent = item.team;
+            teamInfo.className = 'my-team';
+
             const playerNumber = document.createElement('span');
             playerNumber.textContent = item.playerNumber;
 
-            if (item.team == 'a')
+            if (item.team == 'A')
                 playerNumber.className = 'my-player-number a-team';
             else
                 playerNumber.className = 'my-player-number b-team';
 
+            fastMatchingWrapper.appendChild(teamInfo);
             fastMatchingWrapper.appendChild(playerNumber);
         }
 
-        // 경기 확정 시 등번호 생성
+        // 팀 매칭 시 팀 생성
         if (item.teamStatus) {
             const teamElement = document.createElement('span');
             teamElement.textContent = '팀';
