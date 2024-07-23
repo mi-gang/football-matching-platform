@@ -269,7 +269,7 @@ function strRes(res){
 
         if (res[i].possA == false && res[i].possB == false &&
           res[i].possC == false && res[i].possD == false) {
-          str += '<span class="badge rounded-5">남녀무관</span>';
+          str += '<span class="badge rounded-5">등급무관</span>';
         }
         else {
           if (res[i].possA == true)

@@ -30,7 +30,7 @@
                         <div class="name">
                             <span class="teamname" th:text="${member.nickname}">
                             </span>
-                            <span th:if="${member.newbie == true}">
+                            <span th:if="${member.newbie == true} and ${!i.first}">
                                 <span class="nickBadge">new</span>
                             </span>
 
