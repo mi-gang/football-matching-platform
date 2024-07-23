@@ -30,7 +30,9 @@
                             </button>
                             <ul class="dropdown-menu" id='dropField'>
                                 <li th:each="field : ${fieldList}">
-                                    <button th:value="${field.fieldSeq}" th:text="${field.fieldName}"
+                                    <button th:value="${field.fieldSeq}"
+                                    		th:text="${field.fieldName}"
+                                    		th:attr="data-fieldstatus=${field.fieldStatus}"
                                         class='dropdown-item'></button>
                                 </li>
                             </ul>
@@ -188,6 +190,7 @@
         let currentDate = date.getDate();
         $("button[name=city1]").text($("#dropField > li > button:eq(0)").text());
         $("button[name=city1]").val($("#dropField > li > button:eq(0)").val());
+        $("button[name=city1").attr("data-fieldstatus", $("#dropField > li > button:eq(0)").data("fieldstatus"));
         
         getMatchingInfoOfMonth($("#dropField > li > button:eq(0)").val());
         getMatchingInfo($("#dropField > li > button:eq(0)").val(), currentYear + "-" + (parseInt(currentMonth) + 1) + "-" + currentDate);
@@ -195,9 +198,11 @@
         $("#dropField > li > button").on('click', function () {
             $("button[name=city1]").text($(this).text());
             $("button[name=city1]").val($(this).val());
+            var fieldStatus = $(this).data("fieldstatus");
+            $("button[name=city1]").attr('data-fieldstatus', fieldStatus);
             const fieldSeq = $(this).val();
             getMatchingInfoOfMonth(fieldSeq);
-            getMatchingInfo($("#dropField > li > button:eq(0)").val(), currentYear + "-" + (parseInt(currentMonth) + 1) + "-" + currentDate);
+            getMatchingInfo(fieldSeq, currentYear + "-" + (parseInt(currentMonth) + 1) + "-" + currentDate);
         })
 
         function getMatchingInfoOfMonth(fieldSeq){
@@ -516,8 +521,18 @@
             }).get();
             
             let selDay = $(".click-date").attr("id");
+            selDayToDate = new Date(selDay);
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+      		if(selDayToDate < today){
+      			alert("지난 날짜는 일정을 수정 할 수 없습니다!");
+      			return;
+      		}
+      		
+      		var fieldStatus = $("button[name=city1]").attr("data-fieldstatus");
+      		
             let fieldSeq = $('button[name=city1]').val();
-            console.log(fieldSeq);
             
             const dataToSend = {
             	selectTime : checkBox,
