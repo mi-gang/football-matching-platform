@@ -421,9 +421,13 @@
                  JOIN matching_add_lists mal ON ma.matching_add_seq = mal.matching_add_seq
                  JOIN matchings m ON mal.matching_seq = m.matching_seq
                  JOIN fields f on m.field_seq = f.field_seq
-        WHERE m.matching_date = #{date}
-          AND ma.user_id = #{userId}
-        ORDER BY m.matching_time asc
+        WHERE m.matching_date = #{matchingDate}
+            AND ma.user_id = #{userId}
+           OR ma.team_seq IN (SELECT t.team_seq
+                              FROM teams t
+                                       JOIN team_members tm ON t.team_seq = tm.team_seq
+                              WHERE tm.user_id = #{userId})
+        ORDER BY m.matching_time ASC
     </select>
 
     <!-- 매칭 리스트 개수 불러오기 -->
@@ -459,6 +463,10 @@
                  JOIN matchings m ON mal.matching_seq = m.matching_seq
                  JOIN fields f on m.field_seq = f.field_seq
         WHERE ma.user_id = #{userId}
+           OR ma.team_seq IN (SELECT t.team_seq
+                              FROM teams t
+                                       JOIN team_members tm ON t.team_seq = tm.team_seq
+                              WHERE tm.user_id = #{userId})
         ORDER BY m.matching_date DESC, m.matching_time DESC
     </select>
 
