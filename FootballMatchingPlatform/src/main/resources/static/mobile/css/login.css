@@ -111,3 +111,39 @@ button{
 #join{
     margin-bottom: 0.6rem;
 }
+
+/* 부트스트랩 속성 변경 */
+
+.modal-header {
+    border-bottom: none;
+    padding: 1.3rem 1.3rem;
+}
+
+.modal-footer {
+    justify-content: center;
+    border-top: none;
+    padding: 0 1.3rem 1.3rem 1.3rem;
+}
+
+.btn-close {
+    width: 0.1rem;
+    height: 0.1rem;
+    background-size: 0.8rem;
+}
+
+.modal-dialog-centered {
+    justify-content: center;
+}
+
+.modal-content {
+    width: 90%;
+    border-radius: 1rem;
+}
+
+/* 공통 */
+
+.modal-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-align: center;
+}

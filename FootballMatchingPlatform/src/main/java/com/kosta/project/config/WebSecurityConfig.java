@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +23,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import java.util.List;
 
@@ -29,31 +34,45 @@ import java.util.List;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    private final UserDetailService userService;
+//    private final UserDetailService userService;
 
     // 2. 리소스 접근 빈 설정, 일부 파일 시큐리티 기능 비활성화
-    @Bean
-    public WebSecurityCustomizer configure() {
-        System.out.println("WebSecurityConfig's configure()");
-        return (web) -> web.ignoring()
-                .requestMatchers("/static/**", "/mobile/**");
-    }
+//    @Bean
+//    public WebSecurityCustomizer configure() {
+//        System.out.println("WebSecurityConfig's configure()");
+//        return (web) -> web.ignoring()
+//                .requestMatchers("/static/**", "/mobile/**", "/css/**", "/js/**", "/static/common/**");
+//    }
 
     // 3. 특정 HTTP 요청에 대한 웹 기반 보안 구성
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) throws Exception {
         System.out.println("WebSecurityConfig's filterChain()");
         return http
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // 필요한 경우에만 세션 생성
+                        .invalidSessionUrl("/login")) // 유효하지 않은 세션일 경우 로그인 페이지로 이동
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/join", "/css/**").permitAll()
+                        .requestMatchers("/login", "/join", "/static/**", "/mobile/**",
+                                "mobile/css/**", "mobile/js/join.js", "/common/header_back_main.html",
+                                "/user/getUserId", "/user/protected-resource", "/user/csrf-token",
+                                "/user/getUserNickname", "/user/addUserJoin", "/user/login").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .defaultSuccessUrl("/mainPage"))
+                        .usernameParameter("userId")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/mainPage")
+                        .failureUrl("/login?error=true")
+                        .permitAll())
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login")
                         .invalidateHttpSession(true))
-                .csrf(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable())
+                .headers(headers -> headers
+                    .cacheControl(cache -> cache.disable())
+                    .frameOptions(frame -> frame.disable()))
+                .addFilterBefore(new SecurityContextPersistenceFilter(), BasicAuthenticationFilter.class)
                 .build();
     }
 
