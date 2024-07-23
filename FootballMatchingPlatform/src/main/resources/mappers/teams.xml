@@ -208,6 +208,7 @@
 		       INNER JOIN teams t ON ma.team_seq = t.team_seq
 		WHERE t.team_seq = #{teamSeq}
 			   AND (m.matching_status = '경기확정' OR m.matching_status = '매칭성공')
+			   AND mal.matching_success_status = 1
 		      AND m.matching_date - curdate() >= 0
 		      AND m.fast_add_status = 0
 		      ORDER BY m.matching_date DESC,
@@ -221,7 +222,8 @@
 			INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
 		   INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
 		   INNER JOIN teams t ON ma.team_seq = t.team_seq
-		WHERE t.team_seq != (SELECT team_seq FROM teams WHERE team_seq = #{teamSeq}) AND m.matching_seq= #{matchingSeq};	
+		WHERE t.team_seq != (SELECT team_seq FROM teams WHERE team_seq = #{teamSeq}) AND m.matching_seq= #{matchingSeq}
+		AND mal.matching_success_status = 1;	
 	</select>
 	
 	
