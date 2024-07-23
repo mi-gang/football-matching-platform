@@ -95,7 +95,7 @@ public class MatchingsMapperTest {
 	
 	//@Test
 	void updateMatchingsTest() {
-		mm.updateMatchings(3);
+//		mm.updateMatchings(3);
 	}
 	
 	//@Test

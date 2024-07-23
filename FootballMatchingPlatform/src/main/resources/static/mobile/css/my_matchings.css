@@ -355,3 +355,25 @@
     font-size: 1.1rem;
     text-align: center;
 }
+
+
+
+.result-modal-body-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 1rem;
+}
+
+.result-modal-wrapper > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    row-gap: 0.5rem;
+}
+
+.result-modal-span{
+    text-align: center;
+    font-size: 0.9rem;
+}

@@ -161,10 +161,7 @@ function clickChangeText() {
 
 // 취소할 시, 초기화
 $(".btn-close").on('click', function () {
-    $("#teamSelect").text("팀 선택");
-    $("#userSelect").text("신고 대상 선택");
-    $("#reasonSelect").text("신고 사유 선택");
-    $("textarea").val("");
+    setReportModal();
 })
 
 $()
@@ -206,9 +203,18 @@ $("#withdrawModal-btn").on("click", function () {
         .catch(error => {
             console.error("Fetch error:", error);
             getModal('reportSuccessModal').show();
-            $('#reportModalText').text("신고 실패<br>다시 시도해주세요.");
+            $('#reportModalText').html("신고 실패 <br> 각 경기에서 특정 회원에 대해 한 번만 신고할 수 있습니다. ");
+            setReportModal();
         });
 });
+
+// 내용 초기화
+function setReportModal(){
+    $("#teamSelect").text("팀 선택");
+    $("#userSelect").text("신고 대상 선택");
+    $("#reasonSelect").text("신고 사유 선택");
+    $("textarea").val("");
+}
 
 // 매칭 시퀀스 구하기
 function getMatchingSeq() {
