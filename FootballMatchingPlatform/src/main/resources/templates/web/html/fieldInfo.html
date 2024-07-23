@@ -34,14 +34,14 @@
                                 <div class="vr pe-1 me-2"></div>
                                 <span class="ps-2 pe-4">사업자등록증.pdf</span>
                                 <a href="web/img/search.svg" download="">
-                                    <img src="/web/img/download.svg">
+                                    <img src="common/">
                                 </a>
                             </div>
                         </div>
                     </div>
 
                     <!-- 이미지 -->
-                    <img class="mb-4" src="/web/img/fieldimg.svg" id="fieldimg">
+                    <img class="mb-4" th:src="@{'../upload/img/' + ${fieldInfo.fi.fieldImg}}" id="fieldimg">
 
                     <!-- 구장 매니저 & 구장 정보 -->
                     <div class="row">

@@ -26,7 +26,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString(exclude="manager")
+@ToString(exclude={"manager", "fieldImages"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

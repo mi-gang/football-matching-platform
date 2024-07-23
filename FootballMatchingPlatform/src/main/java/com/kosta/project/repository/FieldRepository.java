@@ -13,4 +13,5 @@ import com.kosta.project.dto.FieldInfoDTO;
 
 public interface FieldRepository extends JpaRepository<Field, Integer>{
     List<Field> findByManager_ManagerId(String managerId);
+    
 }

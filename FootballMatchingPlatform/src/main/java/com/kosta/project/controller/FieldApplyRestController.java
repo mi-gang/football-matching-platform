@@ -16,12 +16,12 @@ public class FieldApplyRestController {
 
 	private final SystemManagerFieldService smfs;
 	
-	@PostMapping("/api/update/approve/date")
-	public Map<String, String> updateApprove(@PathVariable Long fieldSeq){
+	// @PostMapping("/api/update/approve/date")
+	// public Map<String, String> updateApprove(@PathVariable Long fieldSeq){
 		
-		smfs.updateFieldStatus2(fieldSeq);
+	// 	smfs.updateFieldStatus2(fieldSeq);
 		
-		return Map.of("result", "성공");
-	}
+	// 	return Map.of("result", "성공");
+	// }
 	
 }

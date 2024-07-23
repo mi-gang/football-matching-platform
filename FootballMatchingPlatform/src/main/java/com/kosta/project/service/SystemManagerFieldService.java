@@ -18,29 +18,29 @@ public class SystemManagerFieldService {
 	
 	private final FieldRepository fr;
 	
-	// 구장 승인 (승인 날짜 업데이트)
-	public void updateApprove(Long fieldSeq) {
-		Field field = fr.findById(fieldSeq).get();
-		Date date = new Date();
-		Instant instant = date.toInstant();
-		LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+	// // 구장 승인 (승인 날짜 업데이트)
+	// public void updateApprove(Long fieldSeq) {
+	// 	Field field = fr.findById(fieldSeq).get();
+	// 	Date date = new Date();
+	// 	Instant instant = date.toInstant();
+	// 	LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
 		
-		field.setFieldApprovalDate(localDate);
+	// 	field.setFieldApprovalDate(localDate);
 		
-		fr.save(field);
-	}
+	// 	fr.save(field);
+	// }
 	
 	
-	// 구장 승인 거절(field_status를 2로 변경
-	public void updateFieldStatus2(Long fieldSeq) {
-		Field field = fr.findById(fieldSeq).get();
+	// // 구장 승인 거절(field_status를 2로 변경
+	// public void updateFieldStatus2(Long fieldSeq) {
+	// 	Field field = fr.findById(fieldSeq).get();
 		
-		int status = 2;
+	// 	int status = 2;
 		
-		field.setFieldStatus(status);
+	// 	field.setFieldStatus(status);
 		
-		fr.save(field);
-	}
+	// 	fr.save(field);
+	// }
 	
 	
 }
