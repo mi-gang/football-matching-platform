@@ -37,10 +37,7 @@ public class FieldApplyRestController {
 		//System.out.println("과연2~~" + fieldSeq);
 		
 	 	smfs.updateFieldStatus2(fieldSeq);
-	 	smfs.updateFieldStatus2(fieldSeq);
 		
-	 	return Map.of("result", "성공");
-	 }
 	 	return Map.of("result", "성공");
 	 }
 	
