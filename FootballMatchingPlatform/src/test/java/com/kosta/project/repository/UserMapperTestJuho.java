@@ -171,12 +171,12 @@ public class UserMapperTestJuho {
 	// 내 정보 수정하기
 	@Test
 	void updateMyInfoByUserIdTest() {
-		UserDTO userDTO = new UserDTO();
-		userDTO.setUserId("user00100");
-		userDTO.setEmail("email00100@gmail.com");
-		userDTO.setName("노묵훈");
-		userDTO.setNickname("zl존묵훈");
-		userDTO.setPhoneNumber("010-2009-0523");
+//		UserDTO userDTO = new UserDTO();
+//		userDTO.setUserId("user00100");
+//		userDTO.setEmail("email00100@gmail.com");
+//		userDTO.setName("노묵훈");
+//		userDTO.setNickname("zl존묵훈");
+//		userDTO.setPhoneNumber("010-2009-0523");
 //		um.updateMyInfoByUserId(userDTO);
 	}
 	
