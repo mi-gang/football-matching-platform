@@ -21,7 +21,7 @@ public class FieldApproveTest {
 	// 구장 승인 (승인 날짜 업데이트)
 	//@Test
 	public void updateApproveTest() {
-		Field field = fr.findById(8L).get();
+		Field field = fr.findById(8).get();
 		Date date = new Date();
 		Instant instant = date.toInstant();
 		LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
@@ -36,7 +36,7 @@ public class FieldApproveTest {
 	// 구장 승인 거절(field_status를 2로 변경)
 	@Test
 	public void updateFieldStatus2Test() {
-		Field field = fr.findById(8L).get();
+		Field field = fr.findById(8).get();
 		
 		int status = 2;
 		

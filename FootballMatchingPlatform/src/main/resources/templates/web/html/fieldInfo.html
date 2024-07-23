@@ -172,11 +172,11 @@
                     </div>
 
                     <div class="d-flex justify-content-center m-5" th:if="${session.managerId == null}">
-                        <button class="btn btn-dark btn-lg p-2 ps-5 pe-5" id="deleteBtn">삭제</button>
+                        <button class="btn btn-dark btn-lg p-2 ps-5 pe-5" id="deleteBtn" th:if="${fieldInfo.f.fieldStatus == 1}">삭제</button>
                     </div>
                     <div class="d-flex justify-content-center m-5" th:if="${session.managerId == null}">
-                        <button class="btn btn-dark btn-lg p-2 ps-5 pe-5 me-5" id="okBtn">승인</button>
-                        <button class="btn border-black border-1 btn-lg p-2 ps-5 pe-5" id="nopeBtn">거절</button>
+                        <button class="btn btn-dark btn-lg p-2 ps-5 pe-5 me-5" id="okBtn" th:if="${fieldInfo.f.fieldStatus == 0}">승인</button>
+                        <button class="btn border-black border-1 btn-lg p-2 ps-5 pe-5" id="nopeBtn" th:if="${fieldInfo.f.fieldStatus == 0}">거절</button>
                     </div>
                 </div>
             </div>
@@ -196,8 +196,34 @@
         $("#fieldContent > ul").html(str);
 
         $("#okBtn").on('click', function () {
-            confirm("승인 하시겠습니까?")
+           // confirm("승인 하시겠습니까?")
             
+            
+            
+            const url = window.location.href; // Get the current URL
+			const match = url.match(/fieldInfo\/(\d+)/); // Extract the matching part using regex
+			const fieldSeq = parseInt(match[1]); // Parse the extracted value to a number
+			console.log(fieldSeq); // Display the value in the console
+ 
+            
+            
+        const data = fieldSeq;
+        $.ajax({
+            type: 'post',
+            url: '/api/update/approve/date',
+            data: JSON.stringify(data),
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            console.log('구장 상태')
+			console.log(response.result)
+			window.location.replace('/fieldApplyList');
+
+        }).fail(function(error){
+            //alert(JSON.stringify(error));
+        })
+            
+        window.location.replace('/fieldApplyList');    
             
         })
 
@@ -211,23 +237,22 @@
  
             
             
-        const data = {'fieldSeq' : fieldSeq};
+        const data = fieldSeq;
         $.ajax({
             type: 'post',
-            url: '/api/update/approve/date',
+            url: '/api/no/approve/field',
             data: JSON.stringify(data),
             contentType : 'application/json; charset=utf-8',
         
         }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
             console.log('구장 상태')
 			console.log(response.result)
-			
-
+window.location.replace('/fieldApplyList');
         }).fail(function(error){
             //alert(JSON.stringify(error));
         })
             
-      
+        
             
         })
 

@@ -22,7 +22,7 @@ public class MatchingsMapperTest {
 	@Autowired
 	MatchingMapper mm;
 	
-	@Test
+	//@Test
 	void selectMatchingsListTest() {
 		MatchingConditionDTO dto = MatchingConditionDTO.builder()
 				.matchingDate("2024-07-10")

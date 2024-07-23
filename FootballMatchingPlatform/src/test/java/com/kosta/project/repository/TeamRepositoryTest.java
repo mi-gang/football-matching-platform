@@ -16,7 +16,7 @@ class TeamRepositoryTest{
 	@Autowired
 	TeamMapper teamMapper;
 	
-	@Test
+	//@Test
 	void isTeam() {
 		System.out.println(teamMapper.isTeam("user007"));
 	}
@@ -33,23 +33,23 @@ class TeamRepositoryTest{
 //		System.out.println(teamMapper.selectSearchPossibleTeam("풋"));
 	}
 	
-	//@Test
+	@Test
 	void insertTeam() {		// 팀 생성하기
-		for(int i=0; i<5; i++) {
+		for(int i=151; i<200; i++) {
 			TeamDTO dto = TeamDTO.builder()
-					.teamName("풋킹왕짱"+i)
-					.hometown("서울 금천구")
-					.weekType("주말")
-					.weekTime("주 2회")
-					.hopeTime("08시-12시")
-					.content("남자만 받아요22"+i)
-					.leaderID("user0010"+i)
+					.teamName("zl존"+i + "등팀")
+					.hometown("서울 양천구")
+					.weekType("주중")
+					.weekTime("주 4회")
+					.hopeTime("14시-16시")
+					.content("아무나 다 받아요 빨리 신청하세요~~@@")
+					.leaderID("user00"+i)
 					.build();
 
 			if(teamMapper.insertTeam(dto)) {
-				String userId = dto.getLeaderID();
-				int teamSeq = teamMapper.selectTeamSeq(dto.getTeamName());
-				teamMapper.insertTeamMember(userId, teamSeq);
+				//String userId = dto.getLeaderID();
+				//int teamSeq = teamMapper.selectTeamSeq(dto.getTeamName());
+				//teamMapper.insertTeamMember(userId, teamSeq);
 			}	
 		}
 	}
