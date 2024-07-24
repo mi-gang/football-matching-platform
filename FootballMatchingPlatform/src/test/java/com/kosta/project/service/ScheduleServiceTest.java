@@ -34,7 +34,7 @@ public class ScheduleServiceTest {
 	
 	//@Test
 	void getMatchingListTest() {
-		System.out.println(scheduleService.getMatchingList("user001"));
+//		System.out.println(scheduleService.getMatchingList("user001"));
 	}
 	
 	//@Test

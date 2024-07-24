@@ -67,13 +67,15 @@ public class ScheduleService {
 	}
 
 	/** 매칭 리스트 전체 확인하기 */
-	public Collection<MatchingScheduleListDTO> getMatchingList(String userId) {
+	public Collection<MatchingScheduleListDTO> getMatchingList(String userId, String userTier) {
 
 		Collection<MatchingScheduleListDTO> scheduleListDTOs = new ArrayList<MatchingScheduleListDTO>();
 
 		scheduleListDTOs = matchingMapper.selectMatchingList(userId);
 
 		for (MatchingScheduleListDTO matchingScheduleListDTO : scheduleListDTOs) {
+			int matchingSeq = matchingScheduleListDTO.getMatchingSeq();
+
 			UserMatchingInfoDTO userMatchingInfoDTO = UserMatchingInfoDTO.builder().userId(userId).matchingSeq(matchingScheduleListDTO.getMatchingSeq()).build();
 			// 팀장 여부 추가하기
 			if (matchingScheduleListDTO.isTeamStatus()) {
@@ -82,6 +84,21 @@ public class ScheduleService {
 			// 상대팀 전부 평가 완료 여부 추가하기(내가 리뷰 작성했을 때만 - 리뷰 작성 안하면 작성 하라고만 띄우기)
 			if (matchingScheduleListDTO.isReviewStatus()) {
 				matchingScheduleListDTO.setOpposingTeamReviewStatus(matchingMapper.selectOpposingTeamReviewStatus(userMatchingInfoDTO));
+			}
+
+			// 팀 매칭중일때 팀 명 추가하기
+			if(matchingScheduleListDTO.isTeamStatus()) {
+				List<String> list = matchingMapper.getTeamNames(userMatchingInfoDTO);
+				if (list.size() > 0) {
+					matchingScheduleListDTO.setMyTeamName(list.get(0));
+					matchingScheduleListDTO.setOpposingTeamName(list.get(1));
+				}
+			}
+
+			// 빠른 매칭 시 명 수 추가하기
+			if (matchingScheduleListDTO.isFastAddStatus()){
+				matchingScheduleListDTO.setTotalUserCount(matchingMapper.selectMatchingMemberCount
+						(MatchingCountDTO.builder().matchingSeq(matchingSeq).userTier(userTier).build()));
 			}
 		}
 		return scheduleListDTOs;

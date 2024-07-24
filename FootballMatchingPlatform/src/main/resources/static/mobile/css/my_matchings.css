@@ -205,6 +205,15 @@
     background: #545454;
 }
 
+.my-team{
+    font-weight: 700;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+    color: #ffffff;
+    background-color: #909090;
+}
+
 .a-team{
     font-weight: 700;
     border-radius: 14px;

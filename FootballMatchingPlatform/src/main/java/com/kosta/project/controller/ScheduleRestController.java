@@ -59,7 +59,7 @@ public class ScheduleRestController {
     public ResponseEntity<Collection<MatchingScheduleListDTO>> getMatchingList(@SessionAttribute("loginUser") UserDTO userDTO) {
 
         Collection<MatchingScheduleListDTO> matchingScheduleListDTOS = new ArrayList<>();
-        matchingScheduleListDTOS = scheduleService.getMatchingList(userDTO.getUserId());
+        matchingScheduleListDTOS = scheduleService.getMatchingList(userDTO.getUserId(), userDTO.getUserTier());
 
         return new ResponseEntity<>(matchingScheduleListDTOS, HttpStatus.OK);
     }
