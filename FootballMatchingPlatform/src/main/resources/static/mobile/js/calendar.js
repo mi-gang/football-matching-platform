@@ -631,7 +631,7 @@ function getMatchigList(item) {
             && item.matchingStatus != '경기취소' && item.matchingStatus != '경기완료') {
 
             if (item.teamStatus){
-                if (item.isLeader){
+                if (item.isleader){
                     setButton(item, matchingBtnWrapper)
                 }
             }else{
