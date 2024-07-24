@@ -44,7 +44,8 @@ public class ScheduleService {
 				matchingScheduleListDTO.setOpposingTeamReviewStatus(matchingMapper.selectOpposingTeamReviewStatus(userMatchingInfoDTO));
 
 			// 팀 매칭중일때 팀 명 추가하기
-			if(matchingScheduleListDTO.isTeamStatus()) {
+//			System.out.println(matchingScheduleListDTO.isTeamStatus() && );
+			if(matchingScheduleListDTO.isTeamStatus() && matchingScheduleListDTO.isMatchingSuccessStatus()) {
 				List<String> list = matchingMapper.getTeamNames(userMatchingInfoDTO);
 				if (list.size() > 0) {
 					matchingScheduleListDTO.setMyTeamName(list.get(0));
@@ -87,7 +88,7 @@ public class ScheduleService {
 			}
 
 			// 팀 매칭중일때 팀 명 추가하기
-			if(matchingScheduleListDTO.isTeamStatus()) {
+			if(matchingScheduleListDTO.isTeamStatus() && matchingScheduleListDTO.isMatchingSuccessStatus()) {
 				List<String> list = matchingMapper.getTeamNames(userMatchingInfoDTO);
 				if (list.size() > 0) {
 					matchingScheduleListDTO.setMyTeamName(list.get(0));
