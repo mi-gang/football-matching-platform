@@ -96,7 +96,7 @@ function renderCalendar() {
             // console.log(typeof (tmpDate))
 
             if (currentYear == tmpMatchingYear && tmpMatchingMonth == parseInt(currentMonth + 1) && tmpMatchingDate == tmpDate) {
-                if (matchingDateList[dateNum].cancelStatus || !matchingDateList[dateNum].matchingSuccessStatus 
+                if (matchingDateList[dateNum].cancelStatus || (!matchingDateList[dateNum].matchingSuccessStatus && matchingDateList[dateNum].matchingStatus != '매칭중')
                     || matchingDateList[dateNum].matchingStatus == '매칭실패' || matchingDateList[dateNum].matchingStatus == '경기취소') {
                     matchingDateElement.classList.add("cal-matching-status-1");
                 } else if (matchingDateList[dateNum].matchingStatus == '매칭중') {
@@ -457,14 +457,14 @@ function getMatchigList(item) {
         matchingStatus.textContent = '매칭취소';
 
     //  && matchingDate.setDate(matchingDate.getDate + 1) > date
-    if(!item.matchingSuccessStatus)
+    if(!item.matchingSuccessStatus && item.matchingStatus != '매칭중')
         matchingStatus.textContent = '매칭실패';
 
     matchingStatus.className = 'matching-status status-2';
     if (item.matchingStatus == '매칭중')
         matchingStatus.className = 'matching-status status-1';
     if (item.matchingStatus == '매칭실패' || item.matchingStatus == '경기취소'
-            || item.cancelStatus || !item.matchingSuccessStatus)
+            || item.cancelStatus || (!item.matchingSuccessStatus && item.matchingStatus != '매칭중') )
         matchingStatus.className = 'matching-status status-3';
 
 
@@ -593,7 +593,7 @@ function getMatchigList(item) {
 
 
 
-    if (item.matchingSuccessStatus && !item.cancelStatus) {
+    if (!item.cancelStatus) {
 
         // 결제 완료 시 결제 금액 표기
         if (item.payStatus && item.matchingStatus != '매칭중' && item.matchingStatus != '매칭실패') {
@@ -630,11 +630,14 @@ function getMatchigList(item) {
         if (item.matchingStatus != '경기확정' && item.matchingStatus != '매칭실패'
             && item.matchingStatus != '경기취소' && item.matchingStatus != '경기완료') {
 
+            console.log('뭐임')
             if (item.teamStatus){
+            console.log(item.teamStatus +"이프문 안에 들어옴")
                 if (item.isleader){
                     setButton(item, matchingBtnWrapper)
                 }
             }else{
+                console.log(item.teamStatus +"else 안에 들어옴")
                 setButton(item, matchingBtnWrapper)
             }
 
