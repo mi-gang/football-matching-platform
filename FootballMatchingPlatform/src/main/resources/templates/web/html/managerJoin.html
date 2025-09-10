@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 가입</title>
+    <link rel="stylesheet" href="mobile/css/common_main.css">
+    <link rel="stylesheet" href="mobile/css/join.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="flex-column-center" id="container">
+        <div class="text-container">
+	        <div class="text" id="text-name">이름</div>
+			<div class="text-invalid" id="invalid-name-check-fail">한글만 작성 가능합니다.</div>
+		</div> 
+        <input id="name">
+        <div class="text-container">
+            <div class="text" id="text-id">아이디</div>
+            <div class="text-invalid" id="invalid-id-success">사용할 가능한 아이디입니다.</div>
+            <div class="text-invalid" id="invalid-id-fail">사용할 수 없는 아이디입니다.</div>
+            <div class="text-invalid" id="invalid-id-doub">중복된 아이디입니다.</div>
+        </div>
+        <input id="id">
+        <div class="text-container">
+            <div class="text" id="text-pw">비밀번호</div>
+            <div class="text-invalid" id="invalid-pw">비밀번호는 영문 대소문자, 숫자, 특수문자를 6자 이상 포함해야 합니다.</div>
+        </div>
+        <input type="password" id="pw">
+        <div class="text-container">
+            <div class="text" id="text-pw-check">비밀번호 확인</div>
+            <div class="text-invalid" id="invalid-pw-check-fail">비밀번호가 일치하지 않습니다.</div>
+            <div class="text-invalid" id="invalid-pw-check-success">비밀번호가 일치합니다.</div>
+        </div>
+        <input type="password" id="pw-check">
+        <div class="text" id="text-phone">전화번호</div>
+        <input type="text" class="form-control" oninput="hypenTel	(this)" maxlength="13">
+        <div class="text-container">
+            <div class="text" id="text-email">이메일</div>
+            <div class="text-invalid" id="invalid-email">사용할 수 없는 이메일입니다.</div>
+        </div>
+        <input id="email">
+         <!--onclick="return check()"-->
+        <button id="join" onclick="check">회원가입</button>
+    </div>
+
+    <script>
+        // 유효성 검사
+        
+        const getNameCheck = RegExp(/^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/);
+        const getIdCheck = RegExp(/^[a-zA-Z0-9]{6,14}$/);
+        const getPwCheck = RegExp(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/);
+        const specialCheck = RegExp(/[`~!@#$%^&*|\\\'\";:\/?]/);
+                
+        //이름 유효성 검사
+        $("#name").keyup(function(){
+        	if($("#name").val() !=""){
+				if(!getNameCheck.test($("#name").val())){
+					$("#text-name").css("margin-right","11.15rem");
+					$("#invalid-name-check-fail").css("display", "block");
+					}
+				else{
+					$("#text-name").css("margin-right","20.5rem");
+					$("#invalid-name-check-fail").css("display", "none");
+					}
+				}
+			else {
+				$("#text-name").css("margin-right","20.5rem");
+				$("#invalid-name-check-fail").css("display","none");
+			}	
+		})
+		//아이디 유효성 검사
+		$("#id").on("change",function(){
+        	if($("#id").val() !=""){
+				if(!getIdCheck.test($("#id").val())){
+					$("#text-id").css("margin-right","7.65rem");
+					$("#invalid-id").css("display", "block");
+					}
+				else{
+					$("#text-id").css("margin-right","19rem");
+					$("#invalid-id").css("display", "none");
+					}
+				}
+			else {
+				$("#text-id").css("margin-right","19rem");
+				$("#invalid-id").css("display","none");
+			}	
+		})
+		//닉네임 중복 검사
+		$("#nickname").on("change",function(){
+			const nickname = $("#nickname").val();
+			console.log(nickname);
+			$.ajax({
+				type: 'post',
+				url: "/user/getUserNickname",
+				data: {"nickname":nickname},
+				dataType: 'text',
+				success: function(response){					
+				if($("#nickname").val() != ""){
+					console.log(response);
+					if(response == true){
+						$("#text-nickname").css("margin-right","7rem");
+						$("#invalid-nickname").css("display", "block");
+						$("#invalid-nickname-doub").css("display", "none");
+					}
+					else{
+						$("#text-nickname").css("margin-right","10.5rem");
+						$("#invalid-nickname").css("display", "none");
+						$("#invalid-nickname-doub").css("display", "block");
+					}
+				}
+				else{
+					$("#text-nickname").css("margin-right","19rem");
+					$("#invalid-nickname").css("display", "none");
+					$("#invalid-nickname-doub").css("display", "none");
+				}},
+				error: function(error){
+					alert("오류" + error);
+				}
+			})
+		})
+        //전화번호 자동 형식
+        const hypenTel = (target) => {
+			target.value = target.value
+   			.replace(/[^0-9]/g, '')
+   			.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+		}
+		//비밀번호 일치여부 검사
+        $("#pw-check").on("keyup", function () {
+            if ($("#pw").val() != "") {
+               	if($(this).val() != $("#pw").val()) {
+                    $("#text-pw-check").css("margin-right", "3.5rem");
+                    $("#invalid-pw-check-success").css("display", "none");
+                    $("#invalid-pw-check-fail").css("display", "block");
+                }
+                else {
+                    $("#text-pw-check").css("margin-right", "6.35rem");
+                    $("#invalid-pw-check-fail").css("display", "none");
+                    $("#invalid-pw-check-success").css("display", "block");
+                }
+            }
+            else {
+                $("#text-pw-check").css("margin-right", "15.5rem");
+                $("#invalid-pw-check-success").css("display", "none");
+                $("#invalid-pw-check-fail").css("display", "none");
+            }
+        })
+        
+        //남자 선택시 여자 선택 제거
+        $("#m").on("click", function () {
+            $(this).addClass("click");
+            $("#f").removeClass("click");
+            $(this).val(1);
+            $("#f").val(0);
+        })
+        
+		//여자 선택시 남자 선택 제거
+        $("#f").on("click", function () {
+            $(this).addClass("click");
+            $("#m").removeClass("click");
+            $(this).val(1);
+            $("#m").val(0);
+        })
+
+		//경기 지역 선택 창 열기
+        $("#location").on("click", function () {
+            $("#modal-location").css("display", "block");
+        })
+		// 창 닫기
+        $("#close").on("click", function () {
+            $("#modal-location").css("display", "none");
+        })
+		// 경기지역 선택 시 창 닫기
+        $(".city").on("click", function () {
+            $("#location").val($(this).text());
+            $("#modal-location").css("display", "none");
+        })
+        
+        //회원 정보 저장
+        $('#join').click(function(){
+        	if ($("#name").val().length == 0) {
+                alert("이름을 입력하세요.");
+                return false;
+            }
+            
+			const joinId = $("#id").val();
+			
+            if (joinId.length == 0) {
+                alert("아이디를 입력하세요.");
+                return false;
+            }
+            
+            if ($("#nickname").val().length == 0) {
+                alert("닉네임을 입력하세요.");
+                return false;
+            }
+
+            if ($("#pw").val().length == 0) {
+                alert("비밀번호를 입력하세요.");
+                return false;
+            }
+
+            if ($("#pw-check").val().length == 0) {
+                alert("비밀번호확인을 입력하세요.");
+                return false;
+            }
+
+            if ($("#birth").val().length == 0) {
+                alert("생년월일을 입력하세요.");
+                return false;
+            }
+
+            if ($("#m").val() == 0 && $("#f").val() == 0) {
+                alert("성별을 선택하세요.");
+                return false;
+            }
+
+            if ($("#phone").val().length == 0) {
+                alert("전화번호를 입력하세요.");
+                return false;
+            }
+
+            if ($("#email").val().length == 0) {
+                alert("이메일을 입력하세요");
+                return false;
+            }
+
+            if ($("#location").val().length == 0) {
+                alert("플레이 지역을 선택하세요.");
+                return false;
+            }
+
+            else{
+            const id = $('#id').val();
+        	const pw = $('#pw').val();
+        	const nickname = $('#nickname').val();
+        	const name = $('#name').val();
+        	const birthday = $('#birth').val();
+        	const gender = $('.gender').val();
+        	const phoneNumber = $('#phone').val();
+        	const email = $('#email').val();
+        	const address = $('#location').val();
+        	
+        	const user = {'userId' : id,
+        				 'password' : pw,
+        				 'nickname' : nickname,
+        				 'name' : name,
+        				 'birthday' : birthday, 
+        				 'gender' : gender, 
+        				 'phoneNumber' : phoneNumber,
+        				 'email' : email,
+        				 'address' : address};
+			$.ajax({
+				type:'Post',
+				url:'/user/addUserJoin',
+				headers : {
+					'Content-Type' : 'application/json'
+				},
+				dataType: 'json',
+				data : JSON.stringify(user),
+				async: false,
+				success: function(response){
+					console.log('통신성공: '+response);
+					alert('회원가입 완료');
+					location.href = '/login';
+				},
+				error: function(){
+					alert('회원가입 실패');
+				}
+			});			
+	     }});
+    </script>
+</body>
+
+</html>

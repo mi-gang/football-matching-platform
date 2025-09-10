@@ -1,0 +1,93 @@
+#container {
+    padding-top: 5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+hr{
+    width: 100%;
+}
+
+
+#info-list button{
+	border-radius:3rem;
+    color:#FFFFFF;
+    font-size:0.8rem;
+    width: 5rem;
+    height: 1.7rem;
+	
+}
+
+
+
+.showerTF {
+    background: #828282;
+}
+.ballTF {
+    background: #828282;
+}
+.parkTF {
+    background: #828282;
+}
+.shoesTF {
+    background: #828282;
+}
+.drinkTF {
+    background: #828282;
+}
+
+
+
+#img-field{
+    width: 100%;
+    margin-bottom: 1.625rem;
+}
+
+#title-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#title-container :nth-child(1){
+    font-size: 1.125rem;
+}
+
+#title-container :nth-child(2){
+    font: 0.75rem;
+    color: #535353;
+}
+
+#info-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#info-list {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+#info-list div {
+    border: 1px solid #A5A5A5;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+}
+
+/* #info-list :nth-child(1), #info-list :nth-child(3), #info-list :nth-child(4){
+    color: #A5A5A5;
+} */
+
+/* #info-list :nth-child(2), #info-list :nth-child(5){
+    background: #73A772;
+    color: #fff;
+}
+ */
+#content-container{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}

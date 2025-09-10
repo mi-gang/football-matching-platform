@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="web/css/common.css" />
+
+    <title>일정 관리</title>
+</head>
+
+<body>
+
+    <header id="navbar"></header>
+    <section class="container-fluid d-flex justify-content-center" id="sectionView">
+
+        <div class="d-flex justify-content-center" id="maincontents">
+            <!-- 여기서부터 내용 작성! -->
+            <div class="w-50 pt-3" id="calendarBox">
+                <div class="row d-flex justify-content-center align-items-center p-3">
+                    <div class="col pe-5">
+                        <div class="dropdown d-flex w-100 justify-content-center align-items-center">
+                            <button class="btn dropdown-toggle btn-lg border-black" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false" name="city1">
+                                구장 선택
+                            </button>
+                            <ul class="dropdown-menu" id='dropField'>
+                                <li th:each="field : ${fieldList}">
+                                    <button th:value="${field.fieldSeq}"
+                                    		th:text="${field.fieldName}"
+                                    		th:attr="data-fieldstatus=${field.fieldStatus}"
+                                        class='dropdown-item'></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 캘린더 & 경기일정 -->
+                <div class="row mt-2 p-3">
+                    <div class="border border-black rounded-5 p-3">
+
+                        <div class="d-flex justify-content-between">
+                            <!-- 캘린더 -->
+                            <div class="d-flex flex-column w-75 border-end border-secondary p-3">
+                                <div class="row p-3 mb-5">
+                                    <div class="col d-flex justify-content-center">
+                                        <img class="calendar-nav-btn" id="prevBtn" src="mobile/img/left arrow.svg"
+                                            alt="이전 달 버튼"></img>
+                                        <div class="year-month"></div>
+                                        <img class="calendar-nav-btn" id="nextBtn" src="web/img/right arrow.svg"
+                                            alt="다음 달 버튼"></img>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="calendar-days">
+                                        <div class="day sun">일</div>
+                                        <div class="day">월</div>
+                                        <div class="day">화</div>
+                                        <div class="day">수</div>
+                                        <div class="day">목</div>
+                                        <div class="day">금</div>
+                                        <div class="day sat">토</div>
+                                    </div>
+                                    <div class="calendar-dates" id="calendarDates"></div>
+                                </div>
+                            </div>
+
+                            <!-- 일정  -->
+                            <div class="row">
+                                <div id="scheduleBox" class="col d-flex flex-column text-center ms-2">
+
+                                </div>
+                                <div class="d-flex flex-column align-items-end mt-2 mb-2">
+                                    <p class="align-text-bottom m-0 me-3" data-bs-toggle="modal"
+                                        data-bs-target="#modScheduleModal">일정수정</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 시간별 모달 -->
+            <div class="modal" id="timeModal" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content align-items-center">
+                        <div class="modal-header border-bottom-0 mt-3">
+                            <p class="fs-3">승패 결과 입력</p>
+                        </div>
+                        <div class="modal-body d-flex flex-wrap justify-content-center">
+                            <div class="row text-center">
+                                <p id="matchingDate">매칭 날짜</p>
+                                <p id="matchingTime">매칭 시간</p>
+                            </div>
+                            <div class="row gap-5 flex-nowrap justify-content-center m-3">
+                                <div class="form-group text-center w-25">
+                                    <label for="loseCount" class="fs-5">A팀</label>
+                                    <div class="input-group  mt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">⚽</span>
+                                        </div>
+                                        <input type="number" class="form-control w-25" id="aCount" aria-label="A팀"
+                                            aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                                <div class="form-group text-center w-25">
+                                    <label for="winCount" class="fs-5">B팀</label>
+                                    <div class="input-group mt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon2">⚽</span>
+                                        </div>
+                                        <input type="number" class="form-control" id="bCount" aria-label="B팀"
+                                            aria-describedby="basic-addon2">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer justify-content-center border-top-0">
+                            <button type="button" class="btn btn-success" id="setScoreBtn"
+                                data-bs-dismiss="modal">완료</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 일정 수정 모달 -->
+            <div class="modal" id="modScheduleModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content align-items-center">
+                        <div class="modal-header border-bottom-0 mt-3">
+                            <p class="fs-3">일정 수정</p>
+                        </div>
+                        <div class="modal-body d-flex flex-wrap gap-3 justify-content-center">
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="8" id="time1">
+                                <label class="form-check-label" for="time1">08-10</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="10" id="time2">
+                                <label class="form-check-label" for="time2">10-12</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="12" id="time3">
+                                <label class="form-check-label" for="time3">12-14</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="14" id="time4">
+                                <label class="form-check-label" for="time4">14-16</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="16" id="time5">
+                                <label class="form-check-label" for="time5">16-18</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="18" id="time6">
+                                <label class="form-check-label" for="time6">18-20</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input class="form-check-input" type="checkbox" value="20" id="time7">
+                                <label class="form-check-label" for="time7">20-22</label>
+                            </div>
+                            <p class="fs-5 text-secondary m-2">⊙ 체크한 시간대는 운영을 하지 않습니다.</p>
+                        </div>
+                        <div class="modal-footer justify-content-center border-top-0 mb-2">
+                            <button type="button" class="btn btn-success" id="addCloseTimeBtn"
+                                data-bs-dismiss="modal">완료</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <script>
+    	$('#modScheduleModal').on('shown.bs.modal', function () {
+            // 모든 체크박스 선택 해제
+            $(this).find('.form-check-input').prop('checked', false);
+        });
+        
+        $("#navbar").load("./common/navbarManager2.html");
+        let matchingDateList;
+        const date = new Date();
+        let currentYear = date.getFullYear();
+        let currentMonth = date.getMonth();
+        let currentDate = date.getDate();
+
+        const twoWeeksLater = new Date(date);
+        twoWeeksLater.setDate(date.getDate() + 16); // 2주 후 날짜 계산
+
+        $("button[name=city1]").text($("#dropField > li > button:eq(0)").text());
+        $("button[name=city1]").val($("#dropField > li > button:eq(0)").val());
+        $("button[name=city1").attr("data-fieldstatus", $("#dropField > li > button:eq(0)").data("fieldstatus"));
+        
+        getMatchingInfoOfMonth($("#dropField > li > button:eq(0)").val());
+        getMatchingInfo($("#dropField > li > button:eq(0)").val(), currentYear + "-" + (parseInt(currentMonth) + 1) + "-" + currentDate);
+
+        $("#dropField > li > button").on('click', function () {
+            $("button[name=city1]").text($(this).text());
+            $("button[name=city1]").val($(this).val());
+            var fieldStatus = $(this).data("fieldstatus");
+            $("button[name=city1]").attr('data-fieldstatus', fieldStatus);
+            const fieldSeq = $(this).val();
+            getMatchingInfoOfMonth(fieldSeq);
+            getMatchingInfo(fieldSeq, currentYear + "-" + (parseInt(currentMonth) + 1) + "-" + currentDate);
+        })
+
+        function getMatchingInfoOfMonth(fieldSeq) {
+            fetch(`/confirmed/dates/${fieldSeq}?month=${parseInt(currentMonth + 1)}&year=${currentYear}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        matchingDateList = [];
+                        renderCalendar();
+                    }
+                    else {
+                        matchingDateList = data;
+                        renderCalendar();
+                    }
+                })
+        }
+
+        // ==========================================캘린더 부분
+        // 캘린더 생성
+        const calendarDates = document.querySelector("#calendarDates");
+        const prevBtn = document.querySelector("#prevBtn");
+        const nextBtn = document.querySelector("#nextBtn");
+
+        function renderCalendar() {
+            $('.year-month').text(`${currentYear}년 ${currentMonth + 1}월`);
+
+            const firstDayOfMonth = new Date(currentYear, currentMonth, 1); // 첫번째 날 불러오기
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();   // 날짜수 불러오기
+
+            const startDayOfWeek = firstDayOfMonth.getDay();
+
+            calendarDates.innerHTML = ""; // 일자 비우기
+
+            // 빈 날짜(이전 달)
+            for (let i = 0; i < startDayOfWeek; i++) {
+                const emptyDate = document.createElement("div");
+                emptyDate.classList.add("date", "empty");
+                calendarDates.appendChild(emptyDate);
+            }
+
+            // 현재 달의 날짜
+            for (let i = 1; i <= daysInMonth; i++) {
+
+                // date-wrapper
+                const dateWrapperElement = document.createElement("div");
+                dateWrapperElement.classList.add("date-wrapper");
+
+                // 날짜
+                const dateElement = document.createElement("div");
+                dateElement.classList.add("date");
+                dateElement.setAttribute('id', currentYear + "-" + parseInt(currentMonth + 1) + "-" + i);
+                dateElement.textContent = i;
+
+                if (i == currentDate && date.getMonth() == currentMonth) {
+                    dateElement.classList.add("today");
+                    dateElement.classList.add("click-date");	// default 오늘 날짜 선택
+                }
+
+                // 현재 날짜와 2주 후 날짜 계산
+                var fieldStatus = $("button[name=city1]").attr("data-fieldstatus");
+                
+                if(fieldStatus == 1){
+                	const currentDate2 = new Date(currentYear, currentMonth, i);
+	                var date2 = date.setHours(0, 0, 0, 0);
+	                // 오늘부터 2주 이내의 날짜 확인
+	                if (currentDate2 >= date2 && currentDate2 <= twoWeeksLater) {
+	                    dateElement.classList.add("blocked"); // 차단된 날짜에 'blocked' 클래스 추가
+	                }
+                }
+                
+
+                // 매칭 여부
+                const matchingDateElement = document.createElement("div");
+                matchingDateElement.classList.add("isMatching");
+
+                // 매칭 정보에 따라 다른 클래스 지정
+                if (matchingDateList.length == 0) {
+                    matchingDateElement.classList.remove("cal-matching-status-3");
+                }
+
+                for (let dateNum = 0; dateNum < matchingDateList.length; dateNum++) {
+                    const tmpMatchingYear = new Date(matchingDateList[dateNum]).getFullYear();
+                    const tmpMatchingMonth = new Date(matchingDateList[dateNum]).getMonth() + 1;
+                    const tmpMatchingDate = new Date(matchingDateList[dateNum]).getDate();
+
+                    if (currentYear == tmpMatchingYear && tmpMatchingMonth == parseInt(currentMonth + 1) && tmpMatchingDate == i) {
+                        matchingDateElement.classList.add("cal-matching-status-3")
+                    }
+
+                }
+
+                dateWrapperElement.appendChild(matchingDateElement);
+                dateWrapperElement.appendChild(dateElement);
+                calendarDates.appendChild(dateWrapperElement);
+            }
+        }
+
+        // 이전 달 버튼 클릭 시
+        prevBtn.addEventListener("click", () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            const fieldSeq = $("button[name=city1]").val();
+            fetch(`/confirmed/dates/${fieldSeq}?month=${parseInt(currentMonth + 1)}&year=${currentYear}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        matchingDateList = [];
+                        renderCalendar();
+                    }
+                    else {
+                        console.log(data);
+                        matchingDateList = data;
+                        renderCalendar();
+                    }
+                })
+        });
+
+        // 다음 달 버튼 클릭 시
+        nextBtn.addEventListener("click", () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            const fieldSeq = $("button[name=city1]").val();
+            fetch(`/confirmed/dates/${fieldSeq}?month=${parseInt(currentMonth + 1)}&year=${currentYear}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        matchingDateList = [];
+                        renderCalendar();
+                    }
+                    else {
+                        console.log(data);
+                        matchingDateList = data;
+                        renderCalendar();
+                    }
+                })
+        });
+
+        // 날짜 클릭 시
+        $(".calendar-dates").on("click", ".date-wrapper", function () {
+            $('.click-date').removeClass('click-date');
+            $('.click-date').removeClass('blocked');
+            $(this).find('.date').addClass('click-date'); // find -> 자식 요소 찾기
+
+            // 클릭한 날짜 불러오기
+            var date = $(this).find('.date').attr("id");
+            var fieldSeq = $("button[name=city1]").val();
+
+            getMatchingInfo(fieldSeq, date);
+        });
+
+        function getMatchingInfo(fieldSeq, date) {
+            $("#scheduleBox").html("");
+            const now = new Date();
+            const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const currentHour = now.getHours();
+            const scheduleStats = {
+                8: false,
+                10: false,
+                12: false,
+                14: false,
+                16: false,
+                18: false,
+                20: false
+            };
+            let closedDate = [];
+            //닫힌날짜 시간 가져오기
+            fetch(`/closedDate/${date}/fieldSeq/${fieldSeq}`)
+                .then(response => response.text())
+                .then(text => {
+                    if (text) {
+                        closedDate = JSON.parse(text);
+                    }
+                    //날짜별 매칭기록 가져오기
+                    return fetch(`/date/${date}/field/${fieldSeq}`);
+                })
+                .then(response => response.text())
+                .then(text => {
+                    if (text) {
+                        var data = JSON.parse(text);
+                        console.log(data);
+                    }
+                    else {
+                        let time = 8;
+                        for (const timeKey in scheduleStats) {
+                            const isClosedTime = closedDate.some(closed => closed.closedTime === parseInt(timeKey))
+                            if (isClosedTime) {
+                                $("#scheduleBox").append(`
+                                <div class="row rounded-3 m-1 timeList closed">
+                                    <p class="m-0 p-3">
+                                        ${time}:00-${parseInt(time) + 2}:00
+                                    </p>
+                                </div>
+                            `);
+                            }
+                            else {
+                                $("#scheduleBox").append(`
+                                <div class="row rounded-3 m-1 timeList default">
+                                    <p class="m-0 p-3">
+                                        ${time}:00-${parseInt(time) + 2}:00
+                                    </p>
+                                </div>
+                            `);
+                            }
+                            time = time + 2;
+                        }
+                        return;
+                    }
+
+                    for (const timeKey in scheduleStats) {
+                        const hasMatchingTime = data.some(matching => matching.matchingTime === parseInt(timeKey))
+                        const isClosedTime = closedDate.some(closed => closed.closedTime === parseInt(timeKey))
+                        if (hasMatchingTime) {
+                            // 해당 시간대에 경기가 있는 경우 처리
+                            for (const matching of data) {
+                                if (matching.matchingTime === parseInt(timeKey)) {
+                                    const matchingDateObj = new Date(matching.matchingDate);
+                                    if (matching.matchingStatus === "경기확정") {
+                                        if ((matchingDateObj.getFullYear() == currentDate.getFullYear() && matchingDateObj.getMonth() == currentDate.getMonth() &&
+                                            matchingDateObj.getDate() < currentDate.getDate()) ||
+                                            ((matchingDateObj.getFullYear() == currentDate.getFullYear() && matchingDateObj.getMonth() == currentDate.getMonth() &&
+                                                matchingDateObj.getDate() == currentDate.getDate()) && (matching.matchingTime + 2) <= currentHour)) {
+                                            $("#scheduleBox").append(`
+                                            <div id="${matching.matchingSeq}" class="row rounded-3 m-1 timeList matching notScore" data-bs-toggle="modal" data-bs-target="#timeModal">
+                                                <p class="m-0 p-3">
+                                                    ${matching.matchingTime}:00-${matching.matchingTime + 2}:00
+                                                </p>
+                                            </div>
+                                        `);
+                                        } else {
+                                            $("#scheduleBox").append(`
+                                            <div class="row rounded-3 m-1 timeList matching">
+                                                <p class="m-0 p-3">
+                                                    ${matching.matchingTime}:00-${matching.matchingTime + 2}:00
+                                                </p>
+                                            </div>
+                                        `);
+                                        }
+                                    } else if (matching.matchingStatus === "경기완료") {
+                                        $("#scheduleBox").append(`
+                                        <div class="row rounded-3 m-1 timeList matching scoreOK">
+                                            <p class="m-0 p-3">
+                                                ${matching.matchingTime}:00-${matching.matchingTime + 2}:00
+                                            </p>
+                                        </div>
+                                    `);
+                                    }
+                                }
+                            }
+                        } else {
+                            if (isClosedTime) {
+                                $("#scheduleBox").append(`
+                            <div class="row rounded-3 m-1 timeList closed">
+                                <p class="m-0 p-3">
+                                    ${timeKey}:00-${parseInt(timeKey) + 2}:00
+                                </p>
+                            </div>
+                        `);
+                            }
+                            else {
+                                // 기본 스타일로 어펜드
+                                $("#scheduleBox").append(`
+                                <div class="row rounded-3 m-1 timeList default">
+                                    <p class="m-0 p-3">
+                                        ${timeKey}:00-${parseInt(timeKey) + 2}:00
+                                    </p>
+                                </div>
+                            `);
+                            }
+                        }
+                    }
+                })
+        }
+        $("#scheduleBox").on("click", ".notScore", function () {
+            var matchingSeq = $(this).attr("id");
+            fetch(`/matchingInfo/${matchingSeq}`)
+                .then(response => response.json())
+                .then(data => {
+                    var date = new Date(data.matchingDate);
+                    var startTime = data.matchingTime;
+                    var endTime = startTime + 2;
+                    var options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+                    var formattedDate = date.toLocaleDateString('ko-KR', options);
+                    $("#matchingDate").text(formattedDate);
+                    $("#matchingTime").text(startTime + ":00-" + endTime + ":00");
+                    $("#setScoreBtn").val(matchingSeq);
+                })
+        })
+
+        // ===================== 승패입력 =====================
+
+        $('#setScoreBtn').on('click', function () {
+            let matchingSeq = $(this).val(); // << 매칭 Seq 가져오기
+            var ascore = $('#aCount').val();
+            var bscore = $('#bCount').val();
+
+            let selDay = $(".click-date").attr("id");
+            let fieldSeq = $('button[name=city1]').val();
+
+            if (ascore === "" || bscore === "") {
+                alert("점수를 입력하세요");
+                return;
+            }
+            console.log(matchingSeq);
+            fetch('/setscore/' + matchingSeq, {
+                method: "put",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    scoreA: ascore,
+                    scoreB: bscore
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    var matchingAddResult = data.result;
+                    console.log(matchingAddResult);
+                    getMatchingInfo(fieldSeq, selDay);
+                })
+        })
+
+        // ============ close time ============
+        $('#addCloseTimeBtn').on('click', function () {
+            const checkBox = $('input[type="checkbox"]:checked').map(function () {
+                return $(this).val(); // 체크박스와 연결된 레이블의 텍스트를 가져옵니다.
+            }).get();
+
+            let selDay = $(".click-date").attr("id");
+            selDayToDate = new Date(selDay);
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+      		if(selDayToDate < today){
+      			alert("지난 날짜는 일정을 수정 할 수 없습니다!");
+      			return;
+      		}
+      		
+      		var fieldStatus = $("button[name=city1]").attr("data-fieldstatus");
+      		
+
+            if ($(".click-date").hasClass("blocked")) {
+                alert("구장이 등록된 상태에서는 2주간 일정수정 할 수 없습니다!");
+                return;
+            }
+
+
+            let fieldSeq = $('button[name=city1]').val();
+            
+            const dataToSend = {
+                selectTime: checkBox,
+                selectDay: selDay
+            }
+
+            $.ajax({
+                url: '/closetime/' + fieldSeq, // 실제 API 엔드포인트로 변경
+                type: 'POST', // 또는 'PUT', 필요한 HTTP 메서드로 설정
+                contentType: 'application/json',
+                data: JSON.stringify(dataToSend), // JSON 문자열로 변환
+                success: function (response) {
+                    console.log('서버 응답:', response);
+                    getMatchingInfo(fieldSeq, selDay);
+                },
+                error: function (xhr, status, error) {
+                    console.error('요청 실패:', error);
+                }
+            })
+
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+#container {
+    padding: 4.3rem 1rem;
+    align-items: normal;
+    gap: 1rem;
+    padding-bottom: 0;
+}
+
+.email{
+	font-size : 0.8rem;
+}
+
+#title-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #D5D5D5;
+    padding: 0.5rem 0;
+}
+
+.nickname-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.nickname-container :nth-child(2) {
+    width: 8.4rem;
+}
+
+.img-container {
+    display: flex;
+}
+
+#right-container {
+    display: flex;
+    gap: 1.1rem;
+    margin-right: 4rem;
+}
+
+#createTeam{
+	position : fixed;
+	left: 50%;
+	bottom : 8%;
+    transform: translate(-50%, 0);
+}
+
+#createTeam > button{
+	background-color : #73A772;
+	color: white;
+
+}

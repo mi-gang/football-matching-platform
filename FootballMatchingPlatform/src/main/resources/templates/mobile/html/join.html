@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 가입</title>
+<!--    <meta name="_csrf" th:content="${_csrf.token}" />-->
+<link rel="stylesheet" href="mobile/css/common_main.css">
+    <link rel="stylesheet" href="mobile/css/join.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="flex-column-center" id="container">
+        <!-- 헤더 -->
+        <header></header>
+        <div class="text-container">
+	        <div class="text" id="text-name">이름</div>
+			<div class="text-invalid" id="invalid-name-check-fail">한글만 작성 가능합니다.</div>
+		</div> 
+        <input id="name">
+        <div class="text-container">
+            <div class="text" id="text-id">아이디</div>
+            <div class="text-invalid" id="invalid-id-success">사용 가능한 아이디입니다.</div>
+            <div class="text-invalid" id="invalid-id-fail">아이디는 영문과 숫자만 가능합니다.</div>
+            <div class="text-invalid" id="invalid-id-doub">중복된 아이디입니다.</div>
+        </div>
+        <input id="id">
+        <div class="text-container">
+            <div class="text" id="text-nickname">닉네임</div>
+            <div class="text-invalid" id="invalid-nickname">사용 가능한 닉네임 입니다.</div>
+            <div class="text-invalid" id="invalid-nickname-doub">중복된 닉네임 입니다.</div>
+        </div>
+        <input id="nickname">
+        <div class="text-container">
+            <div class="text" id="text-pw">비밀번호</div>
+            <div class="text-invalid" id="invalid-pw">비밀번호는 영문 대소문자, 숫자, 특수문자를 6자 이상 포함해야 합니다.</div>
+        </div>
+        <input type="password" id="pw">
+        <div class="text-container">
+            <div class="text" id="text-pw-check">비밀번호 확인</div>
+            <div class="text-invalid" id="invalid-pw-check-fail">비밀번호가 일치하지 않습니다.</div>
+            <div class="text-invalid" id="invalid-pw-check-success">비밀번호가 일치합니다.</div>
+        </div>
+        <input type="password" id="pw-check">
+        <div class="text-container">
+            <div class="text" id="text-birth">생년월일</div>
+            <div class="text" id="text-gender">성별</div>
+        </div>
+        <div>
+            <input type="date" id="birth">
+            <button class="gender" id="m" value="M">남</button>
+            <button class="gender" id="f" value="F">여</button>
+        </div>
+        <div class="text" id="text-phone">전화번호</div>
+        <input id="phone" type="text" class="form-control" oninput="hypenTel(this)" maxlength="13">
+        <div class="text-container">
+            <div class="text" id="text-email">이메일</div>
+            <div class="text-invalid" id="invalid-email">사용할 수 없는 이메일입니다.</div>
+        </div>
+        <input id="email">
+        <div class="text" id="text-location">플레이 지역</div>
+        <input type="button" id="location" placeholder="지역 선택">
+        <div id="modal-location">
+            <div id="top-location">
+                <div id="text-modal-top">플레이 지역</div>
+                <img id="close" src="mobile/img/Close.svg">
+            </div>
+            <div id="location-list">
+               	<div class="location-line">
+               		<input type="radio" id="서울" value="서울" name="city"><label for="서울">서울</label>
+              		<input type="radio" id="경기" value="경기" name="city"><label for="경기">경기</label>
+              		<input type="radio" id="인천" value="인천" name="city"><label for="인천">인천</label>
+               		<input type="radio" id="부산" value="부산" name="city"><label for="부산">부산</label>
+               		<input type="radio" id="대전" value="대전" name="city"><label for="대전">대전</label>
+               	</div>
+               	<div class="location-line">
+               		<input type="radio" id="대구" value="대구" name="city"><label for="대구">대구</label>
+               		<input type="radio" id="울산" value="울산" name="city"><label for="울산">울산</label>
+               		<input type="radio" id="세종" value="세종" name="city"><label for="세종">세종</label>
+               		<input type="radio" id="광주" value="광주" name="city"><label for="광주">광주</label>
+               		<input type="radio" id="강원" value="강원" name="city"><label for="강원">강원</label>
+               	</div>
+               	<div class="location-line">
+               		<input type="radio" id="충북" value="충북" name="city"><label for="충북">충북</label>
+               		<input type="radio" id="충남" value="충남" name="city"><label for="충남">충남</label>
+               		<input type="radio" id="경북" value="경북" name="city"><label for="경북">경북</label>
+               		<input type="radio" id="경남" value="경남" name="city"><label for="경남">경남</label>
+               		<input type="radio" id="제주" value="제주" name="city"><label for="제주">제주</label>
+               	</div>
+            </div>
+            <hr>
+            <div id="gu-list">
+            </div>
+            <div id="submit-container">
+             	<div id="submit">완료</div>
+            </div>
+        </div>
+        	
+         <!--onclick="return check()"-->
+        <button id="join">회원가입</button>
+        <!-- 하단 메뉴바 -->
+    </div>
+
+    <script src="/mobile/js/join.js"></script>
+</body>
+
+</html>

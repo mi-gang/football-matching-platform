@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosta.project.repository.ReportMapper">
+	
+	<!-- 신고 등록하기 -->
+	<insert id="insertReport" parameterType="com.kosta.project.dto.ReportDTO">
+		INSERT INTO reports
+		(report_type, report_content, matching_seq, user_id, reported_user_id)
+		VALUES
+		(#{reportType}, #{reportContent}, #{matchingSeq}, #{userId}, #{reportedUserId})
+	</insert>
+	
+	<!-- 신고 검색하기 -->
+	<select id="selectReport" parameterType="com.kosta.project.dto.ReportDTO">
+		SELECT COUNT(report_seq)
+		FROM reports
+		WHERE user_id = #{userId} AND reported_user_id = #{reportedUserId}
+		AND matching_seq = #{matchingSeq}
+	</select>
+	
+</mapper>

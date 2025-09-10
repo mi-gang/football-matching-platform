@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 화면</title>
+    <link rel="stylesheet" href="/mobile/css/common.css">
+    <link rel="stylesheet" href="/mobile/css/mainPage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+        <!-- 헤더 -->
+        <header></header>
+        <!-- 컨텐츠 컨테이너 -->
+        <div id="container">
+            <img src="/mobile/img/field.jpg">
+            <div id="play-container">
+                <div class="play" id="matching">
+                    <div class="title-play">매칭</div>
+                    <div class="content-play">내 실력에 맞는 <br> 경기 자동 매칭</div>
+                </div>
+                <div class="play" id="fast">
+                    <div class="title-play fast-title">빠른 신청</div>
+                    <div class="content-play fast-content">지금 바로 경기에 <br> 뛰고 싶을 때</div>
+                </div>
+            </div>
+            <div class="info-container">
+                <div class="info-title">
+                    <div>다가오는 경기 일정</div>
+                    <div class="all-see-container" id="schedule">
+                        <div class="all-see">전체 보기</div>
+                        <img class="arrow" src="/mobile/img/right arrow.svg">
+                    </div>
+                </div>
+                <div id="info-schedule" th:if="${getMatchingAlready != null}">
+                    <div id="matching-state" th:text="${getMatchingAlready.matchingStatus}"></div>
+                    <div id="time" th:text="${#dates.format(getMatchingAlready.matchingDate, 'yyyy년 MM월 dd일')} + ' ' + ${getMatchingAlready.matchingTime} + ':00 ~ ' + ${getMatchingAlready.matchingTime + 2} + ':00'">2024년 7월 3일 18:00 - 20:00</div>
+                    <div id="location" th:text="${getMatchingAlready.fieldAddress} + ' ' + ${getMatchingAlready.fieldAddressDetail} + ' ' + ${getMatchingAlready.fieldName}">서울 강서 신정FC 우쩌구 구장</div>
+                </div>
+                <div id="info-schedule" th:if="${getMatchingAlready == null}">
+                    <h1 class = "h1textClass">다가오는 경기 일정이 없습니다.</h1>
+                </div>
+            </div>
+            <div class="info-container">
+                <div class="info-title">
+                    <div>개인 랭킹 top 3</div>
+                    <div class="all-see-container" id="rank">
+                        <div class="all-see">전체 보기</div>
+                        <img class="arrow" src="/mobile/img/right arrow.svg">
+                    </div>
+                </div>
+                <div id="info-rank">
+                    <div id="first-rank" th:if="${getTopOneUser != null}">
+                        <div>
+                            <div>1</div>
+                        </div>
+                        <div th:text="${getTopOneUser.nickname}"></div>
+                        <div th:text="${getTopOneUser.userScore} + '점'">1205점</div>
+                    </div>
+                    <div id="first-rank" th:if="${getTopOneUser == null}">
+                        <div>
+                            <div>1</div>
+                        </div>
+                        <div>-</div>
+                        <div></div>
+                    </div>
+                    <div id="middle-rank" th:if="${getTopTwoUser != null}">
+                        <div>
+                            <div>2</div>
+                        </div>
+                        <div th:text="${getTopTwoUser.nickname}"></div>
+                        <div th:text="${getTopTwoUser.userScore} + '점'"></div>
+                    </div>
+                    <div id="middle-rank" th:if="${getTopTwoUser == null}">
+                        <div>
+                            <div>2</div>
+                        </div>
+                        <div>-</div>
+                        <div></div>
+                    </div>
+                    <div id="last-rank" th:if="${getTopThreeUser != null}">
+                        <div>
+                            <div>3</div>
+                        </div>
+                        <div th:text="${getTopThreeUser.nickname}">뿡칫치</div>
+                        <div th:text="${getTopThreeUser.userScore} + '점'"></div>
+                    </div>
+                    <div id="last-rank" th:if="${getTopThreeUser == null}">
+                        <div>
+                            <div>3</div>
+                        </div>
+                        <div>-</div>
+                        <div></div>
+                    </div>
+                </div>
+                <div id="field-info-container">
+                    <div id="field-info">
+                        <div id="ball-container">
+                            <img src="/mobile/img/ball.svg">
+                        </div>
+                        <div>등록된 구장 정보</div>
+                        <img src="/mobile/img/right arrows.svg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 하단 메뉴바 -->
+        <nav></nav>
+    </div>
+
+    <script>
+    var userTier = "[[${session.loginUser.getUserTier}]]";
+        // header, nav 내용 불러오기
+        $(document).ready(function () {
+            $('header').load('./common/header.html', function () { // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+                $('#page-name').html('<img src="/mobile/img/foot.svg">'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
+                $('#user-tier').text(userTier); // 나중에 세션에서 usertier 구해서 넣기
+            });
+            $('nav').load('./common/nav.html');
+        });
+
+        $("#matching").on("click", function () {
+            
+            location.href = '/matching';
+        })
+
+        $("#fast").on("click", function () {
+            
+            location.href = '/fastmatchinglist';
+        })
+
+        $("#schedule").on("click", function () {
+           
+            location.href = '/myMatchingList';
+        })
+
+        $("#info-schedule").on("click", function () {
+
+            //location.href = '/myMatchingList';
+        })
+
+        $("#rank").on("click", function () {
+
+            location.href = '/ranking';
+        })
+
+        $("#field-info").on("click", function () {
+            
+            location.href = '/addedFieldList';
+        })
+    </script>
+</body>
+
+</html>

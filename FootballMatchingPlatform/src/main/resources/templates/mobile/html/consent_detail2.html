@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/consent_detail1.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+        <!-- 헤더 -->
+        <header></header>
+        <!-- 컨텐츠 컨테이너 -->
+        <div id="container">
+            <div id="content"></div>
+        </div>
+    </div>
+
+    <script>
+        // header, nav 내용 불러오기
+        $(document).ready(function () {
+            $('header').load('./common/header_back_no_login.html', function () { // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+                $('#page-name').text('개인정보 수집 및 이용');
+            });
+        });
+
+        var text = `개인정보보호법에 따라 풋살 매칭 플랫폼에 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적, 개인정보의 보유 및 이용기간, 동의 거부권 및 동의 거부 시 불이익에 관한 사항을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다.
+
+                    1. 수집하는 개인정보
+                    풋살 매칭 플랫폼은 회원가입을 해야만 이용할 수 있는 서비스입니다. 회원가입 시점에 이용자의 전화번호, 이메일, 나이, 성별, 성함을 수집합니다.
+
+                    2. 수집한 개인정보의 이용
+                    - 법령 및 풋살 매칭 플랫폼 이용약관을 위반하는 회원에 대한 이용 제한 조치, 부정 이용 행위를 포함하여 서비스의 원활한 운영에 지장을 주는 행위에 대한 방지 및 제재, 분쟁조정을 위한 기록 보존, 민원처리 등 이용자 보호 및 서비스 운영을 위하여 개인정보를 이용합니다.
+                    - 해당 서비스에서 팀을 신청할 경우, 신청자의 나이, 성별, 이메일 정보를 팀장이 확인할 수 있습니다. 팀 가입 신청이 거절되거나 다른 팀에 들어가거나 팀 가입 신청을 취소할 때까지 해당 팀의 팀장에게 나이, 성별, 이메일 정보가 제공됩니다. 팀 가입이 승인된 경우, 팀 탈퇴 시까지 팀장에게 나이, 성별, 이메일 정보가 제공됩니다.
+
+                    3. 개인정보 보관기간
+                    - 이용자의 개인정보를 회원 탈퇴 시 지체없이 파기됩니다. 3년간 풋살 매칭 플랫폼의 서비스를 이용하지 않을 경우, 해당 회원의 개인정보를 파기합니다.
+
+                    4. 개인정보 수집  및 이용 동의를 거부할 권리
+                    - 이용자는 개인정보의 수집 및 이용 동의를 거부할 권리가 있습니다. 회원가입 시 수집하는 최소한의 개인정보, 즉, 필수 항목에 대한 수집 및 이용 동의를 거부하실 경우, 회원가입이 불가능합니다.`;
+        var content = text.split("\n");
+        var str = "";
+        for (i = 0; i < content.length; i++) {
+            str += "<div>" + content[i] + "</div><br>";
+        }
+
+        $("#content").html(str);
+    </script>
+</body>
+
+</html>

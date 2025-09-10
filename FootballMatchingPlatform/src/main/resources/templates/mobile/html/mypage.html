@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mypage</title>
+    <link rel="stylesheet" href="mobile/css/common.css" />
+    <link rel="stylesheet" href="mobile/css/mypage/mypage.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+        <!-- 헤더 -->
+        <header></header>
+         <!-- 컨텐츠 컨테이너 -->
+        <div id="container">
+            <div id="user-info1">
+                <img id="mypage-user" src="mobile/img/user.svg" alt="회원">
+                <div id="user-name-email">
+                    <span id="nickname">zI존쇠다리</span>
+                    <span id="email">chul***@gmail.com</span>
+                </div>
+            </div>
+            <span id="edit-info">정보 수정</span>
+            <div id="user-info2">
+                <div id="user-info2-1">
+                    <div id="my-tier-wrapper">
+                        <span class="title">나의 등급</span>
+                        <div id="my-tier-info" class="mypage-infos">
+                            <div id="my-tier">A</div>
+                            <div id="my-score-rank-percentile-wrapper">
+                                <div id="mypage-score">
+                                    <span id="my-score">829</span>
+                                    <span>점</span>
+                                </div>
+                                <div id="my-rank-percentile-wrapper">
+                                    <div id="mypage-rank">
+                                        <span id="my-rank">29</span>
+                                        <span>위</span>
+                                    </div>
+                                    <div id="mypage-percentile">
+                                        <span style="font-size: 14px">(상위</span>
+                                        <span style="font-size: 14px" id="my-percentile">25</span>
+                                        <span style="font-size: 14px">%)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="my-record-wrapper">
+                        <span class="title">나의 전적</span>
+                        <div id="my-record-info" class="mypage-infos">
+                            <div id="my-record-info-1">
+                                <div id="game-count-wrapper">
+                                    <span id="game-count">17</span>
+                                    <span>전</span>
+                                </div>
+                                <div id="win-count-wrapper">
+                                    <span id="win-count">12</span>
+                                    <span>승</span>
+                                </div>
+                            </div>
+                            <div id="my-record-info-2">
+                                <span style="font-size: 14px">승률</span>
+                                <span style="font-size: 14px" id="user-win-rate">70.9</span>
+                                <span style="font-size: 14px">%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="my-team-wrapper">
+                    <span class="title">소속 팀</span>
+                    <div id="my-team-info" class="mypage-infos">
+                        <span id="team-name">zI존 풋살</span>
+                        <div id="team-rank-win-rate-wrapper">
+                            <div class="team-wrapper">
+                                <span>순위 :</span>
+                                <span id="team-rank">1</span>
+                                <span>위</span>
+                            </div>
+                            <div class="team-wrapper">
+                                <span>승률 : </span>
+                                <span id="team-win-rate">78</span>
+                                <span>%</span>
+                            </div>
+                        </div>
+                        <div id="team-tier-score-wrapper">
+                            <div class="team-wrapper">
+                                <span>등급 :</span>
+                                <span id="team-tier">A</span>
+                            </div>
+                            <div class="team-wrapper">
+                                <span>점수 :</span>
+                                <span id="team-score">820</span>
+                                <span>점</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="my-inquiry-wrapper">
+                    <div id="my-inquiry-title">
+                        <span class="title">나의 문의</span>
+                        <div id="more-inquiry">
+                            <span class="info-normal-text">전체보기</span>
+                            <img class="right-arrow" src="mobile/img/right arrow.svg" />
+                        </div>
+                    </div>
+                    <div id="my-inquiry-info" class="mypage-infos">
+                        <p id="Q1">Q.경기를 취소했는데 환불이 안됐습니다.</p>
+                        <p id="Q2">Q.등급을 결정하는 기준이 궁금합니다.</p>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- 하단 메뉴바 -->
+      <nav></nav>
+    </div>
+
+    <script>
+      // header, nav 내용 불러오기
+      $(document).ready(function () {
+        $("header").load("common/header_mypage.html", function () {
+          $("#page-name").text("마이페이지");
+        });
+        $("nav").load("common/nav.html");
+      });
+
+      $("document").ready(function () {
+        //내 정보 불러오기
+        $.ajax({
+          type: "get",
+          url: "/user/getMyInfo",
+          dataType: "json",
+          success: function (data) {
+            $("#nickname").empty().append(data.result.nickname);
+            $("#email").empty().append(data.result.email);
+          },
+          error: function () {
+            alert("로그인 하십시오");
+            location.href = "/login";
+          },
+        });
+        //내 등급 불러오기
+        $.ajax({
+          type: "get",
+          url: "/user/getMyTierAndScore",
+          success: function (data) {
+            $("#my-tier").empty().append(data.result.userTier);
+            $("#my-score").empty().append(data.result.userScore);
+            $("#my-rank").empty().append(data.result.userRank);
+            $("#my-percentile")
+              .empty()
+              .append(data.result.percentile.toFixed(2));
+          },
+          error: function () {
+            $("#my-tier").empty().append("불러오기 오류");
+            $("#my-score").empty().append("");
+            $("#my-rank").empty().append("");
+            $("#my-percentile").empty().append("");
+          },
+        });
+        //내 전적 불러오기
+        $.ajax({
+          type: "get",
+          url: "/user/getMyMatchedInfo",
+          success: function (data) {
+            $("#game-count").empty().append(data.result.gameCount);
+            $("#win-count").empty().append(data.result.winCount);
+            $("#user-win-rate").empty().append(data.result.winRate.toFixed(2));
+          },
+          error: function () {},
+        });
+        //소속 팀 정보 불러오기
+        $.ajax({
+          type: "get",
+          url: "/user/getMyTeamInfo",
+          success: function (data) {
+            if (data.result.teamSeq != 0) {
+              $("#team-name").empty().append(data.result.teamName);
+              $("#team-rank").empty().append(data.result.teamRank);
+              $("#team-win-rate")
+                .empty()
+                .append(data.result.winRate.toFixed(2));
+              $("#team-tier").empty().append(data.result.teamTier);
+              $("#team-score").empty().append(data.result.teamScore);
+            } else {
+              $("#team-name").empty().append("  -  ");
+              $("#team-rank").empty().append(" - ");
+              $("#team-win-rate").empty().append(" - ");
+              $("#team-tier").empty().append(" - ");
+              $("#team-score").empty().append(" - ");
+            }
+          },
+          error: function () {
+            alert("팀 로딩 오류");
+            $("#team-name").empty().append("  -  ");
+            $("#team-rank").empty().append(" - ");
+            $("#team-win-rate").empty().append(" - ");
+            $("#team-tier").empty().append(" - ");
+            $("#team-score").empty().append(" - ");
+          },
+        });
+        //내 문의내역 최신 2개 불러오기
+        $.ajax({
+          type: "get",
+          url: "/user/pathTwoInquiry",
+          success: function (data) {
+          	console.log(data)
+			let count = 0;
+			for(let i=0; i < data.result.length; i++) {
+				if(data.result[i] != null)  {
+    			count++;
+  				}
+			}
+			console.log(count);
+			
+          	if(count == 0){
+            $("#Q1").empty().append("-");
+            $("#Q2").empty().append("-");
+            }
+            else if(count ==1){
+            $("#Q1").empty().append(data.result[0].title);
+            $("#Q2").empty().append("-");
+            }
+			else{
+			$("#Q1").empty().append(data.result[0].title);
+            $("#Q2").empty().append(data.result[1].title);
+            }		         
+          },
+          error: function () {
+          },
+        });
+      });
+    </script>
+    <script src="mobile/js/mypage.js"></script>
+  </body>
+</html>

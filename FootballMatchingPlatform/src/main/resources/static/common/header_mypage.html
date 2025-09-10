@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="mobile/css/mypage/mypage_header.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <span id="page-name"></span>
+    <div id="header-user-info">
+      <img id="logout" src="/mobile/img/logout.svg" />
+    </div>
+    <script src="/mobile/js/common.js"></script>
+    <div id = "modal-back">
+    	<div id="top-location">
+                <img id="close" src="mobile/img/Close.svg">
+        </div>
+        <div id="logout-message">로그아웃 하시겠습니까?</div>
+        <div id="submit-logout">
+             	<input type="button" id="submit" value="확인">
+        </div>
+    </div>
+  </body>
+  <script>
+	//로그아웃 창 열기
+    $("#logout").on("click", function () {
+    	$("#modal-back").css("display", "block");
+    })
+	// 창 닫기
+    $("#close").on("click", function () {
+        $("#modal-back").css("display", "none");
+    })
+  </script>
+</html>

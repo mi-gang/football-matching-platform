@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosta.project.repository.TeamMapper">
+	
+	<!-- 팀 유무 확인 -->
+	<select id="isTeam">
+		SELECT user_id
+		FROM team_members tm, teams t
+		WHERE user_id = #{userId} AND tm.team_seq = t.team_seq AND team_dismantle_status = FALSE AND
+		team_member_status = FALSE AND team_member_delete = FALSE; 
+	</select>
+	
+	<!-- 팀장 확인 -->
+	<select id="selectTeamLeader">
+		SELECT user_id
+		FROM team_members
+		WHERE team_seq = #{teamSeq} AND member_seq = 
+		(SELECT MIN(member_seq) FROM team_members WHERE team_seq = #{teamSeq});
+	</select>
+	
+	<!-- 팀 전체 순위 -->
+ 	<select id="selectTeamRankList" resultType="com.kosta.project.dto.TeamDTO">
+		SELECT team_name AS teamName, team_rank AS teamRank, game_count AS gameCount, 
+		win_count AS winCount, if(game_count = 0, 0, ROUND(100*(win_count/game_count))) AS odds,
+		team_tier AS teamTier, team_score AS teamScore 
+		FROM teams
+		ORDER BY team_score DESC
+	</select>
+	
+	<!-- 팀 전체순위 [검색] -->
+	<select id="selectSearchTeamRankList" resultType="com.kosta.project.dto.TeamDTO">
+		SELECT team_name AS teamName, team_rank AS teamRank, game_count AS gameCount, 
+		win_count AS winCount, if(game_count = 0, 0, ROUND(100*(win_count/game_count))) AS odds,
+		team_tier AS teamTier, team_score AS teamScore 
+		FROM teams
+		WHERE team_name REGEXP #{search}
+		ORDER BY team_score DESC;
+	</select>
+	
+		
+	<!-- 가입 가능 팀 목록 조회 -->
+	<select id="selectPossibleJoinTeam" resultType="com.kosta.project.dto.TeamDTO">
+		SELECT t.team_seq AS teamSeq, team_name AS teamName, possible_a AS possA, possible_b AS possB, 
+		possible_c AS possC, possible_d AS possD, week_type AS weekType, week_time AS weekTime,
+		hope_time AS hopeTime, hometown, COUNT(case when team_member_status=FALSE AND team_member_delete=FALSE
+		then 1 END) AS memberCount
+		FROM teams t, team_members m
+		WHERE t.team_seq = m.team_seq AND recruitment = TRUE AND team_dismantle_status = FALSE
+		GROUP BY m.team_seq;
+	</select>
+	
+	<!-- 로그인 -> 가입 가능 팀 목록 조회 -->
+	<select id = "selectPossibleJoinTeamByUser" resultType="com.kosta.project.dto.TeamDTO">
+		SELECT t.team_seq AS teamSeq, team_name AS teamName, possible_a AS possA, possible_b AS possB, 
+		possible_c AS possC, possible_d AS possD, week_type AS weekType, week_time AS weekTime, content, team_tier,
+		hope_time AS hopeTime, hometown, COUNT(case when team_member_status=FALSE AND team_member_delete=FALSE
+		then 1 END) AS memberCount
+		FROM teams t, team_members m
+		WHERE t.team_seq = m.team_seq AND recruitment = TRUE AND team_dismantle_status = FALSE
+		AND t.team_seq NOT IN(
+			SELECT t.team_seq
+			FROM teams AS t JOIN applys AS a ON t.team_seq = a.team_seq
+			WHERE a.user_id = #{userId}
+		)
+		GROUP BY m.team_seq;
+	</select>
+	
+	<!-- 필터적용 -->
+	<select id="selectFilterPossibleTeam" resultType="com.kosta.project.dto.TeamDTO">
+		SELECT t.team_seq AS teamSeq, team_name AS teamName, possible_a AS possA, possible_b AS possB, 
+		possible_c AS possC, possible_d AS possD, week_type AS weekType, week_time AS weekTime, content, team_tier,
+		hope_time AS hopeTime, hometown, COUNT(case when team_member_status=FALSE AND team_member_delete=FALSE
+		then 1 END) AS memberCount
+		FROM teams t, team_members m
+		WHERE t.team_seq = m.team_seq AND recruitment = TRUE AND team_dismantle_status = FALSE
+		AND hometown REGEXP #{location} AND hometown REGEXP #{gu}
+		AND t.team_seq NOT IN(
+			SELECT t.team_seq
+			FROM teams AS t JOIN applys AS a ON t.team_seq = a.team_seq
+			WHERE a.user_id = #{userId}
+		)
+		GROUP BY m.team_seq;	
+	</select>
+	
+	
+	<!-- 가입 가능 팀 목록 조회 [검색] -->
+	<select id="selectSearchPossibleTeam" resultType="com.kosta.project.dto.TeamDTO">
+		SELECT t.team_seq AS teamSeq, team_name AS teamName, possible_a AS possA, possible_b AS possB, 
+		possible_c AS possC, possible_d AS possD, week_type AS weekType, week_time AS weekTime,
+		hope_time AS hopeTime, hometown, COUNT(case when team_member_status=FALSE AND team_member_delete=FALSE
+		then 1 END) AS memberCount
+		FROM teams t, team_members m
+		WHERE t.team_seq = m.team_seq AND team_name REGEXP #{search} AND recruitment = TRUE AND team_dismantle_status = FALSE
+		AND t.team_seq NOT IN(
+			SELECT t.team_seq
+			FROM teams AS t JOIN applys AS a ON t.team_seq = a.team_seq
+			WHERE a.user_id = #{userId}
+		)
+		GROUP BY m.team_seq;
+	</select>
+	
+	
+	<!-- 팀 생성하기 -->
+	<insert id="insertTeam" parameterType="com.kosta.project.dto.TeamDTO">
+		INSERT INTO teams(team_name, hometown, week_type, week_time, hope_time, content, team_score, team_tier, 
+		game_count, win_count, possible_a, possible_b, possible_c, possible_d, 
+		recruitment, team_dismantle_status, leader_id)
+		VALUES(#{teamName}, #{hometown}, #{weekType}, #{weekTime}, #{hopeTime}, #{content}, 100, "D", 0, 0, #{possA},
+		#{possB}, #{possC}, #{possD}, TRUE, FALSE, #{leaderID})
+	</insert>
+	
+	<insert id="insertTeamMember">
+		INSERT INTO team_members(user_id, join_date, team_member_status, team_member_delete,team_seq)
+		VALUES (#{userId}, NOW(), FALSE, FALSE, #{teamSeq})
+	</insert>
+	
+	<select id="selectTeamName" resultType="String">
+		SELECT team_name FROM teams WHERE team_name = #{teamName}
+	</select>
+	
+	
+	<!-- 팀 정보 불러오기 by 모달 -->
+	<select id="selectTeamInfoByModal" resultType="com.kosta.project.dto.TeamDTO">
+		SELECT team_seq AS teamSeq, team_name AS teamName, game_count AS gameCount, win_count AS winCount, 
+		if(game_count = 0, 0, ROUND(100*(win_count/game_count))) AS odds, NVL(team_rank, 0) AS teamRank, 
+		team_tier AS teamTier, team_score AS teamScore, possible_a AS possA, possible_b AS possB, 
+		possible_c AS possC, possible_d AS possD, week_type AS weekType, week_time AS weekTime, 
+		hope_time AS hopeTime, hometown, content
+		FROM teams 
+		WHERE team_seq = #{teamSeq};
+	</select>
+	
+	<select id="selectTeamMemberTierAndCount" resultType="com.kosta.project.dto.MemberCountDTO">
+		SELECT user_tier AS userTier, COUNT(u.user_id) AS tierCount
+		FROM team_members m, users u
+		WHERE m.team_seq = #{teamSeq} AND m.user_id = u.user_id AND team_member_status = FALSE AND team_member_delete = FALSE
+		GROUP BY user_tier;
+	</select>
+	
+	<!-- 팀 가입 신청하기 & 가입신청 취소하기 -->
+	<insert id="insertTeamApply">
+		INSERT INTO applys(user_id, apply_date, apply_status, close_status, team_seq)
+		VALUES (#{userId}, NOW(), FALSE, FALSE, #{teamSeq});
+	</insert>
+	
+	<delete id="deleteApply">
+		DELETE FROM applys WHERE user_id = #{userId} AND team_seq = #{teamSeq};
+	</delete>
+	
+	
+	<!-- 가입 신청된 목록 조회 -->
+	<select id="selectApplyTeamList" resultType="com.kosta.project.dto.TeamDTO">
+		SELECT 
+		    t.team_seq AS teamSeq, 
+		    team_name AS teamName, 
+		    possible_a AS possA, 
+		    possible_b AS possB, 
+		    possible_c AS possC, 
+		    possible_d AS possD, 
+		    week_type AS weekType, 
+		    week_time AS weekTime, 
+		    content, 
+		    team_tier, 
+		    hope_time AS hopeTime, 
+		    hometown, 
+		    (SELECT COUNT(*) 
+		     FROM team_members tm 
+		     WHERE tm.team_seq = t.team_seq 
+		       AND team_member_status = FALSE 
+		       AND team_member_delete = FALSE) AS memberCount
+		FROM 
+		    teams t
+		JOIN 
+		    applys a ON a.team_seq = t.team_seq
+		WHERE 
+		    a.user_id = #{userId} 
+		    AND a.apply_status = FALSE 
+		    AND a.close_status = FALSE 
+		    AND t.recruitment = TRUE 
+		    AND t.team_dismantle_status = FALSE
+		GROUP BY 
+		    t.team_seq, team_name, possible_a, possible_b, possible_c, possible_d, week_type, week_time, content, team_tier, hope_time, hometown; 
+	</select>
+
+	
+	<!-- 팀원 모집 신청 받기 (신청 허가) -->
+	<update id="updateApplyTeamMemberStatus">
+		UPDATE applys SET apply_status = TRUE WHERE user_id = #{userId};
+	</update>
+	
+	<!-- 팀원수 -->
+	<select id="selectTeamMemberCNT"> 
+		SELECT COUNT(user_id)
+		FROM team_members
+		WHERE team_seq = #{teamSeq} AND team_member_status = 0 AND team_member_delete = 0;
+	</select>
+	
+	
+	<!-- 내 팀 정보 조회 (내 팀 정보 Btn) -->
+	<select id="selectTeamInfo" resultType="com.kosta.project.dto.TeamDTO">
+		SELECT t.team_seq AS teamSeq, team_name AS teamName, game_count AS gameCount, win_count AS winCount, 
+		if(game_count = 0, 0, ROUND(100*(win_count/game_count))) AS odds, NVL(team_rank, 0) AS teamRank, team_tier AS teamTier,
+		team_score AS teamScore, possible_a AS possA, possible_b AS possB, possible_c AS possC, recruitment,
+		possible_d AS possD, week_type AS weekType, week_time AS weekTime, hope_time AS hopeTime, hometown, content, 
+		COUNT(case when team_member_status=FALSE AND team_member_delete=FALSE
+		then 1 END) AS memberCount
+		FROM teams AS t
+			JOIN team_members AS tm ON t.team_seq = tm.team_seq
+		WHERE t.team_seq = (SELECT team_seq FROM team_members WHERE user_id = #{userId} AND team_member_status = FALSE
+		AND team_member_delete=FALSE);
+	</select>
+	
+	
+	<!-- 다가오는 일정 -->
+	<select id="selectTeamschedule" resultType="com.kosta.project.dto.TeamScheduleDTO">
+		SELECT m.matching_status      as matchingStatus,
+		       m.matching_date        as matchingDate,
+		       m.matching_time        as matchingTime,
+		       m.matching_seq			AS matchingSeq,
+		       f.field_address        as fieldAddress,
+			    f.field_address_detail as fieldAddressDetail,
+		       f.field_name           as fieldName,
+		       t.team_seq					AS teamSeq
+		FROM matchings m
+		       INNER JOIN fields f ON m.field_seq = f.field_seq
+		       INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+		       INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+		       INNER JOIN teams t ON ma.team_seq = t.team_seq
+		WHERE t.team_seq = #{teamSeq}
+			   AND (m.matching_status = '경기확정' OR m.matching_status = '매칭성공')
+			   AND mal.matching_success_status = 1
+		      AND m.matching_date - curdate() >= 0
+		      AND m.fast_add_status = 0
+		      ORDER BY m.matching_date DESC,
+		      	      m.matching_time DESC
+		LIMIT 1;	
+	</select>
+	
+	<select id="selectRival">
+		SELECT team_name 
+		FROM matchings m
+			INNER JOIN matching_add_lists mal ON mal.matching_seq = m.matching_seq
+		   INNER JOIN matching_adds ma ON ma.matching_add_seq = mal.matching_add_seq
+		   INNER JOIN teams t ON ma.team_seq = t.team_seq
+		WHERE t.team_seq != (SELECT team_seq FROM teams WHERE team_seq = #{teamSeq}) AND m.matching_seq= #{matchingSeq}
+		AND mal.matching_success_status = 1;	
+	</select>
+	
+	
+	<!-- 팀원 팀나가기 & 팀원 강퇴하기 -->
+	<update id="updateTeamMemberStatus">
+		UPDATE team_members SET team_member_status = TRUE WHERE user_id = #{userId};
+	</update>
+
+	<update id="updateTeamMemberDelete">
+		UPDATE team_members SET team_member_delete = TRUE WHERE user_id = #{userId};
+	</update>
+	
+	
+	<!-- 팀 추가 모집 하기 -->
+	<update id="updateTeamInfo" parameterType="com.kosta.project.dto.TeamDTO">
+		UPDATE teams
+		SET hometown = #{hometown}, week_type = #{weekType}, week_time = #{weekTime}, hope_time=#{hopeTime},
+		possible_a = #{possA}, possible_b = #{possB}, possible_c = #{possC}, possible_d = #{possD},
+		content = #{content}, recruitment = true
+		WHERE team_seq = (SELECT team_seq FROM teams WHERE leader_id = #{leaderID});
+	</update>
+	
+	
+	<!-- 추가모집 마감 -->
+	<update id="updateApplyTeamStatus">
+		UPDATE applys SET close_status = TRUE WHERE team_seq = 
+		(SELECT team_seq FROM teams WHERE leader_id=#{userId});
+	</update>
+
+	<update id="updateTeamRecruitmentStatusByLeader">
+		UPDATE teams SET recruitment = FALSE WHERE team_seq = 
+		(SELECT team_seq FROM teams WHERE leader_id=#{userId});
+	</update>
+	
+	<update id="updateTeamRecruitmentStatus">
+		UPDATE teams SET recruitment = FALSE WHERE team_seq = #{teamSeq};
+	</update>
+
+
+	<!-- 팀원 목록 -->
+	<select id="selectTeamMemberList" resultType="com.kosta.project.dto.TeamMemberDTO">
+		SELECT m.user_id, nickname, birthday, gender, user_tier AS userTier, email, m.join_date AS joinDate,
+		if(CURDATE()-m.join_date &lt;= 3, TRUE, FALSE) AS newbie, YEAR(CURDATE()) - YEAR(birthday) + 1 AS age
+		FROM users u, team_members m
+		WHERE u.user_id = m.user_id AND m.team_seq = #{teamSeq} AND 
+		team_member_status = FALSE AND team_member_delete = FALSE
+		ORDER BY member_seq;
+	</select>
+
+
+	<!-- [팀장] 가입 신청 목록 조회 -->
+	<select id="selectApplyList" resultType="com.kosta.project.dto.ApplyDTO">
+		SELECT a.user_id AS userId, nickname, birthday, gender, user_tier AS userTier, email,
+		YEAR(CURDATE()) - YEAR(birthday) + 1 AS age
+		FROM users u, applys a
+		WHERE u.user_id = a.user_id AND a.team_seq = (SELECT team_seq FROM teams WHERE team_name=
+		(SELECT team_name FROM teams WHERE leader_id=#{userId}))
+		AND apply_status = FALSE AND close_status = FALSE;
+	</select>
+
+
+	<!-- 팀 원수 확인(팀해체, 팀매칭신청) -->
+	<select id="selectTeamMemberCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT COUNT(member_seq) 
+		FROM team_members 
+		WHERE team_seq = (SELECT team_seq FROM teams WHERE team_name = (SELECT team_name FROM teams WHERE leader_id = #{userId}))
+		AND team_member_status = 0 
+		AND team_member_delete = FALSE;
+	</select>
+	
+	<update id="updateTeamDismantleStatus">
+		UPDATE teams SET team_dismantle_status = TRUE WHERE team_seq = #{teamSeq};
+	</update>
+	
+	
+	<!-- 팀 시퀀스 가져오기(팀 매칭 신청 할 때), 팀장 여부 확인 할 때 -->
+	<select id="selectTeamSeq" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT team_seq as teamSeq FROM teams 
+		WHERE leader_id = #{userId};
+	</select>
+	
+	<!-- 팀원 리스트 조회(팀 매칭 신청 할 때 팀원 정지 여부 확인 위해) -->
+	<select id="selectTeamMemberIds" resultType="String" parameterType="java.lang.String">
+		SELECT user_id as userId FROM team_members
+		WHERE team_seq = (SELECT team_seq FROM teams 
+		WHERE team_name = (SELECT team_name FROM teams WHERE leader_id = #{userId}))
+		AND team_member_status = 0
+		AND team_member_delete = 0;
+	</select>
+	
+	<!-- 팀 이름 가져오기 -->
+	<select id="selectTeamNameById" resultType="String" parameterType="String">
+		SELECT team_name FROM teams WHERE leader_id = #{userId};
+	</select>
+	
+	<!-- 팀 티어 가져오기 -->
+	<select id="selectTeamTier" resultType="String" parameterType="String">
+		SELECT team_tier FROM teams WHERE leader_id = #{userId};
+	</select>
+	<!-- 내 팀 정보 불러오기(마이페이지) -->
+	<select id="selectTeamInfoByUserId" resultType="com.kosta.project.dto.TeamDTO">
+	    SELECT
+	      teams.team_name as teamName,
+	      teams.team_rank as teamRank,
+	      teams.team_tier as teamTier,
+	      IFNULL(100 * (teams.win_count / teams.game_count), 0) AS winRate,  teams.team_score as teamScore
+	    FROM teams
+	    INNER JOIN team_members ON teams.team_seq = team_members.team_seq
+	    WHERE team_members.user_id = #{userId}
+	</select>
+
+</mapper>
+	

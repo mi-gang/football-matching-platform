@@ -1,0 +1,64 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="/mobile/css/login.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로그인</title>
+</head>
+
+<body>
+  <div class="flex-column-center" id="container">
+    <form id="loginForm">
+      <div class="text" id="text-id">아이디</div>
+      <input id="id" />
+      <div class="text" id="text-pw">비밀번호</div>
+      <input type="password" id="pw" />
+      <button id="login">로그인</button>
+    </form>
+    <div class="flex-column-center">
+      <div id="join"><a th:href="@{/joinPage}">회원가입</a></div>
+      <div id="find"><a href="/findIDPW">아이디/비밀번호 찾기</a></div>
+    </div>
+  </div>
+</body>
+<script>
+  $("#login").on("click", function (e) {
+    e.preventDefault();
+    if($("#id").val() == ""){
+      alert("아이디를 입력해주세요");
+      return;
+    }
+    
+    if($("#pw").val() == ""){
+      alert("비밀번호를 입력해주세요");
+      return;
+    }
+
+    fetch(`/login`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        managerId: $("#id").val(),
+        password: $("#pw").val()
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      var result = data.result;
+      
+      if(result == true){
+        location.href = `/main`;
+      }
+      else{
+      	alert("로그인 정보가 맞지 않습니다");
+      }
+    })
+  })
+</script>
+</html>

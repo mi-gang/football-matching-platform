@@ -1,0 +1,287 @@
+#container{
+    padding: 3.3rem 1rem;
+    justify-content: center;
+}
+
+/* 타이틀 폰트 */
+.title{
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.mypage-infos{
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 1.5px solid #DBDBDB;
+    border-radius: 10px;
+    padding: 0.6rem;
+}
+
+/* 닉네임, 이메일 등 섹션 */
+#user-info1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    column-gap: 3rem;
+    margin-top: 2.5rem;
+}
+
+#user-name-email{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#mypage-user{
+    width: 3rem;
+    height: 3rem;
+}
+
+#edit-info{
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 1.5px solid #73A772;
+    border-radius: 20px;
+    padding: 0.6rem;
+    margin-top: 1.5rem;
+    width: 10rem;
+    height: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#nickname{
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+#email{
+    font-size: 0.9rem;
+}
+
+/* 나머지 정보 섹션 */
+#user-info2{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    margin-top: 2rem; 
+}
+
+#user-info2-1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 1rem;    
+}
+
+/* 나의 등급 */
+#my-tier-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+}
+
+#my-tier-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.8rem;  
+    height: 5rem;
+}
+
+#my-tier{
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #73A772;
+    color: #ffffff;
+    font-size: 1.4rem;
+}
+
+#my-score-rank-percentile-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 0.2rem;
+}
+
+#mypage-score{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+}
+
+#my-rank-percentile-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+    column-gap: 0.2rem;
+    align-items: center;
+}
+
+#mypage-rank{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+}
+
+#mypage-percentile{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+}
+
+#my-percentile{
+    padding-left: 0.2rem;
+}
+
+
+
+/* 나의 전적 */
+#my-record-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+}
+
+#my-record-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 0.2rem;
+    height: 5rem;
+}
+
+#my-record-info-1{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 0.4rem;
+}
+
+#game-count-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+}
+
+#win-count-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+}
+
+#my-record-info-2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+}
+
+#user-win-rate{
+    padding-left: 0.3rem;
+}
+
+/* 나의 팀 */
+
+#my-team-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+}
+
+#my-team-info{
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+    height: 5rem;
+}
+
+#team-name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 0 1rem;
+    border-right: 1.5px solid #DBDBDB;
+}
+
+#team-rank-win-rate-wrapper,
+#team-tier-score-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    row-gap: 0.3rem;
+}
+
+/* #team-rank-wrapper ,
+#team-win-rate-wrapper,
+#team-tier-wrapper,
+#team-score-wrapper
+{
+    display: flex;
+    flex-direction: row;
+} */
+
+.team-wrapper{
+    display: flex;
+    flex-direction: row;
+}
+
+#team-rank,
+#team-win-rate,
+#team-tier,
+#team-score{
+    padding-left: 0.3rem;
+}
+
+
+
+
+
+/* 나의 문의 */
+
+#my-inquiry-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+}
+
+#my-inquiry-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#more-inquiry{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.right-arrow{
+    width: 1.3rem;
+    height: 1.3rem;
+}
+
+.info-normal-text {
+    font-weight: 400;
+    font-size: 0.9rem;
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,312 @@
+/* 
+    메인 컬러
+    color: #73A772;  // 녹색
+ */
+
+ * {
+    font-family: 'Pretendard-Regular';
+    font-size: 16px;
+}
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+/* 네비바 */
+#nav {
+    background: linear-gradient(90deg, #73A772 0%, #90E2CF 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#mainbar > li > a{
+    font-size: 2rem;
+}
+
+/* 사이드바 */
+#sidebar > ul > li > a{
+    font-size: 1.2rem;
+}
+
+.sidenav {
+    background-color: #ffffff;
+    position: fixed;
+    top: 7rem; /* 상단 여백 설정 */
+    left: 0;
+    width: 14rem; /* 너비 설정 */
+    height: 88.4%;
+    border-right: 2px solid #a5a5a5;
+}
+
+/* 메인내용 */
+#sectionView{
+    margin-left: 13.8rem;
+    margin-top: 7rem;
+    width: 104rem;
+    padding: 0;
+    height: 100%;
+}
+
+#maincontents{
+    width: 100%;
+    height: 100%;
+}
+
+.search {
+
+    width: 40rem;
+    border: 1px solid #000000;
+    border-radius: 2rem;
+}
+
+input {
+    padding: 0.4rem 0.4rem;
+    font-size: 1.2rem;
+    border: 0;
+    width: 40rem;
+}
+
+input:focus{
+    outline: none !important;
+}
+
+img{
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
+.btn{
+    border-radius: 2rem;
+}
+
+.btn>dropdown{
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
+.table-hover{
+    width: 78rem;
+}
+
+#reportList{
+    width: 68rem;
+}
+
+#fieldimg{
+    width: 50rem;
+    height: 22.5rem;
+}
+
+#fieldInfo{
+    width: 50rem;
+}
+
+.text-decoration-line-through{
+    color: #a5a5a5;
+}
+
+.inquiryBox{
+    width: 62.5rem;
+}
+
+textarea{
+    width: 100%;
+    height: 7rem;
+    border-radius: 0.5rem;
+    resize: none;
+}
+
+
+/* 버튼 공통 */
+.btn-setting{
+    border-radius: 20px;
+    border-color: transparent;
+    height: 1.8rem;
+}
+
+.timeList{
+	border: 0.1rem solid #a5a5a5;
+	border-color: #a5a5a5;;
+}
+
+.userImg{
+	width: 1.2rem;
+	height: 1.2rem;
+}
+
+.teamImg{
+	width: 1.4rem;
+	height: 1.4rem;
+}
+
+.closed{
+	background-color: #a5a5a5;
+	border-color: #a5a5a5;
+	color : white;
+}
+
+.matching{
+	border: 0.2rem solid #a5a5a5;
+	border-color: #73A772;
+}
+
+.noMatching{
+	border: 0.2rem solid #a5a5a5;
+}
+
+/* ********** 캘린더 ********* */
+
+.calendar-container {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+    width: 95%;
+    margin: 0.5rem 0;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.year-month{
+    font-size: 1.1rem;
+}
+
+.calendar-nav-btn{
+    width: 1.3rem;
+    height: 1.3rem;
+    text-align: center;
+}
+
+#my-matching-list-btn{
+    color: #333333;
+    background: #EBEBEB;
+    font-size: 0.9rem;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding-bottom: 0.3rem;
+}
+
+.day {
+    text-align: center;
+}
+
+.sun{
+    color: #FF7D7D;
+}
+
+.sat{
+    color: #7684FF;
+}
+
+.calendar-dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.date-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0;
+    width: 3rem;
+    height: 3rem;
+}
+
+.today{
+    background: #555555;
+    color: #ffffff;
+    border-radius: 50%;
+    border-width: 0.1rem;
+    /* border-top: 0.1rem; */
+    box-sizing: border-box;
+}
+
+.isMatching{
+    height: 1rem;
+}
+
+.matching-date{
+    width: 0.4rem;
+    height: 0.4rem;
+
+    background: #80D87E;
+    border-radius: 100px;
+
+}
+
+/* .date:hover {
+    background-color: #f5f5f5;
+  } */
+
+/*
+.click-date{
+    background: #DEDEDE;
+    border-radius: 50%;
+    border-width: 0.1rem;
+    color : black;
+    box-sizing: border-box;
+} */
+
+.click-date{
+    background: #73A772;
+    border-radius: 50%;
+    border-width: 0.1rem;
+    color : white;
+    /* border-top: 0.1rem; */
+    box-sizing: border-box;
+}
+
+tr button{
+	border: none;
+  	outline: none;
+  	background-color: inherit ;
+  	padding-inline: 0;
+  	padding-block: 0;
+  	line-height: normal;
+}
+
+.cal-matching-status-3 {
+    width: 0.4rem;
+    height: 0.4rem;
+
+    background: #80D87E;
+    border-radius: 100px;
+}
+
+.scoreOK{
+    background-color: #73A772;
+    color: white;
+}
+
+
+.blocked {
+    background: #d3d3d3; /* 회색 표시 */
+    pointer-events: none; /* 클릭 방지 */
+    cursor: not-allowed; /* 마우스 커서 변경 */
+}

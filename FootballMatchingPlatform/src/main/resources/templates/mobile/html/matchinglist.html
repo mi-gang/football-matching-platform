@@ -1,0 +1,547 @@
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" href="/mobile/css/common.css">
+	<link rel="stylesheet" href="/mobile/css/matchinglist.css">
+</head>
+
+<body>
+	<!-- 모바일 컨테이너 -->
+	<div id="mobile-container">
+		<!-- 헤더 -->
+		<header></header>
+		<!-- 컨텐츠 컨테이너 -->
+		<div id="container">
+			<div class="container">
+				<div class="w-auto h-auto filterBtnDiv">
+					<button class="filterBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">필터</button>
+				</div>
+				<div class="w-auto h-auto matchingCheckListDiv mt-4">
+					<ul id="matchingCheckList" class="d-flex flex-column gap-1">
+						<div class="ulMatchDiv mt-0" id="matchList" th:each="matching : ${matchingList}">
+							<div class="h-auto matchInfo mt-1 mx-1 mb-1 ms-2" data-bs-toggle="modal"
+								data-bs-target="#checkboxModal" th:data-field-seq="${matching.fieldSeq}">
+								<button class="applyStatus" disabled="true" value="신청가능">신청가능</button>
+								<div class="d-flex align-items-center" style="gap: 0.5rem;">
+									<p th:text="${matching.matchingSeq}" class="matchSeq d-none"></p>
+									<p th:text="${matching.fieldSeq}" class="fieldSeq d-none"></p>
+									<p th:text="${matching.matchingTime}" class="matchTimeValue d-none"></p>
+									<p class="matchDate mb-0" th:text="${matching.matchingDate}">날짜</p>
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 8}"
+										th:value="${matching.matchingTime}">08:00~10:00</p>
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 10}"
+										th:value="${matching.matchingTime}">10:00~12:00</p>
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 12}"
+										th:value="${matching.matchingTime}">12:00~14:00</p>
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 14}"
+										th:value="${matching.matchingTime}">14:00~16:00</p>
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 16}"
+										th:value="${matching.matchingTime}">16:00~18:00</p>
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 18}"
+										th:value="${matching.matchingTime}">18:00~20:00</p>
+									<p class="matchTime mb-0" th:if="${matching.matchingTime == 20}"
+										th:value="${matching.matchingTime}">20:00~22:00</p>
+								</div>
+								<div class="d-flex flex-wrap">
+									<p class="matchLocation m-0" th:text="${matching.fieldAddress}">주소</p>
+									<p class="fieldName m-0" th:text="${matching.fieldName}">구장명</p>
+								</div>
+							</div>
+							<input type="checkbox" id="checkBtn">
+							<hr>
+						</div>
+					</ul>
+				</div>
+				<button type="button" id="applyBtn" onclick="applyFunction()" data-bs-toggle="modal"
+					data-bs-target="#matchCheckModal">신청</button>
+
+				<!-- 필터 모달  -->
+				<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content w-auto h-auto">
+							<div class="modal-header">
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<h3>지역</h3>
+								<div class="w-auto h-auto locationCity">
+									<ul id="locationCityBtns">
+										<li><button type="button" class=" locationCityBtn btn m-2"
+												onclick="change_btn(event)" value="서울">서울</button></li>
+										<li><button type="button" class=" locationCityBtn btn m-2"
+												onclick="change_btn(event)" value="인천">인천</button></li>
+										<li><button type="button" class=" locationCityBtn btn m-2"
+												onclick="change_btn(event)" value="부산">부산</button></li>
+									</ul>
+								</div>
+								<hr>
+								<div id="locationInfoDiv"
+									class="overflow-y-auto overflow-x-auto w-auto h-auto timeZone mt-5">
+									<ul id="locationBtns">
+
+									</ul>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" id="searchButton" data-bs-dismiss="modal">완료</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 구장 정보 모달 -->
+				<div class="modal" id="checkboxModal" tabindex="-1" aria-labelledby="checkboxModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content w-auto h-auto">
+							<div class="modal-body">
+								<div class="w-auto h-auto matchingDate">
+									<button type="button" class="closeButton btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+									<div id="locationInfoDiv" class="w-auto h-auto timeZone">
+										<ul id="locationBtns">
+											<hr class="lineUp">
+											<div class="locationInfo">
+												<div id="field-name"></div>
+												<img id="fieldImg" class="matchingLocationImage mx-4 mb-4"/>
+												<div ID="fieldLocation">
+													<p>구장주소</p>
+													<div class="fieldLocationDetail">
+														<p class="mx-3" id="field-address"></p>
+													</div>
+												</div>
+												<div ID="fieldInfomation">
+													<p class="infoTitle">구장시설</p>
+													<div class="locationInfo11">
+														<button class="showerTF" disabled="true">샤워실</button>
+														<button class="parkTF" disabled="true">주차장</button>
+														<button class="shoesTF" disabled="true">풋살화 대여</button><br>
+														<button class="drinkTF mt-1" disabled="true">음료 판매</button>
+														<button class="ballTF" disabled="true">풋살공 대여</button>
+													</div>
+												</div>
+											</div>
+											<hr>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 매칭 신청 모달 -->
+				<div class="modal" id="matchCheckModal" tabindex="-1" aria-labelledby="matchCheckModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content w-auto h-auto">
+							<div class="modal-body">
+								<div class="w-auto h-auto matchingDate">
+									<button type="button" class="closeButton btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+									<div id="locationInfoDiv"
+										class="w-auto h-auto timeZone d-flex flex-column align-items-center">
+										<h3 class="matchDateH3"></h3> <br>
+										<div id="myApplyListDiv" class="overflow-auto">
+											<ul id="myApplyList">
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="matchCheckCloseButton"
+										data-bs-dismiss="modal">취소</button>
+									<button type="button" class="btn btn-primary" id="matchCheckApplyButton"
+										data-bs-toggle="modal" data-bs-target="#statusCheckModal">신청</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 매칭 신청 결과 모달-->
+				<div class="modal" id="statusCheckModal" tabindex="-1" aria-labelledby="statusCheckModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content w-auto h-auto">
+							<div class="modal-body">
+								<div class="w-auto h-auto matchingDate">
+									<button type="button" class="closeButton btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+									<div id="locationInfoDiv" class="w-auto h-auto timeZone">
+										<h3 class="matchDateH3"></h3> <br>
+										<div id="statusCheckSuccess" class="overflow-auto">
+											<button id="statusMyApply" class="mb-3" disabled="true">신청결과</button>
+											<ul id="myApplyListSuccess">
+											</ul>
+										</div>
+										<!--										<div id="statusCheckFail" class="overflow-auto">
+											<button id="statusApplyFail" class="mb-3" disabled="true">실패</button>
+											<ul id="myApplyListFail">
+												<li>
+													<p>강서 신정FC 10:00-12:00</p>
+												</li>
+											</ul>
+										</div>-->
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" id="statusCheckApplyButton"
+										data-bs-toggle="modal" data-bs-target="#statusCheckModal">확인</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="toast" id="toast">구를 선택해주세요!</div>
+
+			
+		</div>
+		<!-- 하단 메뉴바 -->
+		<nav></nav>
+	</div>
+	<script>
+		var userId = "[[${session.loginUser.getUserId}]]";
+		var tier = "[[${session.loginUser.getUserTier}]]";
+		$(document).ready(function () {
+			$('header').load('./common/header_back.html', function () { // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+				$('#page-name').text('매칭 리스트'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
+				$('#user-tier').text(tier); // 나중에 세션에서 usertier 구해서 넣기
+			});
+			$('nav').load('./common/nav.html');
+		});
+		
+		$(".closeButton").on("click", function(){
+			$("#field-name").text("");
+			$("#fieldImg").attr("src", "");
+			$("#field-address").text("");
+		})
+		
+		$(".matchInfo").on("click", function(){
+			const fieldSeq = $(this).data('field-seq');
+				fetch(`/matching/fieldInfo/${fieldSeq}`)
+					.then(response => response.json())
+					.then(data => {
+						fieldInfo = data.result;
+						$("#field-name").text("구장명 " + fieldInfo.fieldName);
+						$("#fieldImg").attr("src", "../upload/img/" + fieldInfo.fieldImg);
+						$("#field-address").text(fieldInfo.fieldAddress);
+						var ballTF = document.querySelector('.ballTF');
+						var parkTF = document.querySelector('.parkTF');
+						var drinkTF = document.querySelector('.drinkTF');
+						var shoesTF = document.querySelector('.shoesTF');
+						var showerTF = document.querySelector('.showerTF');
+
+						let ballYN = fieldInfo.rentBall;
+						let parkYN = fieldInfo.parking;
+						let drinkYN = fieldInfo.sellDrink;
+						let showerYN = fieldInfo.showerRoom;
+						let shoesYN = fieldInfo.rentShoes;
+
+						if (!ballYN) {
+							ballTF.classList.add("active");
+						}
+						else {
+							ballTF.classList.remove("active");
+						}
+						if (!drinkYN) {
+							drinkTF.classList.add("active");
+						}
+						else {
+							drinkTF.classList.remove("active");
+						}
+						if (!shoesYN) {
+							shoesTF.classList.add("active");
+						}
+						else {
+							shoesTF.classList.remove("active");
+						}
+						if (!showerYN) {
+							showerTF.classList.add("active");
+						}
+						else {
+							showerTF.classList.remove("active");
+						}
+						if (!parkYN) {
+							parkTF.classList.add("active");
+						}
+						else {
+							parkTF.classList.remove("active");
+						}
+					})
+			});
+			//.matchInfo
+			var cantApply = document.querySelectorAll('.matchInfo button');
+			// 마감되면 체크박스 disabled
+			cantApply.forEach(function (btn, i) {
+				if (btn.value == '마감' || btn.value == '신청완료') {
+					btn.classList.add('active');
+					const grandparentDivOfCheckbox = btn.parentNode.parentNode;
+					//checkBtn
+					const killCheckbox = grandparentDivOfCheckbox.querySelector('#checkBtn');
+					$(killCheckbox).prop('disabled', true);
+				}
+		})
+
+		var selectedMatchDate = null;
+
+		function change_btn1(e1) {
+			var btns1 = document.querySelectorAll(".matchingDateBtn");
+			btns1.forEach(function (btn1, i) {
+				if (e1.currentTarget == btn1) {
+					btn1.classList.add("active1");
+				}
+				else {
+					btn1.classList.remove("active1");
+				}
+			});
+			selectedMatchDate = e1.currentTarget.value;
+		}
+
+		var selectedLocation = null;
+
+		function change_btn(e) {
+			var btns = document.querySelectorAll(".locationCityBtn");
+			var buttonsText = $(this).val;
+			var buttonsTextTest = $(this).prop('value');
+			btns.forEach(function (btn, i) {
+				if (e.currentTarget == btn) {
+					btn.classList.add("active");
+
+				}
+				else {
+					btn.classList.remove("active");
+				}
+			});
+			$("#locationInfoDiv").empty();
+			if (e.currentTarget.textContent == '인천') {
+				$("#locationInfoDiv")
+					.append("<ul id = 'locationBtns'>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>연수구</button></li>" +
+						"<li><button type = 'button' id='locationBtn1' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>남동구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>남동구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>서구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>미추홀구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>중구</button></li>" +
+						"</ul>");
+			} else if (e.currentTarget.textContent == '서울') {
+				$("#locationInfoDiv")
+					.append("<ul id = 'locationBtns'>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>강서구</button></li>" +
+						"<li><button type = 'button' id='locationBtn1' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>금천구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>도봉구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>동대문구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>송파구</button></li>" +
+						"<li><button type = 'button' id='locationBtn' class = 'w-3 h-2 btn m-1 p-2' onclick='changeButtonColors(this)'>영등포구</button></li>" +
+						"</ul>");
+			}
+			selectedLocation = e.currentTarget.value;
+		}
+
+		let selectedButton = null;
+
+		function changeButtonColors(button) {
+			const computedStyle = window.getComputedStyle(button);
+			const buttonsColor = computedStyle.backgroundColor;
+			selectedButton = button;
+			if (buttonsColor == 'rgb(115, 167, 114)') {
+				button.style.backgroundColor = '#FFFFFF';
+			} else {
+				button.style.backgroundColor = '#73A772';
+			}
+		}
+
+		const statusCheckApplyButton = document.querySelector('#statusCheckApplyButton');
+
+		statusCheckApplyButton.addEventListener('click', function () {
+			location.href = "/mainPage";
+		});
+
+		const searchButton = document.getElementById('searchButton');
+
+		searchButton.addEventListener('click', function () {
+			var region = "";
+			const selectedList = [];
+			const selectedButtons = document.querySelectorAll('#locationBtns button');
+
+			selectedButtons.forEach(button => {
+				if (button.style.backgroundColor == 'rgb(115, 167, 114)') {
+					region = region + button.textContent + " ";
+				}
+			});
+
+			if (region == "") {
+				toast.classList.add('show');
+				setTimeout(function () {
+					toast.classList.remove('show');
+				}, 1000);
+				return;
+			}
+
+			const url = new URL(window.location.href);
+			const matchingDate = url.searchParams.get('matchingDate');
+			const matchingTime = url.searchParams.get('matchingTime');
+			const addType = url.searchParams.get('addType');
+
+			fetch(`/matchinglistByRegion?userId=${userId}&addType=${addType}&matchingDate=${matchingDate}&matchingTime=${matchingTime}&region=${region}`)
+				.then(response => response.json())
+				.then(data => {
+					var matchingListByRegion = data.result;
+					console.log(matchingListByRegion);
+					$("#matchingCheckList").html("");
+					if (matchingListByRegion.length == 0) {
+						console.log("없음");
+						$("#matchingCheckList").append(
+							"<div class='d-flex flex-column'>" +
+							"<img src=/mobile/img/ball.svg/>" +
+							"<div>신청 가능한 구장이 없습니다!</div>" +
+							"</div>"
+						);
+					}
+					else {
+						for (var i = 0; i < matchingListByRegion.length; i++) {
+							$("#matchingCheckList").append(
+								`<div class="ulMatchDiv mt-0" id="matchList">
+								<div class="h-auto matchInfo mt-1 mx-1" data-bs-toggle="modal" 
+								data-bs-target="#checkboxModal" data-field-seq="${matchingListByRegion[i].fieldSeq}">
+									<button class="applyStatus" disabled="true" value="신청가능">신청가능</button>
+									<div class="d-flex align-items-center" style="gap: 0.5rem;">
+										<p class="matchSeq d-none">${matchingListByRegion[i].matchingSeq}</p>
+										<p class="fieldSeq d-none">${matchingListByRegion[i].fieldSeq}</p>
+										<p class="matchTimeValue d-none">${matchingListByRegion[i].matchingTime}</p>
+										<p class="matchDate mb-0">${matchingListByRegion[i].matchingDate}</p>
+										<p class="matchTime mb-0" value="${matchingListByRegion[i].matchingTime}"></p>
+									</div>
+									<div class="d-flex gap-1">
+										<p class="matchLocation">${matchingListByRegion[i].fieldAddress}</p>
+										<p class="fieldName">${matchingListByRegion[i].fieldName}</p>
+									</div>
+								</div>
+							<input type="checkbox" id="checkBtn">
+							<hr>
+							</div>`
+							);
+							$(".matchTime[value=8]").text("08:00~10:00");
+							$(".matchTime[value=10]").text("10:00~12:00");
+							$(".matchTime[value=12]").text("12:00~14:00");
+							$(".matchTime[value=14]").text("14:00~16:00");
+							$(".matchTime[value=16]").text("16:00~18:00");
+							$(".matchTime[value=18]").text("18:00~20:00");
+							$(".matchTime[value=20]").text("20:00~22:00");
+						}
+					}
+				})
+		});
+
+		function applyFunction() {
+			const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+			$("#myApplyList").empty();
+			checkedCheckboxes.forEach(checkbox => {
+				const matchDiv = checkbox.parentNode;
+				const applyStatusText = matchDiv.querySelector('.applyStatus').textContent;
+
+				const matchSeq = matchDiv.querySelector('.matchSeq').textContent;
+				console.log(matchSeq);
+				const fieldSeq = matchDiv.querySelector('.fieldSeq').textContent;
+				console.log(fieldSeq);
+				const matchDateText = matchDiv.querySelector('.matchDate').textContent;
+				console.log(matchDateText);
+				const matchTimeText = matchDiv.querySelector('.matchTime').textContent;
+				console.log(matchTimeText);
+				const matchTimeValue = matchDiv.querySelector('.matchTimeValue').textContent;
+				console.log(matchTimeValue);
+				const matchLocationText = matchDiv.querySelector('.matchLocation').textContent;
+				console.log(matchLocationText);
+				const fieldNameText = matchDiv.querySelector('.fieldName').textContent;
+				console.log(fieldNameText);
+
+				$(".matchDateH3").text(matchDateText);
+				$("#myApplyList").append(
+					"<li><p class='mx-4 mb-1'>" + fieldNameText + "</p>" +
+					"<p class='mx-4 mb-1'>" + matchTimeText + " " + matchLocationText + "</p></li>" + "<hr class='my-0'>"
+				);
+			});
+		}
+
+		const url = new URL(window.location.href);
+		const addType = url.searchParams.get('addType');
+
+		const mdtoList = [];
+		$("#matchCheckApplyButton").on("click", function () {
+			const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+			$("#myApplyList").empty();
+			checkedCheckboxes.forEach(checkbox => {
+				const matchDiv = checkbox.parentNode;
+				const applyStatusText = matchDiv.querySelector('.applyStatus').textContent;
+
+				const matchSeq = matchDiv.querySelector('.matchSeq').textContent;
+				console.log(matchSeq);
+				const fieldSeq = matchDiv.querySelector('.fieldSeq').textContent;
+				console.log(fieldSeq);
+				const matchDateText = matchDiv.querySelector('.matchDate').textContent;
+				console.log(matchDateText);
+				const matchTimeText = matchDiv.querySelector('.matchTime').textContent;
+				console.log(matchTimeText);
+				const matchTimeValue = matchDiv.querySelector('.matchTimeValue').textContent;
+				console.log(matchTimeValue);
+				const matchLocationText = matchDiv.querySelector('.matchLocation').textContent;
+				console.log(matchLocationText);
+
+				mdtoList.push({
+					matchingSeq: matchSeq,
+					matchingDate: matchDateText,
+					matchingTime: matchTimeValue,
+					fieldAddress: matchLocationText,
+					fieldAddressDetail: "",
+					fieldName: "",
+					fieldSeq: fieldSeq
+				})
+			});
+
+			fetch(`/matching`, {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					type: addType,
+					userId: userId,
+					userTier: tier,
+					mdto: mdtoList
+				})
+			})
+			.then(data => {
+				return fetch(`/matchingAddResult?addType=${addType}&userId=${userId}`);
+			})
+			.then(response => response.json())
+			.then(data => {
+				var matchingAddResult = data.result;
+				console.log(matchingAddResult);
+				for (var i = 0; i < matchingAddResult.length; i++) {
+					$("#myApplyListSuccess").append(
+						`<li value=${matchingAddResult[i].matchingTime}>${matchingAddResult[i].fieldName}</li>
+						<p class="matchTimeValue d-none">${matchingAddResult[i].matchingTime}</p>
+						`
+					)
+				}
+				$("#myApplyListSuccess li[value=8]").append(" 08:00~10:00");
+				$("#myApplyListSuccess li[value=10]").append(" 10:00~12:00");
+				$("#myApplyListSuccess li[value=12]").append(" 12:00~14:00");
+				$("#myApplyListSuccess li[value=14]").append(" 14:00~16:00");
+				$("#myApplyListSuccess li[value=16]").append(" 16:00~18:00");
+				$("#myApplyListSuccess li[value=18]").append(" 18:00~20:00");
+				$("#myApplyListSuccess li[value=20]").append(" 20:00~22:00");
+			})
+		});
+	</script>
+</body>
+</html>

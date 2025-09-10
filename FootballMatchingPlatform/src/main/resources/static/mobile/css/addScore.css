@@ -1,0 +1,124 @@
+.click{
+    background-color: #73A772;
+    color: #FFFFFF;
+}
+
+.radioBtn{
+    padding: 0.8rem;
+    border-radius: 2rem;
+}
+
+/* 모달 */
+
+.btn-close {
+    width: 0.1rem;
+    height: 0.1rem;
+    background-size: 0.8rem;
+}
+
+.modal-dialog-centered {
+    justify-content: center;
+}
+
+.modal-content {
+    width: 90%;
+    border-radius: 1rem;
+}
+  /* 공통 */
+
+.modal-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+
+
+  /*모달 내  */
+
+#withdrawModal-1-body-wrapper{
+
+}
+
+.modal-body-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
+}
+
+#withdrawModal-1-body-wrapper >span {
+
+}
+#withdrawModal-btn{
+    background: #EBEBEB;
+    border-color: transparent;
+}
+
+#teamSelect{
+    width: 5.2rem;
+}
+
+#userSelect{
+    width: 11rem;
+}
+
+#reasonSelect{
+    width: 12rem;
+}
+
+/* 토스트 */
+/*토스트 메시지*/
+#toast {
+    opacity: 0;
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translate(-50%,0);
+    padding: 10px 50px;
+    background: #73A772;
+    border-radius: 100px;
+    color: #fff;
+    box-shadow: 3px 4px 11px 0px #00000040;
+    transition: all 0.5s;
+}
+/*토스트 메시지 활성화 되었을 때*/
+#toast.active {
+    opacity: 100%;
+    bottom: 100px;
+}
+
+/* 부트스트랩 속성 변경 */
+
+.modal-header {
+    border-bottom: none;
+    padding: 1.3rem 1.3rem;
+}
+
+.modal-footer {
+    justify-content: center;
+    border-top: none;
+    padding: 0 1.3rem 1.3rem 1.3rem;
+}
+
+.btn-close {
+    width: 0.1rem;
+    height: 0.1rem;
+    background-size: 0.8rem;
+}
+
+.modal-dialog-centered {
+    justify-content: center;
+}
+
+.modal-content {
+    width: 90%;
+    border-radius: 1rem;
+}
+
+/* 버튼 공통 */
+.btn-setting {
+    border-radius: 20px;
+    border-color: transparent;
+    height: 1.8rem;
+}

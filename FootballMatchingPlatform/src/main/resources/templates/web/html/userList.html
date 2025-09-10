@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/web/css/common.css" />
+
+    <title>회원 전체 목록</title>
+</head>
+<body>
+    
+    <header id="navbar"></header>
+    <section class="container-fluid d-flex justify-content-center" id="sectionView">
+
+        <div class="d-flex justify-content-center" id="maincontents">
+            <!-- 여기서부터 내용 작성! -->
+            <div class="pt-3">
+                <div class="row d-flex justify-content-center align-items-center p-3">
+                    <div class="search m-2 d-flex justify-content-between align-items-center">
+                        <input type="text" class="border-1 ms-3" placeholder="이름 입력">
+                        <button class="btn border-0"><img src="../img/search.svg" class="m-2" /></button>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-center align-content-start overflow-auto h-100 p-3">
+                    <table class="table table-hover text-center" id="listTable">
+                        <thead>
+                            <tr class="m-3">
+                                <th scope="col">아이디</th>
+                                <th scope="col">이름</th>
+                                <th scope="col">성별</th>
+                                <th scope="col">나이</th>
+                                <th scope="col">등급</th>
+                                <th scope="col">이메일</th>
+                                <th scope="col">연락처</th>
+                                <th scope="col">가입 날짜</th>
+
+                            </tr>
+                        </thead>
+                        <tbody class='userListTbody'>
+                            <tr>
+                                <td>chul01</td>
+                                <td>김철수</td>
+                                <td>남</td>
+                                <td>24세</td>
+                                <td>A등급</td>
+                                <td>ch0000@gmail.com</td>
+                                <td>010-8452-9482</td>
+                                <td>2024.06.21</td>
+                            </tr>
+                            <tr>
+                                <td>chul01</td>
+                                <td>김철수</td>
+                                <td>남</td>
+                                <td>24세</td>
+                                <td>A등급</td>
+                                <td>ch0000@gmail.com</td>
+                                <td>010-8452-9482</td>
+                                <td>2024.06.21</td>
+                            </tr>
+                            <tr>
+                                <td>chul01</td>
+                                <td>김철수</td>
+                                <td>남</td>
+                                <td>24세</td>
+                                <td>A등급</td>
+                                <td>ch0000@gmail.com</td>
+                                <td>010-8452-9482</td>
+                                <td>2024.06.21</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        $("#navbar").load("/common/navbar.html", function() {
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	// 모든 유저
+        	$('#sUser').on('click', function() {
+        		
+        		
+        	});
+        
+        
+        
+        
+        
+        	// 악질 사회악 유저인 경우
+        	$('#sUser').on('click', function() {
+        	
+        	
+        	});
+        
+        
+        	
+        
+        
+        	// 문의 게시판인 경우
+        	$('#inquiry').on('click', function() {
+        	
+        	
+        	});
+        	
+        
+        
+        
+        });
+        
+        
+        // 처음 디폴트값
+                window.onload = function() {
+        	$('.userListTbody').empty();
+        	
+        	 $.ajax({
+                 type: 'get',
+                 url: '/api/user/list/get',
+                 contentType : 'application/json; charset=utf-8',
+             
+             }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            	 for(let i = 0; i<response.result.length; i++){
+            	 if(response.result[i].fieldStatus == 1){
+				$('.userListTbody').append("<tr class='fieldLocationWhere' onclick=\"location.href='/fieldInfo/' + " + response.result[i].userId + "\">" +
+                                "<td class='fieldLocationWhereValue' value='" + response.result[i].fieldSeq + "'>" + response.result[i].userId + "</td> " +
+                               " <td>" + response.result[i].name + "</td> " +
+                              "  <td>" + response.result[i].gender + "</td> " + // managers 테이블에서 매니저 이름 가져오셈
+                             "   <td>" + response.result[i].birthday + "</td> " +
+                             "   <td>" + response.result[i].userTier + "급</td> " +
+                             "   <td>" + response.result[i].email + "</td> " +
+                             "   <td>" + response.result[i].phoneNumber + "</td> " +
+                             "   <td>" + response.result[i].joinDate + "</td> " +
+                           "</tr>");
+                           }
+            	 }
+                 
+             }).fail(function(error){
+                 //alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
+             })
+        	
+        	
+        }
+        
+        
+    </script>
+</body>
+</html>

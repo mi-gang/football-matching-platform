@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>등록된 구장 리스트</title>
+    <link rel="stylesheet" href="/mobile/css/common.css">
+    <link rel="stylesheet" href="/mobile/css/addedFieldList.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- 모바일 컨테이너 -->
+    <div id="mobile-container">
+        <!-- 헤더 -->
+        <header></header>
+        <!-- 컨텐츠 컨테이너 -->
+        <div id="container">
+            <div id="content-header">
+                <div id="filter-container">
+                    <img id="filter" src="/mobile/img/filter.svg">
+                    <div id="filter-text">지역</div>
+                </div>
+                <div id="search-container">
+                    <input id="search-keyword" placeholder="검색어를 입력하세요">
+                    <img id="search" src="/mobile/img/search.svg">
+                </div>
+            </div>
+            
+            <ul id="list-container" >
+            
+            	<div class="content-box" th:each="i : ${addedFieldList}">
+                    <div class="content-text" th:value="${i.fieldSeq}" onclick="location.href='/addedFieldInfo/'">
+                    	<span th:value="${i.fieldSeq}" class = "hihihi"></span>
+                        <div class="content-title" th:value="${i.fieldSeq}" th:text="${i.fieldName}"></div>
+                        <div class="content-address" th:text="${i.fieldAddress} + ' ' + ${i.fieldAddressDetail}">서울 강서구 화곡동 산 199</div>
+                        <div class="content-info">
+						  <p th:if="${i.showerRoom}">샤워실 </p>
+						  <p th:if="${i.parking}">주차장 </p>
+						  <p th:if="${i.sellDrink}">음료판매 </p>
+						  <p th:if="${i.rentShoes}">축구화 대여 </p>
+						  <p th:if="${i.rentBall}">축구공 대여 </p>
+						</div>
+                    </div>
+                    <img class='fieldImg' th:src="@{'../upload/img/' + ${i.fieldImg}}">
+                </div>
+            	<div class="line-bottom"></div>
+            </ul>
+            
+            <div id="modal-location">
+                <div id="top-location">
+                    <div id="text-modal-top">지역</div>
+                    <img id="close" src="/mobile/img/Close.svg">
+                </div>
+                <div id="location-list">
+                    <div class="location-line">
+                        <input type="radio" id="서울" value="서울" name="location"><label for="서울">서울</label>
+                        <input type="radio" id="경기" value="경기" name="location"><label for="경기">경기</label>
+                        <input type="radio" id="인천" value="인천" name="location"><label for="인천">인천</label>
+                        <input type="radio" id="부산" value="부산" name="location"><label for="부산">부산</label>
+                        <input type="radio" id="대전" value="대전" name="location"><label for="대전">대전</label>
+                    </div>
+                    <div class="location-line">
+                        <input type="radio" id="대구" value="대구" name="location"><label for="대구">대구</label>
+                        <input type="radio" id="울산" value="울산" name="location"><label for="울산">울산</label>
+                        <input type="radio" id="세종" value="세종" name="location"><label for="세종">세종</label>
+                        <input type="radio" id="광주" value="광주" name="location"><label for="광주">광주</label>
+                        <input type="radio" id="강원" value="강원" name="location"><label for="강원">강원</label>
+                    </div>
+                    <div class="location-line">
+                        <input type="radio" id="충북" value="충북" name="location"><label for="충북">충북</label>
+                        <input type="radio" id="충남" value="충남" name="location"><label for="충남">충남</label>
+                        <input type="radio" id="경북" value="경북" name="location"><label for="경북">경북</label>
+                        <input type="radio" id="경남" value="경남" name="location"><label for="경남">경남</label>
+                        <input type="radio" id="제주" value="제주" name="location"><label for="제주">제주</label>
+                    </div>
+                </div>
+                <hr>
+                <div id="gu-list">
+                </div>
+                <div id="submit-container">
+                    <div id="submit">완료</div>
+                </div>
+            </div>
+            
+    <div class="toast" id="toast">지역을 선택해주세요</div>
+	<div class="toast1" id="toast1">구를 선택해주세요</div>
+            
+            
+            
+        </div>
+
+    </div>
+
+    <script>
+    
+    var userTier = "[[${session.loginUser.getUserTier}]]";
+        // header, nav 내용 불러오기
+        $(document).ready(function () {
+            $('header').load('./common/header_back.html', function () { // 뒤로가기 필요한 페이지는 header_back, 아닌 페이지는 header 사용해주세욤
+                $('#page-name').text('구장'); // 해당 페이지 이름 넣어주세욤 ex) 마이페이지
+                $('#user-tier').text(userTier); // 나중에 세션에서 usertier 구해서 넣기
+            });
+        });
+		
+		
+		
+		window.onload = function(){
+		$('#list-container').empty();
+		
+			 $.ajax({
+            type: 'get',
+            url: '/api/field',
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            $('#list-container').empty();
+            for(let i = 0; i<response.result.length; i++){
+            	var showerRoom = "";
+            	var parking = "";
+            	var sellDrink = "";
+            	var rentBall = "";
+            	var rentShoes = "";
+            	if(response.result[i].showerRoom){
+            		showerRoom = "샤워실 ";
+            	}
+            	if(response.result[i].parking){
+            		parking = "주차장 ";
+            	}
+            	if(response.result[i].sellDrink){
+            		sellDrink = "음료판매 ";
+            	}
+            	if(response.result[i].rentBall){
+            		rentBall = "축구공 대여 ";
+            	}
+            	if(response.result[i].rentShoes){
+            		rentShoes = "축구화 대여 ";
+            	}
+            	
+            
+            
+            
+            
+            	console.log(response.result[i].fieldName)	
+            	$('#list-container').append("<div class='content-box'>" +
+                  "<div class='content-text' onclick=\"location.href='/addedFieldInfo/" + response.result[i].fieldSeq +"' \"> " +
+                     "<div class='content-title'>" + response.result[i].fieldName +"</div> " + 
+                      "<div class='content-address'>" + response.result[i].fieldAddress +"</div> " + 
+                      "<div class='content-info'> " +
+						showerRoom 
+						 + parking
+						 + sellDrink
+						 + rentBall
+					 + rentShoes +
+					"</div>" +
+                  "</div>" +
+                  "<img class='fieldImg' src='../upload/img/" + response.result[i].fieldImg + "'></div><div class='line-bottom'></div>");
+            }
+        }).fail(function(error){
+            //alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
+        })
+        
+		
+		}
+		
+		
+		// 링크 아직 안 걸렸음. value값을 아직 가져오지 못함.
+//		const containerElement = document.querySelector('.content-text');
+//		
+//		containerElement.addEventListener('click', (event) => {
+ // 		if (event.target.classList.contains('content-text')) {
+  // 		const clickedDiv = event.target;
+   	//	const addedFieldInfo = clickedDiv.querySelector('.hihihi');
+  	  //  const addedFieldInfoValue = addedFieldInfo.value; // th:value 속성 접근
+			
+	   // console.log(addedFieldInfoValue);
+
+	    //alert("구장 상세 정보 페이지로 이동");
+    	//window.location.href = '/addedFieldInfo/' + addedFieldInfoValue;
+  		//}
+		//});
+		
+		//hrefFieldInfo()
+
+
+
+        $("#search").on("click", function () {
+           // alert($("#search-keyword").val());
+            
+            
+            const data = $("#search-keyword").val();
+            
+             $.ajax({
+            type: 'post',
+            url: '/api/field/search',
+            data: JSON.stringify(data),
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            $('#list-container').empty();
+            for(let i = 0; i<response.result.length; i++){
+            	var showerRoom = "";
+            	var parking = "";
+            	var sellDrink = "";
+            	var rentBall = "";
+            	var rentShoes = "";
+            	if(response.result[i].showerRoom){
+            		showerRoom = "샤워실 ";
+            	}
+            	if(response.result[i].parking){
+            		parking = "주차장 ";
+            	}
+            	if(response.result[i].sellDrink){
+            		sellDrink = "음료판매 ";
+            	}
+            	if(response.result[i].rentBall){
+            		rentBall = "축구공 대여 ";
+            	}
+            	if(response.result[i].rentShoes){
+            		rentShoes = "축구화 대여 ";
+            	}
+            	
+            
+            
+            
+            
+            	console.log(response.result[i].fieldName)	
+            	$('#list-container').append("<div class='content-box'>" +
+                  "<div class='content-text' onclick=\"location.href='/addedFieldInfo/" + response.result[i].fieldSeq +"' \"> " +
+                   
+                     "<div class='content-title'>" + response.result[i].fieldName +"</div> " +
+                      "<div class='content-address'>" + response.result[i].fieldAddress +"</div> " +
+                      "<div class='content-info'> " +
+						showerRoom 
+						 + parking
+						 + sellDrink
+						 + rentBall
+					 + rentShoes +
+					"</div>" +
+                  "</div>" +
+                  "<img class='fieldImg' src = '../upload/img/" + response.result[i].fieldImg + "'>" +
+             "</div>" +
+           "<div class='line-bottom'></div>");
+            }
+            
+        }).fail(function(error){
+            //alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
+        })
+        
+        
+            
+            
+            
+            
+        })
+
+        $("#filter-container").on("click", function () {
+            $("#modal-location").css("display", "block");
+        })
+
+        $("#close").on("click", function () {
+            $("#modal-location").css("display", "none");
+        })
+
+        $("input[name=location]").on("click", function () {
+            if ($(this).val() == "서울") {
+                $("#gu-list").html(
+                    `<div class="gu-line">
+                        <input type="checkbox" id="강남구" value="강남구" name="gu"><label for="강남구">강남구</label>
+                        <input type="checkbox" id="강동구" value="강동구" name="gu"><label for="강동구">강동구</label>
+                        <input type="checkbox" id="강북구" value="강북구" name="gu"><label for="강북구">강북구</label>
+                        <input type="checkbox" id="강서구" value="강서구" name="gu"><label for="강서구">강서구</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="checkbox" id="관악구" value="관악구" name="gu"><label for="관악구">관악구</label>
+                        <input type="checkbox" id="광진구" value="광진구" name="gu"><label for="광진구">광진구</label>
+                        <input type="checkbox" id="구로구" value="구로구" name="gu"><label for="구로구">구로구</label>
+                        <input type="checkbox" id="금천구" value="금천구" name="gu"><label for="금천구">금천구</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="checkbox" id="노원구" value="노원구" name="gu"><label for="노원구">노원구</label>
+                        <input type="checkbox" id="도봉구" value="도봉구" name="gu"><label for="도봉구">도봉구</label>
+                        <input type="checkbox" id="동대문구" value="동대문구" name="gu"><label for="동대문구">동대문구</label>
+                        <input type="checkbox" id="동작구" value="동작구" name="gu"><label for="동작구">동작구</label>
+                    </div>`
+                )
+            }
+            else if ($(this).val() == "인천") {
+                $("#gu-list").html(
+                    `<div class="gu-line">
+                        <input type="checkbox" id="계양구" value="계양구" name="gu"><label for="계양구">계양구</label>
+                        <input type="checkbox" id="남구" value="남구" name="gu"><label for="남구">남구</label>
+                        <input type="checkbox" id="남동구" value="남동구" name="gu"><label for="남동구">남동구</label>
+                        <input type="checkbox" id="동구" value="동구" name="gu"><label for="동구">동구</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="checkbox" id="부평구" value="부평구" name="gu"><label for="부평구">부평구</label>
+                        <input type="checkbox" id="서구" value="서구" name="gu"><label for="서구">서구</label>
+                        <input type="checkbox" id="연수구" value="연수구" name="gu"><label for="연수구">연수구</label>
+                        <input type="checkbox" id="중구" value="중구" name="gu"><label for="중구">중구</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="checkbox" id="강화군" value="강화군" name="gu"><label for="강화군">강화군</label>
+                        <input type="checkbox" id="미추홀구" value="미추홀구" name="gu"><label for="미추홀구">미추홀구</label>
+                    </div>`
+                )
+            }
+            else if ($(this).val() == "경기") {
+                $("#gu-list").html(
+                    `<div class="gu-line">
+                        <input type="checkbox" id="고양시" value="고양시" name="gu"><label for="고양시">고양시</label>
+                        <input type="checkbox" id="과천시" value="과천시" name="gu"><label for="과천시">과천시</label>
+                        <input type="checkbox" id="광명시" value="광명시" name="gu"><label for="광명시">광명시</label>
+                        <input type="checkbox" id="광주시" value="광주시" name="gu"><label for="광주시">광주시</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="checkbox" id="구리시" value="구리시" name="gu"><label for="구리시">구리시</label>
+                        <input type="checkbox" id="군포시" value="군포시" name="gu"><label for="군포시">군포시</label>
+                        <input type="checkbox" id="김포시" value="김포시" name="gu"><label for="김포시">김포시</label>
+                        <input type="checkbox" id="남양주시" value="남양주시" name="gu"><label for="남양주시">남양주시</label>
+                    </div>
+                    <div class="gu-line">
+                        <input type="checkbox" id="동두천시" value="동두천시" name="gu"><label for="동두천시">동두천시</label>
+                        <input type="checkbox" id="부천시" value="부천시" name="gu"><label for="부천시">부천시</label>
+                        <input type="checkbox" id="성남시" value="성남시" name="gu"><label for="성남시">성남시</label>
+                        <input type="checkbox" id="수원시" value="수원시" name="gu"><label for="수원시">수원시</label>
+                    </div>`
+                )
+            }
+            else {
+                $("#gu-list").html(
+                    ``
+                )
+            }
+        })
+
+        $("#submit").on("click", function () {
+            var location = $("input[name=location]:checked").val();
+            var gu_arr = [];
+
+            $("input[name=gu]:checked").each(function () {
+                var gu = $(this).val();
+                gu_arr.push(gu);
+            });
+
+            if (location == null) {
+                
+                
+                toast.classList.add('show');
+				setTimeout(function(){
+					toast.classList.remove('show');
+				}, 1000);
+                
+                return;
+            }
+
+            if (gu_arr.length == 0) {
+                //alert("구를 선택해주세요!");
+                
+                toast1.classList.add('show1');
+				setTimeout(function(){
+					toast1.classList.remove('show1');
+				}, 1000);
+                
+                
+                return;
+            }
+
+
+            
+        for(let i = 0; i<gu_arr.length; i++){    
+            
+        const data = location + " " + gu_arr[i];
+        console.log(data)
+        $.ajax({
+            type: 'post',
+            url: '/api/field/fillter',
+            data: JSON.stringify(data),
+            contentType : 'application/json; charset=utf-8',
+        
+        }).done(function(response){ // 데이터 받아와서 뿌려주는 거 해야 됨ㅇㅇ
+            console.log('ㅎㅇ')
+			console.log(response.result.length)
+			$('#list-container').empty();
+			for(let i = 0; i<response.result.length; i++){
+				            	var showerRoom = "";
+            	var parking = "";
+            	var sellDrink = "";
+            	var rentBall = "";
+            	var rentShoes = "";
+            	if(response.result[i].showerRoom){
+            		showerRoom = "샤워실 ";
+            	}
+            	if(response.result[i].parking){
+            		parking = "주차장 ";
+            	}
+            	if(response.result[i].sellDrink){
+            		sellDrink = "음료판매 ";
+            	}
+            	if(response.result[i].rentBall){
+            		rentBall = "축구공 대여 ";
+            	}
+            	if(response.result[i].rentShoes){
+            		rentShoes = "축구화 대여 ";
+            	}
+            	
+            
+            
+            
+            
+            	console.log(response.result[i].fieldName)	
+            	$('#list-container').append("<div class='content-box'>" +
+                  "<div class='content-text' onclick=\"location.href='/addedFieldInfo/" + response.result[i].fieldSeq +"' \"> " +
+                   
+                     "<div class='content-title'>" + response.result[i].fieldName +"</div> " + 
+                      "<div class='content-address'>" + response.result[i].fieldAddress +"</div> " + 
+                      "<div class='content-info'> " +
+						showerRoom 
+						 + parking
+						 + sellDrink
+						 + rentBall
+					 + rentShoes +
+					"</div>" +
+                  "</div>" +
+                  "<img class='fieldImg' src = '../upload/img/" + response.result[i].fieldImg + "'>" +
+             "</div>" +
+           "<div class='line-bottom'></div>");
+				
+				
+			}
+			
+			
+        }).fail(function(error){
+            alert(JSON.stringify(error)); // 개에바임 이거 ㅋㅋ
+        })
+            
+         }   
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            $("#modal-location").css("display", "none");
+        })
+    </script>
+</body>
+
+</html>
